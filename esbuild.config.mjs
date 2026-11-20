@@ -1,4 +1,6 @@
 import esbuild from 'esbuild';
+import { readFile } from 'node:fs/promises';
+const dictionaryLicense = await readFile('data/CMUDICT-LICENSE.txt', 'utf8');
 const context = await esbuild.context({
   entryPoints: ['src/main.ts'],
   bundle: true,
@@ -8,7 +10,7 @@ const context = await esbuild.context({
   platform: 'node',
   external: ['obsidian', 'electron', '@codemirror/*', '@lezer/*'],
   sourcemap: process.argv.includes('--watch') ? 'inline' : false,
-  banner: { js: '/* Context Cards — local-first vocabulary capture for Obsidian. */' },
+  banner: { js: `/* Context Cards — local-first vocabulary capture for Obsidian.\n\nBundled CMUdict notice:\n${dictionaryLicense.replaceAll('*/', '* /')}\n*/` },
 });
 if (process.argv.includes('--watch')) await context.watch();
 else {

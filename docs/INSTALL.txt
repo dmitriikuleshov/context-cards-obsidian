@@ -1,5 +1,15 @@
 CONTEXT CARDS — INSTALLATION
 
+RECOMMENDED: BRAT
+In Obsidian Community plugins, install and enable BRAT.
+Open BRAT settings > Add beta plugin, and enter:
+dmitriikuleshov/context-cards-obsidian
+Select the latest version, add it and enable Context Cards if needed.
+BRAT can also update the plugin. Set up Ollama/AnkiConnect as described below.
+Existing users: do not uninstall Context Cards first; keep your data.json.
+
+ALTERNATIVE: ZIP
+
 Download context-cards-VERSION.zip from:
 https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest
 Do not use the automatic Source code ZIP: it has no compiled plugin.

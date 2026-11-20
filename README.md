@@ -10,7 +10,27 @@ Turn selected words in Obsidian into editable English vocabulary cards using loc
 - [Ollama](https://ollama.com/) and an installed model. Default: `qwen3.5:9b-q4_K_M`. Speed depends on hardware.
 - Anki Desktop with [AnkiConnect](https://ankiweb.net/shared/info/2055492159). Keep Anki open when adding cards. Review synced cards normally on AnkiMobile/AnkiDroid.
 
-## Install
+## Install with BRAT (recommended)
+
+1. In Obsidian, open **Settings → Community plugins → Browse**, find **BRAT**, install and enable it.
+2. Open **Settings → BRAT → Add beta plugin** and enter:
+
+   ```text
+   dmitriikuleshov/context-cards-obsidian
+   ```
+
+3. Select the latest version and add the plugin. Enable **Context Cards** under Community plugins if it is not enabled automatically.
+4. Set up Ollama and AnkiConnect using steps 4–6 below. BRAT installs the Obsidian plugin, not its external services.
+
+With BRAT already enabled, you can also open this installation link:
+
+```text
+obsidian://brat?plugin=dmitriikuleshov/context-cards-obsidian
+```
+
+BRAT can check for newer releases and update the plugin; configure automatic checks in BRAT, or use its update command. Do not uninstall Context Cards first if you want to keep existing settings/drafts. ZIP installation remains available as an alternative.
+
+## Install from ZIP
 
 1. Open [Releases](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest). Under **Assets**, download **context-cards-VERSION.zip**. Automatic **Source code** archives do not contain the built plugin.
 2. Extract the ZIP. Copy **context-cards** into your vault's **.obsidian/plugins/** folder; create `plugins` if needed. The result must be `.obsidian/plugins/context-cards/main.js`, without another nested folder.
