@@ -1,0 +1,2 @@
+Previous design: 0.1.7, before visual grouping.
+For a design-only rollback, remove the CSS block between Visual groups 0.1.8 markers. This preserves later functional changes. The original stylesheet and view source are also saved here. Do not overwrite plugin data.json.

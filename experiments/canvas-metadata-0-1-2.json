@@ -1,0 +1,205 @@
+{
+  "date": "2026-11-20T07:53:02.568Z",
+  "results": [
+    {
+      "target": "stilted",
+      "source": "He spoke in a dreamy, stilted manner.",
+      "content": {
+        "status": "ready",
+        "expression": "stilted",
+        "partOfSpeech": "adjective",
+        "americanIpa": "/ˈstɪltɪd/",
+        "meaning": "unnaturally stiff, formal, or awkward",
+        "explanation": "Describes speech or behavior that feels forced and lacks natural flow, often sounding rehearsed or artificial.",
+        "examples": [
+          "The actor's dialogue sounded stilted because he was reading from a script.",
+          "Her stilted movements made her seem uncomfortable in the spotlight.",
+          "The translation felt stilted and lost the original poem's rhythm.",
+          "His stilted apology lacked sincerity and sounded rehearsed.",
+          "The play's ending was stilted and did not resolve the conflict naturally."
+        ],
+        "notes": [
+          "Often used with 'manner', 'speech', 'dialogue', or 'movements'.",
+          "Implies a lack of ease or spontaneity."
+        ],
+        "question": ""
+      },
+      "seconds": 7.344661736
+    },
+    {
+      "target": "obscurity",
+      "source": "Interest was intensified by the obscurity of the cause of death.",
+      "content": {
+        "status": "ready",
+        "expression": "obscurity",
+        "partOfSpeech": "uncountable noun",
+        "americanIpa": "/əbskˈjʊɹəti/",
+        "meaning": "the state of being unknown, unclear, or not well understood by many people.",
+        "explanation": "This word describes a situation where facts are hidden or difficult to understand, often making something mysterious or hard to explain.",
+        "examples": [
+          "The true reason for the accident remains in total obscurity.",
+          "She wrote her poetry in obscurity before becoming famous.",
+          "The details of the ancient treaty are lost in historical obscurity.",
+          "He lived a quiet life in obscurity away from the public eye.",
+          "The cause of the fire is still in obscurity despite the investigation."
+        ],
+        "notes": [
+          "Often used with 'in' (e.g., in obscurity, in the obscurity of history).",
+          "Can refer to both lack of fame and lack of clear information."
+        ],
+        "question": ""
+      },
+      "seconds": 3.0340453930000004
+    },
+    {
+      "target": "straining",
+      "source": "The sciences, each straining in its own direction, have hitherto harmed us little.",
+      "content": {
+        "status": "ready",
+        "expression": "strain",
+        "partOfSpeech": "present participle verb",
+        "americanIpa": "/stɹeɪn/",
+        "meaning": "to make a great effort to achieve something or to push towards a goal",
+        "explanation": "Here it describes the sciences pushing hard and independently toward different goals, creating tension or competition.",
+        "examples": [
+          "The team was straining to finish the project before the deadline.",
+          "She is straining to understand the complex rules of the game.",
+          "Many companies are straining to develop new green technologies.",
+          "He strained to lift the heavy box onto the shelf.",
+          "The crowd strained to see the performer on the distant stage."
+        ],
+        "notes": [
+          "Often used with 'to' + verb (e.g., straining to see).",
+          "Implies intense effort or pressure."
+        ],
+        "question": ""
+      },
+      "seconds": 2.5722579519999997
+    },
+    {
+      "target": "brisk",
+      "source": "Death was induced by the brisk ascent of so steep a hill by so elderly a man.",
+      "content": {
+        "status": "ready",
+        "expression": "brisk",
+        "partOfSpeech": "adjective",
+        "americanIpa": "/bɹɪsk/",
+        "meaning": "done with speed and energy; lively and vigorous",
+        "explanation": "It describes an action that is performed quickly and with noticeable effort, often implying a healthy or determined pace.",
+        "examples": [
+          "She took a brisk walk to clear her head after the long meeting.",
+          "The wind was brisk, so we pulled our coats tighter before leaving.",
+          "He gave the horse a brisk trot to get it moving faster.",
+          "The market saw a brisk trade in winter coats during the cold snap.",
+          "They finished the project with a brisk efficiency that impressed the boss."
+        ],
+        "notes": [
+          "Commonly collocates with 'walk', 'pace', 'trade', or 'wind'.",
+          "Often implies a positive, energetic quality rather than just speed."
+        ],
+        "question": ""
+      },
+      "seconds": 2.785531944000002
+    },
+    {
+      "target": "resorted to",
+      "source": "The method had frequently been resorted to when other approaches failed.",
+      "content": {
+        "status": "ready",
+        "expression": "resort to",
+        "partOfSpeech": "verb + to-infinitive",
+        "americanIpa": "/ɹɪˈzɔɹt tə/",
+        "meaning": "to use a method or option only when no other choices are available",
+        "explanation": "This phrase implies a lack of better alternatives, suggesting the action is a last option or a necessary compromise after other methods have failed.",
+        "examples": [
+          "When the battery died, we resorted to using candles for light.",
+          "The company resorted to layoffs after sales dropped significantly.",
+          "If you cannot find a key, you may have to resort to breaking the window.",
+          "He resorted to lying to cover up his mistake.",
+          "We usually walk, but we resorted to taking the bus due to the rain."
+        ],
+        "notes": [
+          "Often used with negative connotations, implying desperation or lack of better options.",
+          "Common collocations: resort to violence, resort to begging, resort to deception."
+        ],
+        "question": ""
+      },
+      "seconds": 3.5020118340000006
+    },
+    {
+      "target": "conspicuous",
+      "source": "My uncle showed some sharpness in replying, for the conspicuous freshness of the tablet implied kinship with anything but archaeology.",
+      "content": {
+        "status": "ready",
+        "expression": "conspicuous",
+        "partOfSpeech": "adjective",
+        "americanIpa": "/kənˈspɪkjuːəs/",
+        "meaning": "clearly visible or obvious because it stands out from the surroundings",
+        "explanation": "Used to describe something that attracts attention immediately, often because it is bright, unusual, or different from what is expected around it.",
+        "examples": [
+          "The red balloon was conspicuous against the blue sky.",
+          "Her bright yellow jacket made her conspicuous in the crowd.",
+          "The missing file was conspicuous in the otherwise full folder.",
+          "He wore a conspicuous badge to show his membership.",
+          "The stain was conspicuous on the white shirt after only one wash."
+        ],
+        "notes": [
+          "often used with 'against' to highlight contrast",
+          "can imply something is noticeable in a positive or negative way"
+        ],
+        "question": ""
+      },
+      "seconds": 2.2315754199999973
+    },
+    {
+      "target": "besieged",
+      "source": "When the professor became convinced that the sculptor knew nothing of any cult, he besieged his visitor with demands for future reports of dreams.",
+      "content": {
+        "status": "ready",
+        "expression": "besiege",
+        "partOfSpeech": "verb (past tense)",
+        "americanIpa": "/bɪˈsiːdʒ/",
+        "meaning": "to overwhelm someone with many requests, questions, or demands",
+        "explanation": "This usage describes being pestered or flooded with attention, similar to a physical siege but applied to social pressure.",
+        "examples": [
+          "The journalist besieged the celebrity with questions about her new book.",
+          "Fans besieged the hotel lobby hoping to meet the singer.",
+          "Critics besieged the director with negative reviews after the premiere.",
+          "She felt besieged by emails from her boss every morning.",
+          "The team was besieged with complaints about the new policy."
+        ],
+        "notes": [
+          "Often used with 'with' to introduce what is overwhelming the person.",
+          "Can be used with both positive and negative contexts."
+        ],
+        "question": ""
+      },
+      "seconds": 2.8220432980000005
+    },
+    {
+      "target": "damp",
+      "source": "The bas-relief was exceedingly damp and fresh.",
+      "content": {
+        "status": "ready",
+        "expression": "damp",
+        "partOfSpeech": "adjective",
+        "americanIpa": "/dæmp/",
+        "meaning": "slightly wet or moist, not dry",
+        "explanation": "Describes a surface that holds a small amount of moisture, often feeling cool to the touch.",
+        "examples": [
+          "The basement felt damp after the heavy rain.",
+          "She opened the window to let the damp air out.",
+          "The clothes hung outside but remained damp all day.",
+          "The soil was damp enough for planting seeds.",
+          "Avoid touching the damp wall near the leak."
+        ],
+        "notes": [
+          "often collocates with 'air', 'cloth', 'soil', or 'wall'",
+          "can imply a slight unpleasantness if the moisture is unwanted"
+        ],
+        "question": ""
+      },
+      "seconds": 1.946068502000002
+    }
+  ]
+}

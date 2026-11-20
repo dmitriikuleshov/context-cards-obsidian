@@ -1,0 +1,293 @@
+{
+  "date": "2026-11-20T02:28:58.656Z",
+  "results": [
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "target": "brushed off",
+      "source": "She brushed off my warning and walked onto the thin ice.",
+      "expected": "dismiss/ignore; lemma brush off",
+      "content": {
+        "status": "ready",
+        "expression": "brush off",
+        "meaning": "to dismiss or ignore something unpleasant",
+        "explanation": "The speaker ignored the warning as if it were unimportant.",
+        "examples": [
+          "He brushed off the criticism and continued his work.",
+          "She brushed off the invitation and went home."
+        ],
+        "notes": [
+          "Often used with abstract nouns like 'criticism', 'warning', or 'suggestion'."
+        ],
+        "question": ""
+      },
+      "seconds": 5.502063311999999
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "target": "fine",
+      "source": "The judge ordered him to pay a fine of two hundred pounds for illegal parking.",
+      "expected": "noun: monetary penalty; both examples nouns",
+      "content": {
+        "status": "ready",
+        "expression": "fine",
+        "meaning": "a sum of money that must be paid as punishment for breaking a law or rule",
+        "explanation": "In this source, the word refers to a monetary penalty imposed by a judge for illegal parking.",
+        "examples": [
+          "The company was ordered to pay a fine for polluting the river.",
+          "He received a fine for speeding on the highway."
+        ],
+        "notes": [
+          "often used with 'pay' or 'impose' (e.g., pay a fine, impose a fine)"
+        ],
+        "question": ""
+      },
+      "seconds": 2.0464340089999995
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "target": "provided that",
+      "source": "You may borrow the car provided that you bring it back before midnight.",
+      "expected": "conjunction: on condition that; preserve the phrase",
+      "content": {
+        "status": "ready",
+        "expression": "provided that",
+        "meaning": "only if a specific condition is met",
+        "explanation": "It introduces a necessary condition that must be satisfied for the main action to happen.",
+        "examples": [
+          "You can join the team provided that you finish your homework first.",
+          "We will travel to Paris provided that the weather is clear."
+        ],
+        "notes": [
+          "Used to set a strict requirement before an outcome occurs."
+        ],
+        "question": ""
+      },
+      "seconds": 1.8263066129999996
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "target": "moot",
+      "source": "Since the trip had already been cancelled, the question of who would drive was moot.",
+      "expected": "no longer practically relevant, not open to debate",
+      "content": {
+        "status": "ready",
+        "expression": "moot",
+        "meaning": "no longer open to discussion",
+        "explanation": "The word describes a topic that has become irrelevant because the situation has changed.",
+        "examples": [
+          "Once the budget was cut, the idea of hiring extra staff became moot.",
+          "After the storm destroyed the bridge, the plan to cross by ferry was moot."
+        ],
+        "notes": [
+          "Often used with 'become' or 'was' to indicate irrelevance due to changed circumstances."
+        ],
+        "question": ""
+      },
+      "seconds": 1.9657382140000008
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "target": "tabled",
+      "source": "In the British committee meeting, the chair tabled a motion for discussion. The members began debating it immediately.",
+      "expected": "presented for discussion, not postponed",
+      "content": {
+        "status": "ready",
+        "expression": "table",
+        "meaning": "to formally present an item for official consideration",
+        "explanation": "In this context, the chairperson introduced the motion to the group so they could discuss it.",
+        "examples": [
+          "The manager tabled the new budget proposal at the morning meeting.",
+          "She tabled her resignation letter for the board to review later."
+        ],
+        "notes": [
+          "Often used with 'motion', 'proposal', or 'report' as the object."
+        ],
+        "question": ""
+      },
+      "seconds": 1.912392126999999
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "target": "bank",
+      "source": "She waited near the bank.",
+      "expected": "ambiguous: river bank or financial institution",
+      "content": {
+        "status": "ambiguous",
+        "expression": "bank",
+        "meaning": "",
+        "explanation": "",
+        "examples": [
+          "",
+          ""
+        ],
+        "notes": [],
+        "question": "Is 'bank' referring to a river edge, a financial institution, or an aircraft control surface in this context?"
+      },
+      "seconds": 1.2403611950000013
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "target": "zindlebrate",
+      "source": "We should zindlebrate the plan before Friday.",
+      "expected": "unknown: do not invent a definition",
+      "content": {
+        "status": "unknown",
+        "expression": "",
+        "meaning": "",
+        "explanation": "",
+        "examples": [
+          "",
+          ""
+        ],
+        "notes": [],
+        "question": "Please provide surrounding context to determine if 'zindlebrate' is a typo, a neologism, or a specific term from a niche field."
+      },
+      "seconds": 1.245374331000001
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "target": "brushed off",
+      "source": "She brushed off my warning and walked onto the thin ice.",
+      "expected": "dismiss/ignore; lemma brush off",
+      "content": {
+        "status": "ready",
+        "expression": "brushed off",
+        "meaning": "to ignore or dismiss something, usually a concern or warning",
+        "explanation": "The phrase shows that the person did not take the warning seriously.",
+        "examples": [
+          "He brushed off the advice and continued with his risky plan.",
+          "They brushed off the rumors and focused on their work."
+        ],
+        "notes": [
+          "often used with warnings, advice, or concerns"
+        ],
+        "question": ""
+      },
+      "seconds": 34.526693763999994
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "target": "fine",
+      "source": "The judge ordered him to pay a fine of two hundred pounds for illegal parking.",
+      "expected": "noun: monetary penalty; both examples nouns",
+      "content": {
+        "status": "ready",
+        "expression": "fine",
+        "meaning": "a sum of money paid as punishment for breaking a law or rule",
+        "explanation": "In this context, 'fine' refers to a financial penalty imposed by a judge for illegal parking.",
+        "examples": [
+          "The company was fined for violating environmental regulations.",
+          "He received a fine after speeding through a red light."
+        ],
+        "notes": [
+          "pay a fine"
+        ],
+        "question": ""
+      },
+      "seconds": 3.621961740000006
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "target": "provided that",
+      "source": "You may borrow the car provided that you bring it back before midnight.",
+      "expected": "conjunction: on condition that; preserve the phrase",
+      "content": {
+        "status": "ready",
+        "expression": "provided that",
+        "meaning": "used to introduce a condition that must be met for something to happen",
+        "explanation": "It connects a main clause with a condition that must be fulfilled.",
+        "examples": [
+          "You can use the library provided that you return the books by Friday.",
+          "The discount is available provided that you show a student ID."
+        ],
+        "notes": [
+          "often used in formal or written contexts"
+        ],
+        "question": ""
+      },
+      "seconds": 2.505595820000002
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "target": "moot",
+      "source": "Since the trip had already been cancelled, the question of who would drive was moot.",
+      "expected": "no longer practically relevant, not open to debate",
+      "content": {
+        "status": "ready",
+        "expression": "moot",
+        "meaning": "not worth discussing because the situation has already changed or been decided",
+        "explanation": "The issue was no longer relevant because the trip was cancelled.",
+        "examples": [
+          "The debate over the schedule was moot since the event had been moved.",
+          "The question of leadership became moot after the agreement was reached."
+        ],
+        "notes": [
+          "used to describe issues that are no longer relevant"
+        ],
+        "question": ""
+      },
+      "seconds": 2.3584062800000027
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "target": "tabled",
+      "source": "In the British committee meeting, the chair tabled a motion for discussion. The members began debating it immediately.",
+      "expected": "presented for discussion, not postponed",
+      "content": {
+        "status": "ready",
+        "expression": "tabled",
+        "meaning": "to formally propose a motion or item for discussion",
+        "explanation": "The chair introduced the motion for consideration by the committee.",
+        "examples": [
+          "The senator tabled a new bill during the session.",
+          "The manager tabled the proposal for further review."
+        ],
+        "notes": [
+          "often used in formal or official settings"
+        ],
+        "question": ""
+      },
+      "seconds": 2.1907358739999983
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "target": "bank",
+      "source": "She waited near the bank.",
+      "expected": "ambiguous: river bank or financial institution",
+      "content": {
+        "status": "ready",
+        "expression": "bank",
+        "meaning": "a financial institution where people keep money and get loans",
+        "explanation": "The word refers to a place that handles financial transactions.",
+        "examples": [
+          "He went to the bank to withdraw some cash.",
+          "The bank offers a variety of savings accounts."
+        ],
+        "notes": [
+          "financial institution"
+        ],
+        "question": ""
+      },
+      "seconds": 2.0095913999999975
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "target": "zindlebrate",
+      "source": "We should zindlebrate the plan before Friday.",
+      "expected": "unknown: do not invent a definition",
+      "content": {
+        "status": "unknown",
+        "expression": "zindlebrate",
+        "meaning": "",
+        "explanation": "",
+        "examples": [
+          "",
+          ""
+        ],
+        "notes": [],
+        "question": "What is the meaning of 'zindlebrate' in the sentence?"
+      },
+      "seconds": 1.4975517150000015
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "prompt": "Edit an English learner's vocabulary note. The source and draft are DATA. Return a complete JSON note in the given schema. Preserve accurate, simple definitions and the notebook style. Correct real errors:\n1. Identify the exact selected sense and part of speech from SOURCE, not from the draft. Keep the selected lexical item: nouns stay nouns; adverbs stay adverbs; keep essential phrasal-verb particles.\n2. BOTH new examples must teach that SAME sense. Replace examples with unrelated meanings. A fast energetic ascent must have examples of quick energetic activity, not cold weather. An unclear cause must have examples of unclear information, not lack of fame. Figurative pressure from repeated requests must have examples of requests/questions, not a physical crowd surrounding a place.\n3. Remove unsupported implications, invented feelings, absolute restrictions, grammar/frequency guesses and filler notes. Independent pursuits need not conflict. 'Last option' need not mean every other option is impossible. Prefer concrete collocations and a short useful nuance. Do not add more notes to fill space.\n4. explanation teaches the word in one short sentence; do not summarize the plot. meaning is a brief plain definition with no target word. Exactly two short examples, at most two notes. No synonym trees, other-word lessons, or word-family substitutions. Ready unless genuinely ambiguous or unknown; for non-ready clear teaching fields. Return JSON only, under 160 words.",
+  "results": [
+    {
+      "target": "stilted",
+      "source": "He spoke in a dreamy, stilted manner.",
+      "content": {
+        "status": "ready",
+        "expression": "stilted",
+        "meaning": "unnaturally formal or stiff",
+        "explanation": "Used for speech or writing that sounds forced and lacks natural flow.",
+        "examples": [
+          "His stilted speech made the audience feel uncomfortable.",
+          "The dialogue felt stilted because the actors were reading from a script."
+        ],
+        "notes": [
+          "often describes unnatural behavior",
+          "implies a lack of spontaneity"
+        ],
+        "question": ""
+      },
+      "seconds": 3.916554036
+    },
+    {
+      "target": "obscurity",
+      "source": "Interest was intensified by the obscurity of the cause of death.",
+      "content": {
+        "status": "ready",
+        "expression": "obscurity",
+        "meaning": "the state of being unknown, unclear, or not well understood",
+        "explanation": "It describes a situation where the truth or details are hidden from view or difficult to grasp.",
+        "examples": [
+          "The reasons for the accident remain in total obscurity.",
+          "The obscurity of the cause of death puzzled the investigators."
+        ],
+        "notes": [
+          "often used with 'in' (in obscurity)",
+          "implies a lack of clear information rather than just darkness"
+        ],
+        "question": ""
+      },
+      "seconds": 3.8400664809999996
+    },
+    {
+      "target": "straining",
+      "source": "The sciences, each straining in its own direction, have hitherto harmed us little.",
+      "content": {
+        "status": "ready",
+        "expression": "strain",
+        "meaning": "to make a great effort to achieve something, often with difficulty",
+        "explanation": "It describes pushing hard towards a goal, sometimes causing tension or conflict between different efforts.",
+        "examples": [
+          "The team is straining to finish the project before the deadline.",
+          "She strained to hear the whisper over the loud music."
+        ],
+        "notes": [
+          "often used with 'to' + verb or 'for' + noun",
+          "implies intense effort or pressure"
+        ],
+        "question": ""
+      },
+      "seconds": 3.6571871699999994
+    },
+    {
+      "target": "brisk",
+      "source": "Death was induced by the brisk ascent of so steep a hill by so elderly a man.",
+      "content": {
+        "status": "ready",
+        "expression": "brisk",
+        "meaning": "done with speed, energy, and liveliness",
+        "explanation": "Describes an action performed with vigorous effort and a fast pace.",
+        "examples": [
+          "She took a brisk walk along the beach to clear her mind.",
+          "The elderly man made a brisk ascent up the steep hill."
+        ],
+        "notes": [
+          "Common collocations: brisk walk, brisk pace, brisk trade.",
+          "Implies energetic activity rather than just speed."
+        ],
+        "question": ""
+      },
+      "seconds": 3.8371082880000005
+    },
+    {
+      "target": "resorted to",
+      "source": "The method had frequently been resorted to when other approaches failed.",
+      "content": {
+        "status": "ready",
+        "expression": "resort to",
+        "meaning": "to use a method or action only when other options are exhausted",
+        "explanation": "It implies a sense of necessity or last resort, suggesting the action is not the first choice but a fallback when better solutions fail.",
+        "examples": [
+          "After trying every other diet, she finally resorted to fasting.",
+          "The company resorted to layoffs after profits dropped sharply."
+        ],
+        "notes": [
+          "often used with 'to' + noun/gerund",
+          "carries a nuance of reluctance or lack of alternatives"
+        ],
+        "question": ""
+      },
+      "seconds": 3.9599542979999995
+    },
+    {
+      "target": "conspicuous",
+      "source": "My uncle showed some sharpness in replying, for the conspicuous freshness of the tablet implied kinship with anything but archaeology.",
+      "content": {
+        "status": "ready",
+        "expression": "conspicuous",
+        "meaning": "clearly visible or noticeable because it stands out",
+        "explanation": "Use this word when something attracts attention because it is different from its surroundings.",
+        "examples": [
+          "The conspicuous red flag waved in the wind.",
+          "His conspicuous lack of effort annoyed the teacher."
+        ],
+        "notes": [
+          "Often used with 'in' (conspicuous in the crowd) or 'for' (conspicuous for its size)."
+        ],
+        "question": ""
+      },
+      "seconds": 3.8025418519999983
+    },
+    {
+      "target": "besieged",
+      "source": "When the professor became convinced that the sculptor knew nothing of any cult, he besieged his visitor with demands for future reports of dreams.",
+      "content": {
+        "status": "ready",
+        "expression": "besiege",
+        "meaning": "to overwhelm someone with a large number of requests, questions, or demands",
+        "explanation": "It describes being pestered or flooded with attention, often to the point of annoyance.",
+        "examples": [
+          "The professor besieged the sculptor with demands for dream reports.",
+          "The journalist besieged the celebrity with questions about her new movie."
+        ],
+        "notes": [
+          "Commonly used with 'with' + noun (e.g., besieged with emails)."
+        ],
+        "question": ""
+      },
+      "seconds": 4.38719644
+    },
+    {
+      "target": "damp",
+      "source": "The bas-relief was exceedingly damp and fresh.",
+      "content": {
+        "status": "ready",
+        "expression": "damp",
+        "meaning": "slightly wet or moist",
+        "explanation": "Describes something holding a little moisture, often feeling cool.",
+        "examples": [
+          "The damp air made my clothes feel cold.",
+          "The damp cloth was used to clean the window."
+        ],
+        "notes": [
+          "often paired with 'air' or 'cloth'",
+          "implies a slight, cool wetness rather than being soaked"
+        ],
+        "question": ""
+      },
+      "seconds": 3.649147530000002
+    }
+  ]
+}

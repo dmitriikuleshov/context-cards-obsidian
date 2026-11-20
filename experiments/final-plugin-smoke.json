@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-20T02:49:25.164Z",
+  "model": "qwen3.5:9b-q4_K_M",
+  "seconds": 10.322464775999999,
+  "context": "They had argued about the journey all morning. At noon, Mara brushed off his warning and bought a ticket. She said she could take care of herself.",
+  "content": {
+    "status": "ready",
+    "expression": "brush off",
+    "meaning": "to dismiss or ignore something unpleasant or unwanted",
+    "explanation": "The speaker ignored Mara's warning as if it were unimportant.",
+    "examples": [
+      "He brushed off her criticism and continued working on his project.",
+      "She brushed off the rude comment and walked away without answering."
+    ],
+    "notes": [
+      "Often used with abstract nouns like 'warning', 'criticism', or 'insult'."
+    ],
+    "question": ""
+  },
+  "fields": {
+    "Key": "77eb897b-1293-446d-bdc6-08f21c4afc4e",
+    "Expression": "brush off",
+    "Meaning": "to dismiss or ignore something unpleasant or unwanted",
+    "Context": "They had argued about the journey all morning. At noon, Mara <mark>brushed off</mark> his warning and bought a ticket. She said she could take care of herself.",
+    "GapContext": "They had argued about the journey all morning. At noon, Mara <span class=\"cc-gap\">[…]</span> his warning and bought a ticket. She said she could take care of herself.",
+    "SourceForm": "brushed off",
+    "Explanation": "The speaker ignored Mara&#39;s warning as if it were unimportant.",
+    "Examples": "<ul><li>He brushed off her criticism and continued working on his project.</li><li>She brushed off the rude comment and walked away without answering.</li></ul>",
+    "UsageNotes": "<ul><li>Often used with abstract nouns like &#39;warning&#39;, &#39;criticism&#39;, or &#39;insult&#39;.</li></ul>",
+    "Source": "Test book · <a href=\"obsidian://open?vault=Temporary%20test&amp;file=Test%20book.md\">Open source in Obsidian</a>",
+    "Created": "2026-11-20T02:49:14.842Z"
+  },
+  "ankiWrites": 0
+}
