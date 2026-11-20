@@ -1,6 +1,13 @@
 import { PluginSettingTab, Setting, Notice, type App } from 'obsidian';
 import type ContextCardsPlugin from './main';
-import { DEFAULTS, cardFields, type CardFields, type Settings } from './types';
+import {
+  DEFAULTS,
+  cardFields,
+  MAX_TIMEOUT_SECONDS,
+  validTimeoutSeconds,
+  type CardFields,
+  type Settings,
+} from './types';
 import { Ollama } from './ollama';
 import { Anki } from './anki';
 import { endpoint } from './http';
@@ -112,17 +119,34 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root)
       .setName('Request timeout')
       .setDesc(
-        'How long to wait for generation, including the initial model load. Start with 60 seconds; try 120 if loading or longer content causes timeouts. A higher limit does not make generation faster.',
+        'Maximum generation time in seconds, including the initial model load. Default: 60. Enter a longer duration for slower hardware, for example 300 or 600. A higher limit does not make generation faster.',
       )
-      .addDropdown((dropdown) =>
-        dropdown
-          .addOptions({ '30': '30 seconds', '60': '60 seconds', '120': '120 seconds' })
-          .setValue(String(settings.timeoutSeconds))
-          .onChange((value) => {
-            settings.timeoutSeconds = Number(value);
-            this.plugin.persist();
-          }),
-      );
+      .addText((input) => {
+        input.inputEl.type = 'number';
+        input.inputEl.min = '1';
+        input.inputEl.max = String(MAX_TIMEOUT_SECONDS);
+        input.inputEl.step = '1';
+        input.inputEl.setAttribute('aria-label', 'Request timeout in seconds');
+        input.setPlaceholder('60').setValue(String(settings.timeoutSeconds));
+        input.onChange((value) => {
+          const seconds = Number(value);
+          const valid = value.trim() !== '' && validTimeoutSeconds(seconds);
+          input.inputEl.setCustomValidity(
+            valid ? '' : `Enter a whole number from 1 to ${MAX_TIMEOUT_SECONDS} seconds.`,
+          );
+          input.inputEl.setAttribute('aria-invalid', String(!valid));
+          if (!valid) return;
+          settings.timeoutSeconds = seconds;
+          this.plugin.persist();
+        });
+        input.inputEl.addEventListener('blur', () => {
+          if (!input.getValue().trim()) {
+            input.setValue(String(settings.timeoutSeconds));
+            input.inputEl.setCustomValidity('');
+            input.inputEl.setAttribute('aria-invalid', 'false');
+          } else input.inputEl.reportValidity();
+        });
+      });
     new Setting(root).setName('Card fields').setHeading();
     root.createEl('p', {
       cls: 'cc-muted',

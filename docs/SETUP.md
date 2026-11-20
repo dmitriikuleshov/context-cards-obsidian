@@ -72,7 +72,7 @@ Under **Settings → Context Cards → Local model**, start with:
 
 Click **Check connection** in the **Check Ollama** row. You should see a list of installed models. This only checks connectivity; it does not load the model or confirm that enough memory is available.
 
-The first request may take longer while the model loads. Try a `120 seconds` timeout if necessary. You can use another installed model, but output quality and adherence to the requested format may differ.
+The first request may take longer while the model loads. Request timeout accepts a whole number of seconds; the default is `60`. For slower hardware, try `300` or `600`. You can use another installed model, but output quality and adherence to the requested format may differ.
 
 With the default address, generation stays on your computer. Changing the Ollama URL sends the selected text and context to that server instead.
 

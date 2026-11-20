@@ -72,6 +72,16 @@ export interface Capture {
   mode: 'reading' | 'editor' | 'manual';
 }
 export const EXAMPLE_COUNT = 5;
+// Node timers use a signed 32-bit millisecond delay.
+export const MAX_TIMEOUT_SECONDS = Math.floor(2_147_483_647 / 1000);
+export function validTimeoutSeconds(value: unknown): value is number {
+  return (
+    typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value >= 1 &&
+    value <= MAX_TIMEOUT_SECONDS
+  );
+}
 export const MAX_DRAFTS = 4;
 export interface Content {
   status: 'ready' | 'ambiguous' | 'unknown';

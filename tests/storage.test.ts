@@ -19,6 +19,16 @@ function draft() {
   );
 }
 describe('persisted drafts and settings', () => {
+  it('keeps long manual timeouts and rejects invalid timer values', () => {
+    for (const timeoutSeconds of [1, 60, 600, 3600, 2147483])
+      expect(restoreData({ settings: { timeoutSeconds } }).settings.timeoutSeconds).toBe(
+        timeoutSeconds,
+      );
+    for (const timeoutSeconds of [0, -1, 1.5, Infinity, NaN, 2147484, '600'])
+      expect(restoreData({ settings: { timeoutSeconds } }).settings.timeoutSeconds).toBe(60);
+    expect(restoreData({}).settings.timeoutSeconds).toBe(60);
+  });
+
   it('preserves grouped meanings and all ten examples across a restart', () => {
     const original = {
       ...draft(),

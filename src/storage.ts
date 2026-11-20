@@ -1,6 +1,7 @@
 import {
   DEFAULTS,
   DEFAULT_FIELDS,
+  validTimeoutSeconds,
   EXAMPLE_COUNT,
   MAX_DRAFTS,
   emptyContent,
@@ -81,9 +82,9 @@ function settings(value: unknown): Settings {
   for (const [key, min, max] of [
     ['temperature', 0, 2],
     ['contextSize', 1000, 6000],
-    ['timeoutSeconds', 10, 300],
   ] as const)
     if (finite(value[key]) && value[key] >= min && value[key] <= max) result[key] = value[key];
+  if (validTimeoutSeconds(value.timeoutSeconds)) result.timeoutSeconds = value.timeoutSeconds;
   if (record(value.fields)) {
     const f = value.fields;
     for (const key of ['grammar', 'wordFormation', 'context', 'examples'] as const)
