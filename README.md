@@ -4,7 +4,7 @@ Turn selected words in Obsidian into editable English vocabulary cards using loc
 
 [Download the latest release](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest)
 
-**[Пошаговая инструкция на русском: скачивание → Ollama → Anki → обзор интерфейса](docs/SETUP.ru.md)**
+**[Setup guide with screenshots: download → Ollama → Anki → interface walkthrough](docs/SETUP.md)**
 
 ## Requirements
 
