@@ -1,7 +1,12 @@
 import { mkdir, copyFile, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { zipSync } from 'fflate';
+import { createHash } from 'node:crypto';
 const manifest = JSON.parse(await readFile('manifest.json', 'utf8'));
+const pkg = JSON.parse(await readFile('package.json', 'utf8'));
+const lock = JSON.parse(await readFile('package-lock.json', 'utf8'));
+if (![pkg.version, lock.version, lock.packages[''].version].every((v) => v === manifest.version))
+  throw new Error('Manifest, package and lockfile versions must match.');
 const folder = path.resolve('release', manifest.id);
 await mkdir(folder, { recursive: true });
 for (const file of ['main.js', 'manifest.json', 'styles.css'])
@@ -9,7 +14,7 @@ for (const file of ['main.js', 'manifest.json', 'styles.css'])
 await copyFile('data/CMUDICT-LICENSE.txt', path.join(folder, 'CMUDICT-LICENSE.txt'));
 await writeFile(
   path.join(folder, 'INSTALL.txt'),
-  `Context Cards ${manifest.version}\n\nCopy the context-cards folder into your vault's .obsidian/plugins/ directory.\nEnable Context Cards in Obsidian Settings > Community plugins.\nOpen Context Cards settings and check Ollama and AnkiConnect.\n\nSelect a word in Reading Mode or Live Preview, then click Create cards.\nReview the draft, preview both cards, and approve to add to Anki.\n\nBoth cards are stored in one note and one book deck.\nEnable Bury siblings in Anki. Text generation is local; no Markdown notes are created.\n`,
+  `Context Cards ${manifest.version}\n\n${await readFile('docs/INSTALL.txt', 'utf8')}`,
 );
 const files = {};
 for (const name of ['main.js', 'manifest.json', 'styles.css', 'INSTALL.txt', 'CMUDICT-LICENSE.txt'])
@@ -18,4 +23,19 @@ await writeFile(
   path.resolve('release', `${manifest.id}-${manifest.version}.zip`),
   zipSync(files, { level: 9 }),
 );
+const assets = [
+  `${manifest.id}-${manifest.version}.zip`,
+  ...['main.js', 'manifest.json', 'styles.css', 'CMUDICT-LICENSE.txt'].map(
+    (name) => `${manifest.id}/${name}`,
+  ),
+];
+const sums = await Promise.all(
+  assets.map(
+    async (name) =>
+      `${createHash('sha256')
+        .update(await readFile(path.join('release', name)))
+        .digest('hex')}  ${path.basename(name)}`,
+  ),
+);
+await writeFile('release/SHA256SUMS.txt', sums.join('\n') + '\n');
 console.log(`Packaged release/context-cards-${manifest.version}.zip`);

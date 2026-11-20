@@ -1,0 +1,26 @@
+CONTEXT CARDS — INSTALLATION
+
+Download context-cards-VERSION.zip from:
+https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest
+Do not use the automatic Source code ZIP: it has no compiled plugin.
+
+1. Extract the ZIP and copy context-cards into YOUR_VAULT/.obsidian/plugins/.
+   main.js must be directly inside context-cards, not another nested folder.
+2. Restart Obsidian and enable Context Cards under Settings > Community plugins.
+3. Install/start Ollama and download the model:
+   ollama pull qwen3.5:9b-q4_K_M
+4. Install Anki Desktop and AnkiConnect (add-on code 2055492159).
+   Restart Anki and keep it open when adding cards.
+5. In Context Cards settings check connections and the installed model.
+   Defaults: Ollama http://127.0.0.1:11434; AnkiConnect http://127.0.0.1:8765.
+6. Select a word in a Markdown book, click Create cards, review the draft,
+   and use Add to Anki in the Edit tab.
+
+UPDATES
+Disable the plugin; replace main.js, manifest.json and styles.css; update the
+included documentation/CMU notice, and enable the plugin again.
+Keep your existing data.json: it stores settings, API key and drafts.
+
+Requires desktop Obsidian; currently tested on Windows. Review synced cards
+in mobile Anki normally. No build tools are needed to install a release.
+Optional source marking edits original Markdown. Review model answers.

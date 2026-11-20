@@ -1,0 +1,42 @@
+name: Release
+on:
+  push:
+    tags: ['[0-9]*']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Validate version tag
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const version = JSON.parse(fs.readFileSync("manifest.json", "utf8")).version;
+            if (process.env.GITHUB_REF_TYPE !== "tag" || process.env.GITHUB_REF_NAME !== version)
+              throw new Error("Run this workflow on a tag matching manifest.version exactly.");
+          '
+      - run: npm ci
+      - run: npm run check
+      - run: node scripts/package.mjs
+      - run: npm run verify:package
+      - name: Create downloadable draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if gh release view "$GITHUB_REF_NAME" --json isDraft > /tmp/release-state.json 2>/dev/null; then
+            node -e 'if (!require("/tmp/release-state.json").isDraft) throw new Error("Refusing to replace a published release.")'
+          else
+            gh release create "$GITHUB_REF_NAME" --verify-tag --draft --title "Context Cards $GITHUB_REF_NAME" --notes-file docs/INSTALL.txt
+          fi
+          gh release upload "$GITHUB_REF_NAME" --clobber release/*.zip release/SHA256SUMS.txt release/context-cards/main.js release/context-cards/manifest.json release/context-cards/styles.css release/context-cards/CMUDICT-LICENSE.txt
