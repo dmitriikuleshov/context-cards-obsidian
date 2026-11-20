@@ -627,6 +627,8 @@
 }
 .cc-destination-tools {
   margin: 0;
+  border-top: 0;
+  padding-top: 0;
 }
 .cc-destination-tools > summary {
   position: absolute;

@@ -96,7 +96,23 @@ export class ReviewView extends ItemView {
     const details = parent.createEl('details', { cls: 'cc-section' });
     details.dataset.ccSection = key;
     details.open = this.sections.get(key) ?? false;
-    details.createEl('summary', { text: label });
+    const summary = details.createEl('summary', { text: label });
+    if (key === 'explanation' || key === 'examples') {
+      summary.addEventListener('click', () => {
+        if (details.open) return;
+        const win = details.ownerDocument.defaultView;
+        win?.requestAnimationFrame(() => {
+          if (!details.isConnected || !details.open) return;
+          details.scrollIntoView({
+            block: 'start',
+            inline: 'nearest',
+            behavior: win.matchMedia('(prefers-reduced-motion: reduce)').matches
+              ? 'instant'
+              : 'smooth',
+          });
+        });
+      });
+    }
     return details;
   }
   render() {

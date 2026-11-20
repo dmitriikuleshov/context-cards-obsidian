@@ -166,3 +166,22 @@ test('disabled fields disappear from editor and preview while recall keeps its g
   await expect(card.getByText('Explanation', { exact: true })).toHaveCount(0);
   await expect(card.getByText('Usage examples', { exact: true })).toHaveCount(0);
 });
+
+test('opening teaching sections reveals their content above the footer', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 720 });
+  await page.goto('/');
+  for (const key of ['explanation', 'examples']) {
+    const summary = page.locator(`[data-cc-section=${key}] > summary`);
+    await summary.click();
+    const section = page.locator(`[data-cc-section=${key}]`);
+    await expect
+      .poll(async () => {
+        const rect = await section.boundingBox();
+        const footer = await page.locator('.cc-footer').boundingBox();
+        return !!rect && !!footer && rect.y >= -2 && rect.y + 100 < footer.y;
+      })
+      .toBe(true);
+  }
+  await expect(page.locator('.cc-destination-tools')).toHaveCSS('border-top-width', '0px');
+  await page.screenshot({ path: '.test-artifacts/expanded-section-scroll.png' });
+});
