@@ -42,14 +42,21 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root).setName('Local model').setHeading();
     text(
       'Ollama server',
-      'The address of your local Ollama instance. No cloud fallback is used.',
+      'Where the model runs. Keep http://127.0.0.1:11434 when Ollama is on this computer, and leave Ollama running while generating. Change this only to use another server; selected text and context will be sent there.',
       'ollamaUrl',
       DEFAULTS.ollamaUrl,
     );
-    text('Model', 'Use an installed model tag.', 'model', DEFAULTS.model);
+    text(
+      'Model',
+      'The model that writes your drafts. Copy its exact installed name from ollama list, including the tag after the colon. Download it with ollama pull first; entering a name here does not download it.',
+      'model',
+      DEFAULTS.model,
+    );
     new Setting(root)
       .setName('Check Ollama')
-      .setDesc('Lists installed models without loading one into GPU memory.')
+      .setDesc(
+        'Check whether the server is reachable and list installed models. This does not generate a draft or confirm that the model fits in memory.',
+      )
       .addButton((button) =>
         button.setButtonText('Check connection').onClick(async () => {
           button.setDisabled(true);
@@ -72,7 +79,7 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root)
       .setName('Context length')
       .setDesc(
-        'Maximum surrounding characters sent with a selection. More context can be included from the draft editor.',
+        'How much surrounding source text to include in a new draft. Start with Balanced. Increase it when the meaning needs more context; longer passages may take more time to process. You can also use More context in the editor.',
       )
       .addDropdown((dropdown) =>
         dropdown
@@ -91,7 +98,7 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root)
       .setName('Generation temperature')
       .setDesc(
-        'The tested starting value is 0.2. The model runs without an unrestricted thinking phase.',
+        'Controls variation in generated wording. Start with 0.2 for consistent drafts. Higher values may produce more varied wording but less reliable definitions and examples; they do not make the model more knowledgeable.',
       )
       .addDropdown((dropdown) =>
         dropdown
@@ -104,7 +111,9 @@ export class ContextSettings extends PluginSettingTab {
       );
     new Setting(root)
       .setName('Request timeout')
-      .setDesc('Includes the first model load. Typical warm generation should be much shorter.')
+      .setDesc(
+        'How long to wait for generation, including the initial model load. Start with 60 seconds; try 120 if loading or longer content causes timeouts. A higher limit does not make generation faster.',
+      )
       .addDropdown((dropdown) =>
         dropdown
           .addOptions({ '30': '30 seconds', '60': '60 seconds', '120': '120 seconds' })
@@ -183,27 +192,27 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root).setName('Anki').setHeading();
     text(
       'AnkiConnect server',
-      'Keep desktop Anki open with the AnkiConnect add-on enabled.',
+      'Where approved notes are sent. Keep http://127.0.0.1:8765 for Anki on this computer. Install AnkiConnect and keep Anki Desktop open while checking the connection or adding cards.',
       'ankiUrl',
       DEFAULTS.ankiUrl,
     );
     text(
       'AnkiConnect API key',
-      'Leave empty unless you configured a key in AnkiConnect. Stored in this vault’s plugin settings.',
+      'Leave blank for a default AnkiConnect installation. If you configured an API key in AnkiConnect, enter the same key here. This is not your AnkiWeb password; it is stored in this vault’s plugin settings.',
       'ankiKey',
       'Optional',
       true,
     );
     text(
       'Default deck',
-      'The parent deck for your books. Each book can remember its own destination.',
+      'Starting destination for new drafts. With One deck per book enabled, this is the parent, such as English::Books; otherwise it is the destination itself. Override it in a draft if needed. Changing this does not move existing cards or replace remembered book destinations.',
       'rootDeck',
       DEFAULTS.rootDeck,
     );
     new Setting(root)
       .setName('One deck per book')
       .setDesc(
-        'For example: English::Books::Animal Farm. Recognition and Recall stay together in that deck.',
+        'Use a subdeck named after each Markdown file, for example English::Books::Animal Farm. Turn off to start new books in the default deck instead. A book can remember an explicitly chosen destination. Both exercises stay together.',
       )
       .addToggle((toggle) =>
         toggle.setValue(settings.decksByBook).onChange((value) => {
@@ -213,19 +222,21 @@ export class ContextSettings extends PluginSettingTab {
       );
     text(
       'Note type',
-      'A dedicated note type with Recognition and Recall templates. Created on the first approved export; existing templates are not overwritten.',
+      'The Anki note type containing the fields and two exercise templates. Keep Context Cards unless you need a separate compatible type. Created on first export if missing; an unrelated existing type can cause an incompatibility error. This does not change scheduling.',
       'noteType',
       DEFAULTS.noteType,
     );
     text(
       'Default tags',
-      'Applied to new notes. Separate tags with spaces.',
+      'Labels for finding notes in Anki. Separate tags with spaces, for example reading vocabulary. Edit them in each draft if needed; changing this does not retag existing notes.',
       'defaultTags',
       DEFAULTS.defaultTags,
     );
     new Setting(root)
       .setName('Check Anki')
-      .setDesc('Reads deck names. No notes or decks are created.')
+      .setDesc(
+        'Check that AnkiConnect is reachable and report the number of decks. Keep Anki Desktop open. This only reads the deck list; it does not create notes, cards or decks.',
+      )
       .addButton((button) =>
         button.setButtonText('Check connection').onClick(async () => {
           button.setDisabled(true);
