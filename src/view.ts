@@ -14,6 +14,7 @@ export class ReviewView extends ItemView {
   private previewFrame?: HTMLIFrameElement;
   private previewObserver?: ResizeObserver;
   private footer?: HTMLElement;
+  private destination?: HTMLElement;
   private warning?: HTMLElement;
   private answerChip?: HTMLElement;
   private sections = new Map<string, boolean>();
@@ -115,6 +116,7 @@ export class ReviewView extends ItemView {
         : undefined;
     const scrollTop = root.scrollTop;
     this.answerChip = undefined;
+    this.destination = undefined;
     root.empty();
     root.addClass('cc-panel');
     root.lang = 'en';
@@ -381,8 +383,10 @@ export class ReviewView extends ItemView {
     original.addClass('cc-original');
     original.createEl('blockquote', { text: draft.capture.selected });
     original.createDiv({ cls: 'cc-muted', text: draft.capture.file });
+    const explanationSection = this.section(body, 'explanation', 'Explanation & usage notes');
+    explanationSection.addClass('cc-teaching-section');
     this.field(
-      body,
+      explanationSection,
       'Explanation',
       draft.explanation,
       (v) =>
@@ -391,8 +395,27 @@ export class ReviewView extends ItemView {
         }),
       { multiline: true, rows: 2 },
     );
-    const examples = body.createDiv({ cls: 'cc-examples' });
-    examples.createEl('h3', { text: 'Examples' });
+    this.field(
+      explanationSection,
+      'Usage notes',
+      draft.notes.join('\n'),
+      (v) =>
+        update(() => {
+          draft.notes = v.split('\n').filter((s) => s.trim());
+        }),
+      { multiline: true, rows: 2 },
+    );
+    const exampleCount = draft.examples.filter((v) => v.trim()).length;
+    const groupCount = draft.exampleGroups?.length;
+    const examples = this.section(
+      body,
+      'examples',
+      exampleCount
+        ? `Examples · ${groupCount ? `${groupCount} ${groupCount === 1 ? 'usage' : 'usages'} · ` : ''}${exampleCount} examples`
+        : 'Examples',
+    );
+    examples.addClass('cc-examples');
+    examples.addClass('cc-teaching-section');
     if (draft.exampleGroups?.length) {
       draft.exampleGroups.forEach((group, gi) => {
         const container = examples.createDiv({ cls: 'cc-example-group' });
@@ -436,34 +459,23 @@ export class ReviewView extends ItemView {
         row.querySelector('label')?.addClass('cc-sr-only');
       }
     }
-    this.field(
-      body,
-      'Usage notes',
-      draft.notes.join('\n'),
-      (v) =>
-        update(() => {
-          draft.notes = v.split('\n').filter((s) => s.trim());
-        }),
-      { multiline: true, rows: 2 },
-    );
-    const technical = this.section(body, 'anki', 'Anki destination');
-    technical.addClass('cc-technical');
-    technical.querySelector('summary')!.createSpan({
-      cls: 'cc-deck-summary',
-      text: draft.deck.split('::').at(-1) ?? '',
-      attr: { title: draft.deck },
-    });
-    if (!draft.deck.trim()) technical.open = true;
-    const deck = this.field(technical, 'Deck', draft.deck, (v) => {
+    const destination = body.createDiv({ cls: 'cc-destination' });
+    this.destination = destination;
+    const deckRow = destination.createDiv({ cls: 'cc-deck-row' });
+    const icon = deckRow.createSpan({ cls: 'cc-deck-icon' });
+    setIcon(icon, 'layers');
+    icon.setAttribute('aria-hidden', 'true');
+    const deck = this.field(deckRow, 'Deck', draft.deck, (v) =>
       update(() => {
         draft.deck = v;
-      });
-      const summary = technical.querySelector('.cc-deck-summary');
-      if (summary) {
-        summary.textContent = v.split('::').at(-1) ?? '';
-        summary.setAttribute('title', v);
-      }
-    });
+      }),
+    );
+    deck.parentElement!.querySelector('label')?.addClass('cc-sr-only');
+    deck.setAttribute('placeholder', 'Choose an Anki deck');
+    deck.setAttribute('title', draft.deck);
+    const technical = this.section(destination, 'anki', 'Tags');
+    technical.addClass('cc-technical');
+    technical.addClass('cc-destination-tools');
     const listId = `cc-decks-${crypto.randomUUID()}`;
     deck.setAttribute('list', listId);
     const options = technical.createEl('datalist', { attr: { id: listId } });
@@ -495,6 +507,8 @@ export class ReviewView extends ItemView {
     }
     metadata.hidden = !f.grammar && f.ipa === 'off';
     examples.hidden = !f.examples;
+    if (!f.explanationSentences)
+      explanationSection.querySelector('summary')!.textContent = 'Usage notes';
     tools.hidden = !f.context;
     for (const button of Array.from(body.querySelectorAll('button')))
       if (button.textContent === 'Find base word') button.hidden = !f.wordFormation;
@@ -581,8 +595,15 @@ export class ReviewView extends ItemView {
       this.warning.toggleClass('is-visible', !!draft.error || draft.status !== 'ready');
     }
     if (!this.footer) return;
-    this.footer.empty();
-    if (draft.phase === 'saved' || this.tab === 'preview') return;
+    if (draft.phase === 'saved' || this.tab === 'preview') {
+      this.footer.empty();
+      return;
+    }
+    // Keep destination inputs mounted while footer validation/actions refresh on each keystroke.
+    for (const child of Array.from(this.footer.children))
+      if (child !== this.destination) child.remove();
+    if (this.destination && this.destination.parentElement !== this.footer)
+      this.footer.appendChild(this.destination);
     if (draft.duplicates?.length) {
       const duplicate = this.footer.createDiv({ cls: 'cc-duplicate' });
       duplicate.createDiv({ text: 'This expression is already in Anki.' });

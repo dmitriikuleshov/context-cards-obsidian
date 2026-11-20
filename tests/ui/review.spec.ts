@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 test('compact sections retain all fields and context editing actions', async ({ page }) => {
   await page.setViewportSize({ width: 340, height: 850 });
   await page.goto('/');
+  await page.locator('[data-cc-section=explanation] > summary').click();
+  await page.locator('[data-cc-section=examples] > summary').click();
   for (const name of [
     'Grammar',
     'American IPA',
@@ -10,7 +12,7 @@ test('compact sections retain all fields and context editing actions', async ({ 
     'Usage notes',
   ])
     await expect(page.getByLabel(name, { exact: true })).toBeVisible();
-  await expect(page.getByLabel('Deck', { exact: true })).toBeHidden();
+  await expect(page.getByLabel('Deck', { exact: true })).toBeVisible();
   await page.locator('.cc-technical > summary').click();
   await page.getByLabel('Deck', { exact: true }).fill('English::Books::Shared');
   await page.getByLabel('Tags', { exact: true }).fill('reading');
@@ -48,6 +50,7 @@ test('review, edit and both expandable hints work in a real browser', async ({ p
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/');
   await expect(page.getByLabel('Word or expression', { exact: true })).toHaveValue('brush off');
+  await page.locator('[data-cc-section=explanation] > summary').click();
   await page.getByLabel('Explanation', { exact: true }).fill('Mara dismissed the warning.');
   await page.getByRole('button', { name: 'Preview cards', exact: true }).click();
   const card = page.frameLocator('iframe');
@@ -79,6 +82,7 @@ test('regeneration preserves edits until accepted, including in a narrow sidebar
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
+  await page.locator('[data-cc-section=explanation] > summary').click();
   await page.getByLabel('Explanation', { exact: true }).fill('My own explanation.');
   await page.getByRole('button', { name: 'Regenerate', exact: true }).click();
   await expect(page.getByLabel('Explanation', { exact: true })).toHaveValue('My own explanation.');
@@ -108,6 +112,7 @@ test('grouped examples stay editable and appear on the card back', async ({ page
     ];
     view.render();
   });
+  await page.locator('[data-cc-section=examples] > summary').click();
   await page.getByLabel('Meaning / usage 2', { exact: true }).fill('Remove dust or dirt');
   await page.getByLabel('Usage 2, example 1', { exact: true }).fill('She brushed off the dirt.');
   await expect(page.getByLabel('Meaning / usage 2', { exact: true })).toHaveValue(

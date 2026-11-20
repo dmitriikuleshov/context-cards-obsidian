@@ -68,6 +68,28 @@ function setup() {
   return { draft, plugin, view, click, field };
 }
 describe('editable review panel', () => {
+  it('keeps the deck visible in the footer and preserves typing focus', () => {
+    const { view, field } = setup();
+    const explanation = view.contentEl.querySelector<HTMLDetailsElement>(
+      '[data-cc-section=explanation]',
+    )!;
+    const examples = view.contentEl.querySelector<HTMLDetailsElement>(
+      '[data-cc-section=examples]',
+    )!;
+    expect(explanation.open).toBe(false);
+    expect(examples.open).toBe(false);
+    expect(
+      explanation.compareDocumentPosition(examples) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    const deck = field('Deck');
+    expect(view.contentEl.querySelector('.cc-footer')!.contains(deck)).toBe(true);
+    deck.focus();
+    deck.value = 'English::Books::New';
+    deck.setSelectionRange(10, 10);
+    deck.dispatchEvent(new Event('input'));
+    expect(document.activeElement).toBe(deck);
+    expect(deck.selectionStart).toBe(10);
+  });
   it('edits grouped examples and renders safe headings in the Anki preview', () => {
     const { draft, view, field } = setup();
     draft.exampleGroups = [

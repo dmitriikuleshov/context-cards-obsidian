@@ -153,15 +153,17 @@ All teaching fields are in English and can be edited. Fields disabled in setting
 
 If the answer is wrong, expand **Answer**, highlight the correct text inside the context field, then click **Use selection as answer**. It changes the expected answer to your selection. **More context** expands the passage from the captured source snapshot. You can also edit the context manually and regenerate for the updated passage.
 
-### Example groups, destination and actions
+### Explanation, examples, destination and actions
+
+**Explanation & usage notes** appears above **Examples**. Both sections are collapsed initially; click their headings to expand and edit the fields. Their expanded state is kept when the panel redraws.
 
 ![Editable example groups and export buttons](images/examples-deck.png)
 
 Edit each **Meaning / usage** heading and its examples. The model selects the number of groups within your configured limit; different topics alone do not necessarily represent different meanings.
 
-![Expanded Anki destination with Deck, Tags and Refresh decks](images/destination.png)
+![Footer destination with Deck and expanded Tags controls](images/destination.png)
 
-Expand **Anki destination** to choose **Deck** and **Tags**. **Refresh decks** reloads the available deck names from Anki. After renaming a deck, select its new name yourself: the current destination is not remapped automatically.
+Choose **Deck** in the footer above the action buttons. Expand **Tags** to edit tags or access **Refresh decks**. **Refresh decks** reloads the available deck names from Anki. After renaming a deck, select its new name yourself: the current destination is not remapped automatically.
 
 - **Generate draft / Regenerate:** generate teaching content. For a proposed replacement, choose **Apply new version** or **Keep my draft** to retain your current edits.
 - **Add to Anki:** export the approved note. Required enabled fields and a valid source answer must be present.

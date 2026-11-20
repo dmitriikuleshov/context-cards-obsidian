@@ -581,3 +581,63 @@
 .cc-panel [hidden] {
   display: none !important;
 }
+
+.cc-teaching-section {
+  margin: 18px 0;
+}
+.cc-teaching-section > summary {
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 4px 0;
+}
+.cc-teaching-section[open] > summary {
+  margin-bottom: 12px;
+  color: var(--text-normal);
+}
+.cc-destination {
+  position: relative;
+  margin-bottom: 10px;
+  min-width: 0;
+}
+.cc-deck-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 62px;
+  min-width: 0;
+}
+.cc-deck-icon {
+  display: flex;
+  color: var(--text-muted);
+  flex: 0 0 auto;
+}
+.cc-deck-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.cc-deck-row .cc-field {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.cc-deck-row input {
+  width: 100%;
+  min-width: 0;
+  font-size: 12px;
+}
+.cc-destination-tools {
+  margin: 0;
+}
+.cc-destination-tools > summary {
+  position: absolute;
+  top: 7px;
+  right: 0;
+  margin: 0;
+  font-size: 12px;
+}
+.cc-destination-tools[open] {
+  padding-top: 12px;
+}
+.cc-destination-tools .cc-field {
+  margin-bottom: 10px;
+}
