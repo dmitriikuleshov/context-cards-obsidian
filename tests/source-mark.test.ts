@@ -34,6 +34,17 @@ describe('marking the selected source occurrence', () => {
       end: 18,
     });
   });
+  it('does not mark a stale snapshot or words inside an unclosed fence', () => {
+    expect(
+      sourceMarkRange('A bright future awaits.', capture('The bright student smiled.', 'bright')),
+    ).toBeNull();
+    expect(sourceMarkRange('```text\nword', capture('word', 'word'))).toBeNull();
+    expect(sourceMarkRange('~~~text\nword', capture('word', 'word'))).toBeNull();
+    expect(sourceMarkRange('```text\n`literal` word\n```', capture('word', 'word'))).toBeNull();
+    expect(
+      sourceMarkRange('```text\ncode\n```\nA word.', capture('A word.', 'word')),
+    ).not.toBeNull();
+  });
   it('avoids double wrapping, code fences, partial words and ambiguous copies', () => {
     expect(
       sourceMarkRange(

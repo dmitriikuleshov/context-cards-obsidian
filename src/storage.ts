@@ -170,7 +170,18 @@ export function restoreData(value: unknown): StoredData & { skipped: number } {
       };
       if (finite(item.noteId) && item.noteId > 0) d.noteId = item.noteId;
       if (finite(item.seconds)) d.seconds = item.seconds;
-      if (record(item.pendingContent)) d.pendingContent = content(item.pendingContent);
+      if (record(item.pendingContent)) {
+        d.pendingContent = content(item.pendingContent);
+        if (
+          record(item.pendingSource) &&
+          typeof item.pendingSource.context === 'string' &&
+          typeof item.pendingSource.answer === 'string'
+        )
+          d.pendingSource = {
+            context: item.pendingSource.context,
+            answer: item.pendingSource.answer,
+          };
+      }
       drafts.push(d);
     }
   return { settings: config, drafts: drafts.slice(-MAX_DRAFTS), skipped };

@@ -209,8 +209,22 @@ export class ReviewView extends ItemView {
         suggestion,
         'Apply new version',
         () => {
+          if (
+            draft.pendingSource &&
+            (draft.pendingSource.context !== draft.context ||
+              draft.pendingSource.answer !== draft.answer)
+          ) {
+            delete draft.pendingContent;
+            delete draft.pendingSource;
+            this.changed(draft);
+            draft.error =
+              'The source changed after this version was generated. Generate again for the updated passage.';
+            this.render();
+            return;
+          }
           Object.assign(draft, draft.pendingContent);
           delete draft.pendingContent;
+          delete draft.pendingSource;
           this.changed(draft);
           this.render();
         },
@@ -218,6 +232,7 @@ export class ReviewView extends ItemView {
       );
       this.button(suggestion, 'Keep my draft', () => {
         delete draft.pendingContent;
+        delete draft.pendingSource;
         this.changed(draft);
         this.render();
       });

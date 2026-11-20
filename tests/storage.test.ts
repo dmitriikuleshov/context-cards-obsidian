@@ -19,6 +19,13 @@ function draft() {
   );
 }
 describe('persisted drafts and settings', () => {
+  it('keeps the source snapshot of a pending replacement across restart', () => {
+    const original = draft();
+    original.pendingContent = { ...original };
+    original.pendingSource = { context: original.context, answer: original.answer };
+    const restored = restoreData({ drafts: [original] }).drafts[0]!;
+    expect(restored.pendingSource).toEqual(original.pendingSource);
+  });
   it('keeps long manual timeouts and rejects invalid timer values', () => {
     for (const timeoutSeconds of [1, 60, 600, 3600, 2147483])
       expect(restoreData({ settings: { timeoutSeconds } }).settings.timeoutSeconds).toBe(

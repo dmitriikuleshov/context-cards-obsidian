@@ -200,6 +200,20 @@ describe('editable review panel', () => {
     expect(frame().srcdoc).toContain('brushed off');
     expect(frame().getAttribute('sandbox')).toBe('allow-same-origin');
   });
+  it('refuses a pending replacement after its source context is edited', () => {
+    const { view, draft, field, click } = setup();
+    const original = draft.meaning;
+    draft.pendingContent = { ...draft, meaning: 'Meaning from the previous source.' };
+    draft.pendingSource = { context: draft.context, answer: draft.answer };
+    view.render();
+    const context = field('Context from your book');
+    context.value += ' A new sentence changes the passage.';
+    context.dispatchEvent(new Event('input'));
+    click('Apply new version');
+    expect(draft.meaning).toBe(original);
+    expect(draft.pendingContent).toBeUndefined();
+    expect(draft.error).toContain('source changed');
+  });
   it('makes regeneration a deliberate choice and preserves the source answer', () => {
     const { view, draft, click } = setup();
     draft.pendingContent = {

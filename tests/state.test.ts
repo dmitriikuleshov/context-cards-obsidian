@@ -55,6 +55,45 @@ function deferred<T>() {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('draft state and asynchronous operations', () => {
+  it('does not restore cleared drafts when source marking completes later', async () => {
+    const { plugin, draft } = setup(),
+      work = deferred<void>();
+    plugin.drafts = [];
+    plugin.settings.markSourceWord = true;
+    (plugin.app.workspace as any).getActiveViewOfType = () => ({
+      file: { path: draft.capture.file },
+      getMode: () => 'preview',
+    });
+    plugin.app.vault = { process: () => work.promise } as any;
+    const open = vi.spyOn(plugin, 'openPanel');
+    const generate = vi.spyOn(plugin, 'generate');
+    const running = plugin.capture({ ...draft.capture, mode: 'reading' });
+    await plugin.clearDrafts();
+    work.resolve();
+    await running;
+    expect(plugin.drafts).toEqual([]);
+    expect(open).not.toHaveBeenCalled();
+    expect(generate).not.toHaveBeenCalled();
+  });
+  it('deduplicates overlapping captures that await source marking', async () => {
+    const { plugin, draft } = setup(),
+      work = deferred<void>();
+    plugin.drafts = [];
+    plugin.settings.markSourceWord = true;
+    (plugin.app.workspace as any).getActiveViewOfType = () => ({
+      file: { path: draft.capture.file },
+      getMode: () => 'preview',
+    });
+    plugin.app.vault = { process: () => work.promise } as any;
+    vi.spyOn(plugin, 'openPanel').mockResolvedValue({ show: vi.fn() } as any);
+    const generate = vi.spyOn(plugin, 'generate').mockResolvedValue();
+    const first = plugin.capture({ ...draft.capture, mode: 'reading' });
+    const second = plugin.capture({ ...draft.capture, mode: 'reading' });
+    work.resolve();
+    await Promise.all([first, second]);
+    expect(plugin.drafts).toHaveLength(1);
+    expect(generate).toHaveBeenCalledTimes(1);
+  });
   it('fills only general meaning for an existing draft without changing its contextual meaning', async () => {
     const { plugin, draft } = setup();
     Object.assign(draft, structuredClone(content));

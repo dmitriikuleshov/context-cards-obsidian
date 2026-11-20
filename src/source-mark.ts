@@ -28,6 +28,23 @@ export function sourceMarkRange(
   const best = candidates[0];
   if (!best || (candidates.length > 1 && (best.score < 12 || best.score === candidates[1]!.score)))
     return null;
+  // A stale Reading Mode snapshot must not mark an unrelated remaining occurrence.
+  if (preferredStart === undefined && best.score < Math.min(12, before.length + after.length))
+    return null;
+  // An open fenced block extends to EOF, even if it contains inline backticks.
+  let fence: { char: string; length: number } | undefined;
+  for (const line of text.slice(0, best.start).split(/\r?\n/)) {
+    const match = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line);
+    if (!match) continue;
+    const marker = match[1]!,
+      rest = match[2]!;
+    if (fence) {
+      if (marker[0] === fence.char && marker.length >= fence.length && !rest.trim())
+        fence = undefined;
+    } else if (marker[0] !== '`' || !rest.includes('`'))
+      fence = { char: marker[0]!, length: marker.length };
+  }
+  if (fence) return null;
   // Do not wrap text already inside inline code or fenced code blocks.
   const code = /(`+|~{3,})[\s\S]*?\1/g;
   for (const match of text.matchAll(code))

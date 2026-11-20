@@ -27,6 +27,7 @@ export default class ContextCardsPlugin extends Plugin {
   private writes: Promise<void> = Promise.resolve();
   private exports: Promise<unknown> = Promise.resolve();
   private unloaded = false;
+  private captureEpoch = 0;
 
   async onload() {
     const stored = restoreData(await this.loadData());
@@ -182,6 +183,8 @@ export default class ContextCardsPlugin extends Plugin {
     return leaf.view as ReviewView;
   }
   async capture(captured: Capture) {
+    if (this.unloaded) return;
+    const epoch = this.captureEpoch;
     captured = trimCapture(captured);
     if (!captured.selected.trim() || captured.selected.length > 240) {
       new Notice('Select a word or a short expression, up to 240 characters.');
@@ -189,14 +192,16 @@ export default class ContextCardsPlugin extends Plugin {
     }
     this.hideFloating();
     // Do not accumulate duplicates from repeated clicks on the same selection.
-    const same = this.drafts.find(
-      (d) =>
-        d.phase !== 'saved' &&
-        d.capture.file === captured.file &&
-        d.capture.start === captured.start &&
-        d.capture.selected === captured.selected &&
-        d.capture.text === captured.text,
-    );
+    const findExisting = () =>
+      this.drafts.find(
+        (d) =>
+          d.phase !== 'saved' &&
+          d.capture.file === captured.file &&
+          d.capture.start === captured.start &&
+          d.capture.selected === captured.selected &&
+          d.capture.text === captured.text,
+      );
+    let same = findExisting();
     if (this.settings.markSourceWord && !same) {
       const sourceView = this.app.workspace.getActiveViewOfType(MarkdownView);
       if (sourceView?.file?.path === captured.file) {
@@ -238,6 +243,8 @@ export default class ContextCardsPlugin extends Plugin {
         }
       }
     }
+    if (this.unloaded || epoch !== this.captureEpoch) return;
+    same ??= findExisting();
     const draft = same ?? createDraft(captured, this.settings);
     if (!same) {
       this.drafts.push(draft);
@@ -290,8 +297,10 @@ export default class ContextCardsPlugin extends Plugin {
           'The context or answer changed while generating. Generate again for the updated passage.';
         return;
       }
-      if (hadContent || draft.revision !== revision) draft.pendingContent = result.content;
-      else {
+      if (hadContent || draft.revision !== revision) {
+        draft.pendingContent = result.content;
+        draft.pendingSource = { context: source, answer: target };
+      } else {
         const expression = result.content.expression || draft.expression;
         Object.assign(draft, result.content, { expression });
       }
@@ -394,6 +403,7 @@ export default class ContextCardsPlugin extends Plugin {
     this.jobs.get(draft.id)?.abort();
   }
   async clearDrafts() {
+    this.captureEpoch++;
     for (const controller of this.jobs.values()) controller.abort();
     this.drafts = [];
     this.lastCapture = null;
@@ -569,6 +579,8 @@ export default class ContextCardsPlugin extends Plugin {
     this.unloaded = true;
     for (const controller of this.jobs.values()) controller.abort();
     clearTimeout(this.saveTimer);
-    void this.flush();
+    void this.flush().catch((error) =>
+      console.error('Context Cards: could not save on unload.', error),
+    );
   }
 }

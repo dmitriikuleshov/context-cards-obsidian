@@ -115,6 +115,7 @@ export interface Draft extends Content {
   allowDuplicate: boolean;
   revision: number;
   pendingContent?: Content;
+  pendingSource?: { context: string; answer: string };
 }
 export interface StoredData {
   settings: Settings;
