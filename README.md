@@ -1,102 +1,75 @@
 # Context Cards
 
-Turn selected words in Obsidian into editable English vocabulary cards using local Ollama and Anki.
+**Read what you love. Turn the words you meet into Anki cards.**
 
-[Download the latest release](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest)
+![Context Cards in Obsidian: reading The Call of Cthulhu alongside an editable vocabulary draft](docs/images/context-cards-obsidian.png)
 
-**[Setup guide with screenshots: download → Ollama → Anki → interface walkthrough](docs/SETUP.md)**
+Meet a word in a book, select it, and let your local AI prepare a vocabulary card—with the passage that made you curious in the first place. Review the draft right beside your reading, make it your own, and send it to Anki.
 
-## Requirements
+**[Get started — setup guide](docs/SETUP.md)** · **[Download](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest)** · **[Interface walkthrough](docs/SETUP.md#4-explore-the-interface)**
 
-- Obsidian Desktop. Tested on Windows; actual app use on macOS/Linux is unverified. Mobile Obsidian is not supported.
-- [Ollama](https://ollama.com/) and an installed model. Default: `qwen3.5:9b-q4_K_M`. Speed depends on hardware.
-- Anki Desktop with [AnkiConnect](https://ankiweb.net/shared/info/2055492159). Keep Anki open when adding cards. Review synced cards normally on AnkiMobile/AnkiDroid.
+## From a good book to a useful card
 
-## Install with BRAT (recommended)
+Collecting vocabulary should not mean copying passages between apps, writing every definition from scratch, or losing the context that helped a word make sense.
 
-1. In Obsidian, open **Settings → Community plugins → Browse**, find **BRAT**, install and enable it.
-2. Open **Settings → BRAT → Add beta plugin** and enter:
+Context Cards brings that work into Obsidian:
 
-   ```text
-   dmitriikuleshov/context-cards-obsidian
-   ```
+1. **Select a word or expression** in your Markdown reading.
+2. **Click Create cards.** A local model prepares an English draft from the surrounding passage.
+3. **Review, edit, and add to Anki.** One approved note creates two complementary exercises.
 
-3. Select the latest version and add the plugin. Enable **Context Cards** under Community plugins if it is not enabled automatically.
-4. Set up Ollama and AnkiConnect using steps 4–6 below. BRAT installs the Obsidian plugin, not its external services.
+No separate vocabulary notes to maintain. Your books stay in Obsidian; your spaced repetition stays in Anki.
 
-With BRAT already enabled, you can also open this installation link:
+## Understand the word. Practise using it.
 
-```text
-obsidian://brat?plugin=dmitriikuleshov/context-cards-obsidian
-```
+A definition is a start. A useful vocabulary card gives you more to work with:
 
-BRAT can check for newer releases and update the plugin; configure automatic checks in BRAT, or use its update command. Do not uninstall Context Cards first if you want to keep existing settings/drafts. ZIP installation remains available as an alternative.
+- **Meaning in this context:** understand exactly what the word means in your passage.
+- **General meaning:** connect that encounter to the word's broader use.
+- **Grammar and pronunciation:** see the grammatical label and choose American or British IPA.
+- **Word formation:** discover a useful base word and its meaning, without a long lesson on affixes.
+- **Examples grouped by meaning or usage:** explore different established uses rather than five sentences saying the same thing.
+- **Explanations and usage notes:** learn patterns, collocations and nuances that help you use the word yourself.
 
-## Install from ZIP
+Every field is editable. Hide the fields you do not need, choose how much explanation you want, and set the number of example groups and sentences. Keep a compact reminder or build a fuller study note.
 
-1. Open [Releases](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest). Under **Assets**, download **context-cards-VERSION.zip**. Automatic **Source code** archives do not contain the built plugin.
-2. Extract the ZIP. Copy **context-cards** into your vault's **.obsidian/plugins/** folder; create `plugins` if needed. The result must be `.obsidian/plugins/context-cards/main.js`, without another nested folder.
-3. Restart Obsidian. Enable community plugins if needed, then enable **Context Cards** under **Settings → Community plugins**. Installation is manual; the plugin is not in the Community directory yet.
-4. Install/start Ollama and download the default model:
+## Two ways to remember
 
-   ```sh
-   ollama pull qwen3.5:9b-q4_K_M
-   ```
+| Exercise | What you practise |
+| --- | --- |
+| **Recognition** | See the word and recall its meaning. Reveal the original passage if you need a hint, then flip for the answer. |
+| **Recall** | See your passage with a gap and type the missing word or expression. An optional definition hint helps when you get stuck. |
 
-   Another installed model can be selected in settings; structured output quality may vary.
-5. Install AnkiConnect with Anki add-on code **2055492159**, then restart Anki.
-6. In **Settings → Context Cards**, check both connections and the model name. Defaults: Ollama `http://127.0.0.1:11434`, AnkiConnect `http://127.0.0.1:8765`. Enter an API key if AnkiConnect requires one.
+The recall exercise uses the **original source form**. If the book says “brushed off,” that is what you restore—even when the dictionary entry is “brush off.” Both exercises belong to one Anki note and stay in the same deck.
 
-No Node.js, npm or Python is needed to install a release.
+## Built around your reading
 
-## Use and settings
+- **Read in either mode.** Capture selections from Reading Mode or Live Preview.
+- **Keep the source close.** Review the surrounding passage and jump back to the book.
+- **Organise by book.** Use a separate subdeck for each Markdown file, or choose your own destination.
+- **Check before exporting.** Preview both exercises and edit the draft before it reaches Anki.
+- **Pick up where you left off.** The last four drafts can survive an Obsidian restart.
+- **Mark words as you go.** Optionally format captured words as inline code in the source Markdown.
+- **Review on your phone.** Sync the finished cards through Anki and study in AnkiDroid or AnkiMobile.
 
-Select a word/expression in a Markdown book in Reading Mode or Live Preview, click **Create cards**, edit the English draft, then **Add to Anki** in Edit.
+## Your model, on your computer
 
-- **Recognition:** word/expression with optional source-context hint; flip to see the explanation.
-- **Recall:** source passage with a gap, optional definition hint and typed answer. Restore the original inflected source form.
-- **Card fields:** toggle Grammar, word formation and context; choose American/British/off IPA; choose 1–10 sentences or off for contextual meaning, general meaning and explanation; choose up to 1–5 example groups and 1–10 examples per group.
-- **Decks:** one Markdown file gets one subdeck under `English::Books` by default. Both sibling cards remain together.
-- **Drafts:** only the last four are retained. **Clear all** removes drafts, not exported notes.
-- **Source marking:** optionally wrap words in backticks in original Markdown. Off by default.
-- **Reset to defaults:** resets connections and other settings; keeps drafts and Anki notes.
+Context Cards uses **Ollama** to generate content and **AnkiConnect** to add approved notes. Both point to local addresses by default. There is no cloud fallback, telemetry, or AI subscription required by the plugin.
 
-Disabling fields hides them without erasing current draft text. Regenerate and apply the new version to change counts or accent. Hiding context keeps the Recall gap; hiding contextual meaning removes its hint. Already exported notes are not regenerated.
+You choose the model and stay in control of the result. AI can still get meanings, pronunciation or examples wrong, so review is part of the workflow. If you configure a remote server, the relevant text is sent to that server instead.
 
-Models can make mistakes. Review definitions, pronunciation and examples before approval. In Anki, consider **Bury siblings** to separate exercises.
+## Start with your next chapter
 
-## Update or uninstall
+You will need **Obsidian Desktop**, **Ollama with a downloaded model**, and **Anki Desktop with AnkiConnect**. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.
 
-Disable the plugin. Download the new release and replace **main.js**, **manifest.json** and **styles.css** in the existing folder; update the included documentation and CMU notice too. **Keep your existing data.json**: it stores settings and drafts. Re-enable the plugin.
+Install through **BRAT** for convenient plugin updates, or download a ready-to-use ZIP. You do not need to build the plugin yourself.
 
-To uninstall, disable and remove the plugin folder. This removes local settings/drafts, but does not delete Anki notes or undo source markings.
+**[Follow the setup guide →](docs/SETUP.md)**
 
-## Troubleshooting
+The guide covers downloading the plugin, setting up Ollama and Anki, and a screenshot walkthrough of the interface.
 
-- Plugin missing: check ZIP choice and folder nesting, then restart Obsidian.
-- Ollama unavailable: start it and check URL/model tag. Increase the timeout if initial model loading takes longer.
-- Anki unavailable: open it, enable AnkiConnect and check URL/API key.
-- Renamed Anki deck: **Refresh decks**, then select its new name. Existing destinations are not automatically remapped.
+---
 
-## Data and privacy
+For contributors: [release instructions](docs/RELEASING.md) · [development history](docs/DEVELOPMENT-HISTORY.ru.md).
 
-Selected text/context goes to the configured Ollama server; approved fields go to AnkiConnect. Both default to loopback addresses. There is no cloud fallback or telemetry. Changing server URLs changes where data is sent.
-
-Settings, including any API key, and drafts are stored in the vault-local plugin **data.json**. Optional source marking edits original Markdown. Release archives exclude books, personal settings, drafts and experiment reports.
-
-## Development
-
-Node.js 22+:
-
-```sh
-npm ci
-npm run check
-npm run package
-npm run verify:package
-```
-
-Archives are built in `release/`. UI checks: `npx playwright install --with-deps chromium`, then `npm run test:ui`. `npm run test:anki` checks templates in a temporary collection, not your personal collection.
-
-See [release instructions](docs/RELEASING.md). [Historical notes](docs/DEVELOPMENT-HISTORY.ru.md) describe older versions, not the current installation process.
-
-American pronunciation data is derived from CMUdict: see [data/README.md](data/README.md) and [its license](data/CMUDICT-LICENSE.txt). Its notice is included in releases.
+American pronunciation data is derived from CMUdict. See [data/README.md](data/README.md) and [its license](data/CMUDICT-LICENSE.txt); the notice is bundled with the plugin.
