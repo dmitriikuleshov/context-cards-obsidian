@@ -4,6 +4,47 @@ test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 440, height: 1050 });
   await page.goto('/?writing=1');
 });
+test('Skip on the only suggestion completes the review, Undo restores it, and Keep completes it too', async ({
+  page,
+}) => {
+  await page.evaluate(() => {
+    const p = (window as any).writingPreview;
+    p.session.findings = p.session.findings.slice(0, 1);
+    p.view.show(p.session);
+  });
+  await expect(button(page, 'Skip')).toBeEnabled();
+  await button(page, 'Skip').click();
+  expect(
+    await page.evaluate(() => (window as any).writingPreview.session.findings[0].dismissed),
+  ).toBe(true);
+  await expect(
+    page.getByRole('heading', { name: 'All corrections reviewed', exact: true }),
+  ).toBeVisible();
+  await expect(button(page, 'Skip')).toHaveCount(0);
+  await expect(button(page, 'Finish review')).toBeEnabled();
+  await expect(page.getByText('0 cards selected · 1 skipped.', { exact: true })).toBeVisible();
+  await button(page, 'Undo').click();
+  await expect(button(page, 'Skip')).toBeVisible();
+  expect(
+    await page.evaluate(() => (window as any).writingPreview.session.findings[0].dismissed),
+  ).toBe(false);
+  await button(page, 'Keep & next').click();
+  await expect(page.getByText('1 card selected · 0 skipped.', { exact: true })).toBeVisible();
+  await expect(button(page, 'Review 1 card')).toBeEnabled();
+});
+test('a skipped suggestion can be revisited without offering a second no-op Skip', async ({
+  page,
+}) => {
+  const mark = page.locator('.cc-writing-word').filter({ hasText: 'wrote' });
+  await button(page, 'Skip').click();
+  await mark.click();
+  await expect(button(page, 'Skip')).toHaveCount(0);
+  await expect(button(page, 'Keep & next')).toBeEnabled();
+  await button(page, 'Keep & next').click();
+  expect(
+    await page.evaluate(() => (window as any).writingPreview.session.findings[0].selected),
+  ).toBe(true);
+});
 test('highlight, keep, undo, skip and batch preview follow the approved design', async ({
   page,
 }) => {

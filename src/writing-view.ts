@@ -63,7 +63,10 @@ export class WritingView extends ItemView {
     return el;
   }
   private active(s: WritingSession) {
-    return s.findings.find((f) => f.id === this.findingIds.get(s.id)) ?? s.findings[0];
+    return (
+      s.findings.find((f) => f.id === this.findingIds.get(s.id)) ??
+      s.findings.find((f) => !f.selected && !f.dismissed && !f.noteId)
+    );
   }
   private selected(s: WritingSession) {
     return s.findings.filter((f) => f.selected && canPractise(f));
@@ -87,9 +90,8 @@ export class WritingView extends ItemView {
   private next(s: WritingSession, f: WritingFinding) {
     const start = s.findings.indexOf(f);
     const ordered = [...s.findings.slice(start + 1), ...s.findings.slice(0, start)];
-    const next =
-      ordered.find((item) => !item.selected && !item.dismissed && !item.noteId) ?? ordered[0];
-    if (next) this.findingIds.set(s.id, next.id);
+    const next = ordered.find((item) => !item.selected && !item.dismissed && !item.noteId);
+    this.findingIds.set(s.id, next?.id ?? '');
   }
   private decide(s: WritingSession, f: WritingFinding, keep: boolean) {
     if (s.phase !== 'idle' || f.noteId) return;
@@ -295,7 +297,7 @@ export class WritingView extends ItemView {
     }
     text.appendText(s.capture.selected.slice(end));
     if (!s.analysed) return;
-    if (!f) {
+    if (!s.findings.length) {
       body.createEl('p', {
         text: 'No issues were flagged. You can save this review or select another passage.',
       });
@@ -314,12 +316,29 @@ export class WritingView extends ItemView {
         text: `Correction ${i + 1} of ${s.findings.length} · ${item.title}`,
         attr: { value: item.id },
       });
-    picker.value = f.id;
+    if (!f) picker.createEl('option', { text: 'Revisit a correction…', attr: { value: '' } });
+    picker.value = f?.id ?? '';
     picker.addEventListener('change', () => {
       this.findingIds.set(s.id, picker.value);
       this.undo = undefined;
       this.render();
     });
+    if (!f) {
+      body.createEl('h3', { text: 'All corrections reviewed', cls: 'cc-writing-complete' });
+      const kept = this.selected(s).length,
+        skipped = s.findings.filter((f) => f.dismissed).length;
+      body.createEl('p', {
+        text: `${kept} ${kept === 1 ? 'card' : 'cards'} selected · ${skipped} skipped.`,
+      });
+      body.createEl('p', {
+        cls: 'cc-muted',
+        text: kept
+          ? 'Review your selected cards below, or click a highlight to revisit a correction.'
+          : 'No cards will be created. You can finish this review or click a highlight to reconsider.',
+      });
+      this.renderUndo(body, s);
+      return;
+    }
     this.button(row, 'Edit', () => {
       this.editing = f.id;
       this.render();
@@ -329,6 +348,11 @@ export class WritingView extends ItemView {
     change.createSpan({ text: '→', attr: { 'aria-hidden': 'true' } });
     change.createEl('ins', { text: f.after || '(remove)' });
     body.createEl('p', { cls: 'cc-writing-why', text: f.explanation });
+    if (f.dismissed)
+      body.createEl('p', {
+        cls: 'cc-muted',
+        text: 'Skipped. No practice card will be created for this suggestion.',
+      });
     if (f.noteId) {
       body.createEl('p', { cls: 'cc-writing-success', text: 'Already added to Anki.' });
       this.button(body, 'Open in Anki', () => void this.host.openAnki([f.noteId!]));
@@ -343,7 +367,7 @@ export class WritingView extends ItemView {
               : 'Clarify your intended meaning before treating this as an error.',
       });
     const decisions = body.createDiv({ cls: 'cc-writing-decisions' });
-    if (!f.noteId)
+    if (!f.noteId && !f.dismissed)
       this.button(decisions, f.selected ? 'Remove from cards' : 'Skip', () =>
         this.decide(s, f, false),
       ).disabled = busy;
@@ -367,6 +391,17 @@ export class WritingView extends ItemView {
         },
         true,
       ).disabled = busy || s.findings.length < 2;
+    this.renderUndo(body, s);
+    body.createEl('p', {
+      cls: 'cc-muted',
+      text:
+        reviewed === s.findings.length
+          ? 'All corrections reviewed. Click a highlight to revisit it.'
+          : 'Keep useful mistakes as practice cards. Your text stays unchanged.',
+    });
+  }
+  private renderUndo(body: HTMLElement, s: WritingSession) {
+    const busy = s.phase !== 'idle';
     if (this.undo?.session === s.id) {
       const u = this.undo,
         item = s.findings.find((f) => f.id === u.id);
@@ -384,13 +419,6 @@ export class WritingView extends ItemView {
         }).disabled = busy;
       }
     }
-    body.createEl('p', {
-      cls: 'cc-muted',
-      text:
-        reviewed === s.findings.length
-          ? 'All corrections reviewed. Click a highlight to revisit it.'
-          : 'Keep useful mistakes as practice cards. Your text stays unchanged.',
-    });
   }
   private renderEditor(body: HTMLElement, s: WritingSession, f: WritingFinding) {
     body.createEl('h2', { text: 'Edit correction' });

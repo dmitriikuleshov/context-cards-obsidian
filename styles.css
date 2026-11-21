@@ -388,6 +388,10 @@
   font-size: 14px;
   margin: 0;
 }
+.cc-writing-workflow h3.cc-writing-complete {
+  font-size: 18px;
+  margin: 20px 0 12px;
+}
 .cc-writing-row {
   display: flex;
   align-items: center;
