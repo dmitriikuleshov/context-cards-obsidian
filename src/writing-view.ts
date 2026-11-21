@@ -500,10 +500,6 @@ export class WritingView extends ItemView {
         this.editing = f.id;
         this.render();
       }).disabled = s.phase !== 'idle' || !!f.noteId;
-      this.button(actions, 'Remove', () => {
-        f.selected = false;
-        this.changed(s);
-      }).disabled = s.phase !== 'idle' || !!f.noteId;
       if (f.noteId)
         card.createEl('p', {
           cls: 'cc-writing-success',
