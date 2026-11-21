@@ -1,6 +1,6 @@
 import { WritingController } from './writing-controller';
 import { WritingView, WRITING_VIEW } from './writing-view';
-import { MarkdownView, Notice, Plugin } from 'obsidian';
+import { MarkdownView, Notice, Plugin, type WorkspaceLeaf } from 'obsidian';
 import { sourceMarkRange } from './source-mark';
 import { activeCapture, readCapture } from './capture';
 import { Anki, DuplicateError } from './anki';
@@ -31,6 +31,7 @@ export default class ContextCardsPlugin extends Plugin {
   private exports: Promise<unknown> = Promise.resolve();
   private unloaded = false;
   private captureEpoch = 0;
+  private panelChanges: Promise<unknown> = Promise.resolve();
 
   async onload() {
     const raw = await this.loadData();
@@ -218,23 +219,29 @@ export default class ContextCardsPlugin extends Plugin {
     for (const leaf of this.app.workspace.getLeavesOfType(WRITING_VIEW))
       (leaf.view as WritingView).render();
   }
+  private async openMode(type: string): Promise<WorkspaceLeaf> {
+    const operation = this.panelChanges
+      .catch(() => {})
+      .then(async () => {
+        const workspace = this.app.workspace;
+        const current = workspace.getLeavesOfType(type);
+        const other = workspace.getLeavesOfType(type === WRITING_VIEW ? VIEW_TYPE : WRITING_VIEW);
+        const leaf =
+          current[0] ?? other[0] ?? workspace.getRightLeaf(false) ?? workspace.getLeaf('split');
+        if (!current.includes(leaf)) await leaf.setViewState({ type, active: true });
+        // Also clean up panes left stacked by older versions, without touching other plugins.
+        for (const extra of [...current, ...other]) if (extra !== leaf) extra.detach();
+        await workspace.revealLeaf(leaf);
+        return leaf;
+      });
+    this.panelChanges = operation;
+    return operation;
+  }
   async openWritingPanel(): Promise<WritingView> {
-    let leaf = this.app.workspace.getLeavesOfType(WRITING_VIEW)[0];
-    if (!leaf) {
-      leaf = this.app.workspace.getRightLeaf(true) ?? this.app.workspace.getLeaf('split');
-      await leaf.setViewState({ type: WRITING_VIEW, active: true });
-    }
-    await this.app.workspace.revealLeaf(leaf);
-    return leaf.view as WritingView;
+    return (await this.openMode(WRITING_VIEW)).view as WritingView;
   }
   async openPanel(): Promise<ReviewView> {
-    let leaf = this.app.workspace.getLeavesOfType(VIEW_TYPE)[0];
-    if (!leaf) {
-      leaf = this.app.workspace.getRightLeaf(false) ?? this.app.workspace.getLeaf('split');
-      await leaf.setViewState({ type: VIEW_TYPE, active: true });
-    }
-    await this.app.workspace.revealLeaf(leaf);
-    return leaf.view as ReviewView;
+    return (await this.openMode(VIEW_TYPE)).view as ReviewView;
   }
   async capture(captured: Capture) {
     if (this.unloaded) return;
