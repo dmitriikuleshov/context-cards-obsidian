@@ -174,7 +174,7 @@ export function parseWritingAnalysis(
       explanation: str(item.explanation, 'explanation'),
       tip: str(item.tip, 'tip', 500),
       pattern: str(item.pattern, 'pattern', 300),
-      selected: false,
+      selected: item.kind === 'grammar' || item.kind === 'vocabulary',
       format: item.recommended_format === 'gap' ? 'gap' : 'correction',
     };
     if (!f.title || !f.original || !source.includes(f.original) || !f.explanation)

@@ -1,31 +1,37 @@
 import { test, expect, type Page } from '@playwright/test';
 const button = (p: Page, name: string) => p.getByRole('button', { name, exact: true });
+const choice = (p: Page) => p.getByRole('checkbox', { name: 'Create an Anki card', exact: true });
 const word = (p: Page, text: string) => p.locator('.cc-writing-word').filter({ hasText: text });
 async function selectTwo(p: Page) {
-  await button(p, 'Create card').click();
+  await choice(p).check();
   await word(p, 'did').click();
-  await button(p, 'Create card').click();
+  await choice(p).check();
 }
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 440, height: 1050 });
   await page.goto('/?writing=1');
+  await page.evaluate(() => {
+    const p = (window as any).writingPreview;
+    p.session.findings[1].selected = false;
+    p.view.show(p.session);
+  });
 });
-test('two correction actions toggle inclusion without navigation or generation', async ({
+test('Edit and the labeled checkbox change inclusion without navigation or generation', async ({
   page,
 }) => {
-  await expect(page.locator('.cc-writing-decisions button')).toHaveText(['Edit', 'Create card']);
+  await expect(page.locator('.cc-writing-decisions button')).toHaveText(['Edit']);
   await expect(button(page, 'Skip')).toHaveCount(0);
   await expect(button(page, 'Undo')).toHaveCount(0);
-  await button(page, 'Create card').click();
-  await expect(button(page, "Don't create card")).toBeVisible();
+  await choice(page).check();
+  await expect(choice(page)).toBeChecked();
   await expect(page.getByRole('heading', { name: 'Past participle', exact: true })).toBeVisible();
   expect(
     await page.evaluate(() => (window as any).writingPreview.session.findings[0].card),
   ).toBeUndefined();
   await expect(word(page, 'wrote')).toHaveClass(/is-kept/);
   await expect(button(page, 'Review 1 card')).toBeEnabled();
-  await button(page, "Don't create card").click();
-  await expect(button(page, 'Create card')).toBeVisible();
+  await choice(page).uncheck();
+  await expect(choice(page)).toBeVisible();
   await expect(word(page, 'wrote')).not.toHaveClass(/is-kept/);
   await expect(button(page, 'Review cards')).toBeDisabled();
   await expect(page.getByRole('heading', { name: 'Past participle', exact: true })).toBeVisible();
@@ -34,10 +40,22 @@ test('two correction actions toggle inclusion without navigation or generation',
     p.session.findings = p.session.findings.slice(0, 1);
     p.view.show(p.session);
   });
-  await button(page, 'Create card').click();
-  await button(page, "Don't create card").click();
+  await choice(page).check();
+  await choice(page).uncheck();
   await expect(button(page, 'Finish review')).toBeEnabled();
-  await expect(button(page, 'Create card')).toBeEnabled();
+  await expect(choice(page)).toBeEnabled();
+});
+test('new analysis defaults to checked grammar/vocabulary, with style excluded', async ({
+  page,
+}) => {
+  await page.goto('/?writing=1');
+  await expect(choice(page)).toBeChecked();
+  await expect(button(page, 'Review 2 cards')).toBeEnabled();
+  await word(page, 'did').click();
+  await expect(choice(page)).toBeChecked();
+  await word(page, 'stories').click();
+  await expect(choice(page)).not.toBeChecked();
+  await expect(choice(page)).toBeDisabled();
 });
 test('word navigation preserves independent choices and exports the selected batch', async ({
   page,
@@ -46,7 +64,7 @@ test('word navigation preserves independent choices and exports the selected bat
   await page.screenshot({ path: '.test-artifacts/writing-panel.png', fullPage: true });
   await selectTwo(page);
   await word(page, 'wrote').click();
-  await expect(button(page, "Don't create card")).toBeVisible();
+  await expect(choice(page)).toBeVisible();
   await button(page, 'Review 2 cards').click();
   await expect(page.locator('.cc-writing-preview')).toHaveCount(2);
   await expect(page.locator('.cc-writing-question mark')).toHaveText(['wrote', 'did']);
@@ -81,12 +99,12 @@ test('editing keeps focus, cancels safely, validates and supports gap cards', as
   await page.locator('[data-writing-section=edit-details]>summary').click();
   await page.getByLabel('Exercise type').selectOption('gap');
   await button(page, 'Save changes').click();
-  await button(page, 'Create card').click();
+  await choice(page).check();
   await button(page, 'Review 1 card').click();
   await expect(page.locator('.cc-writing-question .cc-gap')).toHaveCount(1);
 });
 test('generation failure keeps choices and retry opens previews', async ({ page }) => {
-  await button(page, 'Create card').click();
+  await choice(page).check();
   await page.evaluate(() => ((window as any).writingPreview.controls.failGenerate = true));
   await button(page, 'Review 1 card').click();
   await expect(page.getByRole('alert')).toContainText('after retry');
@@ -95,7 +113,7 @@ test('generation failure keeps choices and retry opens previews', async ({ page 
   await expect(page.locator('.cc-writing-preview')).toHaveCount(1);
 });
 test('prepared fields can be edited without regenerating the correction', async ({ page }) => {
-  await button(page, 'Create card').click();
+  await choice(page).check();
   await button(page, 'Review 1 card').click();
   await page
     .locator('.cc-writing-preview')
@@ -109,14 +127,14 @@ test('prepared fields can be edited without regenerating the correction', async 
   await expect(page.getByText('My own helpful explanation.', { exact: true })).toBeVisible();
 });
 test('cancellation stays on the correction and preserves the toggle state', async ({ page }) => {
-  await button(page, 'Create card').click();
+  await choice(page).check();
   await page.evaluate(() => ((window as any).writingPreview.controls.deferGenerate = true));
   await button(page, 'Review 1 card').click();
   await expect(page.getByRole('status')).toContainText('Preparing');
   await button(page, 'Cancel').click();
   await expect(page.getByRole('alert')).toContainText('Cancelled');
   await expect(page.locator('.cc-writing-preview')).toHaveCount(0);
-  await expect(button(page, "Don't create card")).toBeEnabled();
+  await expect(choice(page)).toBeEnabled();
 });
 test('partial export retries only remaining notes and locks successful edits', async ({ page }) => {
   await selectTwo(page);
@@ -140,14 +158,14 @@ test('excluding a correction removes it from export and preserves its prepared c
   await button(page, 'Review 2 cards').click();
   await button(page, '← Corrections').click();
   await word(page, 'did').click();
-  await button(page, "Don't create card").click();
+  await choice(page).uncheck();
   await expect(button(page, 'Review 1 card')).toBeEnabled();
   expect(
     await page.evaluate(() => (window as any).writingPreview.session.findings[1].card),
   ).toBeTruthy();
-  await button(page, 'Create card').click();
+  await choice(page).check();
   await expect(button(page, 'Review 2 cards')).toBeEnabled();
-  await button(page, "Don't create card").click();
+  await choice(page).uncheck();
   await button(page, 'Review 1 card').click();
   await expect(page.locator('.cc-writing-preview')).toHaveCount(1);
   await button(page, 'Add 1 card to Anki').click();
@@ -160,8 +178,8 @@ test('style feedback has two controls with card creation disabled and narrow lay
 }) => {
   await page.setViewportSize({ width: 320, height: 1000 });
   await word(page, 'stories').click();
-  await expect(page.locator('.cc-writing-decisions button')).toHaveText(['Edit', 'Create card']);
-  await expect(button(page, 'Create card')).toBeDisabled();
+  await expect(page.locator('.cc-writing-decisions button')).toHaveText(['Edit']);
+  await expect(choice(page)).toBeDisabled();
   await expect(button(page, 'Edit')).toBeEnabled();
   await expect(
     page.getByText('Optional style suggestion. No practice card is needed.'),

@@ -139,13 +139,13 @@ describe('writing analysis and practice validation', () => {
     };
     expect(isolatedQuestion(f, [f, other])).toBe('She has wrote stories.');
   });
-  it('accepts genuine quotes, deduplicates targets and leaves every card unselected', () => {
+  it('accepts genuine quotes, deduplicates targets and selects corrections by default', () => {
     const r = parseWritingAnalysis(
       JSON.stringify({ summary: 'One issue.', findings: [finding, finding] }),
       source,
     );
     expect(r.findings).toHaveLength(1);
-    expect(r.findings[0]!.selected).toBe(false);
+    expect(r.findings[0]!.selected).toBe(true);
     expect(correctedSentence(r.findings[0]!)).toBe('I have written three stories this week.');
   });
   it('rejects invented source quotes and ambiguous targets', () => {
@@ -261,6 +261,8 @@ describe('writing analysis and practice validation', () => {
     const restored = restoreWritingSessions([s]);
     expect(restored[0]!.phase).toBe('idle');
     expect(restored[0]!.findings[0]!.noteId).toBe(42);
+    f.selected=false;
+    expect(restoreWritingSessions([s])[0]!.findings[0]!.selected).toBe(false);
     expect(restoreWritingSessions([{ ...s, capture: {} }])).toEqual([]);
   });
 });

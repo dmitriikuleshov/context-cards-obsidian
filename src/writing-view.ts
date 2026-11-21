@@ -297,11 +297,6 @@ export class WritingView extends ItemView {
     change.createSpan({ text: '→', attr: { 'aria-hidden': 'true' } });
     change.createEl('ins', { text: f.after || '(remove)' });
     body.createEl('p', { cls: 'cc-writing-why', text: f.explanation });
-    if (f.dismissed)
-      body.createEl('p', {
-        cls: 'cc-muted',
-        text: 'Not selected for a card.',
-      });
     if (f.noteId) {
       body.createEl('p', { cls: 'cc-writing-success', text: 'Already added to Anki.' });
       this.button(body, 'Open in Anki', () => void this.host.openAnki([f.noteId!]));
@@ -327,12 +322,21 @@ export class WritingView extends ItemView {
     } catch {
       valid = false;
     }
-    this.button(
-      decisions,
-      f.noteId ? 'Added to Anki' : f.selected ? "Don't create card" : 'Create card',
-      () => this.decide(s, f, !f.selected),
-      true,
-    ).disabled = busy || !!f.noteId || !valid || (f.kind !== 'grammar' && f.kind !== 'vocabulary');
+    const toggle = decisions.createEl('label', { cls: 'cc-writing-card-toggle' });
+    toggle.dataset.writingCardToggle = '';
+    const checkbox = toggle.createEl('input', { type: 'checkbox' });
+    checkbox.checked = f.selected || !!f.noteId;
+    checkbox.disabled =
+      busy || !!f.noteId || !valid || (f.kind !== 'grammar' && f.kind !== 'vocabulary');
+    toggle.classList.toggle('is-selected', checkbox.checked);
+    toggle.classList.toggle('is-disabled', checkbox.disabled);
+    toggle.createSpan({ text: 'Create an Anki card' });
+    checkbox.addEventListener('change', () => {
+      this.decide(s, f, checkbox.checked);
+      this.contentEl
+        .querySelector<HTMLInputElement>('[data-writing-card-toggle] input')
+        ?.focus({ preventScroll: true });
+    });
   }
   private renderEditor(body: HTMLElement, s: WritingSession, f: WritingFinding) {
     body.createEl('h2', { text: 'Edit correction' });
