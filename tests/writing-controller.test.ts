@@ -76,6 +76,63 @@ function setup() {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing review lifecycle', () => {
+  it('validates every card before writing files or exporting the first note', async () => {
+    const { manager, session, f, files } = setup();
+    f.selected = true;
+    f.card = {
+      kind: 'correction',
+      question: original,
+      target: 'wrote',
+      answer: 'written',
+      corrected: 'I have written three stories.',
+      explanation: 'Use a participle.',
+      hint: '',
+      tip: '',
+    };
+    const second = structuredClone(f);
+    second.id = 'invalid';
+    second.card!.answer = 'wrong';
+    session.findings.push(second);
+    const add = vi.spyOn(WritingAnki.prototype, 'add');
+    await manager.export(session);
+    expect(add).not.toHaveBeenCalled();
+    expect(files.size).toBe(0);
+    expect(session.error).toContain('approved correction');
+  });
+  it('cancels generation and rejects a late successful response', async () => {
+    const { manager, session, f } = setup();
+    f.selected = true;
+    let resolve!: (v: any) => void;
+    vi.spyOn(WritingModel.prototype, 'exercise').mockImplementation(
+      () => new Promise((r) => (resolve = r)),
+    );
+    const job = manager.generate(session);
+    manager.cancel(session);
+    resolve({ question: 'late' });
+    await job;
+    expect(f.card).toBeUndefined();
+    expect(session.phase).toBe('idle');
+    expect(session.error).toContain('Cancelled');
+  });
+  it('does not start two overlapping batch exports', async () => {
+    const { manager, session, f } = setup();
+    f.selected = true;
+    f.card = {
+      kind: 'correction',
+      question: original,
+      target: 'wrote',
+      answer: 'written',
+      corrected: 'I have written three stories.',
+      explanation: 'Use a participle.',
+      hint: '',
+      tip: '',
+    };
+    const add = vi
+      .spyOn(WritingAnki.prototype, 'add')
+      .mockResolvedValue({ noteId: 5, existing: false });
+    await Promise.all([manager.export(session), manager.export(session)]);
+    expect(add).toHaveBeenCalledTimes(1);
+  });
   it('keeps prepared cards after a generation failure and retries only missing drafts', async () => {
     const { manager, session, f } = setup();
     f.selected = true;

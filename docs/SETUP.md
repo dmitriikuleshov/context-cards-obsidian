@@ -223,14 +223,17 @@ Writing practice is a separate mode. Existing vocabulary capture still works wit
 
 1. Select a paragraph of your own English writing in Reading Mode or Live Preview, up to **6,000 characters**.
 2. Click **Check writing** beside the selection, or run **Context Cards: Check selected writing** from the command palette. There is also a context-menu entry.
-3. Choose a finding from **Corrections**. The panel shows one at a time: the original fragment is highlighted, followed by editable **Correction** and **Explanation** fields. The source note is never automatically corrected or marked by this mode.
-4. Click **Create card** for a useful grammar or vocabulary correction. The exercise opens in **Preview** automatically. Use **Flip card** to inspect the answer, then **Add to Anki** to save the review and export this one card. **Next correction** continues after export. Use **Skip** to dismiss a suggestion.
-5. For extra control, expand **More details** in Edit. It contains Tip, card type (**Correct the mistake** or **Complete the sentence**), editable card fields and issue metadata. Changing the underlying correction invalidates its old exercise. Typing keeps focus and expanded sections stay open.
-6. **Options** in the footer contains the writing deck, **Save review**, and **Review details** with the full selection, recheck and restore controls. The review selector appears at the top only when there is more than one review.
+3. Click a highlighted word in **Original text** to inspect its correction and explanation. The correction picker also reaches overlapping suggestions. The original note is never automatically corrected or marked by this mode.
+4. Click **Keep & next** to select a useful correction for practice, or **Skip**. Both advance to the next unreviewed suggestion. A check mark means kept; a dash means skipped. **Undo** reverses your last decision. Skipped suggestions remain clickable in the text.
+5. Click **Edit** to change a correction. Changes apply only after **Save changes**; **Cancel** discards them. **More details** contains the tip, issue metadata, exercise type and prepared card fields. Changing the underlying correction invalidates its exercise. Typing keeps focus.
+6. Click **Review N cards** to prepare the selected exercises. Review their questions and answers together, remove any unwanted card, then **Add N cards to Anki**. This saves the review and exports the batch. **← Corrections** returns to the original text without losing your choices. You can review your current selection before deciding on every suggestion.
+7. **Options** in the footer contains the writing deck, **Save review**, **Recheck selection** and **Open saved review**. The review selector appears at the top only when there is more than one review. If you skip everything, **Finish review** completes the review without exporting cards.
 
 Optional style, unclear meaning and obvious typos cannot become practice cards. If the meaning is unclear, resolve it yourself before classifying the finding as a definite grammar/vocabulary correction.
 
-Invalid model responses get one automatic retry within your configured request timeout. Prepared cards and their edits are kept if another operation fails. Retry **Create card** after an error. Connection failures are shown without an automatic retry. If analysis keeps failing, try a shorter selection or increase **Request timeout** in Local model settings.
+Invalid model responses get one automatic retry within your configured request timeout. Prepared cards and your choices are kept if another operation fails. Use **Retry preparing cards** after a preparation error. Cancelling a model request keeps earlier results and stays on corrections. Connection failures are shown without an automatic retry. If analysis keeps failing, try a shorter selection or increase **Request timeout** in Local model settings.
+
+If exporting partly fails, the preview marks successful cards **Already added** and locks their editing/removal controls. **Retry remaining cards** sends only the remaining exercises. The entire pending batch is validated before its first card is sent.
 
 **One selected finding creates one card.** Correction cards ask you to repair the highlighted fragment; gap cards use Anki's typed-answer comparison. Hints are collapsed on the front. Treat the answer as a model answer: other natural wording can be valid, and Anki still lets you assess your own response.
 

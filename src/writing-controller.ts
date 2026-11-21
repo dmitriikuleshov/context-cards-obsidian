@@ -110,6 +110,8 @@ export class WritingController {
     if (fresh) void this.analyse(s);
   }
   cancel(s: WritingSession) {
+    if (this.jobs.has(s.id))
+      s.error = 'Cancelled. Your previous results and prepared cards were kept.';
     this.jobs.get(s.id)?.abort();
   }
   stop() {
@@ -274,6 +276,8 @@ export class WritingController {
       const operation = this.exports
         .catch(() => {})
         .then(async () => {
+          // Validate the whole batch before creating a review or sending its first note.
+          for (const f of selected) writingPracticeFields(f);
           await this.writeReview(s);
           const uri = `obsidian://open?vault=${encodeURIComponent(s.capture.vault)}&file=${encodeURIComponent(s.reviewPath!)}`;
           for (const f of selected) {

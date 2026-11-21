@@ -1,72 +1,159 @@
-import { test, expect } from '@playwright/test';
-test('writing follows Create, Preview and Add without extra visible fields', async ({ page }) => {
-  await page.setViewportSize({ width: 440, height: 1000 });
+import { test, expect, type Page } from '@playwright/test';
+const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
+test.beforeEach(async ({ page }) => {
+  await page.setViewportSize({ width: 440, height: 1050 });
   await page.goto('/?writing=1');
-  await expect(page.getByLabel('Choose a correction', { exact: true })).toHaveCount(1);
-  await expect(page.getByLabel('Correction', { exact: true })).toHaveValue('written');
-  await expect(page.getByRole('checkbox')).toHaveCount(0);
-  await expect(page.getByLabel('Tip', { exact: true })).toBeHidden();
-  await expect(page.getByLabel('Writing deck', { exact: true })).toBeHidden();
-  await page.evaluate(() => {
-    const second = (window as any).writingPreview.session.findings[1];
-    second.kind = 'grammar';
-    second.selected = true;
-  });
-
-  await page.getByRole('button', { name: 'Create card', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Add to Anki', exact: true })).toBeEnabled();
-  await page.getByRole('button', { name: 'Preview writing card', exact: true }).click();
-
-  const card = page.frameLocator('iframe');
-  await expect(card.locator('mark')).toHaveText('wrote');
-  await page.getByRole('button', { name: 'Flip card', exact: true }).click();
-  await expect(
-    card.getByText('I have written three stories this week.', { exact: true }),
-  ).toBeVisible();
-  await page.getByRole('button', { name: 'Edit writing review', exact: true }).click();
-  await page.screenshot({ path: '.test-artifacts/writing-panel.png', fullPage: true });
-  await page.getByRole('button', { name: 'Preview card', exact: true }).click();
-  await page.getByRole('button', { name: 'Add to Anki', exact: true }).click();
-  await expect(page.getByText('Added to Anki.', { exact: true })).toBeVisible();
-  expect(
-    await page.evaluate(() => (window as any).writingPreview.session.findings[1].noteId),
-  ).toBeUndefined();
-  await expect(page.getByRole('button', { name: 'Next correction', exact: true })).toBeVisible();
-  expect(await page.evaluate(() => (window as any).writingPreview.session.capture.selected)).toBe(
-    'I have wrote three stories this week.',
-  );
 });
-test('typing keeps the same input, focus and expanded sections', async ({ page }) => {
-  await page.setViewportSize({ width: 340, height: 850 });
-  await page.goto('/?writing=1');
-  await page.locator('[data-writing-section=advanced] > summary').click();
-  const input = page.getByLabel('Correction', { exact: true });
-  await input.evaluate((el) => el.setAttribute('data-stable-input', 'yes'));
-  await input.fill('');
-  await input.pressSequentially('written again', { delay: 15 });
-  await expect(input).toHaveValue('written again');
-  await expect(input).toBeFocused();
-  await expect(input).toHaveAttribute('data-stable-input', 'yes');
-  await expect(page.locator('[data-writing-section=advanced]')).toHaveAttribute('open', '');
-  await expect(page.locator('.cc-writing-correction')).toHaveText(
-    'I have written again three stories this week.',
-  );
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
-    true,
-  );
-});
-test('gap preview works and editing its correction invalidates only that card', async ({
+test('highlight, keep, undo, skip and batch preview follow the approved design', async ({
   page,
 }) => {
-  await page.goto('/?writing=1');
-
-  await page.locator('[data-writing-section=advanced] > summary').click();
-  await page.getByLabel('Card format: Past participle', { exact: true }).selectOption('gap');
-  await page.getByRole('button', { name: 'Create card', exact: true }).click();
-  await page.getByRole('button', { name: 'Preview writing card', exact: true }).click();
-  await expect(page.frameLocator('iframe').locator('.cc-gap')).toHaveCount(1);
-  await page.getByRole('button', { name: 'Edit writing review', exact: true }).click();
-  await page.getByLabel('Correction', { exact: true }).fill('written again');
-  await expect(page.getByLabel('Question', { exact: true })).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Create card', exact: true })).toBeEnabled();
+  await expect(page.getByRole('textbox')).toBeHidden();
+  await expect(button(page, 'Review cards')).toBeDisabled();
+  await page.screenshot({ path: '.test-artifacts/writing-panel.png', fullPage: true });
+  await button(page, 'Keep & next').click();
+  await expect(page.locator('.cc-writing-word.is-kept')).toHaveCount(1);
+  await expect(page.getByLabel('Choose a correction')).toHaveValue(
+    await page.evaluate(() => (window as any).writingPreview.session.findings[1].id),
+  );
+  await button(page, 'Undo').click();
+  await expect(page.locator('.cc-writing-word.is-kept')).toHaveCount(0);
+  await button(page, 'Keep & next').click();
+  await button(page, 'Keep & next').click();
+  await button(page, 'Skip').click();
+  await expect(page.locator('.cc-writing-word.is-skipped')).toHaveCount(1);
+  await button(page, 'Review 2 cards').click();
+  await expect(page.locator('.cc-writing-preview')).toHaveCount(2);
+  await expect(page.locator('.cc-writing-question mark')).toHaveText(['wrote', 'did']);
+  await expect(page.locator('.cc-writing-answer')).toHaveText([
+    'I have written three stories this week.',
+    'I made a mistake yesterday.',
+  ]);
+  await button(page, 'Add 2 cards to Anki').click();
+  await expect(page.getByRole('heading', { name: 'Added to Anki' })).toBeVisible();
+  expect(await page.evaluate(() => (window as any).writingPreview.controls.exports.length)).toBe(2);
+  expect(await page.evaluate(() => (window as any).writingPreview.session.capture.selected)).toBe(
+    'I have wrote three stories this week. I did a mistake yesterday.',
+  );
+});
+test('editing is explicit, keeps focus, validates and cancel discards changes', async ({
+  page,
+}) => {
+  await button(page, 'Edit').click();
+  const input = page.getByLabel('Correction', { exact: true });
+  await input.evaluate((el) => el.setAttribute('data-stable', 'yes'));
+  await input.fill('');
+  await input.pressSequentially('written again', { delay: 10 });
+  await expect(input).toBeFocused();
+  await expect(input).toHaveAttribute('data-stable', 'yes');
+  await button(page, 'Cancel').click();
+  expect(await page.evaluate(() => (window as any).writingPreview.session.findings[0].after)).toBe(
+    'written',
+  );
+  await button(page, 'Edit').click();
+  await input.fill('wrote');
+  await button(page, 'Save changes').click();
+  await expect(page.getByRole('alert').last()).toContainText('must change');
+  await input.fill('written');
+  await page.locator('[data-writing-section=edit-details]>summary').click();
+  await page.getByLabel('Exercise type').selectOption('gap');
+  await button(page, 'Save changes').click();
+  await button(page, 'Keep & next').click();
+  await button(page, 'Review 1 card').click();
+  await expect(page.locator('.cc-writing-question .cc-gap')).toHaveCount(1);
+  await page
+    .locator('.cc-writing-preview')
+    .getByRole('button', { name: 'Edit', exact: true })
+    .click();
+  await input.fill('written again');
+  await button(page, 'Save changes').click();
+  expect(
+    await page.evaluate(() => (window as any).writingPreview.session.findings[0].card),
+  ).toBeUndefined();
+  await expect(button(page, 'Review 1 card')).toBeVisible();
+});
+test('generation failures preserve choices and retry opens previews', async ({ page }) => {
+  await button(page, 'Keep & next').click();
+  await page.evaluate(() => ((window as any).writingPreview.controls.failGenerate = true));
+  await button(page, 'Review 1 card').click();
+  await expect(page.getByRole('alert')).toContainText('after retry');
+  await expect(page.locator('.cc-writing-word.is-kept')).toHaveCount(1);
+  await button(page, 'Retry preparing cards').click();
+  await expect(page.locator('.cc-writing-preview')).toHaveCount(1);
+});
+test('prepared card fields can be edited without regenerating the correction', async ({ page }) => {
+  await button(page, 'Keep & next').click();
+  await button(page, 'Review 1 card').click();
+  await page
+    .locator('.cc-writing-preview')
+    .getByRole('button', { name: 'Edit', exact: true })
+    .click();
+  await page.locator('[data-writing-section=edit-details]>summary').click();
+  await page.locator('[data-writing-section=card-fields]>summary').click();
+  await page.getByLabel('Card explanation', { exact: true }).fill('My own helpful explanation.');
+  await button(page, 'Save changes').click();
+  await button(page, 'Review 1 card').click();
+  await expect(page.getByText('My own helpful explanation.', { exact: true })).toBeVisible();
+});
+test('cancellation does not advance to previews or accept late results', async ({ page }) => {
+  await button(page, 'Keep & next').click();
+  await page.evaluate(() => ((window as any).writingPreview.controls.deferGenerate = true));
+  await button(page, 'Review 1 card').click();
+  await expect(page.getByRole('status')).toContainText('Preparing');
+  await button(page, 'Cancel').click();
+  await expect(page.getByRole('alert')).toContainText('Cancelled');
+  await expect(page.locator('.cc-writing-preview')).toHaveCount(0);
+  await expect(button(page, 'Keep & next')).toBeEnabled();
+});
+test('partial Anki failure retries only missing cards and locks exported edits', async ({
+  page,
+}) => {
+  await button(page, 'Keep & next').click();
+  await button(page, 'Keep & next').click();
+  await button(page, 'Review 2 cards').click();
+  await page.evaluate(() => ((window as any).writingPreview.controls.failExport = true));
+  await button(page, 'Add 2 cards to Anki').click();
+  await expect(page.getByRole('alert')).toContainText('Cannot connect');
+  await expect(page.getByText('✓ Already added', { exact: true })).toBeVisible();
+  await expect(
+    page.locator('.cc-writing-preview').first().getByRole('button', { name: 'Edit', exact: true }),
+  ).toBeDisabled();
+  await button(page, 'Retry remaining cards').click();
+  await expect(page.getByRole('heading', { name: 'Added to Anki' })).toBeVisible();
+  const ids = await page.evaluate(() => (window as any).writingPreview.controls.exports);
+  expect(new Set(ids).size).toBe(2);
+  expect(ids).toHaveLength(2);
+});
+test('removing a preview changes the export batch and all-skipped review can finish', async ({
+  page,
+}) => {
+  await button(page, 'Keep & next').click();
+  await button(page, 'Keep & next').click();
+  await button(page, 'Review 2 cards').click();
+  await page
+    .locator('.cc-writing-preview')
+    .last()
+    .getByRole('button', { name: 'Remove', exact: true })
+    .click();
+  await expect(page.locator('.cc-writing-preview')).toHaveCount(1);
+  await expect(button(page, 'Add 1 card to Anki')).toBeEnabled();
+  await button(page, '← Corrections').click();
+  await page
+    .getByLabel('Choose a correction')
+    .selectOption(await page.evaluate(() => (window as any).writingPreview.session.findings[0].id));
+  await button(page, 'Remove from cards').click();
+  await button(page, 'Skip').click();
+  await button(page, 'Skip').click();
+  await button(page, 'Finish review').click();
+  await expect(page.getByRole('heading', { name: 'Review finished' })).toBeVisible();
+});
+test('optional style has no Keep action and narrow sidebar does not overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 1000 });
+  await page
+    .getByLabel('Choose a correction')
+    .selectOption(await page.evaluate(() => (window as any).writingPreview.session.findings[2].id));
+  await expect(button(page, 'Keep & next')).toHaveCount(0);
+  await expect(
+    page.getByText('Optional style suggestion. No practice card is needed.'),
+  ).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
