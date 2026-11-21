@@ -495,11 +495,6 @@ export class WritingView extends ItemView {
       const card = body.createDiv({ cls: 'cc-writing-preview' }),
         row = card.createDiv({ cls: 'cc-writing-row' });
       row.createEl('h3', { text: `Card ${i + 1} · ${f.title}` });
-      const actions = row.createDiv({ cls: 'cc-writing-row' });
-      this.button(actions, 'Edit', () => {
-        this.editing = f.id;
-        this.render();
-      }).disabled = s.phase !== 'idle' || !!f.noteId;
       if (f.noteId)
         card.createEl('p', {
           cls: 'cc-writing-success',
@@ -525,6 +520,12 @@ export class WritingView extends ItemView {
           text: e instanceof Error ? e.message : String(e),
         });
       }
+      const edit = this.button(card, 'Edit card', () => {
+        this.editing = f.id;
+        this.render();
+      });
+      edit.addClass('cc-writing-edit-card');
+      edit.disabled = s.phase !== 'idle' || !!f.noteId;
     }
     if (!this.selected(s).length)
       body.createEl('p', { text: 'No cards selected. Return to corrections to keep one.' });

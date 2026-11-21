@@ -117,7 +117,7 @@ test('prepared fields can be edited without regenerating the correction', async 
   await button(page, 'Review 1 card').click();
   await page
     .locator('.cc-writing-preview')
-    .getByRole('button', { name: 'Edit', exact: true })
+    .getByRole('button', { name: 'Edit card', exact: true })
     .click();
   await page.locator('[data-writing-section=edit-details]>summary').click();
   await page.locator('[data-writing-section=card-fields]>summary').click();
@@ -144,7 +144,7 @@ test('partial export retries only remaining notes and locks successful edits', a
   await expect(page.getByRole('alert')).toContainText('Cannot connect');
   await expect(page.getByText('✓ Already added', { exact: true })).toBeVisible();
   await expect(
-    page.locator('.cc-writing-preview').first().getByRole('button', { name: 'Edit', exact: true }),
+    page.locator('.cc-writing-preview').first().getByRole('button', { name: 'Edit card', exact: true }),
   ).toBeDisabled();
   await button(page, 'Retry remaining cards').click();
   const ids = await page.evaluate(() => (window as any).writingPreview.controls.exports);
