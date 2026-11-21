@@ -283,7 +283,7 @@ export class WritingView extends ItemView {
     if (!s.analysed) return;
     if (!s.findings.length) {
       body.createEl('p', {
-        text: 'No issues were flagged. You can save this review or select another passage.',
+        text: 'No issues were flagged. You can select another passage.',
       });
       return;
     }
@@ -536,17 +536,9 @@ export class WritingView extends ItemView {
     this.field(options, 'Writing deck', s.deck, 'deck', s, (v) => {
       s.deck = v;
     });
-    this.button(options, 'Save review', () => void this.host.writing.save(s)).disabled =
-      busy || !s.analysed;
     this.button(options, 'Recheck selection', () => {
       void this.host.writing.analyse(s);
     }).disabled = busy || s.findings.some((f) => !!f.noteId);
-    if (s.reviewPath)
-      this.button(
-        options,
-        'Open saved review',
-        () => void this.host.app.workspace.openLinkText(s.reviewPath!, '', true),
-      );
     const actions = footer.createDiv({ cls: 'cc-writing-footer-actions' }),
       pending = this.pending(s);
     if (this.screen === 'done') return;

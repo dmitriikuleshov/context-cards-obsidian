@@ -227,7 +227,7 @@ Writing practice is a separate mode. Existing vocabulary capture still works wit
 4. Each correction has two actions: **Edit** and **Create card**. Create card selects it for the batch and changes to **Don't create card**, which excludes it again. This toggle stays on the same correction; click another highlighted word to move on. A check mark means selected, and a dash means excluded. Exercises are prepared only when you click **Review N cards** below.
 5. Click **Edit** to change a correction. Changes apply only after **Save changes**; **Cancel** discards them. **More details** contains the tip, issue metadata, exercise type and prepared card fields. Changing the underlying correction invalidates its exercise. Typing keeps focus.
 6. Click **Review N cards** to prepare the selected exercises. Review their questions and answers together, remove any unwanted card, then **Add N cards to Anki**. This saves the review and exports the batch. **← Corrections** returns to the original text without losing your choices. You can review your current selection before deciding on every suggestion.
-7. **Options** in the footer contains the writing deck, **Save review**, **Recheck selection** and **Open saved review**. The review selector appears at the top only when there is more than one review. When all corrections are excluded, **Finish review** completes the review without exporting cards.
+7. **Options** in the footer contains the writing deck and **Recheck selection**. The review selector appears at the top only when there is more than one review. When all corrections are excluded, **Finish review** completes the review without exporting cards.
 
 Optional style, unclear meaning and obvious typos cannot become practice cards. If the meaning is unclear, resolve it yourself before classifying the finding as a definite grammar/vocabulary correction.
 
@@ -249,7 +249,7 @@ Under **Settings → Context Cards → Writing practice**:
 | Writing review folder | `English/Writing reviews` | Vault-relative folder for saved Markdown feedback. |
 | Writing note type | `Context Cards Writing` | A separate note type with one Practice template. Keep it different from the vocabulary type. |
 
-A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created only when you save/export. Use **Open saved review** to return to it. Personal notes appended after its managed review block are retained when the plugin updates the review.
+A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created when exporting cards. Open it from your configured writing review folder or the source link in Anki. Personal notes appended after its managed review block are retained when the plugin updates the review.
 
 The latest four writing sessions are stored with plugin data when **Restore unfinished drafts** is enabled. They are independent of the four vocabulary drafts. Rechecking replaces the session's suggestions and unexported exercise drafts; it is disabled after a finding has been exported. Use a fresh selection for new writing.
 
