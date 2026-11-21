@@ -53,9 +53,7 @@ test('highlight, keep, undo, skip and batch preview follow the approved design',
   await page.screenshot({ path: '.test-artifacts/writing-panel.png', fullPage: true });
   await button(page, 'Keep & next').click();
   await expect(page.locator('.cc-writing-word.is-kept')).toHaveCount(1);
-  await expect(page.getByLabel('Choose a correction')).toHaveValue(
-    await page.evaluate(() => (window as any).writingPreview.session.findings[1].id),
-  );
+  await expect(page.getByRole('heading', { name: 'Make a mistake', exact: true })).toBeVisible();
   await button(page, 'Undo').click();
   await expect(page.locator('.cc-writing-word.is-kept')).toHaveCount(0);
   await button(page, 'Keep & next').click();
@@ -178,9 +176,7 @@ test('removing a preview changes the export batch and all-skipped review can fin
   await expect(page.locator('.cc-writing-preview')).toHaveCount(1);
   await expect(button(page, 'Add 1 card to Anki')).toBeEnabled();
   await button(page, '← Corrections').click();
-  await page
-    .getByLabel('Choose a correction')
-    .selectOption(await page.evaluate(() => (window as any).writingPreview.session.findings[0].id));
+  await page.locator('.cc-writing-word').filter({ hasText: 'wrote' }).click();
   await button(page, 'Remove from cards').click();
   await button(page, 'Skip').click();
   await button(page, 'Skip').click();
@@ -189,9 +185,7 @@ test('removing a preview changes the export batch and all-skipped review can fin
 });
 test('optional style has no Keep action and narrow sidebar does not overflow', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 1000 });
-  await page
-    .getByLabel('Choose a correction')
-    .selectOption(await page.evaluate(() => (window as any).writingPreview.session.findings[2].id));
+  await page.locator('.cc-writing-word').filter({ hasText: 'stories' }).click();
   await expect(button(page, 'Keep & next')).toHaveCount(0);
   await expect(
     page.getByText('Optional style suggestion. No practice card is needed.'),

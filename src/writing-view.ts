@@ -305,24 +305,6 @@ export class WritingView extends ItemView {
     }
     body.createDiv({ cls: 'cc-writing-legend', text: '✓ Kept for a card     – Skipped' });
     body.createEl('hr');
-    const row = body.createDiv({ cls: 'cc-writing-row' });
-    // A picker also makes overlapping or unmappable suggestions reachable without inventing source anchors.
-    const picker = row.createEl('select', {
-      cls: 'cc-writing-issue-nav',
-      attr: { 'aria-label': 'Choose a correction' },
-    });
-    for (const [i, item] of s.findings.entries())
-      picker.createEl('option', {
-        text: `Correction ${i + 1} of ${s.findings.length} · ${item.title}`,
-        attr: { value: item.id },
-      });
-    if (!f) picker.createEl('option', { text: 'Revisit a correction…', attr: { value: '' } });
-    picker.value = f?.id ?? '';
-    picker.addEventListener('change', () => {
-      this.findingIds.set(s.id, picker.value);
-      this.undo = undefined;
-      this.render();
-    });
     if (!f) {
       body.createEl('h3', { text: 'All corrections reviewed', cls: 'cc-writing-complete' });
       const kept = this.selected(s).length,
@@ -339,6 +321,8 @@ export class WritingView extends ItemView {
       this.renderUndo(body, s);
       return;
     }
+    const row = body.createDiv({ cls: 'cc-writing-row' });
+    row.createEl('h3', { text: f.title });
     this.button(row, 'Edit', () => {
       this.editing = f.id;
       this.render();
