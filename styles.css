@@ -411,15 +411,16 @@
   font: inherit;
   height: auto;
   min-height: 0;
-  padding: 0 3px;
+  padding: 1px 6px;
   margin: 0;
-  border: 0;
-  border-bottom: 2px solid var(--cc-accent);
-  border-radius: 3px;
+  border: 1px solid var(--cc-accent);
+  border-bottom-width: 2px;
+  border-radius: 6px;
   box-shadow: none;
   background: color-mix(in srgb, var(--cc-accent) 15%, transparent);
   color: var(--text-normal);
   white-space: pre-wrap;
+  cursor: pointer;
 }
 .cc-writing-word[aria-pressed='true'] {
   outline: 2px solid var(--cc-accent);
@@ -452,11 +453,65 @@
   min-width: 0;
   flex: 1;
   text-overflow: ellipsis;
-  border: 0;
+  border: 1px solid var(--cc-line);
+  border-radius: 7px;
+  padding: 8px 10px;
+  height: auto;
   box-shadow: none;
-  background: transparent;
+  background: var(--background-secondary);
   font-size: 12px;
+  color: var(--text-normal);
+  cursor: pointer;
+}
+.cc-writing-workflow .cc-writing-button {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 7px;
+  background: var(--interactive-normal, var(--background-secondary));
+  color: var(--text-normal);
+  padding: 8px 12px;
+  min-height: 36px;
+  height: auto;
+  cursor: pointer;
+}
+.cc-writing-workflow .cc-writing-button:not(.mod-cta):hover {
+  background: var(--interactive-hover, var(--background-secondary));
+  border-color: var(--cc-accent);
+}
+.cc-writing-workflow .cc-writing-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+.cc-writing-workflow button:focus-visible,
+.cc-writing-workflow select:focus-visible,
+.cc-writing-workflow summary:focus-visible {
+  outline: 2px solid var(--cc-accent);
+  outline-offset: 3px;
+}
+.cc-writing-workflow button.cc-writing-word:hover {
+  background: color-mix(in srgb, var(--cc-accent) 28%, var(--background-primary));
+}
+.cc-writing-workflow .cc-section > summary {
+  border: 1px solid var(--cc-line);
+  border-radius: 7px;
+  padding: 9px 12px;
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  cursor: pointer;
+}
+.cc-writing-workflow .cc-section > summary:hover {
+  border-color: var(--cc-accent);
+}
+.cc-writing-workflow .cc-section[open] > summary {
+  margin-bottom: 16px;
+}
+.cc-writing-instruction {
   color: var(--text-muted);
+  font-size: 12px;
+  margin: 14px 0 8px;
+}
+.cc-writing-workflow .cc-panel-header .cc-writing-button,
+.cc-writing-source-heading .cc-writing-button {
+  font-size: 12px;
 }
 .cc-writing-change {
   display: flex;

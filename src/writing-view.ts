@@ -47,7 +47,10 @@ export class WritingView extends ItemView {
     this.render();
   }
   private button(root: HTMLElement, text: string, action: () => void, primary = false) {
-    const b = root.createEl('button', { text, cls: primary ? 'mod-cta' : 'cc-link-button' });
+    const b = root.createEl('button', {
+      text,
+      cls: primary ? 'cc-writing-button mod-cta' : 'cc-writing-button',
+    });
     b.type = 'button';
     b.addEventListener('click', action);
     return b;
@@ -252,6 +255,11 @@ export class WritingView extends ItemView {
       'Open source',
       () => void this.host.app.workspace.openLinkText(s.capture.file, '', true),
     );
+    if (s.findings.length)
+      body.createEl('p', {
+        cls: 'cc-writing-instruction',
+        text: 'Click a highlighted word to review its correction.',
+      });
     const text = body.createDiv({
       cls: 'cc-writing-text',
       attr: { 'aria-label': 'Original selected text' },
