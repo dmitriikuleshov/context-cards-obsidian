@@ -6,6 +6,7 @@ import { cleanDeck, sourceUri } from './text';
 import {
   canPractise,
   correctedSentence,
+  writingPracticeFields,
   restoreWritingSessions,
   type WritingSession,
   type WritingFinding,
@@ -164,12 +165,33 @@ export class WritingController {
     }
     const model = new WritingModel(structuredClone(this.host.settings));
     await this.run(s, 'generating', async (signal) => {
+      const failures: string[] = [];
       for (const f of selected) {
-        const card = await model.exercise(f, signal, s.findings);
-        if (signal.aborted || this.stopped) return;
-        f.card = card;
-        this.host.persist();
+        // Preserve valid prepared cards, including the user's manual edits, on retry.
+        if (f.card) {
+          try {
+            writingPracticeFields(f);
+            continue;
+          } catch {
+            /* Rebuild an invalid draft. */
+          }
+        }
+        try {
+          const card = await model.exercise(f, signal, s.findings);
+          if (signal.aborted || this.stopped) return;
+          f.card = card;
+          this.host.persist();
+        } catch (error) {
+          if (signal.aborted || this.stopped) return;
+          const message = error instanceof Error ? error.message : String(error);
+          failures.push(`${f.title}: ${message}`);
+          if (/cannot connect|timed out|server returned/i.test(message)) break;
+        }
       }
+      if (failures.length)
+        throw new Error(
+          `Some cards could not be prepared. Ready cards were kept. Retry to prepare the remaining cards.\n${failures.join('\n')}`,
+        );
     });
   }
   private async writeReview(s: WritingSession): Promise<void> {

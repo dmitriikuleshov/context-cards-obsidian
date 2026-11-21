@@ -338,10 +338,10 @@
 .cc-writing-panel {
   padding: 0 !important;
 }
-.cc-writing-panel > select {
-  display: block;
-  width: calc(100% - 40px);
-  margin: 16px 20px;
+.cc-writing-navigation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .cc-writing-panel .cc-panel-body > p {
   margin: 16px 0;
@@ -351,20 +351,26 @@
   overflow-wrap: anywhere;
   font: inherit;
 }
-.cc-writing-finding {
-  border-top: 1px solid var(--background-modifier-border);
-  padding-top: 18px;
-  margin-top: 20px;
+.cc-writing-original {
+  margin: 20px 0 16px;
+  font: 16px/1.6 var(--font-text);
 }
-.cc-writing-finding h3 {
-  font-size: 15px;
-  margin: 0 0 12px;
+.cc-writing-panel .cc-panel-body > .cc-field {
+  margin: 16px 0;
 }
-.cc-writing-finding .cc-context {
-  margin: 12px 0;
+.cc-writing-panel .cc-field select {
+  width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
 }
-.cc-writing-finding .cc-field {
-  margin: 12px 0;
+.cc-writing-choices {
+  margin: 18px 0;
+}
+.cc-writing-choices > select {
+  max-width: 100%;
+}
+.cc-writing-panel .cc-section {
+  margin: 16px 0;
 }
 .cc-writing-select {
   display: flex;
@@ -378,24 +384,10 @@
   padding: 8px 12px;
   margin: 12px 0;
 }
-.cc-writing-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.cc-writing-actions button {
-  flex: 1 1 140px;
-}
 .cc-writing-error {
   color: var(--text-error);
   margin: 14px 0;
   overflow-wrap: anywhere;
-}
-.cc-writing-card-preview {
-  padding: 12px;
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 8px;
-  margin: 12px 0;
 }
 .cc-preview-toolbar {
   display: flex;

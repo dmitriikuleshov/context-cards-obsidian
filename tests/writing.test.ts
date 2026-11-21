@@ -33,6 +33,71 @@ export function sampleFinding(): WritingFinding {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing analysis and practice validation', () => {
+  it('repairs invalid analysis once within the original timeout budget', async () => {
+    const now = vi
+      .spyOn(Date, 'now')
+      .mockReturnValueOnce(1000)
+      .mockReturnValueOnce(1000)
+      .mockReturnValueOnce(3000);
+    const request = vi
+      .spyOn(http, 'jsonRequest')
+      .mockResolvedValueOnce({
+        message: {
+          content: JSON.stringify({
+            summary: '',
+            findings: [{ ...finding, explanation: 'x'.repeat(2001) }],
+          }),
+        },
+      })
+      .mockResolvedValueOnce({
+        message: { content: JSON.stringify({ summary: 'One issue.', findings: [finding] }) },
+      });
+    const result = await new WritingModel({ ...DEFAULTS, timeoutSeconds: 60 }).analyse(
+      source,
+      new AbortController().signal,
+    );
+    expect(result.findings).toHaveLength(1);
+    expect(request).toHaveBeenCalledTimes(2);
+    expect(request.mock.calls[0]![3]).toBe(60000);
+    expect(request.mock.calls[1]![3]).toBe(58000);
+    expect(JSON.stringify(request.mock.calls[1]![1])).toContain('validation_error');
+    now.mockRestore();
+  });
+  it('stops after two invalid responses and does not retry network failures', async () => {
+    const request = vi.spyOn(http, 'jsonRequest').mockResolvedValue({ message: { content: '{}' } });
+    await expect(
+      new WritingModel(DEFAULTS).analyse(source, new AbortController().signal),
+    ).rejects.toThrow('after retry');
+    expect(request).toHaveBeenCalledTimes(2);
+    request.mockReset().mockRejectedValue(new Error('Cannot connect to Ollama'));
+    await expect(
+      new WritingModel(DEFAULTS).analyse(source, new AbortController().signal),
+    ).rejects.toThrow('Cannot connect');
+    expect(request).toHaveBeenCalledTimes(1);
+  });
+  it('repairs a truncated card response without accepting a different answer', async () => {
+    const f = sampleFinding();
+    const request = vi
+      .spyOn(http, 'jsonRequest')
+      .mockResolvedValueOnce({ done_reason: 'length', message: { content: '{}' } })
+      .mockResolvedValueOnce({
+        message: {
+          content: JSON.stringify({
+            question: source,
+            target: 'wrote',
+            answer: 'written',
+            corrected_sentence: 'I have written three stories this week.',
+            hint: '',
+            explanation: 'Use the participle.',
+            tip: '',
+          }),
+        },
+      });
+    expect(
+      (await new WritingModel(DEFAULTS).exercise(f, new AbortController().signal)).answer,
+    ).toBe('written');
+    expect(request).toHaveBeenCalledTimes(2);
+  });
   it('derives a visible complete-word target from the corrected sentence', () => {
     expect(minimalCorrection('I have wrote.', 'I have written.')).toEqual({
       before: 'wrote',

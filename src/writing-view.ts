@@ -1,6 +1,7 @@
-import { ItemView, type WorkspaceLeaf } from 'obsidian';
+import { ItemView, setIcon, type WorkspaceLeaf } from 'obsidian';
 import type ContextCardsPlugin from './main';
 import { htmlText } from './text';
+import { CARD_CSS } from './templates';
 import {
   canPractise,
   writingPracticeFields,
@@ -12,6 +13,17 @@ import {
 export const WRITING_VIEW = 'context-cards-writing';
 export class WritingView extends ItemView {
   private current = '';
+  private findingIds = new Map<string, string>();
+  private tab: 'edit' | 'preview' = 'edit';
+  private back = false;
+  private sections = new Map<string, boolean>();
+  private actions?: HTMLElement;
+  private warning?: HTMLElement;
+  private corrected?: HTMLElement;
+  private quote?: HTMLElement;
+  private cardEditor?: HTMLElement;
+  private issuePicker?: HTMLSelectElement;
+  private formatPicker?: HTMLSelectElement;
   constructor(
     leaf: WorkspaceLeaf,
     private host: ContextCardsPlugin,
@@ -32,13 +44,22 @@ export class WritingView extends ItemView {
   }
   show(s: WritingSession) {
     this.current = s.id;
+    this.tab = 'edit';
+    this.back = false;
     this.render();
   }
-  private button(root: HTMLElement, text: string, callback: () => void, primary = false) {
-    const b = root.createEl('button', { text, cls: primary ? 'mod-cta' : '' });
-    b.type = 'button';
-    b.addEventListener('click', callback);
-    return b;
+  private button(root: HTMLElement, text: string, callback: () => void, cls = '') {
+    const button = root.createEl('button', { text, cls });
+    button.type = 'button';
+    button.addEventListener('click', callback);
+    return button;
+  }
+  private section(root: HTMLElement, key: string, title: string) {
+    const section = root.createEl('details', { cls: 'cc-section' });
+    section.dataset.writingSection = key;
+    section.open = this.sections.get(key) ?? false;
+    section.createEl('summary', { text: title });
+    return section;
   }
   private field(
     root: HTMLElement,
@@ -46,10 +67,12 @@ export class WritingView extends ItemView {
     value: string,
     key: string,
     change: (v: string) => void,
+    s: WritingSession,
+    f?: WritingFinding,
     multiline = true,
   ) {
-    const wrap = root.createDiv({ cls: 'cc-field' });
-    const id = `writing-${crypto.randomUUID()}`;
+    const wrap = root.createDiv({ cls: 'cc-field' }),
+      id = `writing-${crypto.randomUUID()}`;
     wrap.createEl('label', { text: label, attr: { for: id } });
     const input = multiline
       ? wrap.createEl('textarea', { attr: { rows: '2' } })
@@ -57,36 +80,65 @@ export class WritingView extends ItemView {
     input.id = id;
     input.value = value;
     input.dataset.writingField = key;
+    input.disabled = s.phase !== 'idle' || !!f?.noteId;
     input.addEventListener('input', () => {
       change(input.value);
+      s.error = '';
       this.host.persist();
-      this.render();
+      // Keep the input and its ancestors mounted: typing and IME composition must not redraw the panel.
+      this.updateLive(s, f);
     });
     return input;
   }
+  private selected(s: WritingSession) {
+    return s.findings.filter((f) => f.selected && canPractise(f) && !f.noteId);
+  }
+  private active(s: WritingSession) {
+    return (
+      s.findings.find((f) => !f.dismissed && f.id === this.findingIds.get(s.id)) ??
+      s.findings.find((f) => !f.dismissed)
+    );
+  }
   render() {
     const root = this.contentEl;
-    const focused = root.ownerDocument.activeElement as HTMLInputElement | HTMLTextAreaElement;
-    const key = focused?.dataset?.writingField;
-    const cursor = key ? [focused.selectionStart, focused.selectionEnd] : undefined;
+    for (const section of Array.from(
+      root.querySelectorAll<HTMLDetailsElement>('details[data-writing-section]'),
+    ))
+      this.sections.set(section.dataset.writingSection!, section.open);
+    const active = root.ownerDocument.activeElement as
+      HTMLInputElement | HTMLTextAreaElement | null;
+    const focusKey = active?.dataset?.writingField;
+    const cursor =
+      focusKey && typeof active?.selectionStart === 'number'
+        ? [active.selectionStart, active.selectionEnd]
+        : undefined;
     const scroll = root.scrollTop;
+    this.actions = this.warning = this.corrected = this.quote = this.cardEditor = undefined;
+    this.issuePicker = undefined;
+    this.formatPicker = undefined;
     root.empty();
     root.addClass('cc-panel');
     root.addClass('cc-writing-panel');
     root.lang = 'en';
     const header = root.createDiv({ cls: 'cc-panel-header' });
     header.createEl('strong', { text: 'Check writing' });
-    this.button(header, 'Vocabulary', () => void this.host.openPanel());
-    const sessions = this.host.writing.sessions;
-    const s = sessions.find((v) => v.id === this.current) ?? sessions.at(-1);
+    const navigation = header.createDiv({ cls: 'cc-writing-navigation' });
+    this.button(navigation, 'Vocabulary', () => void this.host.openPanel(), 'cc-link-button');
+    const settings = this.button(navigation, '', () => this.host.openSettings(), 'clickable-icon');
+    settings.setAttribute('aria-label', 'Context Cards settings');
+    setIcon(settings, 'sliders-horizontal');
+    const sessions = this.host.writing.sessions,
+      s = sessions.find((s) => s.id === this.current) ?? sessions.at(-1);
     if (!s) {
-      root.createEl('p', {
-        text: 'Select your own text in a Markdown note, then choose Check writing. Your original text will stay intact.',
+      const empty = root.createDiv({ cls: 'cc-empty' });
+      empty.createEl('h2', { text: 'Learn from your own writing.' });
+      empty.createEl('p', {
+        text: 'Select a paragraph and choose Check writing. Review corrections, then turn useful mistakes into practice.',
       });
       return;
     }
-    const busy = s.phase !== 'idle';
-    const picker = root.createEl('select', { attr: { 'aria-label': 'Writing review' } });
+    const pickerRow = root.createDiv({ cls: 'cc-draft-switcher' });
+    const picker = pickerRow.createEl('select', { attr: { 'aria-label': 'Writing review' } });
     for (const session of sessions)
       picker.createEl('option', {
         text: `${session.capture.book} · ${session.created.slice(0, 16).replace('T', ' ')}`,
@@ -95,139 +147,238 @@ export class WritingView extends ItemView {
     picker.value = s.id;
     picker.addEventListener('change', () => {
       this.current = picker.value;
+      this.tab = 'edit';
+      this.back = false;
       this.render();
     });
+    const source = root.createDiv({ cls: 'cc-source-heading' });
+    source.createSpan({ text: s.capture.book });
+    this.button(
+      source,
+      'Open source',
+      () => void this.host.app.workspace.openLinkText(s.capture.file, '', true),
+      'cc-link-button',
+    );
+    const tabs = root.createDiv({ cls: 'cc-tabs' });
+    for (const [value, title] of [
+      ['edit', 'Edit'],
+      ['preview', 'Preview'],
+    ] as const) {
+      const b = this.button(
+        tabs,
+        title,
+        () => {
+          this.tab = value;
+          this.back = false;
+          this.render();
+        },
+        this.tab === value ? 'is-active' : '',
+      );
+      b.setAttribute(
+        'aria-label',
+        value === 'edit' ? 'Edit writing review' : 'Preview writing card',
+      );
+    }
     const body = root.createDiv({ cls: 'cc-panel-body' });
-    body.createDiv({
-      cls: 'cc-muted',
-      text: 'Review suggestions before accepting them. Optional style and unclear meaning are not treated as errors.',
-    });
-    const source = body.createEl('details');
-    source.createEl('summary', { text: 'Your selected text' });
-    source.createEl('pre', { text: s.capture.selected, cls: 'cc-writing-source' });
-    if (s.summary) body.createEl('p', { text: s.summary });
-    if (s.analysed && !s.findings.length)
-      body.createEl('p', {
-        text: 'No issues were flagged. This is model feedback, not a guarantee that the text is error-free.',
-      });
-    if (busy) {
-      body.createEl('p', {
+    if (s.phase !== 'idle') {
+      const busy = body.createDiv({ cls: 'cc-busy' });
+      busy.createSpan({ cls: 'cc-spinner' });
+      busy.createSpan({
         text:
           s.phase === 'analysing'
-            ? 'Checking your writing…'
+            ? 'Checking writing…'
             : s.phase === 'generating'
-              ? 'Preparing practice cards…'
-              : 'Saving your review…',
+              ? 'Preparing cards…'
+              : 'Saving…',
       });
-      if (s.phase === 'analysing' || s.phase === 'generating')
-        this.button(body, 'Cancel', () => this.host.writing.cancel(s));
+      if (['analysing', 'generating'].includes(s.phase))
+        this.button(busy, 'Cancel', () => this.host.writing.cancel(s));
     }
-    for (const f of s.findings.filter((f) => !f.dismissed)) this.finding(body, s, f, busy);
-    const dismissed = s.findings.filter((f) => f.dismissed);
-    if (dismissed.length) {
-      const hidden = body.createEl('details');
-      hidden.createEl('summary', { text: `Dismissed suggestions · ${dismissed.length}` });
-      for (const f of dismissed) {
-        this.button(hidden, `Restore: ${f.title}`, () => {
-          f.dismissed = false;
-          this.host.persist();
-          this.render();
-        }).disabled = busy;
-      }
-    }
-
-    if (s.error)
-      body.createDiv({ cls: 'cc-writing-error', text: s.error, attr: { role: 'alert' } });
-    const footer = root.createDiv({ cls: 'cc-footer' });
-    this.field(
-      footer,
-      'Writing deck',
-      s.deck,
-      'writing-deck',
-      (v) => {
-        s.deck = v;
-      },
-      false,
-    );
-    const selected = s.findings.filter((f) => f.selected && canPractise(f) && !f.noteId);
-    const actions = footer.createDiv({ cls: 'cc-writing-actions' });
-    const check = this.button(
-      actions,
-      s.analysed ? 'Recheck selection' : 'Check writing',
-      () => void this.host.writing.analyse(s),
-    );
-    check.disabled = busy || s.findings.some((f) => !!f.noteId);
-    check.title = 'Rechecking replaces current suggestions and unexported card drafts.';
-    const generate = this.button(
-      actions,
-      `Prepare ${selected.length || ''} ${selected.length === 1 ? 'card' : 'cards'}`.replace(
-        '  ',
-        ' ',
-      ),
-      () => void this.host.writing.generate(s),
-    );
-    generate.disabled = busy || !selected.length;
-    const save = this.button(actions, 'Save review', () => void this.host.writing.save(s));
-    save.disabled = busy || !s.analysed;
-    let valid = selected.length > 0 && selected.every((f) => !!f.card);
-    if (valid)
-      try {
-        for (const f of selected) writingPracticeFields(f);
-      } catch {
-        valid = false;
-      }
-    const add = this.button(
-      actions,
-      `Save review & add ${selected.length || ''} ${selected.length === 1 ? 'card' : 'cards'}`.replace(
-        '  ',
-        ' ',
-      ),
-      () => void this.host.writing.export(s),
-      true,
-    );
-    add.disabled = busy || !valid;
-    if (s.reviewPath)
-      this.button(
-        footer,
-        'Open saved review',
-        () => void this.host.app.workspace.openLinkText(s.reviewPath!, '', true),
+    const visible = s.findings.filter((f) => !f.dismissed);
+    if (visible.length) {
+      const selector = body.createDiv({ cls: 'cc-field' });
+      selector.createEl('label', {
+        text: `Corrections · ${visible.length}`,
+        attr: { for: 'cc-writing-correction-picker' },
+      });
+      const pick = selector.createEl('select', {
+        attr: { id: 'cc-writing-correction-picker', 'aria-label': 'Choose a correction' },
+      });
+      this.issuePicker = pick;
+      for (const f of visible)
+        pick.createEl('option', {
+          text: `${f.noteId ? 'Added · ' : f.selected ? '✓ ' : ''}${f.title} · ${f.kind}`,
+          attr: { value: f.id },
+        });
+      const f = this.active(s)!;
+      pick.value = f.id;
+      pick.addEventListener('change', () => {
+        this.findingIds.set(s.id, pick.value);
+        this.back = false;
+        this.render();
+      });
+      if (this.tab === 'edit') this.renderEditor(body, s, f);
+      else this.renderPreview(body, s, f);
+    } else if (s.analysed && s.phase === 'idle')
+      body.createEl('p', {
+        text: s.findings.length
+          ? 'All suggestions are dismissed. Restore one from Review details below.'
+          : 'No issues were flagged. You can save the review or check another selection.',
+      });
+    if (this.tab === 'edit') this.renderDetails(body, s);
+    this.warning = body.createDiv({ cls: 'cc-warning', attr: { role: 'alert' } });
+    if (this.tab === 'edit') {
+      const footer = root.createDiv({ cls: 'cc-footer' });
+      const destination = footer.createDiv({ cls: 'cc-destination' }),
+        row = destination.createDiv({ cls: 'cc-deck-row' });
+      const icon = row.createSpan({ cls: 'cc-deck-icon' });
+      setIcon(icon, 'layers');
+      icon.setAttribute('aria-hidden', 'true');
+      const deck = this.field(
+        row,
+        'Writing deck',
+        s.deck,
+        'writing-deck',
+        (v) => {
+          s.deck = v;
+        },
+        s,
+        undefined,
+        false,
       );
-    // Cancel stays available while other editing controls are locked.
-    if (busy)
-      for (const e of Array.from(
-        root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
-          'input,textarea,select',
-        ),
-      ))
-        e.disabled = true;
+      deck.parentElement!.querySelector('label')?.addClass('cc-sr-only');
+      const tools = this.section(destination, 'footer-tools', 'More');
+      tools.addClass('cc-destination-tools');
+      this.button(tools, 'Save review', () => void this.host.writing.save(s)).disabled =
+        s.phase !== 'idle' || !s.analysed;
+      if (s.reviewPath)
+        this.button(
+          tools,
+          'Open saved review',
+          () => void this.host.app.workspace.openLinkText(s.reviewPath!, '', true),
+        );
+      this.actions = footer.createDiv({ cls: 'cc-footer-actions' });
+    }
+    this.updateLive(s, this.active(s));
     root.scrollTop = scroll;
-    if (key) {
+    if (focusKey) {
       const replacement = Array.from(
         root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-writing-field]'),
-      ).find((e) => e.dataset.writingField === key);
+      ).find((e) => e.dataset.writingField === focusKey);
       if (replacement && !replacement.disabled) {
         replacement.focus({ preventScroll: true });
-        if (cursor && cursor[0] !== null) replacement.setSelectionRange(cursor[0]!, cursor[1]!);
+        if (cursor) replacement.setSelectionRange(cursor[0]!, cursor[1]!);
       }
     }
   }
-  private finding(root: HTMLElement, s: WritingSession, f: WritingFinding, busy: boolean) {
-    const block = root.createDiv({ cls: 'cc-writing-finding' });
-    block.createEl('h3', { text: `${f.kind[0]!.toUpperCase() + f.kind.slice(1)} · ${f.title}` });
-    const original = block.createDiv({ cls: 'cc-context' });
-    const start = f.original.indexOf(f.before);
-    original.innerHTML = `${htmlText(f.original.slice(0, start))}<mark>${htmlText(f.before)}</mark>${htmlText(f.original.slice(start + f.before.length))}`;
+  private renderEditor(body: HTMLElement, s: WritingSession, f: WritingFinding) {
+    this.quote = body.createDiv({ cls: 'cc-context cc-writing-original' });
+    this.field(
+      body,
+      'Correction',
+      f.after,
+      `${f.id}-after`,
+      (v) => {
+        f.after = v;
+        this.host.writing.editFinding(f);
+      },
+      s,
+      f,
+      false,
+    );
+    this.corrected = body.createDiv({ cls: 'cc-writing-correction' });
+    this.field(
+      body,
+      'Explanation',
+      f.explanation,
+      `${f.id}-why`,
+      (v) => {
+        f.explanation = v;
+        this.host.writing.editFinding(f);
+      },
+      s,
+      f,
+    );
+    const notes = this.section(body, 'tip', 'Tip');
+    this.field(
+      notes,
+      'Tip',
+      f.tip,
+      `${f.id}-tip`,
+      (v) => {
+        f.tip = v;
+        this.host.writing.editFinding(f);
+      },
+      s,
+      f,
+    );
+    const choose = body.createDiv({ cls: 'cc-writing-choices' });
+    const label = choose.createEl('label', { cls: 'cc-writing-select' }),
+      checkbox = label.createEl('input', { type: 'checkbox' });
+    checkbox.checked = f.selected;
+    checkbox.disabled = s.phase !== 'idle' || !!f.noteId || !canPractise(f);
+    label.appendText(' Create a practice card');
+    checkbox.addEventListener('change', () => {
+      f.selected = checkbox.checked;
+      this.host.persist();
+      this.updateLive(s, f);
+    });
+    const format = choose.createEl('select', { attr: { 'aria-label': `Card format: ${f.title}` } });
+    this.formatPicker = format;
+    format.createEl('option', { text: 'Correct the mistake', attr: { value: 'correction' } });
+    const gap = format.createEl('option', {
+      text: 'Complete the sentence',
+      attr: { value: 'gap' },
+    });
+    gap.disabled = !f.after.trim();
+    format.value = f.format;
+    format.disabled = s.phase !== 'idle' || !!f.noteId || !canPractise(f);
+    format.addEventListener('change', () => {
+      f.format = format.value === 'gap' ? 'gap' : 'correction';
+      this.host.writing.editFinding(f);
+      this.host.persist();
+      this.render();
+    });
     if (f.noteId) {
-      block.createDiv({
+      body.createDiv({
         cls: 'cc-muted',
         text: f.reused ? 'Existing Anki practice reused.' : 'Added to Anki.',
       });
-      this.button(block, 'Open in Anki', () => void this.host.openAnki([f.noteId!]));
+      this.button(body, 'Open in Anki', () => void this.host.openAnki([f.noteId!]));
+    } else if (!canPractise(f))
+      body.createDiv({
+        cls: 'cc-muted',
+        text:
+          f.kind === 'unclear'
+            ? 'Clarify the intended meaning before treating this as an error.'
+            : f.kind === 'style'
+              ? 'Optional style suggestion. No practice card is selected.'
+              : 'Typing slip. No practice card is selected.',
+      });
+    if (f.card) {
+      const card = this.section(body, 'card-fields', 'Card details');
+      this.cardEditor = card;
+      for (const [label, key] of [
+        ['Question', 'question'],
+        ['Answer', 'answer'],
+        ['Corrected sentence', 'corrected'],
+        ['Hint', 'hint'],
+        ['Card explanation', 'explanation'],
+        ['Card tip', 'tip'],
+      ] as const)
+        this.field(
+          card,
+          label,
+          f.card[key],
+          `${f.id}-card-${key}`,
+          (v) => {
+            if (f.card) f.card[key] = v;
+          },
+          s,
+          f,
+        );
     }
-    const editable = block.createDiv();
-    const invalidate = () => this.host.writing.editFinding(f);
-    const metadata = editable.createEl('details');
-    metadata.createEl('summary', { text: 'Edit issue details' });
+    const metadata = this.section(body, 'issue-details', 'Issue details');
     this.field(
       metadata,
       'Issue title',
@@ -235,8 +386,9 @@ export class WritingView extends ItemView {
       `${f.id}-title`,
       (v) => {
         f.title = v;
-        invalidate();
       },
+      s,
+      f,
       false,
     );
     this.field(
@@ -246,125 +398,171 @@ export class WritingView extends ItemView {
       `${f.id}-before`,
       (v) => {
         f.before = v;
-        invalidate();
+        this.host.writing.editFinding(f);
       },
+      s,
+      f,
       false,
     );
-    const category = metadata.createEl('select', {
-      attr: { 'aria-label': `Finding category: ${f.title}` },
-    });
+    const category = metadata.createEl('select', { attr: { 'aria-label': 'Finding category' } });
     for (const kind of ['grammar', 'vocabulary', 'style', 'unclear', 'typo'])
       category.createEl('option', { text: kind, attr: { value: kind } });
     category.value = f.kind;
+    category.disabled = s.phase !== 'idle' || !!f.noteId;
     category.addEventListener('change', () => {
       f.kind = category.value as typeof f.kind;
       if (!canPractise(f)) f.selected = false;
-      invalidate();
+      this.host.writing.editFinding(f);
+      this.host.persist();
       this.render();
     });
-    if (!f.noteId)
-      this.button(metadata, 'Dismiss suggestion', () => {
-        f.dismissed = true;
-        f.selected = false;
-        invalidate();
-        this.render();
-      }).disabled = busy;
-    this.field(
-      editable,
-      'Replace with',
-      f.after,
-      `${f.id}-after`,
-      (v) => {
-        f.after = v;
-        invalidate();
-      },
-      false,
+  }
+  private renderDetails(body: HTMLElement, s: WritingSession) {
+    const details = this.section(body, 'review-details', 'Review details');
+    details.createEl('pre', { cls: 'cc-writing-source', text: s.capture.selected });
+    if (s.summary) details.createEl('p', { text: s.summary });
+    const recheck = this.button(
+      details,
+      s.analysed ? 'Recheck selection' : 'Check writing',
+      () => void this.host.writing.analyse(s),
     );
-    if (f.kind !== 'unclear')
-      try {
-        block.createDiv({ cls: 'cc-writing-correction', text: correctedSentence(f) });
-      } catch (error) {
-        block.createDiv({ text: String(error) });
-      }
-    this.field(editable, 'Why', f.explanation, `${f.id}-why`, (v) => {
-      f.explanation = v;
-      invalidate();
-    });
-    this.field(
-      editable,
-      'Tip',
-      f.tip,
-      `${f.id}-tip`,
-      (v) => {
-        f.tip = v;
-        invalidate();
-      },
-      false,
-    );
-    if (canPractise(f)) {
-      const label = editable.createEl('label', { cls: 'cc-writing-select' });
-      const check = label.createEl('input', { type: 'checkbox' });
-      check.checked = f.selected;
-      label.appendText(' Create a practice card');
-      check.addEventListener('change', () => {
-        f.selected = check.checked;
+    recheck.disabled = s.phase !== 'idle' || s.findings.some((f) => !!f.noteId);
+    recheck.title = 'Rechecking replaces current suggestions and unexported card drafts.';
+    for (const f of s.findings.filter((f) => f.dismissed))
+      this.button(details, `Restore: ${f.title}`, () => {
+        f.dismissed = false;
         this.host.persist();
         this.render();
+      }).disabled = s.phase !== 'idle';
+  }
+  private renderPreview(body: HTMLElement, s: WritingSession, f: WritingFinding) {
+    if (!f.card) {
+      body.createEl('p', {
+        text: 'Select this correction for practice, then prepare the card in Edit.',
       });
-      const format = editable.createEl('select', {
-        attr: { 'aria-label': `Card format: ${f.title}` },
+      return;
+    }
+    const toolbar = body.createDiv({ cls: 'cc-preview-toolbar' });
+    this.button(toolbar, 'Flip card', () => {
+      this.back = !this.back;
+      this.render();
+    });
+    try {
+      const fields = writingPracticeFields(f);
+      const front = `<div class="cc-eyebrow">${f.card.kind === 'gap' ? 'Complete the sentence' : 'Correct the highlighted part'}</div><div class="cc-context">${fields.Question}</div>`;
+      const answer = `<hr id="answer"><div class="cc-meaning">${fields.Answer}</div><div class="cc-context">${fields.Corrected}</div><div class="cc-label">Why</div><div>${fields.Explanation}</div>${fields.Tip ? `<div class="cc-label">Remember</div><div>${fields.Tip}</div>` : ''}`;
+      const typed =
+        !this.back && f.card.kind === 'gap'
+          ? '<label>Your answer<input aria-label="Your answer" autocomplete="off"></label>'
+          : '';
+      const frame = body.createEl('iframe', {
+        cls: 'cc-preview-frame',
+        attr: {
+          title: 'Writing practice preview. Typed answers are compared in Anki.',
+          sandbox: 'allow-same-origin',
+        },
       });
-      format.createEl('option', { text: 'Correct the mistake', attr: { value: 'correction' } });
-      format.createEl('option', { text: 'Complete the sentence', attr: { value: 'gap' } });
-      format.value = f.format;
-      format.addEventListener('change', () => {
-        f.format = format.value === 'gap' ? 'gap' : 'correction';
-        invalidate();
-        this.render();
+      const dark = body.ownerDocument.body.classList.contains('theme-dark');
+      frame.srcdoc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';"><style>${CARD_CSS}body{margin:0;padding:20px}input{box-sizing:border-box;display:block;width:100%;padding:10px;font:inherit}</style></head><body class="card ${dark ? 'nightMode' : ''}"><div class="cc-card">${front}${this.back ? answer : typed}</div></body></html>`;
+    } catch (error) {
+      body.createDiv({
+        cls: 'cc-writing-error',
+        text: error instanceof Error ? error.message : String(error),
       });
-    } else
-      block.createDiv({
-        cls: 'cc-muted',
-        text:
-          f.kind === 'unclear'
-            ? 'Clarification is needed before this can become a definite correction.'
-            : f.kind === 'style'
-              ? 'Optional wording suggestion. Not selected for practice.'
-              : 'Typing slip. Not selected for practice.',
-      });
-    if (f.card) {
-      const details = block.createEl('details');
-      details.open = true;
-      details.createEl('summary', { text: 'Practice card · review before adding' });
-      const c = f.card;
-      for (const [label, key] of [
-        ['Question', 'question'],
-        ['Answer', 'answer'],
-        ['Corrected sentence', 'corrected'],
-        ['Hint', 'hint'],
-        ['Card explanation', 'explanation'],
-        ['Card tip', 'tip'],
-      ] as const)
-        this.field(details, label, c[key], `${f.id}-card-${key}`, (v) => {
-          c[key] = v;
-        });
+    }
+  }
+  private updateLive(s: WritingSession, f?: WritingFinding) {
+    if (f && this.quote) {
+      const index = f.original.indexOf(f.before);
+      this.quote.innerHTML =
+        index < 0 || !f.before
+          ? htmlText(f.original)
+          : `${htmlText(f.original.slice(0, index))}<mark>${htmlText(f.before)}</mark>${htmlText(f.original.slice(index + f.before.length))}`;
+    }
+    if (f && this.corrected) {
       try {
-        const fields = writingPracticeFields(f);
-        const preview = details.createDiv({ cls: 'cc-writing-card-preview' });
-        preview.innerHTML = `<div class="cc-label">Front</div>${fields.Question}<hr><div class="cc-label">Back</div><div>${fields.Corrected}</div><div>${fields.Explanation}</div>`;
-      } catch (error) {
-        details.createDiv({
-          cls: 'cc-writing-error',
-          text: error instanceof Error ? error.message : String(error),
-        });
+        this.corrected.textContent =
+          f.kind === 'unclear' ? 'Clarification needed' : correctedSentence(f);
+      } catch {
+        this.corrected.textContent = 'Check the highlighted text and correction.';
       }
     }
-    if (busy || f.noteId)
-      for (const input of Array.from(
-        block.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
-          'input,textarea,select',
-        ),
-      ))
-        input.disabled = true;
+    if (f && this.formatPicker) {
+      this.formatPicker.options[1]!.disabled = !f.after.trim();
+      if (!f.after.trim() && f.format === 'gap') {
+        f.format = 'correction';
+        this.host.writing.editFinding(f);
+        this.formatPicker.value = f.format;
+        this.host.persist();
+      }
+    }
+    if (f && !f.card && this.cardEditor) {
+      this.cardEditor.remove();
+      this.cardEditor = undefined;
+    }
+    if (this.issuePicker)
+      for (const option of Array.from(this.issuePicker.options)) {
+        const finding = s.findings.find((f) => f.id === option.value);
+        if (finding)
+          option.textContent = `${finding.noteId ? 'Added · ' : finding.selected ? '✓ ' : ''}${finding.title} · ${finding.kind}`;
+      }
+    if (this.warning) {
+      this.warning.textContent = s.error;
+      this.warning.toggleClass('is-visible', !!s.error);
+    }
+    if (!this.actions) return;
+    this.actions.empty();
+    const selected = this.selected(s),
+      busy = s.phase !== 'idle';
+    if (!s.analysed) {
+      this.button(
+        this.actions,
+        'Check writing',
+        () => void this.host.writing.analyse(s),
+        'mod-cta',
+      ).disabled = busy;
+      return;
+    }
+    const prepare = this.button(
+      this.actions,
+      `Prepare ${selected.length || ''} ${selected.length === 1 ? 'card' : 'cards'}`.replace(
+        '  ',
+        ' ',
+      ),
+      () => void this.host.writing.generate(s),
+    );
+    prepare.disabled = busy || !selected.length;
+    let valid = !!selected.length;
+    for (const finding of selected)
+      try {
+        writingPracticeFields(finding);
+      } catch {
+        valid = false;
+      }
+    const add = this.button(
+      this.actions,
+      selected.length > 1 ? `Add ${selected.length} cards to Anki` : 'Add to Anki',
+      () => void this.host.writing.export(s),
+      'mod-cta',
+    );
+    add.disabled = busy || !valid;
+    add.title = 'Save the writing review and add the selected, prepared cards.';
+    if (f && !f.noteId) {
+      const discard = this.button(
+        this.actions,
+        '',
+        () => {
+          f.dismissed = true;
+          f.selected = false;
+          this.host.writing.editFinding(f);
+          this.host.persist();
+          this.render();
+        },
+        'cc-discard clickable-icon',
+      );
+      discard.disabled = busy;
+      discard.setAttribute('aria-label', 'Dismiss suggestion');
+      setIcon(discard, 'trash-2');
+    }
   }
 }

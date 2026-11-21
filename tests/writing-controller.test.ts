@@ -76,6 +76,36 @@ function setup() {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing review lifecycle', () => {
+  it('keeps prepared cards after a generation failure and retries only missing drafts', async () => {
+    const { manager, session, f } = setup();
+    f.selected = true;
+    const second = { ...structuredClone(f), id: 'second' };
+    session.findings.push(second);
+    const card = {
+      kind: 'correction' as const,
+      question: original,
+      target: 'wrote',
+      answer: 'written',
+      corrected: 'I have written three stories.',
+      explanation: 'Use a participle.',
+      hint: '',
+      tip: '',
+    };
+    const exercise = vi
+      .spyOn(WritingModel.prototype, 'exercise')
+      .mockResolvedValueOnce(card)
+      .mockRejectedValueOnce(new Error('Invalid writing explanation'))
+      .mockResolvedValueOnce({ ...card, tip: 'Retried' });
+    await manager.generate(session);
+    expect(f.card).toBe(card);
+    expect(session.error).toContain('Ready cards were kept');
+    expect(second.card).toBeUndefined();
+    await manager.generate(session);
+    expect(exercise).toHaveBeenCalledTimes(3);
+    expect(f.card).toBe(card);
+    expect(second.card?.tip).toBe('Retried');
+    expect(session.error).toBe('');
+  });
   it('saves a separate review without modifying the source', async () => {
     const { manager, session, files } = setup();
     await manager.save(session);

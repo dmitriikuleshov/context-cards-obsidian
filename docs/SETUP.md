@@ -223,11 +223,13 @@ Writing practice is a separate mode. Existing vocabulary capture still works wit
 
 1. Select a paragraph of your own English writing in Reading Mode or Live Preview, up to **6,000 characters**.
 2. Click **Check writing** beside the selection, or run **Context Cards: Check selected writing** from the command palette. There is also a context-menu entry.
-3. Review the findings. The original fragment is highlighted, **Replace with** is editable, and **Why** and **Tip** explain the suggestion. The source note is never automatically corrected or marked by this mode.
-4. Use **Edit issue details** to change a title, highlighted fragment or classification, or dismiss a finding. Optional style, unclear meaning and obvious typos are not selected for practice. If the meaning is unclear, resolve it yourself before classifying the finding as a definite grammar/vocabulary correction.
+3. Choose a finding from **Corrections**. The panel shows one at a time: the original fragment is highlighted, **Correction** is editable, and **Explanation** and the collapsed **Tip** explain the suggestion. The source note is never automatically corrected or marked by this mode.
+4. Expand **Issue details** to change a title, highlighted fragment or classification. The trash button dismisses the current suggestion; **Review details** lets you restore it, read the full selection or recheck the analysis. Optional style, unclear meaning and obvious typos cannot become practice cards. If the meaning is unclear, resolve it yourself before classifying the finding as a definite grammar/vocabulary correction.
 5. Tick **Create a practice card** for worthwhile grammar or vocabulary mistakes. Choose **Correct the mistake** or **Complete the sentence**. Nothing is selected automatically.
-6. Click **Prepare cards**. Review the generated question, answer, corrected sentence, explanation and optional hint. You can edit these fields. Changing the underlying correction invalidates its old exercise, so prepare it again.
-7. Choose **Save review** to save feedback alone, or **Save review & add cards** to save and export the selected, reviewed exercises.
+6. Click **Prepare cards**, then open **Preview** and **Flip card** to review the exercise. Expand **Card details** in Edit to change the question, answer, corrected sentence, explanation or hint. Changing the underlying correction invalidates its old exercise, so prepare it again. Typing keeps focus and expanded sections stay open.
+7. Return to **Edit**, check the writing deck and click **Add to Anki**. This saves the review and exports the selected, prepared exercises. To save feedback alone, expand **More** beside the deck and choose **Save review**.
+
+Invalid model responses get one automatic retry within your configured request timeout. If preparing several cards partly fails, already prepared cards and their edits are kept: click **Prepare cards** again to retry only missing or invalid drafts. Connection failures are shown without an automatic retry. If analysis keeps failing, try a shorter selection or increase **Request timeout** in Local model settings.
 
 **One selected finding creates one card.** Correction cards ask you to repair the highlighted fragment; gap cards use Anki's typed-answer comparison. Hints are collapsed on the front. Treat the answer as a model answer: other natural wording can be valid, and Anki still lets you assess your own response.
 
