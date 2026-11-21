@@ -6,6 +6,7 @@ This guide covers a first setup on Windows. You need three running applications:
 2. [Set up Ollama](#2-set-up-ollama)
 3. [Set up Anki](#3-set-up-anki)
 4. [Explore the interface](#4-explore-the-interface)
+5. [Check your own writing](#5-check-your-own-writing)
 
 ## 1. Download and install
 
@@ -213,3 +214,39 @@ Disabling **Context from your book** hides ordinary context display, but preserv
 | Add to Anki disabled | The message below Edit, enabled required fields, source answer, pending replacement or duplicate warning. |
 
 Official references: [Ollama on Windows](https://docs.ollama.com/windows), [AnkiConnect](https://ankiweb.net/shared/info/2055492159), [Anki sync](https://docs.ankiweb.net/syncing.html), [BRAT](https://github.com/TfTHacker/obsidian42-brat).
+
+## 5. Check your own writing
+
+Writing practice is a separate mode. Existing vocabulary capture still works with **Create cards**.
+
+![Writing review panel with an editable correction and practice-card draft](images/writing-panel.png)
+
+1. Select a paragraph of your own English writing in Reading Mode or Live Preview, up to **6,000 characters**.
+2. Click **Check writing** beside the selection, or run **Context Cards: Check selected writing** from the command palette. There is also a context-menu entry.
+3. Review the findings. The original fragment is highlighted, **Replace with** is editable, and **Why** and **Tip** explain the suggestion. The source note is never automatically corrected or marked by this mode.
+4. Use **Edit issue details** to change a title, highlighted fragment or classification, or dismiss a finding. Optional style, unclear meaning and obvious typos are not selected for practice. If the meaning is unclear, resolve it yourself before classifying the finding as a definite grammar/vocabulary correction.
+5. Tick **Create a practice card** for worthwhile grammar or vocabulary mistakes. Choose **Correct the mistake** or **Complete the sentence**. Nothing is selected automatically.
+6. Click **Prepare cards**. Review the generated question, answer, corrected sentence, explanation and optional hint. You can edit these fields. Changing the underlying correction invalidates its old exercise, so prepare it again.
+7. Choose **Save review** to save feedback alone, or **Save review & add cards** to save and export the selected, reviewed exercises.
+
+**One selected finding creates one card.** Correction cards ask you to repair the highlighted fragment; gap cards use Anki's typed-answer comparison. Hints are collapsed on the front. Treat the answer as a model answer: other natural wording can be valid, and Anki still lets you assess your own response.
+
+The model uses the original sentence for the exercise and fixes other recognised, non-overlapping mistakes in that same sentence so there is one target to practise. Review the result: schema checks can verify that the question and answer agree, not that the English advice is always correct.
+
+### Writing settings and saved reviews
+
+Under **Settings → Context Cards → Writing practice**:
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| Writing deck | `English::Writing mistakes` | Destination for writing exercises, separate from reading vocabulary. |
+| Writing review folder | `English/Writing reviews` | Vault-relative folder for saved Markdown feedback. |
+| Writing note type | `Context Cards Writing` | A separate note type with one Practice template. Keep it different from the vocabulary type. |
+
+A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created only when you save/export. Use **Open saved review** to return to it. Personal notes appended after its managed review block are retained when the plugin updates the review.
+
+The latest four writing sessions are stored with plugin data when **Restore unfinished drafts** is enabled. They are independent of the four vocabulary drafts. Rechecking replaces the session's suggestions and unexported exercise drafts; it is disabled after a finding has been exported. Use a fresh selection for new writing.
+
+Successful exports show **Added to Anki**. A matching existing practice note can be reused, and retries skip findings already exported. Matching uses the normalised error/pattern key, not a complete semantic understanding of every equivalent mistake. An export interrupted halfway preserves successful note identifiers so you can retry the remaining cards.
+
+Keep Ollama open while checking/preparing, and Anki Desktop open while exporting. Longer selections can take longer or exceed the local model's output capacity; split a large text into paragraphs if needed. A result with no findings means the model did not flag issues, not that the text is guaranteed error-free.

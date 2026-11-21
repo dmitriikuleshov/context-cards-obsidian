@@ -24,7 +24,7 @@ export class ContextSettings extends PluginSettingTab {
     root.empty();
     root.createEl('h2', { text: 'Context Cards' });
     root.createEl('p', {
-      text: 'Select a passage, review an English draft, and add two cards to Anki. Generation uses your configured local Ollama server.',
+      text: 'Select a word to create vocabulary cards, or select your own writing to review mistakes and create practice. Both modes use your configured Ollama server.',
     });
     const settings = this.plugin.settings;
     const text = (
@@ -280,10 +280,31 @@ export class ContextSettings extends PluginSettingTab {
       cls: 'cc-muted',
       text: 'In Anki, enable Bury siblings to separate the two exercises. Scheduling and FSRS remain controlled by Anki.',
     });
+    new Setting(root).setName('Writing practice').setHeading();
+    text(
+      'Writing deck',
+      'Destination for cards made from your own writing mistakes. One approved finding creates one card; vocabulary decks are unchanged.',
+      'writingDeck',
+      DEFAULTS.writingDeck,
+    );
+    text(
+      'Writing review folder',
+      'Vault-relative folder for saved writing reviews. Reviews keep the selected text, corrections and Anki references. The original source note is not changed.',
+      'writingReviewFolder',
+      DEFAULTS.writingReviewFolder,
+    );
+    text(
+      'Writing note type',
+      'A separate Anki note type with one Practice template. Keep it different from the vocabulary note type.',
+      'writingNoteType',
+      DEFAULTS.writingNoteType,
+    );
     new Setting(root).setName('Reading workflow').setHeading();
     new Setting(root)
       .setName('Selection button')
-      .setDesc('Show Create cards beside a selection in Reading Mode and Live Preview.')
+      .setDesc(
+        'Show Create cards and Check writing beside a selection in Reading Mode and Live Preview.',
+      )
       .addToggle((toggle) =>
         toggle.setValue(settings.floatingButton).onChange((value) => {
           settings.floatingButton = value;

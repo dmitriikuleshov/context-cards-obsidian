@@ -324,6 +324,79 @@
 .cc-floating[hidden] {
   display: none !important;
 }
+.cc-floating {
+  display: flex;
+  gap: 6px;
+}
+.cc-floating > button {
+  margin: 0;
+  font: inherit;
+}
+.cc-floating > button[hidden] {
+  display: none !important;
+}
+.cc-writing-panel {
+  padding: 0 !important;
+}
+.cc-writing-panel > select {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 16px 20px;
+}
+.cc-writing-panel .cc-panel-body > p {
+  margin: 16px 0;
+}
+.cc-writing-source {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+}
+.cc-writing-finding {
+  border-top: 1px solid var(--background-modifier-border);
+  padding-top: 18px;
+  margin-top: 20px;
+}
+.cc-writing-finding h3 {
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+.cc-writing-finding .cc-context {
+  margin: 12px 0;
+}
+.cc-writing-finding .cc-field {
+  margin: 12px 0;
+}
+.cc-writing-select {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0;
+}
+.cc-writing-correction {
+  color: var(--text-normal);
+  border-left: 2px solid var(--cc-accent);
+  padding: 8px 12px;
+  margin: 12px 0;
+}
+.cc-writing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cc-writing-actions button {
+  flex: 1 1 140px;
+}
+.cc-writing-error {
+  color: var(--text-error);
+  margin: 14px 0;
+  overflow-wrap: anywhere;
+}
+.cc-writing-card-preview {
+  padding: 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  margin: 12px 0;
+}
 .cc-preview-toolbar {
   display: flex;
   gap: 7px;

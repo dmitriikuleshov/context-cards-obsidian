@@ -44,3 +44,7 @@ export class Setting {}
 export function setIcon(element: HTMLElement, name: string) {
   element.dataset.icon = name;
 }
+
+export class TFile {}
+export const normalizePath = (path: string) =>
+  path.replaceAll('\\', '/').replace(/\/+/g, '/').replace(/\/$/, '');

@@ -1,3 +1,5 @@
+import { WritingController } from './writing-controller';
+import { WritingView, WRITING_VIEW } from './writing-view';
 import { MarkdownView, Notice, Plugin } from 'obsidian';
 import { sourceMarkRange } from './source-mark';
 import { activeCapture, readCapture } from './capture';
@@ -20,9 +22,10 @@ export default class ContextCardsPlugin extends Plugin {
   settings: Settings = structuredClone(DEFAULTS);
   drafts: Draft[] = [];
   deckNames: string[] = [];
+  writing = new WritingController(this);
   private jobs = new Map<string, AbortController>();
   private lastCapture: Capture | null = null;
-  private floating = new Map<Document, HTMLButtonElement>();
+  private floating = new Map<Document, HTMLElement>();
   private saveTimer?: ReturnType<typeof setTimeout>;
   private writes: Promise<void> = Promise.resolve();
   private exports: Promise<unknown> = Promise.resolve();
@@ -30,9 +33,26 @@ export default class ContextCardsPlugin extends Plugin {
   private captureEpoch = 0;
 
   async onload() {
-    const stored = restoreData(await this.loadData());
+    const raw = await this.loadData();
+    const stored = restoreData(raw);
     this.settings = stored.settings;
     this.drafts = stored.drafts;
+    if (this.settings.restoreDrafts) this.writing.restore(raw?.writingSessions);
+    this.registerView(WRITING_VIEW, (leaf) => new WritingView(leaf, this));
+    this.addCommand({
+      id: 'check-writing',
+      name: 'Check selected writing',
+      callback: () => {
+        const captured = activeCapture(this.app) ?? this.lastCapture;
+        if (captured) void this.writing.start(captured);
+        else new Notice('Select your writing first.');
+      },
+    });
+    this.addCommand({
+      id: 'open-writing',
+      name: 'Open writing review',
+      callback: () => void this.openWritingPanel(),
+    });
     if (stored.skipped)
       new Notice(
         `Could not restore ${stored.skipped} damaged draft(s). Other drafts are available.`,
@@ -73,6 +93,13 @@ export default class ContextCardsPlugin extends Plugin {
         if (captured)
           menu.addItem((item) =>
             item
+              .setTitle('Check writing')
+              .setIcon('spell-check')
+              .onClick(() => void this.writing.start(captured)),
+          );
+        if (captured && captured.selected.length <= 240)
+          menu.addItem((item) =>
+            item
               .setTitle('Create vocabulary cards')
               .setIcon('book-open-check')
               .onClick(() => void this.capture(captured)),
@@ -104,15 +131,27 @@ export default class ContextCardsPlugin extends Plugin {
   }
   private setupDocument(doc: Document) {
     if (this.floating.has(doc)) return;
-    const button = doc.createElement('button');
+    const button = doc.createElement('div');
+    const vocabulary = doc.createElement('button');
+    vocabulary.textContent = 'Create cards';
+    vocabulary.setAttribute('aria-label', 'Create vocabulary cards from selection');
+    const writing = doc.createElement('button');
+    writing.textContent = 'Check writing';
+    writing.setAttribute('aria-label', 'Check selected writing');
+    button.append(vocabulary, writing);
     button.className = 'cc-floating';
-    button.textContent = 'Create cards';
-    button.setAttribute('aria-label', 'Create vocabulary cards from selection');
     button.hidden = true;
     doc.body.appendChild(button);
     this.floating.set(doc, button);
     button.addEventListener('pointerdown', (event) => event.preventDefault());
-    button.addEventListener('click', () => {
+    writing.addEventListener('click', () => {
+      const captured = this.lastCapture;
+      if (captured) {
+        this.hideFloating();
+        void this.writing.start(captured);
+      }
+    });
+    vocabulary.addEventListener('click', () => {
       const capture = this.lastCapture;
       if (capture) void this.capture(capture);
     });
@@ -125,11 +164,12 @@ export default class ContextCardsPlugin extends Plugin {
         return;
       }
       const captured = readCapture(this.app, view);
-      if (!captured || captured.selected.length > 240) {
+      if (!captured || captured.selected.length > 6000) {
         button.hidden = true;
         return;
       }
       this.lastCapture = captured;
+      vocabulary.hidden = captured.selected.length > 240;
       if (!this.settings.floatingButton) {
         button.hidden = true;
         return;
@@ -172,6 +212,20 @@ export default class ContextCardsPlugin extends Plugin {
   }
   hideFloating() {
     for (const button of this.floating.values()) button.hidden = true;
+  }
+  refreshWriting() {
+    if (this.unloaded) return;
+    for (const leaf of this.app.workspace.getLeavesOfType(WRITING_VIEW))
+      (leaf.view as WritingView).render();
+  }
+  async openWritingPanel(): Promise<WritingView> {
+    let leaf = this.app.workspace.getLeavesOfType(WRITING_VIEW)[0];
+    if (!leaf) {
+      leaf = this.app.workspace.getRightLeaf(true) ?? this.app.workspace.getLeaf('split');
+      await leaf.setViewState({ type: WRITING_VIEW, active: true });
+    }
+    await this.app.workspace.revealLeaf(leaf);
+    return leaf.view as WritingView;
   }
   async openPanel(): Promise<ReviewView> {
     let leaf = this.app.workspace.getLeavesOfType(VIEW_TYPE)[0];
@@ -571,12 +625,14 @@ export default class ContextCardsPlugin extends Plugin {
     const snapshot: StoredData = structuredClone({
       settings: this.settings,
       drafts: this.settings.restoreDrafts ? this.drafts.slice(-MAX_DRAFTS) : [],
+      writingSessions: this.settings.restoreDrafts ? this.writing.sessions : [],
     });
     this.writes = this.writes.catch(() => {}).then(() => this.saveData(snapshot));
     return this.writes;
   }
   onunload() {
     this.unloaded = true;
+    this.writing.stop();
     for (const controller of this.jobs.values()) controller.abort();
     clearTimeout(this.saveTimer);
     void this.flush().catch((error) =>

@@ -1,6 +1,6 @@
 {
   "name": "obsidian-context-cards",
-  "version": "0.1.25",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -18,7 +18,8 @@
     "format": "prettier --write src tests scripts *.json *.mjs *.ts styles.css",
     "check": "npm test && npm run build",
     "package": "npm run build && node scripts/package.mjs",
-    "verify:package": "node scripts/verify-package.mjs"
+    "verify:package": "node scripts/verify-package.mjs",
+    "test:writing-anki": "node scripts/verify-writing-anki.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

@@ -1,3 +1,4 @@
+import type { WritingSession } from './writing';
 export interface CardFields {
   grammar: boolean;
   ipa: 'american' | 'british' | 'off';
@@ -27,6 +28,9 @@ export function cardFields(settings?: Partial<Settings>): CardFields {
 }
 export interface Settings {
   fields: CardFields;
+  writingDeck: string;
+  writingReviewFolder: string;
+  writingNoteType: string;
   ollamaUrl: string;
   model: string;
   temperature: number;
@@ -45,6 +49,9 @@ export interface Settings {
 }
 export const DEFAULTS: Settings = {
   fields: { ...DEFAULT_FIELDS },
+  writingDeck: 'English::Writing mistakes',
+  writingReviewFolder: 'English/Writing reviews',
+  writingNoteType: 'Context Cards Writing',
   ollamaUrl: 'http://127.0.0.1:11434',
   model: 'qwen3.5:9b-q4_K_M',
   temperature: 0.2,
@@ -120,6 +127,7 @@ export interface Draft extends Content {
 export interface StoredData {
   settings: Settings;
   drafts: Draft[];
+  writingSessions?: WritingSession[];
 }
 export function emptyContent(): Content {
   return {

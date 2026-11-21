@@ -20,6 +20,17 @@ Context Cards brings that work into Obsidian:
 
 No separate vocabulary notes to maintain. Your books stay in Obsidian; your spaced repetition stays in Anki.
 
+## Turn writing mistakes into practice
+
+Writing your own story or paragraph? Select it and choose **Check writing**, next to Create cards. Review grammar and vocabulary suggestions, edit the corrections and tips, then choose which findings deserve an Anki card.
+
+- **Correct the mistake:** repair a highlighted expression from your writing.
+- **Complete the sentence:** restore a specific corrected form in a gap.
+
+Each chosen mistake creates **one** exercise, not the vocabulary mode's automatic pair. Optional style suggestions, unclear meaning and typing slips are separated from practice candidates. You can dismiss suggestions and edit the model's classification.
+
+Save the full review in Obsidian, with the original selection, suggestions and Anki references. Writing cards use a separate deck. Your original text stays untouched. [Writing-mode walkthrough](docs/SETUP.md#5-check-your-own-writing)
+
 ## Understand the word. Practise using it.
 
 A definition is a start. A useful vocabulary card gives you more to work with:

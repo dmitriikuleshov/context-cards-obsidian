@@ -68,6 +68,9 @@ function settings(value: unknown): Settings {
   const result = structuredClone(DEFAULTS);
   if (!record(value)) return result;
   for (const key of [
+    'writingDeck',
+    'writingReviewFolder',
+    'writingNoteType',
     'ollamaUrl',
     'model',
     'ankiUrl',

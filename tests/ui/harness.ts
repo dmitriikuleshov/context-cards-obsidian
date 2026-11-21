@@ -1,4 +1,5 @@
 import { ReviewView } from '../../src/view';
+import { mountWritingPanel } from './writing-harness';
 import { createDraft } from '../../src/text';
 import { DEFAULTS, type Draft } from '../../src/types';
 import type ContextCardsPlugin from '../../src/main';
@@ -94,5 +95,6 @@ const host = {
 };
 const view = new ReviewView({} as any, host as unknown as ContextCardsPlugin);
 view.show(draft);
-document.querySelector('#panel')!.append(view.contentEl);
+if (new URLSearchParams(location.search).has('writing')) mountWritingPanel(document.querySelector('#panel')!);
+else document.querySelector('#panel')!.append(view.contentEl);
 Object.assign(window, { contextCardsPreview: { view, draft, host } });

@@ -56,11 +56,15 @@ describe('selection to draft through the plugin entry points', () => {
       const show = vi.fn();
       vi.spyOn(plugin, 'openPanel').mockResolvedValue({ show } as any);
       const generate = vi.spyOn(plugin, 'generate').mockResolvedValue();
+      const writing = vi.spyOn(plugin.writing, 'start').mockResolvedValue();
       await plugin.onload();
       contentEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-      const button = document.querySelector<HTMLButtonElement>('.cc-floating')!;
+      const button = document.querySelector<HTMLButtonElement>(
+        '.cc-floating > button[aria-label="Create vocabulary cards from selection"]',
+      )!;
       expect(button.hidden).toBe(false);
-      const down = new Event('pointerdown', { cancelable: true });
+      expect(button.parentElement!.hidden).toBe(false);
+      const down = new Event('pointerdown', { cancelable: true, bubbles: true });
       button.dispatchEvent(down);
       expect(down.defaultPrevented).toBe(true);
       button.click();
@@ -69,6 +73,9 @@ describe('selection to draft through the plugin entry points', () => {
       expect(plugin.drafts[0]!.answer).toBe('brushed off');
       expect(plugin.drafts[0]!.capture.mode).toBe(mode === 'preview' ? 'reading' : 'editor');
       expect(show).toHaveBeenCalledWith(plugin.drafts[0]);
+      contentEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+      document.querySelector<HTMLButtonElement>('[aria-label="Check selected writing"]')!.click();
+      expect(writing).toHaveBeenCalledWith(expect.objectContaining({ selected: 'brushed off' }));
       // Opening a palette or clicking the ribbon can collapse the DOM selection.
       selection.removeAllRanges();
       if (mode === 'source') view.editor.getSelection = () => '';

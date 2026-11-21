@@ -1,9 +1,9 @@
 {
   "id": "context-cards",
   "name": "Context Cards",
-  "version": "0.1.25",
+  "version": "0.2.0",
   "minAppVersion": "1.8.0",
-  "description": "Create two editable vocabulary cards from your reading with local Ollama and Anki.",
+  "description": "Create vocabulary cards and writing-mistake practice with local Ollama and Anki.",
   "author": "Context Cards contributors",
   "isDesktopOnly": true
 }
