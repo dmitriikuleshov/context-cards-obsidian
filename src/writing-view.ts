@@ -145,7 +145,6 @@ export class WritingView extends ItemView {
     const header = root.createDiv({ cls: 'cc-panel-header' });
     header.createEl('strong', { text: 'Writing practice' });
     const nav = header.createDiv({ cls: 'cc-writing-navigation' });
-    this.button(nav, 'Vocabulary', () => void this.host.openPanel());
     const settings = this.button(nav, '', () => this.host.openSettings());
     settings.setAttribute('aria-label', 'Context Cards settings');
     setIcon(settings, 'sliders-horizontal');
