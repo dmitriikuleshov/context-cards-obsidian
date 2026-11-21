@@ -343,6 +343,9 @@
   align-items: center;
   gap: 12px;
 }
+.cc-writing-workflow .cc-clear-drafts {
+  margin-left: auto;
+}
 .cc-writing-panel .cc-panel-body > p {
   margin: 16px 0;
 }

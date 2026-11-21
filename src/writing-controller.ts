@@ -114,6 +114,21 @@ export class WritingController {
       s.error = 'Cancelled. Your previous results and prepared cards were kept.';
     this.jobs.get(s.id)?.abort();
   }
+  async clear() {
+    if (this.sessions.some((s) => s.phase === 'exporting' || s.phase === 'saving')) {
+      new Notice('Wait for the writing export or save to finish before clearing drafts.');
+      return;
+    }
+    for (const job of this.jobs.values()) job.abort();
+    this.sessions = [];
+    this.host.persist();
+    this.refresh();
+    try {
+      await this.host.flush();
+    } catch (error) {
+      new Notice(`Could not save the cleared writing draft list: ${String(error)}`);
+    }
+  }
   stop() {
     this.stopped = true;
     for (const job of this.jobs.values()) job.abort();
@@ -123,7 +138,7 @@ export class WritingController {
     phase: WritingSession['phase'],
     work: (signal: AbortSignal) => Promise<void>,
   ) {
-    if (this.stopped || s.phase !== 'idle') return;
+    if (this.stopped || s.phase !== 'idle' || !this.sessions.includes(s)) return;
     const controller = new AbortController();
     this.jobs.set(s.id, controller);
     s.phase = phase;

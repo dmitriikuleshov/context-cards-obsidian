@@ -80,6 +80,11 @@ export function mountWritingPanel(root: HTMLElement) {
     app: { workspace: { openLinkText: () => {} } },
     writing: {
       sessions: [session],
+      clear: async () => {
+        host.writing.sessions = [];
+        controls.finish?.();
+        view.render();
+      },
       cancel: (s: any) => {
         s.phase = 'idle';
         s.error = 'Cancelled. Your previous results and prepared cards were kept.';

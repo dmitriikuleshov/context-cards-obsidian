@@ -76,6 +76,46 @@ function setup() {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing review lifecycle', () => {
+  it('clears all drafts, aborts model jobs and rejects late responses without deleting saved reviews', async () => {
+    const { manager, session, f, host, files } = setup();
+    await manager.save(session);
+    const saved = [...files.entries()].map(([path, item]) => [path, item.text]);
+    const second = structuredClone(session);
+    second.id = 'second';
+    second.findings[0]!.selected = true;
+    manager.sessions.push(second);
+    let analyse!: (v: any) => void, generate!: (v: any) => void;
+    vi.spyOn(WritingModel.prototype, 'analyse').mockImplementation(
+      () => new Promise((r) => (analyse = r)),
+    );
+    vi.spyOn(WritingModel.prototype, 'exercise').mockImplementation(
+      () => new Promise((r) => (generate = r)),
+    );
+    const jobs = [manager.analyse(session), manager.generate(second)];
+    await manager.clear();
+    expect(manager.sessions).toEqual([]);
+    expect(host.flush).toHaveBeenCalled();
+    analyse({ summary: 'Late response', findings: [] });
+    generate({ question: 'Late card' });
+    await Promise.all(jobs);
+    expect(manager.sessions).toEqual([]);
+    expect(session.findings).toContain(f);
+    expect(second.findings[0]!.card).toBeUndefined();
+    expect([...files.entries()].map(([path, item]) => [path, item.text])).toEqual(saved);
+  });
+  it('does not clear drafts during a save/export and ignores stale session requests after clearing', async () => {
+    const { manager, session } = setup();
+    for (const phase of ['saving', 'exporting'] as const) {
+      session.phase = phase;
+      await manager.clear();
+      expect(manager.sessions).toEqual([session]);
+    }
+    session.phase = 'idle';
+    await manager.clear();
+    const analyse = vi.spyOn(WritingModel.prototype, 'analyse');
+    await manager.analyse(session);
+    expect(analyse).not.toHaveBeenCalled();
+  });
   it('validates every card before writing files or exporting the first note', async () => {
     const { manager, session, f, files } = setup();
     f.selected = true;

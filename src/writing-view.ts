@@ -158,9 +158,9 @@ export class WritingView extends ItemView {
       return;
     }
     this.current = s.id;
+    const draftRow = root.createDiv({ cls: 'cc-draft-switcher' });
     if (sessions.length > 1) {
-      const row = root.createDiv({ cls: 'cc-draft-switcher' }),
-        picker = row.createEl('select', { attr: { 'aria-label': 'Writing review' } });
+      const picker = draftRow.createEl('select', { attr: { 'aria-label': 'Writing review' } });
       for (const item of sessions)
         picker.createEl('option', {
           text: `${item.capture.book} · ${item.created.slice(0, 16).replace('T', ' ')}`,
@@ -171,6 +171,18 @@ export class WritingView extends ItemView {
         this.show(sessions.find((s) => s.id === picker.value)!),
       );
     }
+    const clear = this.button(draftRow, 'Clear all', () => {
+      this.attempt++;
+      this.editing = undefined;
+      this.screen = 'review';
+      this.current = '';
+      void this.host.writing.clear();
+    });
+    clear.addClass('cc-clear-drafts');
+    clear.setAttribute('aria-label', 'Clear all writing drafts');
+    clear.title =
+      'Clear writing drafts and cancel analysis/preparation. Existing Anki cards and saved reviews are kept.';
+    clear.disabled = sessions.some((s) => s.phase === 'exporting' || s.phase === 'saving');
     const body = root.createDiv({ cls: 'cc-panel-body' }),
       busy = s.phase !== 'idle';
     if (busy) {

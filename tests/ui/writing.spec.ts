@@ -16,6 +16,32 @@ test.beforeEach(async ({ page }) => {
     p.view.show(p.session);
   });
 });
+test('Clear all is available for one draft and clears the whole selector while preparation is running', async ({
+  page,
+}) => {
+  const clear = page.getByRole('button', { name: 'Clear all writing drafts', exact: true });
+  await expect(clear).toBeVisible();
+  await page.evaluate(() => {
+    const p = (window as any).writingPreview;
+    const second = structuredClone(p.session);
+    second.id = 'second';
+    p.host.writing.sessions.push(second);
+    p.controls.deferGenerate = true;
+    p.view.render();
+  });
+  await expect(page.getByLabel('Writing review')).toBeVisible();
+  await button(page, 'Review 1 card').click();
+  await expect(page.getByRole('status')).toContainText('Preparing');
+  await clear.click();
+  await expect(
+    page.getByText('Select your English writing and choose Check writing.', { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel('Writing review')).toHaveCount(0);
+  await expect(page.locator('.cc-writing-preview')).toHaveCount(0);
+  expect(await page.evaluate(() => (window as any).writingPreview.host.writing.sessions)).toEqual(
+    [],
+  );
+});
 test('Edit and the labeled checkbox change inclusion without navigation or generation', async ({
   page,
 }) => {
@@ -144,7 +170,10 @@ test('partial export retries only remaining notes and locks successful edits', a
   await expect(page.getByRole('alert')).toContainText('Cannot connect');
   await expect(page.getByText('✓ Already added', { exact: true })).toBeVisible();
   await expect(
-    page.locator('.cc-writing-preview').first().getByRole('button', { name: 'Edit card', exact: true }),
+    page
+      .locator('.cc-writing-preview')
+      .first()
+      .getByRole('button', { name: 'Edit card', exact: true }),
   ).toBeDisabled();
   await button(page, 'Retry remaining cards').click();
   const ids = await page.evaluate(() => (window as any).writingPreview.controls.exports);
