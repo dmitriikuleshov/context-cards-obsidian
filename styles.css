@@ -346,6 +346,13 @@
 .cc-writing-workflow .cc-clear-drafts {
   margin-left: auto;
 }
+.cc-writing-draft-title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--text-muted);
+  font-size: 12px;
+}
 .cc-writing-panel .cc-panel-body > p {
   margin: 16px 0;
 }

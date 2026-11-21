@@ -253,7 +253,7 @@ A saved review keeps the selected text, source link, suggestions, exercise draft
 
 The latest four writing sessions are stored with plugin data when **Restore unfinished drafts** is enabled. They are independent of the four vocabulary drafts. Rechecking replaces the session's suggestions and unexported exercise drafts; it is disabled after a finding has been exported. Use a fresh selection for new writing.
 
-**Clear all**, beside the writing draft selector, clears every writing draft and cancels running analysis/preparation. It keeps vocabulary drafts, saved review notes and existing Anki cards. It is available even with one draft, and is disabled while a review is being saved or cards are being exported.
+With multiple writing drafts, **Clear all** beside the selector clears every writing draft and cancels running analysis/preparation. With one draft, its title appears beside **Clear draft**. With no drafts, the panel shows **No writing drafts** and no clearing controls. Clearing keeps vocabulary drafts, saved review notes and existing Anki cards. It is disabled while a review is being saved or cards are being exported.
 
 Successful exports show **Added to Anki**. A matching existing practice note can be reused, and retries skip findings already exported. Matching uses the normalised error/pattern key, not a complete semantic understanding of every equivalent mistake. An export interrupted halfway preserves successful note identifiers so you can retry the remaining cards.
 

@@ -16,11 +16,13 @@ test.beforeEach(async ({ page }) => {
     p.view.show(p.session);
   });
 });
-test('Clear all is available for one draft and clears the whole selector while preparation is running', async ({
-  page,
-}) => {
+test('draft controls adapt to one, multiple and empty drafts during clearing', async ({ page }) => {
   const clear = page.getByRole('button', { name: 'Clear all writing drafts', exact: true });
-  await expect(clear).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Clear writing draft', exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText('Draft · My story', { exact: true })).toBeVisible();
+  await expect(clear).toHaveCount(0);
   await page.evaluate(() => {
     const p = (window as any).writingPreview;
     const second = structuredClone(p.session);
@@ -37,10 +39,22 @@ test('Clear all is available for one draft and clears the whole selector while p
     page.getByText('Select your English writing and choose Check writing.', { exact: true }),
   ).toBeVisible();
   await expect(page.getByLabel('Writing review')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'No writing drafts', exact: true })).toBeVisible();
+  await expect(clear).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Clear writing draft', exact: true })).toHaveCount(
+    0,
+  );
   await expect(page.locator('.cc-writing-preview')).toHaveCount(0);
   expect(await page.evaluate(() => (window as any).writingPreview.host.writing.sessions)).toEqual(
     [],
   );
+});
+test('clearing the only draft leaves an empty state without a clearing button', async ({
+  page,
+}) => {
+  await page.getByRole('button', { name: 'Clear writing draft', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'No writing drafts', exact: true })).toBeVisible();
+  await expect(page.locator('.cc-draft-switcher')).toHaveCount(0);
 });
 test('Edit and the labeled checkbox change inclusion without navigation or generation', async ({
   page,

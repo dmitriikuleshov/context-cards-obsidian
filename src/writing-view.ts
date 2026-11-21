@@ -151,10 +151,9 @@ export class WritingView extends ItemView {
     const sessions = this.host.writing.sessions,
       s = sessions.find((s) => s.id === this.current) ?? sessions.at(-1);
     if (!s) {
-      root.createDiv({
-        cls: 'cc-empty',
-        text: 'Select your English writing and choose Check writing.',
-      });
+      const empty = root.createDiv({ cls: 'cc-empty' });
+      empty.createEl('h2', { text: 'No writing drafts' });
+      empty.createEl('p', { text: 'Select your English writing and choose Check writing.' });
       return;
     }
     this.current = s.id;
@@ -170,8 +169,10 @@ export class WritingView extends ItemView {
       picker.addEventListener('change', () =>
         this.show(sessions.find((s) => s.id === picker.value)!),
       );
+    } else {
+      draftRow.createSpan({ cls: 'cc-writing-draft-title', text: `Draft · ${s.capture.book}` });
     }
-    const clear = this.button(draftRow, 'Clear all', () => {
+    const clear = this.button(draftRow, sessions.length > 1 ? 'Clear all' : 'Clear draft', () => {
       this.attempt++;
       this.editing = undefined;
       this.screen = 'review';
@@ -179,7 +180,10 @@ export class WritingView extends ItemView {
       void this.host.writing.clear();
     });
     clear.addClass('cc-clear-drafts');
-    clear.setAttribute('aria-label', 'Clear all writing drafts');
+    clear.setAttribute(
+      'aria-label',
+      sessions.length > 1 ? 'Clear all writing drafts' : 'Clear writing draft',
+    );
     clear.title =
       'Clear writing drafts and cancel analysis/preparation. Existing Anki cards and saved reviews are kept.';
     clear.disabled = sessions.some((s) => s.phase === 'exporting' || s.phase === 'saving');
