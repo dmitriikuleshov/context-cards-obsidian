@@ -372,6 +372,10 @@
 .cc-writing-panel .cc-section {
   margin: 16px 0;
 }
+.cc-writing-panel .cc-footer-actions > .cc-link-button {
+  flex: 0 0 auto;
+  padding: 0 12px;
+}
 .cc-writing-select {
   display: flex;
   gap: 8px;

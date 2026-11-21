@@ -90,8 +90,10 @@ export class WritingView extends ItemView {
     });
     return input;
   }
-  private selected(s: WritingSession) {
-    return s.findings.filter((f) => f.selected && canPractise(f) && !f.noteId);
+  private choose(s: WritingSession, current: WritingFinding) {
+    for (const finding of s.findings)
+      finding.selected = finding === current && canPractise(finding);
+    this.host.persist();
   }
   private active(s: WritingSession) {
     return (
@@ -138,6 +140,7 @@ export class WritingView extends ItemView {
       return;
     }
     const pickerRow = root.createDiv({ cls: 'cc-draft-switcher' });
+    pickerRow.hidden = sessions.length < 2;
     const picker = pickerRow.createEl('select', { attr: { 'aria-label': 'Writing review' } });
     for (const session of sessions)
       picker.createEl('option', {
@@ -164,6 +167,7 @@ export class WritingView extends ItemView {
       ['edit', 'Edit'],
       ['preview', 'Preview'],
     ] as const) {
+      if (value === 'preview' && !this.active(s)?.card) continue;
       const b = this.button(
         tabs,
         title,
@@ -225,11 +229,10 @@ export class WritingView extends ItemView {
           ? 'All suggestions are dismissed. Restore one from Review details below.'
           : 'No issues were flagged. You can save the review or check another selection.',
       });
-    if (this.tab === 'edit') this.renderDetails(body, s);
     this.warning = body.createDiv({ cls: 'cc-warning', attr: { role: 'alert' } });
-    if (this.tab === 'edit') {
+    {
       const footer = root.createDiv({ cls: 'cc-footer' });
-      const destination = footer.createDiv({ cls: 'cc-destination' }),
+      const destination = this.section(footer, 'footer-tools', 'Options'),
         row = destination.createDiv({ cls: 'cc-deck-row' });
       const icon = row.createSpan({ cls: 'cc-deck-icon' });
       setIcon(icon, 'layers');
@@ -247,13 +250,12 @@ export class WritingView extends ItemView {
         false,
       );
       deck.parentElement!.querySelector('label')?.addClass('cc-sr-only');
-      const tools = this.section(destination, 'footer-tools', 'More');
-      tools.addClass('cc-destination-tools');
-      this.button(tools, 'Save review', () => void this.host.writing.save(s)).disabled =
+      this.renderDetails(destination, s);
+      this.button(destination, 'Save review', () => void this.host.writing.save(s)).disabled =
         s.phase !== 'idle' || !s.analysed;
       if (s.reviewPath)
         this.button(
-          tools,
+          destination,
           'Open saved review',
           () => void this.host.app.workspace.openLinkText(s.reviewPath!, '', true),
         );
@@ -287,6 +289,7 @@ export class WritingView extends ItemView {
       false,
     );
     this.corrected = body.createDiv({ cls: 'cc-writing-correction' });
+    this.corrected.hidden = true;
     this.field(
       body,
       'Explanation',
@@ -299,7 +302,7 @@ export class WritingView extends ItemView {
       s,
       f,
     );
-    const notes = this.section(body, 'tip', 'Tip');
+    const notes = this.section(body, 'advanced', 'More details');
     this.field(
       notes,
       'Tip',
@@ -312,17 +315,7 @@ export class WritingView extends ItemView {
       s,
       f,
     );
-    const choose = body.createDiv({ cls: 'cc-writing-choices' });
-    const label = choose.createEl('label', { cls: 'cc-writing-select' }),
-      checkbox = label.createEl('input', { type: 'checkbox' });
-    checkbox.checked = f.selected;
-    checkbox.disabled = s.phase !== 'idle' || !!f.noteId || !canPractise(f);
-    label.appendText(' Create a practice card');
-    checkbox.addEventListener('change', () => {
-      f.selected = checkbox.checked;
-      this.host.persist();
-      this.updateLive(s, f);
-    });
+    const choose = notes.createDiv({ cls: 'cc-writing-choices' });
     const format = choose.createEl('select', { attr: { 'aria-label': `Card format: ${f.title}` } });
     this.formatPicker = format;
     format.createEl('option', { text: 'Correct the mistake', attr: { value: 'correction' } });
@@ -356,7 +349,7 @@ export class WritingView extends ItemView {
               : 'Typing slip. No practice card is selected.',
       });
     if (f.card) {
-      const card = this.section(body, 'card-fields', 'Card details');
+      const card = this.section(notes, 'card-fields', 'Edit card fields');
       this.cardEditor = card;
       for (const [label, key] of [
         ['Question', 'question'],
@@ -378,7 +371,7 @@ export class WritingView extends ItemView {
           f,
         );
     }
-    const metadata = this.section(body, 'issue-details', 'Issue details');
+    const metadata = this.section(notes, 'issue-details', 'Issue details');
     this.field(
       metadata,
       'Issue title',
@@ -436,6 +429,8 @@ export class WritingView extends ItemView {
       }).disabled = s.phase !== 'idle';
   }
   private renderPreview(body: HTMLElement, s: WritingSession, f: WritingFinding) {
+    if (f.noteId)
+      body.createEl('p', { text: f.reused ? 'Existing Anki practice reused.' : 'Added to Anki.' });
     if (!f.card) {
       body.createEl('p', {
         text: 'Select this correction for practice, then prepare the card in Edit.',
@@ -503,8 +498,7 @@ export class WritingView extends ItemView {
     if (this.issuePicker)
       for (const option of Array.from(this.issuePicker.options)) {
         const finding = s.findings.find((f) => f.id === option.value);
-        if (finding)
-          option.textContent = `${finding.noteId ? 'Added · ' : finding.selected ? '✓ ' : ''}${finding.title} · ${finding.kind}`;
+        if (finding) option.textContent = `${finding.noteId ? 'Added · ' : ''}${finding.title}`;
       }
     if (this.warning) {
       this.warning.textContent = s.error;
@@ -512,8 +506,7 @@ export class WritingView extends ItemView {
     }
     if (!this.actions) return;
     this.actions.empty();
-    const selected = this.selected(s),
-      busy = s.phase !== 'idle';
+    const busy = s.phase !== 'idle';
     if (!s.analysed) {
       this.button(
         this.actions,
@@ -523,34 +516,67 @@ export class WritingView extends ItemView {
       ).disabled = busy;
       return;
     }
-    const prepare = this.button(
-      this.actions,
-      `Prepare ${selected.length || ''} ${selected.length === 1 ? 'card' : 'cards'}`.replace(
-        '  ',
-        ' ',
-      ),
-      () => void this.host.writing.generate(s),
-    );
-    prepare.disabled = busy || !selected.length;
-    let valid = !!selected.length;
-    for (const finding of selected)
-      try {
-        writingPracticeFields(finding);
-      } catch {
-        valid = false;
-      }
-    const add = this.button(
-      this.actions,
-      selected.length > 1 ? `Add ${selected.length} cards to Anki` : 'Add to Anki',
-      () => void this.host.writing.export(s),
-      'mod-cta',
-    );
-    add.disabled = busy || !valid;
-    add.title = 'Save the writing review and add the selected, prepared cards.';
+    if (!f) return;
+    if (f.noteId) {
+      const next = s.findings.find((item) => !item.dismissed && !item.noteId && item.id !== f.id);
+      if (next)
+        this.button(
+          this.actions,
+          'Next correction',
+          () => {
+            this.findingIds.set(s.id, next.id);
+            this.tab = 'edit';
+            this.back = false;
+            this.render();
+          },
+          'mod-cta',
+        ).disabled = busy;
+      return;
+    }
+    let valid = false;
+    try {
+      writingPracticeFields(f);
+      valid = true;
+    } catch {
+      /* Prepare or repair this card. */
+    }
+    if (this.tab === 'preview' && valid) {
+      this.button(
+        this.actions,
+        'Add to Anki',
+        () => {
+          this.choose(s, f);
+          void this.host.writing.export(s);
+        },
+        'mod-cta',
+      ).disabled = busy || !canPractise(f);
+    } else {
+      this.button(
+        this.actions,
+        valid ? 'Preview card' : 'Create card',
+        () => {
+          void (async () => {
+            this.choose(s, f);
+            if (!valid) await this.host.writing.generate(s);
+            if (
+              f.card &&
+              !s.error &&
+              this.active(s)?.id === f.id &&
+              (this.current || s.id) === s.id
+            ) {
+              this.tab = 'preview';
+              this.back = false;
+              this.render();
+            }
+          })();
+        },
+        'mod-cta',
+      ).disabled = busy || !canPractise(f);
+    }
     if (f && !f.noteId) {
       const discard = this.button(
         this.actions,
-        '',
+        'Skip',
         () => {
           f.dismissed = true;
           f.selected = false;
@@ -558,11 +584,10 @@ export class WritingView extends ItemView {
           this.host.persist();
           this.render();
         },
-        'cc-discard clickable-icon',
+        'cc-link-button',
       );
       discard.disabled = busy;
       discard.setAttribute('aria-label', 'Dismiss suggestion');
-      setIcon(discard, 'trash-2');
     }
   }
 }
