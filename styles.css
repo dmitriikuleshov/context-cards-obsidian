@@ -388,10 +388,6 @@
   font-size: 14px;
   margin: 0;
 }
-.cc-writing-workflow h3.cc-writing-complete {
-  font-size: 18px;
-  margin: 20px 0 12px;
-}
 .cc-writing-row {
   display: flex;
   align-items: center;
@@ -531,15 +527,6 @@
 }
 .cc-writing-decisions .mod-cta {
   flex: 1;
-}
-.cc-writing-undo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin: 14px 0;
 }
 .cc-writing-preview {
   border: 1px solid var(--cc-line);

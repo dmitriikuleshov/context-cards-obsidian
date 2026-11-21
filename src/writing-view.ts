@@ -17,7 +17,6 @@ export class WritingView extends ItemView {
   private screen: Screen = 'review';
   private findingIds = new Map<string, string>();
   private editing?: string;
-  private undo?: { session: string; id: string; selected: boolean; dismissed: boolean };
   private sections = new Map<string, boolean>();
   private attempt = 0;
   constructor(
@@ -42,7 +41,6 @@ export class WritingView extends ItemView {
     this.current = s.id;
     this.screen = 'review';
     this.editing = undefined;
-    this.undo = undefined;
     this.attempt++;
     this.render();
   }
@@ -63,10 +61,7 @@ export class WritingView extends ItemView {
     return el;
   }
   private active(s: WritingSession) {
-    return (
-      s.findings.find((f) => f.id === this.findingIds.get(s.id)) ??
-      s.findings.find((f) => !f.selected && !f.dismissed && !f.noteId)
-    );
+    return s.findings.find((f) => f.id === this.findingIds.get(s.id)) ?? s.findings[0];
   }
   private selected(s: WritingSession) {
     return s.findings.filter((f) => f.selected && canPractise(f));
@@ -87,20 +82,12 @@ export class WritingView extends ItemView {
     this.host.persist();
     this.render();
   }
-  private next(s: WritingSession, f: WritingFinding) {
-    const start = s.findings.indexOf(f);
-    const ordered = [...s.findings.slice(start + 1), ...s.findings.slice(0, start)];
-    const next = ordered.find((item) => !item.selected && !item.dismissed && !item.noteId);
-    this.findingIds.set(s.id, next?.id ?? '');
-  }
-  private decide(s: WritingSession, f: WritingFinding, keep: boolean) {
+  private decide(s: WritingSession, f: WritingFinding, include: boolean) {
     if (s.phase !== 'idle' || f.noteId) return;
-    // Skipped suggestions remain inspectable in the original text and can be undone.
-    if (keep && !(f.kind === 'grammar' || f.kind === 'vocabulary')) return;
-    this.undo = { session: s.id, id: f.id, selected: f.selected, dismissed: !!f.dismissed };
-    f.dismissed = !keep;
-    f.selected = keep;
-    this.next(s, f);
+    if (include && f.kind !== 'grammar' && f.kind !== 'vocabulary') return;
+    f.selected = include;
+    f.dismissed = !include;
+    this.findingIds.set(s.id, f.id);
     this.changed(s);
   }
   private field(
@@ -244,12 +231,11 @@ export class WritingView extends ItemView {
   }
   private renderReview(body: HTMLElement, s: WritingSession) {
     const busy = s.phase !== 'idle',
-      f = this.active(s),
-      reviewed = s.findings.filter((f) => f.selected || f.dismissed || f.noteId).length;
+      f = this.active(s);
     const heading = body.createDiv({ cls: 'cc-writing-row' });
     heading.createEl('h2', { text: 'Review your writing' });
     if (s.analysed)
-      heading.createSpan({ cls: 'cc-muted', text: `${reviewed} of ${s.findings.length} reviewed` });
+      heading.createSpan({ cls: 'cc-muted', text: `${s.findings.length} suggestions` });
     const source = body.createDiv({ cls: 'cc-writing-row cc-writing-source-heading' });
     source.createSpan({ text: `${s.capture.book} · Original text` });
     this.button(
@@ -272,7 +258,6 @@ export class WritingView extends ItemView {
       const finding = s.findings.find((f) => f.id === range.id)!;
       const mark = this.button(text, s.capture.selected.slice(range.start, range.end), () => {
         this.findingIds.set(s.id, range.id);
-        this.undo = undefined;
         this.render();
         this.contentEl.querySelector('.cc-writing-change')?.scrollIntoView({ block: 'nearest' });
       });
@@ -303,30 +288,11 @@ export class WritingView extends ItemView {
       });
       return;
     }
-    body.createDiv({ cls: 'cc-writing-legend', text: '✓ Kept for a card     – Skipped' });
+    body.createDiv({ cls: 'cc-writing-legend', text: '✓ Card selected     – Not selected' });
     body.createEl('hr');
-    if (!f) {
-      body.createEl('h3', { text: 'All corrections reviewed', cls: 'cc-writing-complete' });
-      const kept = this.selected(s).length,
-        skipped = s.findings.filter((f) => f.dismissed).length;
-      body.createEl('p', {
-        text: `${kept} ${kept === 1 ? 'card' : 'cards'} selected · ${skipped} skipped.`,
-      });
-      body.createEl('p', {
-        cls: 'cc-muted',
-        text: kept
-          ? 'Review your selected cards below, or click a highlight to revisit a correction.'
-          : 'No cards will be created. You can finish this review or click a highlight to reconsider.',
-      });
-      this.renderUndo(body, s);
-      return;
-    }
+    if (!f) return;
     const row = body.createDiv({ cls: 'cc-writing-row' });
     row.createEl('h3', { text: f.title });
-    this.button(row, 'Edit', () => {
-      this.editing = f.id;
-      this.render();
-    }).disabled = busy || !!f.noteId;
     const change = body.createDiv({ cls: 'cc-writing-change' });
     change.createEl('del', { text: f.before });
     change.createSpan({ text: '→', attr: { 'aria-hidden': 'true' } });
@@ -335,7 +301,7 @@ export class WritingView extends ItemView {
     if (f.dismissed)
       body.createEl('p', {
         cls: 'cc-muted',
-        text: 'Skipped. No practice card will be created for this suggestion.',
+        text: 'Not selected for a card.',
       });
     if (f.noteId) {
       body.createEl('p', { cls: 'cc-writing-success', text: 'Already added to Anki.' });
@@ -351,58 +317,23 @@ export class WritingView extends ItemView {
               : 'Clarify your intended meaning before treating this as an error.',
       });
     const decisions = body.createDiv({ cls: 'cc-writing-decisions' });
-    if (!f.noteId && !f.dismissed)
-      this.button(decisions, f.selected ? 'Remove from cards' : 'Skip', () =>
-        this.decide(s, f, false),
-      ).disabled = busy;
-    if (!f.noteId && !f.selected && (f.kind === 'grammar' || f.kind === 'vocabulary')) {
-      let valid = true;
-      try {
-        correctedSentence(f);
-        if (!f.explanation.trim()) valid = false;
-      } catch {
-        valid = false;
-      }
-      this.button(decisions, 'Keep & next', () => this.decide(s, f, true), true).disabled =
-        busy || !valid;
-    } else
-      this.button(
-        decisions,
-        'Next correction',
-        () => {
-          this.next(s, f);
-          this.render();
-        },
-        true,
-      ).disabled = busy || s.findings.length < 2;
-    this.renderUndo(body, s);
-    body.createEl('p', {
-      cls: 'cc-muted',
-      text:
-        reviewed === s.findings.length
-          ? 'All corrections reviewed. Click a highlight to revisit it.'
-          : 'Keep useful mistakes as practice cards. Your text stays unchanged.',
-    });
-  }
-  private renderUndo(body: HTMLElement, s: WritingSession) {
-    const busy = s.phase !== 'idle';
-    if (this.undo?.session === s.id) {
-      const u = this.undo,
-        item = s.findings.find((f) => f.id === u.id);
-      if (item && !item.noteId) {
-        const row = body.createDiv({ cls: 'cc-writing-undo' });
-        row.createSpan({
-          text: `“${item.before}” ${item.selected ? 'kept for practice' : 'skipped'}.`,
-        });
-        this.button(row, 'Undo', () => {
-          item.selected = u.selected;
-          item.dismissed = u.dismissed;
-          this.findingIds.set(s.id, item.id);
-          this.undo = undefined;
-          this.changed(s);
-        }).disabled = busy;
-      }
+    this.button(decisions, 'Edit', () => {
+      this.editing = f.id;
+      this.render();
+    }).disabled = busy || !!f.noteId;
+    let valid = true;
+    try {
+      correctedSentence(f);
+      if (!f.explanation.trim()) valid = false;
+    } catch {
+      valid = false;
     }
+    this.button(
+      decisions,
+      f.noteId ? 'Added to Anki' : f.selected ? "Don't create card" : 'Create card',
+      () => this.decide(s, f, !f.selected),
+      true,
+    ).disabled = busy || !!f.noteId || !valid || (f.kind !== 'grammar' && f.kind !== 'vocabulary');
   }
   private renderEditor(body: HTMLElement, s: WritingSession, f: WritingFinding) {
     body.createEl('h2', { text: 'Edit correction' });
@@ -609,7 +540,6 @@ export class WritingView extends ItemView {
     this.button(options, 'Save review', () => void this.host.writing.save(s)).disabled =
       busy || !s.analysed;
     this.button(options, 'Recheck selection', () => {
-      this.undo = undefined;
       void this.host.writing.analyse(s);
     }).disabled = busy || s.findings.some((f) => !!f.noteId);
     if (s.reviewPath)
