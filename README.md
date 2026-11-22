@@ -15,14 +15,14 @@ Collecting vocabulary should not mean copying passages between apps, writing eve
 Context Cards brings that work into Obsidian:
 
 1. **Select a word or expression** in your Markdown reading.
-2. **Click Create cards.** A local model prepares an English draft from the surrounding passage.
+2. **Click Explain word / phrase.** A local model prepares an English draft from the surrounding passage.
 3. **Review, edit, and add to Anki.** One approved note creates two complementary exercises.
 
 No separate vocabulary notes to maintain. Your books stay in Obsidian; your spaced repetition stays in Anki.
 
 ## Turn writing mistakes into practice
 
-Writing your own story or paragraph? Select it and choose **Check writing**, next to Create cards. Review grammar and vocabulary suggestions, edit the corrections and tips, then choose which findings deserve an Anki card.
+Writing your own story or paragraph? Select it and choose **Find mistakes**, next to Explain word / phrase. Review grammar and vocabulary suggestions, edit the corrections and tips, then choose which findings deserve an Anki card.
 
 - **Correct the mistake:** repair a highlighted expression from your writing.
 - **Complete the sentence:** restore a specific corrected form in a gap.

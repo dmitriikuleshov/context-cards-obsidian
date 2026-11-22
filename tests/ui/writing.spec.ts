@@ -33,7 +33,7 @@ test('draft controls adapt to one, multiple and empty drafts during clearing', a
   await expect(page.getByRole('status')).toContainText('Preparing');
   await clear.click();
   await expect(
-    page.getByText('Select your English writing and choose Check writing.', { exact: true }),
+    page.getByText('Select your English writing and choose Find mistakes.', { exact: true }),
   ).toBeVisible();
   await expect(page.getByLabel('Writing review')).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'No writing drafts', exact: true })).toBeVisible();

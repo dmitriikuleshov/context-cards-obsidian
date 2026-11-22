@@ -42,7 +42,7 @@ export default class ContextCardsPlugin extends Plugin {
     this.registerView(WRITING_VIEW, (leaf) => new WritingView(leaf, this));
     this.addCommand({
       id: 'check-writing',
-      name: 'Check selected writing',
+      name: 'Find mistakes',
       callback: () => {
         const captured = activeCapture(this.app) ?? this.lastCapture;
         if (captured) void this.writing.start(captured);
@@ -60,14 +60,14 @@ export default class ContextCardsPlugin extends Plugin {
       );
     this.registerView(VIEW_TYPE, (leaf) => new ReviewView(leaf, this));
     this.addSettingTab(new ContextSettings(this.app, this));
-    this.addRibbonIcon('book-open-check', 'Context Cards: create from selection', () => {
+    this.addRibbonIcon('book-open-check', 'Context Cards: Explain word / phrase', () => {
       const capture = activeCapture(this.app) ?? this.lastCapture;
       if (capture) void this.capture(capture);
       else void this.openPanel();
     });
     this.addCommand({
       id: 'create-from-selection',
-      name: 'Create cards from selection',
+      name: 'Explain word / phrase',
       callback: () => {
         const captured = activeCapture(this.app) ?? this.lastCapture;
         if (captured) void this.capture(captured);
@@ -94,14 +94,14 @@ export default class ContextCardsPlugin extends Plugin {
         if (captured)
           menu.addItem((item) =>
             item
-              .setTitle('Check writing')
+              .setTitle('Find mistakes')
               .setIcon('spell-check')
               .onClick(() => void this.writing.start(captured)),
           );
         if (captured && captured.selected.length <= 240)
           menu.addItem((item) =>
             item
-              .setTitle('Create vocabulary cards')
+              .setTitle('Explain word / phrase')
               .setIcon('book-open-check')
               .onClick(() => void this.capture(captured)),
           );
@@ -134,11 +134,11 @@ export default class ContextCardsPlugin extends Plugin {
     if (this.floating.has(doc)) return;
     const button = doc.createElement('div');
     const vocabulary = doc.createElement('button');
-    vocabulary.textContent = 'Create cards';
-    vocabulary.setAttribute('aria-label', 'Create vocabulary cards from selection');
+    vocabulary.textContent = 'Explain word / phrase';
+    vocabulary.setAttribute('aria-label', 'Explain word / phrase');
     const writing = doc.createElement('button');
-    writing.textContent = 'Check writing';
-    writing.setAttribute('aria-label', 'Check selected writing');
+    writing.textContent = 'Find mistakes';
+    writing.setAttribute('aria-label', 'Find mistakes');
     button.append(vocabulary, writing);
     button.className = 'cc-floating';
     button.hidden = true;

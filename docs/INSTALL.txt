@@ -23,7 +23,7 @@ Do not use the automatic Source code ZIP: it has no compiled plugin.
    Restart Anki and keep it open when adding cards.
 5. In Context Cards settings check connections and the installed model.
    Defaults: Ollama http://127.0.0.1:11434; AnkiConnect http://127.0.0.1:8765.
-6. Select a word in a Markdown book, click Create cards, review the draft,
+6. Select a word in a Markdown book, click Explain word / phrase, review the draft,
    and use Add to Anki in the Edit tab.
 
 UPDATES

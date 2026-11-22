@@ -60,9 +60,10 @@ describe('selection to draft through the plugin entry points', () => {
       await plugin.onload();
       contentEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
       const button = document.querySelector<HTMLButtonElement>(
-        '.cc-floating > button[aria-label="Create vocabulary cards from selection"]',
+        '.cc-floating > button[aria-label="Explain word / phrase"]',
       )!;
       expect(button.hidden).toBe(false);
+      expect(button.textContent).toBe('Explain word / phrase');
       expect(button.parentElement!.hidden).toBe(false);
       const down = new Event('pointerdown', { cancelable: true, bubbles: true });
       button.dispatchEvent(down);
@@ -74,7 +75,11 @@ describe('selection to draft through the plugin entry points', () => {
       expect(plugin.drafts[0]!.capture.mode).toBe(mode === 'preview' ? 'reading' : 'editor');
       expect(show).toHaveBeenCalledWith(plugin.drafts[0]);
       contentEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-      document.querySelector<HTMLButtonElement>('[aria-label="Check selected writing"]')!.click();
+      const writingButton = document.querySelector<HTMLButtonElement>(
+        '[aria-label="Find mistakes"]',
+      )!;
+      expect(writingButton.textContent).toBe('Find mistakes');
+      writingButton.click();
       expect(writing).toHaveBeenCalledWith(expect.objectContaining({ selected: 'brushed off' }));
       // Opening a palette or clicking the ribbon can collapse the DOM selection.
       selection.removeAllRanges();

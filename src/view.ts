@@ -152,7 +152,7 @@ export class ReviewView extends ItemView {
       empty.createDiv({ cls: 'cc-empty-icon', text: 'Aa' });
       empty.createEl('h2', { text: 'Keep the words worth keeping.' });
       empty.createEl('p', {
-        text: 'Select a word or expression in your book, then click Create cards or use the editor context menu.',
+        text: 'Select a word or expression in your book, then click Explain word / phrase or use the editor context menu.',
       });
 
       this.button(empty, 'Check connections', () => this.plugin.checkConnections());

@@ -182,7 +182,7 @@ export class WritingView extends ItemView {
     if (!s) {
       const empty = root.createDiv({ cls: 'cc-empty' });
       empty.createEl('h2', { text: 'No writing drafts' });
-      empty.createEl('p', { text: 'Select your English writing and choose Check writing.' });
+      empty.createEl('p', { text: 'Select your English writing and choose Find mistakes.' });
       this.editorValues.clear();
       this.renderKey = '';
       owner.scrollTop = 0;
@@ -645,7 +645,7 @@ export class WritingView extends ItemView {
     if (!s.analysed) {
       this.button(
         actions,
-        'Check writing',
+        'Find mistakes',
         () => void this.host.writing.analyse(s),
         true,
       ).disabled = busy;

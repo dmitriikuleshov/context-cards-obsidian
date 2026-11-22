@@ -369,7 +369,7 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root)
       .setName('Selection button')
       .setDesc(
-        'Show Create cards and Check writing beside a selection in Reading Mode and Live Preview.',
+        'Show Explain word / phrase and Find mistakes beside a selection in Reading Mode and Live Preview.',
       )
       .addToggle((toggle) =>
         toggle.setValue(settings.floatingButton).onChange((value) => {
@@ -416,7 +416,7 @@ export class ContextSettings extends PluginSettingTab {
       );
     root.createEl('p', {
       cls: 'cc-muted',
-      text: 'Commands: Create cards from selection · Open review panel · Check connections. Assign shortcuts under Obsidian → Hotkeys.',
+      text: 'Commands: Explain word / phrase · Find mistakes · Open review panel · Check connections. Assign shortcuts under Obsidian → Hotkeys.',
     });
     this.dropdownCleanup = enhanceSelects(root);
   }

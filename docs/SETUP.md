@@ -110,7 +110,7 @@ You do not need to create the destination deck or note type manually: the plugin
 
 ### Verify your first note and sync
 
-1. Open a Markdown text in Obsidian, select a word and click **Create cards**.
+1. Open a Markdown text in Obsidian, select a word and click **Explain word / phrase**.
 2. Review the generated draft and click **Add to Anki** in **Edit**.
 3. After **Two cards added to Anki**, select **Open in Anki**, or open Anki's Browse window.
 4. Check both **Recognition** and **Recall**. They are two cards from one note, not two independent notes.
@@ -123,7 +123,7 @@ The screenshots below show the **actual plugin panel in its standalone preview**
 
 ### Select a word and manage drafts
 
-Read Markdown in **Reading Mode** or **Live Preview**, select a word or expression, and click **Create cards**. You can also use the Context Cards commands in Obsidian's command palette.
+Read Markdown in **Reading Mode** or **Live Preview**, select a word or expression, and click **Explain word / phrase**. You can also use the Context Cards commands in Obsidian's command palette.
 
 The panel opens with an editable draft. Use the selector at the top to switch between the latest **four** drafts. Adding a fifth removes the oldest from the list. **Clear all** clears drafts and cancels current generation; it does not delete Anki notes. Unsent content in removed drafts is lost.
 
@@ -208,7 +208,7 @@ Disabling **Context from your book** hides ordinary context display, but preserv
 
 | Symptom | Check |
 | --- | --- |
-| No Create cards button | Markdown selection, Reading Mode/Live Preview and Selection button setting. Try the command palette. |
+| No Explain word / phrase button | Markdown selection, Reading Mode/Live Preview and Selection button setting. Try the command palette. |
 | Plugin missing | Enable it under Community plugins; for ZIP installation, check folder nesting. |
 | Ollama unavailable | Running app, server URL and exact tag from `ollama list`. |
 | Slow or failed generation | Initial model load, available memory and timeout. Connectivity checks do not test memory capacity. |
@@ -219,12 +219,12 @@ Official references: [Ollama on Windows](https://docs.ollama.com/windows), [Anki
 
 ## 5. Check your own writing
 
-Writing practice is a separate mode. Existing vocabulary capture still works with **Create cards**.
+Writing practice is a separate mode. Existing vocabulary capture still works with **Explain word / phrase**.
 
 ![Writing review panel with an editable correction and practice-card draft](images/writing-panel.png)
 
 1. Select a paragraph of your own English writing in Reading Mode or Live Preview, up to **6,000 characters**.
-2. Click **Check writing** beside the selection, or run **Context Cards: Check selected writing** from the command palette. There is also a context-menu entry.
+2. Click **Find mistakes** beside the selection, or run **Context Cards: Find mistakes** from the command palette. There is also a context-menu entry.
 3. Click a highlighted word in **Original text** to inspect its correction and explanation. The original note is never automatically corrected or marked by this mode.
 4. Beside **Edit**, the **Create an Anki card** checkbox controls whether this correction is included in the batch. Grammar and vocabulary corrections are checked by default after analysis; optional style, unclear meaning and typos stay unchecked. Uncheck any card you do not want. The label stays the same and the current word stays open. Saved choices are preserved when reopening a review. Exercises are prepared only when you click **Review N cards** below.
 5. Click **Edit** to change a correction. Changes apply only after **Save changes**; **Cancel** discards them. **More details** contains the tip, issue metadata, exercise type and prepared card fields. Changing the underlying correction invalidates its exercise. Typing keeps focus.
