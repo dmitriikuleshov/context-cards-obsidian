@@ -1,12 +1,21 @@
 # Context Cards
 
-**Read what you love. Turn the words you meet into Anki cards.**
+**Learn the words you meet. Practise the mistakes you make.**
 
 ![Context Cards in Obsidian: reading The Call of Cthulhu alongside an editable vocabulary draft](docs/images/context-cards-obsidian.png)
 
-Meet a word in a book, select it, and let your local AI prepare a vocabulary card—with the passage that made you curious in the first place. Review the draft right beside your reading, make it your own, and send it to Anki.
+Turn your reading and writing into useful Anki practice, right inside Obsidian. Select a word to understand it, or select your own writing to find mistakes. Your local AI prepares the material; you review it before adding anything to Anki.
 
 **[Get started — setup guide](docs/SETUP.md)** · **[Download](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest)** · **[Interface walkthrough](docs/SETUP.md#4-explore-the-interface)**
+
+## Two buttons, two ways to learn
+
+| Select… | Click… | What happens next |
+| --- | --- | --- |
+| A word or expression in your Markdown reading | **Explain word / phrase** | Get an editable vocabulary draft with its context, meanings and examples. |
+| A paragraph of your own English writing | **Find mistakes** | Review highlighted corrections and choose which ones to practise. |
+
+Both actions open a draft first. You decide what goes into Anki.
 
 ## From a good book to a useful card
 
@@ -22,14 +31,14 @@ No separate vocabulary notes to maintain. Your books stay in Obsidian; your spac
 
 ## Turn writing mistakes into practice
 
-Writing your own story or paragraph? Select it and choose **Find mistakes**, next to Explain word / phrase. Review grammar and vocabulary suggestions, edit the corrections and tips, then choose which findings deserve an Anki card.
+Select your writing and click **Find mistakes**. Click a highlighted expression to inspect its correction, explanation and **Create an Anki card** checkbox. Keep the grammar and vocabulary corrections you want to practise, then choose **Review N cards** before exporting.
 
 - **Correct the mistake:** repair a highlighted expression from your writing.
-- **Complete the sentence:** restore a specific corrected form in a gap.
+- **Fill in the gap:** restore a specific corrected form in a sentence.
 
-Each chosen mistake creates **one** exercise, not the vocabulary mode's automatic pair. Optional style suggestions, unclear meaning and typing slips are separated from practice candidates. You can dismiss suggestions and edit the model's classification.
+**One selected correction creates one card.** Let the model choose an exercise type for each correction, or set your preference. Optional style suggestions, unclear meaning and spelling-only feedback do not become practice cards.
 
-Save the full review in Obsidian, with the original selection, suggestions and Anki references. Writing cards use a separate deck. Your original text stays untouched. [Writing-mode walkthrough](docs/SETUP.md#5-check-your-own-writing)
+Exporting also saves a Markdown review with the original text, feedback and Anki references. Writing cards use their own deck. [Writing-mode walkthrough →](docs/SETUP.md#5-check-your-own-writing)
 
 ## Understand the word. Practise using it.
 
@@ -56,10 +65,11 @@ The recall exercise uses the **original source form**. If the book says “brush
 ## Built around your reading
 
 - **Read in either mode.** Capture selections from Reading Mode or Live Preview.
+- **One familiar panel layout.** Both modes share the Context Cards header, a draft selector, **Clear all** and **Open source**.
 - **Keep the source close.** Review the surrounding passage and jump back to the book.
 - **Organise by book.** Use a separate subdeck for each Markdown file, or choose your own destination.
 - **Check before exporting.** Preview both exercises and edit the draft before it reaches Anki.
-- **Pick up where you left off.** The last four drafts can survive an Obsidian restart.
+- **Pick up where you left off.** The last four drafts in each mode can survive an Obsidian restart.
 - **Mark words as you go.** Optionally format captured words as inline code in the source Markdown.
 - **Review on your phone.** Sync the finished cards through Anki and study in AnkiDroid or AnkiMobile.
 
@@ -81,6 +91,6 @@ The guide covers downloading the plugin, setting up Ollama and Anki, and a scree
 
 ---
 
-For contributors: [release instructions](docs/RELEASING.md) · [development history](docs/DEVELOPMENT-HISTORY.ru.md).
+For contributors: [testing](docs/TESTING.md) · [release instructions](docs/RELEASING.md) · [development history](docs/DEVELOPMENT-HISTORY.ru.md).
 
-American pronunciation data is derived from CMUdict. See [data/README.md](data/README.md) and [its license](data/CMUDICT-LICENSE.txt); the notice is bundled with the plugin.
+American pronunciation data is derived from CMUdict. See [data/README.md](data/README.md) and [its license](data/CMUDICT-LICENSE.txt); the notice is included in the downloadable ZIP.

@@ -1,6 +1,13 @@
 # Context Cards: setup and interface guide
 
-This guide covers a first setup on Windows. You need three running applications: **Obsidian** for reading, **Ollama** for local generation, and **Anki Desktop** for adding cards. BRAT installs and updates the Obsidian plugin; it does not install Ollama or Anki.
+Set up the plugin on Windows, connect a local model and Anki, then create your first vocabulary or writing card. Keep **Ollama** running while generating content and **Anki Desktop** running while exporting. BRAT installs the Obsidian plugin; Ollama and Anki are separate applications.
+
+| Select… | Use… | Result |
+| --- | --- | --- |
+| One word or expression in your reading | **Explain word / phrase** | An editable vocabulary draft. |
+| A paragraph of your own English writing | **Find mistakes** | Highlighted corrections to review. |
+
+Both actions prepare material for review. Exporting to Anki is a later step.
 
 1. [Download and install](#1-download-and-install)
 2. [Set up Ollama](#2-set-up-ollama)
@@ -22,20 +29,34 @@ This guide covers a first setup on Windows. You need three running applications:
    dmitriikuleshov/context-cards-obsidian
    ```
 
-6. Select the latest available version and add the plugin. Enable **Context Cards** under Community plugins if it is not enabled automatically.
+6. Add the plugin using the latest published release. If a version selector is shown, choose the latest release. Enable **Context Cards** under Community plugins if needed.
 7. Open **Settings → Context Cards**.
 
-Configure update checks in BRAT, or use its update command. Do not uninstall Context Cards before updating: keep its settings and drafts in place.
+Configure update checks in BRAT, or use its update command. Keep your existing plugin settings and drafts in place. See [BRAT's documentation](https://tfthacker.com/BRAT) for its installation and update controls.
 
 ### Alternative: ZIP
 
 1. Open [the latest release](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest).
 2. Under **Assets**, download **context-cards-VERSION.zip**. Do not use the automatic **Source code** archives: they do not contain the compiled plugin.
 3. Extract the `context-cards` folder into `<your vault>/.obsidian/plugins/`. Create `plugins` if necessary.
-4. Check the result: `.obsidian/plugins/context-cards/main.js`, without another nested `context-cards` folder.
+4. Check the folder structure:
+
+   ```text
+   <your vault>/
+     .obsidian/
+       plugins/
+         context-cards/
+           main.js
+           manifest.json
+           styles.css
+           CMUDICT-LICENSE.txt
+           INSTALL.txt
+   ```
+
+   `main.js` must be directly inside `context-cards`, without another nested folder.
 5. Restart Obsidian and enable **Context Cards** under Community plugins.
 
-To update manually, disable the plugin, replace `main.js`, `manifest.json`, `styles.css` and the included documentation/CMUdict notice, then enable it again. **Keep your existing data.json**, which stores settings and drafts. No Node.js, npm or Python is needed to install a release.
+To update manually, disable the plugin, replace the release files in its existing folder, then enable it again or restart Obsidian. **Keep your existing `data.json`**, which stores settings, API key and drafts. No Node.js, npm or Python is needed to install a release.
 
 ## 2. Set up Ollama
 
@@ -49,7 +70,7 @@ To update manually, disable the plugin, replace `main.js`, `manifest.json`, `sty
    ollama pull qwen3.5:9b-q4_K_M
    ```
 
-4. Wait for the download to finish. The model requires several gigabytes of disk space, plus sufficient memory to run. Speed depends on hardware; the development setup uses an RTX 5070 and 32 GB RAM.
+4. Wait for the download to finish. The model requires several gigabytes of disk space and enough memory to run. Speed depends on the chosen model and your hardware.
 5. Check installed models:
 
    ```powershell
@@ -58,7 +79,7 @@ To update manually, disable the plugin, replace `main.js`, `manifest.json`, `sty
 
    The list should include `qwen3.5:9b-q4_K_M`.
 
-Keep Ollama running while generating drafts. The Windows app normally starts its server itself; you do not need another `ollama serve` process when it is already running.
+Keep Ollama running while generating drafts. Its Windows app runs the server in the background; an additional `ollama serve` process is unnecessary when it is already active. [Official Windows instructions](https://docs.ollama.com/windows)
 
 ### Connect from Obsidian
 
@@ -68,10 +89,11 @@ Under **Settings → Context Cards → Local model**, start with:
 | --- | --- |
 | Ollama server | `http://127.0.0.1:11434` |
 | Model | `qwen3.5:9b-q4_K_M` |
+| Context length | `Balanced · 1,800 characters` |
 | Generation temperature | `0.2` |
 | Request timeout | `60 seconds` |
 
-Click **Check connection** in the **Check Ollama** row. You should see a list of installed models. This only checks connectivity; it does not load the model or confirm that enough memory is available.
+Click **Check connection** in the **Check Ollama** row. You should see a list of installed models. Copy the exact tag from `ollama list`: entering a model name in settings does not download it. This check confirms server access rather than model quality or available memory.
 
 The first request may take longer while the model loads. Request timeout accepts a whole number of seconds; the default is `60`. For slower hardware, try `300` or `600`. You can use another installed model, but output quality and adherence to the requested format may differ.
 
@@ -115,21 +137,23 @@ You do not need to create the destination deck or note type manually: the plugin
 3. After **Two cards added to Anki**, select **Open in Anki**, or open Anki's Browse window.
 4. Check both **Recognition** and **Recall**. They are two cards from one note, not two independent notes.
 
-For phone reviews, sync Anki Desktop with your AnkiWeb account, then sync AnkiDroid or AnkiMobile. Generation and export happen on the computer; the phone reviews the resulting cards. Consider enabling **Bury siblings** in Anki to separate the two exercises.
+For phone reviews, sync Anki Desktop with your AnkiWeb account, then sync AnkiDroid or AnkiMobile with the same account. Generation and export happen on the computer; the phone reviews the resulting cards. Anki's **Bury siblings** option can separate the two exercises. [Anki syncing instructions](https://docs.ankiweb.net/manual/syncing)
 
 ## 4. Explore the interface
 
-The screenshots below show the **actual plugin panel in its standalone preview**, using sample content and simulated connections. They are not screenshots of the surrounding Obsidian window. Your Obsidian theme and panel width may change its appearance.
+The screenshots below show the **current plugin views in the standalone preview**, with sample text and simulated model/Anki connections. Your Obsidian theme and panel width affect their appearance. The README's opening image shows the plugin inside Obsidian.
 
 ### Select a word and manage drafts
 
 Read Markdown in **Reading Mode** or **Live Preview**, select a word or expression, and click **Explain word / phrase**. You can also use the Context Cards commands in Obsidian's command palette.
 
-The panel opens with an editable draft. Use the selector at the top to switch between the latest **four** drafts. Adding a fifth removes the oldest from the list. **Clear all** clears drafts and cancels current generation; it does not delete Anki notes. Unsent content in removed drafts is lost.
+Both modes share the **Context Cards** header and settings button, a **draft selector** with **Clear all**, and a source row with **Open source**. The selector appears even when there is one draft.
+
+The latest **four** drafts in each mode can be restored across restarts. The two lists are independent. **Clear all** clears the current mode's drafts and cancels generation while keeping existing Anki notes. With no drafts, the selector and clearing controls disappear.
 
 ### Edit: the word and its meanings
 
-![Edit panel: draft selector, word, grammar, IPA and meaning fields](images/editor-fields.png)
+![Current vocabulary panel: shared header, meanings, source context and Anki destination](images/editor-fields.png)
 
 All teaching fields are in English and can be edited. Fields disabled in settings are hidden.
 
@@ -152,7 +176,7 @@ All teaching fields are in English and can be edited. Fields disabled in setting
 
 **Answer** is the exact source form required by Recall. For example, the dictionary entry can be `brush off`, while the expected answer is `brushed off`.
 
-If the answer is wrong, expand **Answer**, highlight the correct text inside the context field, then click **Use selection as answer**. It changes the expected answer to your selection. **More context** expands the passage from the captured source snapshot. You can also edit the context manually and regenerate for the updated passage.
+If the answer is wrong, expand **Answer**, highlight the correct text inside the context field, then click **Use selection as answer**. It changes the expected answer to your selection. If you change the learning target, regenerate and review its teaching content too. **More context** expands the passage from the captured source snapshot.
 
 ### Explanation, examples, destination and actions
 
@@ -208,28 +232,46 @@ Disabling **Context from your book** hides ordinary context display, but preserv
 
 | Symptom | Check |
 | --- | --- |
-| No Explain word / phrase button | Markdown selection, Reading Mode/Live Preview and Selection button setting. Try the command palette. |
+| No selection buttons | Select text in a Markdown note in Reading Mode or Live Preview. Enable **Reading workflow → Selection button**, or use the command palette. |
 | Plugin missing | Enable it under Community plugins; for ZIP installation, check folder nesting. |
 | Ollama unavailable | Running app, server URL and exact tag from `ollama list`. |
 | Slow or failed generation | Initial model load, available memory and timeout. Connectivity checks do not test memory capacity. |
 | Anki unavailable | Running Anki Desktop, installed AnkiConnect, URL and API key. |
 | Add to Anki disabled | The message below Edit, enabled required fields, source answer, pending replacement or duplicate warning. |
+| Old button names or duplicated controls | Update with BRAT or the latest ZIP, then restart Obsidian. |
 
-Official references: [Ollama on Windows](https://docs.ollama.com/windows), [AnkiConnect](https://ankiweb.net/shared/info/2055492159), [Anki sync](https://docs.ankiweb.net/syncing.html), [BRAT](https://github.com/TfTHacker/obsidian42-brat).
+Official references: [Ollama on Windows](https://docs.ollama.com/windows), [AnkiConnect](https://ankiweb.net/shared/info/2055492159), [Anki sync](https://docs.ankiweb.net/manual/syncing), [BRAT](https://tfthacker.com/BRAT).
 
 ## 5. Check your own writing
 
-Writing practice is a separate mode. Existing vocabulary capture still works with **Explain word / phrase**.
+Use **Find mistakes** for your own writing and **Explain word / phrase** for vocabulary from your reading. The two modes have independent drafts and Anki destinations.
 
-![Writing review panel with an editable correction and practice-card draft](images/writing-panel.png)
+### Find and choose corrections
 
 1. Select a paragraph of your own English writing in Reading Mode or Live Preview, up to **6,000 characters**.
 2. Click **Find mistakes** beside the selection, or run **Context Cards: Find mistakes** from the command palette. There is also a context-menu entry.
-3. Click a highlighted word in **Original text** to inspect its correction and explanation. The original note is never automatically corrected or marked by this mode.
-4. Beside **Edit**, the **Create an Anki card** checkbox controls whether this correction is included in the batch. Grammar and vocabulary corrections are checked by default after analysis; optional style, unclear meaning and typos stay unchecked. Uncheck any card you do not want. The label stays the same and the current word stays open. Saved choices are preserved when reopening a review. Exercises are prepared only when you click **Review N cards** below.
-5. Click **Edit** to change a correction. Changes apply only after **Save changes**; **Cancel** discards them. **More details** contains the tip, issue metadata, exercise type and prepared card fields. Changing the underlying correction invalidates its exercise. Typing keeps focus.
-6. Click **Review N cards** to prepare the selected exercises. Review their questions and answers together, then **Add N cards to Anki**. This saves the review and exports the batch. **← Corrections** returns to the original text without losing your choices; uncheck **Create an Anki card** there to exclude a correction. You can review your current selection before deciding on every suggestion.
-7. The writing deck is always editable in the bottom panel, just like the deck in vocabulary mode. The panel stays at the bottom of the pane while your text and cards scroll above it. **Options**, beside the deck, expands **Recheck selection** within the same panel. The top uses the same Context Cards header as vocabulary mode, with a draft selector, **Clear all**, and a source row with **Open source**. When all corrections are excluded, **Finish review** completes the review without exporting cards.
+3. Click a highlighted expression in the selected paragraph to read its correction and explanation. The original note is not automatically corrected or marked.
+4. Use **Create an Anki card** to include or exclude that correction. Grammar and vocabulary corrections are selected by default. Selecting the checkbox does not export anything yet.
+
+![Current writing review: shared header, highlighted corrections, a card checkbox and Review 1 card](images/writing-panel.png)
+
+### Edit feedback or the exercise type
+
+Click **Edit** to adjust the correction and explanation. Choose **Save changes** to apply your edits, or **Cancel** to keep the earlier version.
+
+![Correction editor with editable feedback, More details and save controls](images/writing-edit.png)
+
+Under **More details**, you can change the exercise type or inspect other feedback fields. Choose **Correct the mistake** or **Fill in the gap** per correction. The default **Let AI choose** setting selects a format during generation. Changing the underlying correction requires preparing its exercise again.
+
+### Review and export
+
+1. Click **Review N cards** to prepare exercises for the corrections you selected.
+2. Check each question and answer. **Edit card** opens the editor; **← Corrections** returns to the highlighted paragraph so you can change your selection.
+3. Choose the writing deck in the bottom bar, then click **Add N cards to Anki**. Exporting also saves the Markdown review automatically.
+
+![Prepared writing exercise with question, answer, Edit card and Add 1 card to Anki](images/writing-card.png)
+
+**Options → Recheck selection** analyses the text again and replaces unexported suggestions and exercises. Rechecking is disabled after a finding has been exported; use a fresh selection for new work. When all corrections are excluded, **Finish review** completes the review without exporting cards.
 
 Optional style, unclear meaning and obvious typos cannot become practice cards. If the meaning is unclear, resolve it yourself before classifying the finding as a definite grammar/vocabulary correction.
 
@@ -241,11 +283,7 @@ If exporting partly fails, the preview marks successful cards **Already added** 
 
 The model uses the original sentence for the exercise and fixes other recognised, non-overlapping mistakes in that same sentence so there is one target to practise. Review the result: schema checks can verify that the question and answer agree, not that the English advice is always correct.
 
-Analysis now checks proposed edits in a separate model pass before keeping them. Both passes share the configured analysis timeout. This can take a little longer. Card preparation keeps the checked explanation and tip, and source/preview headings show the actual replacement. Narrow grammar/vocabulary highlights take priority over overlapping optional suggestions. Whole-sentence inventions and corrections that combine separate targets are rejected. These checks reduce inconsistent feedback; they do not make a local model infallible.
-
-Existing drafts keep their captured content. After updating, use **Options → Recheck selection** to replace an older, inconsistent analysis, then prepare its cards again. Rechecking is disabled for already-exported reviews; start a fresh selection in that case.
-
-The editor keeps unsaved text, dropdown choices and cursor position during background redraws. **Cancel** discards those changes. Saving only prepared card fields returns directly to preview; changing the underlying correction returns to corrections so its exercise can be prepared again. The panel accounts for the footer when scrolling to controls. In short windows, the footer scrolls with the page instead of covering content.
+Saving only prepared card feedback returns to preview. Changing the underlying correction returns to corrections so you can prepare its exercise again.
 
 ### Writing settings and saved reviews
 
@@ -262,13 +300,13 @@ Under **Settings → Context Cards → Writing practice**:
 | Writing review folder | `English/Writing reviews` | Vault-relative folder for saved Markdown feedback. |
 | Writing note type | `Context Cards Writing` | A separate note type with one Practice template. Keep it different from the vocabulary type. |
 
-A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created when exporting cards. Open it from your configured writing review folder or the source link in Anki. Personal notes appended after its managed review block are retained when the plugin updates the review.
+A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created automatically when exporting cards; there is no separate Save review step. Open it from your configured writing review folder or the source link in Anki. Personal notes appended after its managed review block are retained when the plugin updates the review.
 
 Writing preferences apply to the next analysis or **Recheck selection**. Existing drafts and prepared cards keep their saved settings. You can override the exercise type for a specific correction under **Edit → More details → Exercise type** before preparing cards. Enable at least one check category to run an analysis.
 
 The latest four writing sessions are stored with plugin data when **Restore unfinished drafts** is enabled. They are independent of the four vocabulary drafts. Rechecking replaces the session's suggestions and unexported exercise drafts; it is disabled after a finding has been exported. Use a fresh selection for new writing.
 
-With multiple writing drafts, **Clear all** beside the selector clears every writing draft and cancels running analysis/preparation. With one draft, its title appears beside **Clear draft**. With no drafts, the panel shows **No writing drafts** and no clearing controls. Clearing keeps vocabulary drafts, saved review notes and existing Anki cards. It is disabled while a review is being saved or cards are being exported.
+**Clear all** appears beside the selector even with one writing draft. It clears writing drafts and cancels analysis/preparation while keeping vocabulary drafts, saved review notes and Anki cards. With no writing drafts, the selector and clearing button disappear. Clearing is disabled during saving or export.
 
 Successful exports show **Added to Anki**. A matching existing practice note can be reused, and retries skip findings already exported. Matching uses the normalised error/pattern key, not a complete semantic understanding of every equivalent mistake. An export interrupted halfway preserves successful note identifiers so you can retry the remaining cards.
 

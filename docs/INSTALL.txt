@@ -1,11 +1,14 @@
-CONTEXT CARDS — INSTALLATION
+CONTEXT CARDS — QUICK SETUP
+
+Full English guide with screenshots:
+https://github.com/dmitriikuleshov/context-cards-obsidian/blob/main/docs/SETUP.md
 
 RECOMMENDED: BRAT
 In Obsidian Community plugins, install and enable BRAT.
 Open BRAT settings > Add beta plugin, and enter:
 dmitriikuleshov/context-cards-obsidian
 Select the latest version, add it and enable Context Cards if needed.
-BRAT can also update the plugin. Set up Ollama/AnkiConnect as described below.
+BRAT can also update the plugin. Continue with OLLAMA and ANKI below.
 Existing users: do not uninstall Context Cards first; keep your data.json.
 
 ALTERNATIVE: ZIP
@@ -17,14 +20,49 @@ Do not use the automatic Source code ZIP: it has no compiled plugin.
 1. Extract the ZIP and copy context-cards into YOUR_VAULT/.obsidian/plugins/.
    main.js must be directly inside context-cards, not another nested folder.
 2. Restart Obsidian and enable Context Cards under Settings > Community plugins.
-3. Install/start Ollama and download the model:
-   ollama pull qwen3.5:9b-q4_K_M
-4. Install Anki Desktop and AnkiConnect (add-on code 2055492159).
-   Restart Anki and keep it open when adding cards.
-5. In Context Cards settings check connections and the installed model.
-   Defaults: Ollama http://127.0.0.1:11434; AnkiConnect http://127.0.0.1:8765.
-6. Select a word in a Markdown book, click Explain word / phrase, review the draft,
-   and use Add to Anki in the Edit tab.
+
+OLLAMA
+
+Install and open Ollama: https://ollama.com/download/windows
+In a new PowerShell window, download the default model:
+  ollama pull qwen3.5:9b-q4_K_M
+Check its installed name:
+  ollama list
+
+In Settings > Context Cards > Local model:
+  Ollama server: http://127.0.0.1:11434
+  Model: qwen3.5:9b-q4_K_M
+  Request timeout: 60 seconds; try 300 or 600 on slower hardware.
+Use Check connection in the Check Ollama row.
+Keep Ollama running while generating content.
+
+ANKI
+
+Install and open Anki Desktop: https://apps.ankiweb.net/
+Choose Tools > Add-ons > Get Add-ons and enter 2055492159 for AnkiConnect.
+Restart Anki and keep it open while checking connections or adding cards.
+
+In Settings > Context Cards > Anki:
+  AnkiConnect server: http://127.0.0.1:8765
+  API key: blank unless configured in AnkiConnect.
+Use Check connection in the Check Anki row.
+The plugin creates its deck and note type on the first approved export.
+
+THE TWO ACTIONS
+
+Explain word / phrase:
+Select one word or expression in a Markdown book. Review the English draft,
+preview it, then use Add to Anki in Edit. One note creates Recognition and
+Recall cards. Recall asks for the original source form.
+
+Find mistakes:
+Select a paragraph of your writing. Click highlighted expressions to review
+the corrections and choose which grammar/vocabulary findings become cards.
+Click Review N cards, check the exercises, then Add N cards to Anki.
+One chosen correction creates one card. Exporting also saves a Markdown review.
+
+Both modes have a draft selector, Clear all and Open source.
+Sync Anki Desktop through AnkiWeb to review the cards on your phone.
 
 UPDATES
 Disable the plugin; replace main.js, manifest.json and styles.css; update the

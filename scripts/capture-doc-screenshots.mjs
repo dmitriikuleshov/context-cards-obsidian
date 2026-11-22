@@ -55,14 +55,19 @@ try {
     await page.locator('.cc-examples').scrollIntoViewIfNeeded();
     await page.locator('.cc-technical > summary').click();
     await page.getByLabel('Deck', { exact: true }).scrollIntoViewIfNeeded();
-    await page.screenshot({ path: 'docs/images/examples-deck.png' });
     await page.getByLabel('Tags', { exact: true }).scrollIntoViewIfNeeded();
     await page.evaluate(() => {
       for (const el of document.querySelectorAll('.cc-panel-body,#panel,.cc-panel'))
         el.scrollTop = el.scrollHeight;
     });
     await page.waitForTimeout(300);
-    await page.screenshot({ path: 'docs/images/destination.png' });
+    const examples = await page.locator('[data-cc-section=examples]').boundingBox();
+    const examplesTop = Math.max(0, examples.y);
+    await page.screenshot({
+      path: 'docs/images/examples-deck.png',
+      clip: { x: 0, y: examplesTop, width: 680, height: 1000 - examplesTop },
+    });
+    await page.locator('.cc-footer').screenshot({ path: 'docs/images/destination.png' });
     await page.getByRole('button', { name: 'Preview cards', exact: true }).click();
     await page.getByRole('button', { name: 'Recognition', exact: true }).scrollIntoViewIfNeeded();
     await page.screenshot({
@@ -83,6 +88,26 @@ try {
       .waitFor();
     await page.waitForTimeout(200);
     await page.screenshot({ path: 'docs/images/card-back.png' });
+    await page.setViewportSize({ width: 680, height: 800 });
+    await page.goto('http://127.0.0.1:4180/?writing=1');
+    await page.getByLabel('Writing review', { exact: true }).waitFor();
+    await page.evaluate(() => {
+      const { session, view } = window.writingPreview;
+      session.findings[1].selected = false;
+      view.render();
+    });
+    await page.screenshot({ path: 'docs/images/writing-panel.png' });
+    await page.getByRole('button', { name: 'Edit', exact: true }).click();
+    await page.getByRole('heading', { name: 'Edit correction', exact: true }).waitFor();
+    const editActions = await page.locator('.cc-writing-decisions').boundingBox();
+    await page.screenshot({
+      path: 'docs/images/writing-edit.png',
+      clip: { x: 0, y: 0, width: 680, height: editActions.y + editActions.height + 20 },
+    });
+    await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await page.getByRole('button', { name: 'Review 1 card', exact: true }).click();
+    await page.getByRole('heading', { name: 'Review your cards', exact: true }).waitFor();
+    await page.screenshot({ path: 'docs/images/writing-card.png' });
   } finally {
     await browser.close();
   }
