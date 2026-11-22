@@ -1,6 +1,6 @@
 {
   "name": "obsidian-context-cards",
-  "version": "0.3.20",
+  "version": "0.3.21",
   "private": true,
   "type": "module",
   "engines": {
@@ -11,6 +11,7 @@
     "dev": "node esbuild.config.mjs --watch",
     "build": "tsc --noEmit && node esbuild.config.mjs",
     "test": "vitest run",
+    "test:analysis": "vitest run --config vitest.analysis.config.ts --coverage",
     "test:ui": "playwright test",
     "test:anki": "node scripts/verify-anki-core.mjs",
     "preview": "node scripts/preview.mjs",
@@ -25,12 +26,13 @@
   "devDependencies": {
     "@playwright/test": "^1.65.1",
     "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "4.1.12",
     "esbuild": "^0.28.2",
     "fflate": "^0.8.3",
     "jsdom": "^27.0.0",
     "obsidian": "1.14.4",
     "prettier": "^3.10.1",
     "typescript": "^5.9.0",
-    "vitest": "^4.0.0"
+    "vitest": "4.1.12"
   }
 }

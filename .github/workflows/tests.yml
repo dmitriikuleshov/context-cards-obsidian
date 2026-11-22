@@ -1,0 +1,26 @@
+name: Tests
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run test:analysis
+      - run: npm run check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: analysis-coverage
+          path: coverage/analysis/
+          if-no-files-found: ignore
+          retention-days: 14

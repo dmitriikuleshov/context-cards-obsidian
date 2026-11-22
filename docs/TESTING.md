@@ -1,9 +1,27 @@
 # Writing analysis checks
 
+The focused analysis suite measures five modules: `writing.ts` (validation, alignment and recovery), `writing-model.ts` (generation and independent verification), `writing-controller.ts` (session lifecycle, preparation and saving), `writing-workflow.ts` (source highlights), and `http.ts` (model transport). UI and Anki scheduling are outside this coverage percentage.
+
+```sh
+npm ci
+npm run test:analysis
+```
+
+This runs deterministic unit tests and integration tests against temporary local HTTP servers. No installed Ollama model, running Anki, Obsidian vault or credentials are needed. Local servers use OS-assigned ports and are closed after each test. Saved reviews use an in-memory vault.
+
+Coverage is enforced **for each covered module**, rather than averaged across the application: at least **98% of lines and statements, 97% of branches, and 100% of functions**. Missing the threshold fails the command. HTML and JSON reports are generated at `coverage/analysis/index.html` and `coverage/analysis/coverage-summary.json`. Reports are generated files, not checked into Git.
+
+The **Tests** GitHub Actions workflow runs coverage and the complete unit/build checks for pushes to `main`/`master` and pull requests. Download its `analysis-coverage` artifact and open `index.html` to inspect covered branches. Release builds enforce the same analysis coverage thresholds.
+
+The suite checks malformed and oversized responses, exact source/answer alignment, duplicate or missing review IDs, optional versus genuine corrections, category settings, shared timeout budgets, cancellation and late responses, partial generation failures, serialization of writes, failed persistence, and restoration of valid saved work. Integration cases run the controller through HTTP, response validation and both exercise formats, including a settings change during an active batch. They never export a note to a real Anki collection.
+
+Review-save regressions include literal managed-end markers inside quoted text, CRLF files, repeated saves without whitespace growth, and preservation of appended human notes. If an owned review is missing its actual end marker, saving fails without overwriting it.
+
 Run the deterministic checks after changes to writing analysis:
 
 ```sh
 npm test -- --maxWorkers=2
+npm run test:analysis
 npm run build
 npm run test:ui
 npm run test:writing-anki
