@@ -126,6 +126,78 @@ test('grouped examples stay editable and appear on the card back', async ({ page
   await expect(card.getByText('She brushed off the dirt.', { exact: true })).toBeVisible();
 });
 
+for (const width of [320, 440]) {
+  test(`usage headings wrap completely and resize with the panel (${width}px)`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const labels = [
+      'Electrical energy or force used to operate machinery, lighting, and other equipment in homes and workplaces',
+      'Authority, control, or influence over people or situations, especially within a government or organisation',
+    ];
+    await page.evaluate((meaningLabels) => {
+      const { draft, view } = (window as any).contextCardsPreview;
+      draft.exampleGroups = meaningLabels.map((meaning: string) => ({
+        meaning,
+        examples: ['First example.', 'Second example.'],
+      }));
+      draft.examples = draft.exampleGroups.flatMap((g: any) => g.examples);
+      view.render();
+    }, labels);
+    await page.locator('[data-cc-section=examples] > summary').click();
+    const first = page.getByLabel('Meaning / usage 1', { exact: true });
+    const second = page.getByLabel('Meaning / usage 2', { exact: true });
+    const fullyShown = async () => {
+      for (const field of [first, second]) {
+        await expect(field).toBeVisible();
+        expect(await field.evaluate((el) => el.tagName)).toBe('TEXTAREA');
+        expect(
+          await field.evaluate(
+            (el) => el.scrollHeight <= el.clientHeight + 1 && el.scrollWidth <= el.clientWidth + 1,
+          ),
+        ).toBe(true);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+        true,
+      );
+    };
+    await expect(first).toHaveValue(labels[0]!);
+    await expect(second).toHaveValue(labels[1]!);
+    await fullyShown();
+    const narrowHeight = (await first.boundingBox())!.height;
+    await page
+      .locator('[data-cc-section=examples]')
+      .evaluate((el) => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
+    await page.screenshot({ path: `.test-artifacts/usage-meaning-${width}.png` });
+    await page.setViewportSize({ width: 700, height: 900 });
+    await fullyShown();
+    expect((await first.boundingBox())!.height).toBeLessThan(narrowHeight);
+    const edited = labels[0] + '\n' + 'Averylongunbrokentext'.repeat(10);
+    await first.fill(edited);
+    await fullyShown();
+    await page.evaluate(() => (window as any).contextCardsPreview.view.render());
+    await expect(first).toHaveValue(edited);
+    await fullyShown();
+    await first.fill('Energy');
+    await fullyShown();
+    expect((await first.boundingBox())!.height).toBeLessThan(narrowHeight);
+    await first.fill(labels[0]!);
+    await page.getByRole('button', { name: 'Preview cards', exact: true }).click();
+    await page.getByRole('button', { name: 'Flip card', exact: true }).click();
+    await expect(page.frameLocator('iframe').getByText(labels[0]!, { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Edit draft', exact: true }).click();
+    await page.evaluate(() => {
+      const { draft, view } = (window as any).contextCardsPreview;
+      draft.phase = 'saved';
+      draft.noteId = 99;
+      view.render();
+    });
+    await expect(first).toBeDisabled();
+    await fullyShown();
+  });
+}
+
 test('disabled fields disappear from editor and preview while recall keeps its gap', async ({
   page,
 }) => {

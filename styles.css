@@ -938,6 +938,15 @@
 .cc-example-group + .cc-example-group {
   margin-top: 22px;
 }
+.cc-field textarea.cc-usage-meaning {
+  field-sizing: content;
+  min-height: calc(1lh + 20px);
+  max-height: none;
+  overflow: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  resize: none;
+}
 
 .cc-panel [hidden] {
   display: none !important;

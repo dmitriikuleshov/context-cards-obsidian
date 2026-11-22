@@ -435,11 +435,17 @@ export class ReviewView extends ItemView {
     if (draft.exampleGroups?.length) {
       draft.exampleGroups.forEach((group, gi) => {
         const container = examples.createDiv({ cls: 'cc-example-group' });
-        this.field(container, `Meaning / usage ${gi + 1}`, group.meaning, (v) =>
-          update(() => {
-            group.meaning = v;
-          }),
+        const meaning = this.field(
+          container,
+          `Meaning / usage ${gi + 1}`,
+          group.meaning,
+          (v) =>
+            update(() => {
+              group.meaning = v;
+            }),
+          { multiline: true, rows: 1 },
         );
+        meaning.addClass('cc-usage-meaning');
         group.examples.forEach((value, ei) => {
           const input = this.field(
             container,
