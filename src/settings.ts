@@ -81,6 +81,7 @@ export class ContextSettings extends PluginSettingTab {
             '1800': 'Balanced · 1,800 characters',
             '3000': 'Expanded · 3,000 characters',
             '6000': 'Long · 6,000 characters',
+            '12000': 'Extended · 12,000 characters',
           })
           .setValue(String(settings.contextSize))
           .onChange((value) => {

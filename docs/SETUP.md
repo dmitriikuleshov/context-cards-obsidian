@@ -178,6 +178,8 @@ All teaching fields are in English and can be edited. Fields disabled in setting
 
 If the answer is wrong, expand **Answer**, highlight the correct text inside the context field, then click **Use selection as answer**. It changes the expected answer to your selection. If you change the learning target, regenerate and review its teaching content too. **More context** expands the passage from the captured source snapshot.
 
+Vocabulary context supports up to **12,000 characters**: choose **Extended · 12,000 characters** in Local model settings for a larger surrounding-text budget. New drafts still start with the selected sentence and its neighbours; use More context to expand them. Longer contexts use a larger model window and may take more time and memory. The writing selection limit remains 6,000 characters.
+
 ### Explanation, examples, destination and actions
 
 **Explanation & usage notes** appears above **Examples**. Both sections are collapsed initially; click their headings to expand and edit the fields. Their expanded state is kept when the panel redraws.

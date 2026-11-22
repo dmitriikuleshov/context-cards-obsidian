@@ -193,6 +193,7 @@ export class Ollama {
     grammar: string,
     signal: AbortSignal,
     timeout = this.settings.timeoutSeconds * 1000,
+    contextTokens = this.settings.contextSize > 6000 ? 12288 : 6144,
   ): Promise<string> {
     const count = cardFields(this.settings).generalMeaningSentences || 2;
     const response = await jsonRequest<ChatResponse>(
@@ -227,7 +228,7 @@ export class Ollama {
         think: false,
         keep_alive: '10m',
         options: {
-          num_ctx: 6144,
+          num_ctx: contextTokens,
           num_predict: 150 + (cardFields(this.settings).generalMeaningSentences || 2) * 90,
           temperature: this.settings.temperature,
         },
@@ -254,6 +255,7 @@ export class Ollama {
     grammar: string,
     signal: AbortSignal,
     timeout = this.settings.timeoutSeconds * 1000,
+    contextTokens = this.settings.contextSize > 6000 ? 12288 : 6144,
   ): Promise<NonNullable<Content['exampleGroups']>> {
     const f = cardFields(this.settings);
     const schema = structuredClone(CARD_SCHEMA.properties.examples);
@@ -286,7 +288,7 @@ export class Ollama {
         think: false,
         keep_alive: '10m',
         options: {
-          num_ctx: 6144,
+          num_ctx: contextTokens,
           num_predict: Math.min(6000, 250 + f.maxUsages * f.examplesPerUsage * 45),
           temperature: this.settings.temperature,
         },
@@ -325,6 +327,7 @@ export class Ollama {
     grammar: string,
     signal: AbortSignal,
     timeout = this.settings.timeoutSeconds * 1000,
+    contextTokens = this.settings.contextSize > 6000 ? 12288 : 6144,
   ): Promise<string> {
     const response = await jsonRequest<ChatResponse>(
       `${endpoint(this.settings.ollamaUrl)}/api/chat`,
@@ -347,7 +350,11 @@ export class Ollama {
         stream: false,
         think: false,
         keep_alive: '10m',
-        options: { num_ctx: 6144, num_predict: 350, temperature: this.settings.temperature },
+        options: {
+          num_ctx: contextTokens,
+          num_predict: 350,
+          temperature: this.settings.temperature,
+        },
       },
       signal,
       timeout,
@@ -373,6 +380,7 @@ export class Ollama {
     source: string,
     signal: AbortSignal,
   ): Promise<{ content: Content; seconds: number }> {
+    const contextTokens = Math.max(source.length, this.settings.contextSize) > 6000 ? 12288 : 6144;
     const f = cardFields(this.settings);
     const schema = structuredClone(CARD_SCHEMA) as any;
     schema.properties.meaning = {
@@ -426,7 +434,7 @@ export class Ollama {
         think: false,
         keep_alive: '10m',
         options: {
-          num_ctx: 6144,
+          num_ctx: contextTokens,
           num_predict: 2200,
           temperature: this.settings.temperature,
           top_p: 0.8,
@@ -489,7 +497,7 @@ export class Ollama {
             stream: false,
             think: false,
             keep_alive: '10m',
-            options: { num_ctx: 6144, num_predict: 150, temperature: 0 },
+            options: { num_ctx: contextTokens, num_predict: 150, temperature: 0 },
           },
           signal,
           remaining(),
@@ -511,6 +519,7 @@ export class Ollama {
         content.partOfSpeech,
         signal,
         remaining(),
+        contextTokens,
       );
     if (content.status === 'ready' && f.wordFormation)
       content.wordFormation = await this.wordFormation(
@@ -518,6 +527,7 @@ export class Ollama {
         content.partOfSpeech,
         signal,
         remaining(),
+        contextTokens,
       );
     if (content.status === 'ready' && f.examples) {
       content.exampleGroups = await this.usageExamples(
@@ -525,6 +535,7 @@ export class Ollama {
         content.partOfSpeech,
         signal,
         remaining(),
+        contextTokens,
       );
       content.examples = content.exampleGroups.flatMap((g) => g.examples);
     }

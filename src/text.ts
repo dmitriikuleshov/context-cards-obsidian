@@ -1,5 +1,5 @@
 import type { Capture, Draft, Settings } from './types';
-import { cardFields, emptyContent, EXAMPLE_COUNT } from './types';
+import { cardFields, emptyContent, EXAMPLE_COUNT, MAX_VOCABULARY_CONTEXT } from './types';
 
 export function escapeHtml(value: string): string {
   return value.replace(
@@ -38,7 +38,7 @@ export function trimCapture(capture: Capture): Capture {
 export function contextWindow(text: string, start: number, end: number, limit: number) {
   if (start < 0 || end <= start || end > text.length)
     throw new Error('Select a word or expression first.');
-  const budget = Math.max(end - start, Math.min(12000, limit));
+  const budget = Math.max(end - start, Math.min(MAX_VOCABULARY_CONTEXT, limit));
   const spare = budget - (end - start);
   let left = Math.max(0, start - Math.floor(spare * 0.5));
   let right = Math.min(text.length, left + budget);

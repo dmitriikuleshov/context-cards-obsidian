@@ -8,6 +8,37 @@ afterEach(() => {
   vi.useRealTimers();
 });
 describe('vocabulary controller guards and failures', () => {
+  it.each([6001, 12000])(
+    'generates a vocabulary draft with %i context characters',
+    async (length) => {
+      const { plugin, d } = pluginFixture();
+      d.context = 'word' + 'x'.repeat(length - 4);
+      d.answer = 'word';
+      d.answerStart = 0;
+      const api = vi
+        .spyOn(Ollama.prototype, 'generate')
+        .mockResolvedValue({ content: content(), seconds: 1 });
+      await plugin.generate(d);
+      expect(api).toHaveBeenCalledWith('word', d.context, expect.any(AbortSignal));
+      expect(d.phase).toBe('editing');
+      expect(d.error).toBe('');
+    },
+  );
+  it('expands vocabulary context beyond 6000 up to 12000 without losing the answer', () => {
+    const { plugin, d } = pluginFixture();
+    d.capture.text = 'x'.repeat(8000) + 'word' + 'x'.repeat(8000);
+    d.capture.start = 8000;
+    d.capture.end = 8004;
+    d.context = d.capture.text.slice(4000, 12000);
+    d.answer = 'word';
+    d.answerStart = 4000;
+    plugin.expandContext(d);
+    expect(d.context).toHaveLength(12000);
+    expect(d.context.slice(d.answerStart, d.answerStart + d.answer.length)).toBe('word');
+    const before = d.context;
+    plugin.expandContext(d);
+    expect(d.context).toBe(before);
+  });
   for (const method of ['generate', 'generateGeneralMeaning', 'generateWordFormation'] as const) {
     for (const phase of ['sending', 'saved'] as const)
       it(`${method} leaves ${phase} drafts intact`, async () => {
@@ -63,7 +94,7 @@ describe('vocabulary controller guards and failures', () => {
     d.answerStart = -1;
     await plugin.generate(d);
     d.answerStart = 4;
-    d.context += 'x'.repeat(6001);
+    d.context += 'x'.repeat(12001);
     await plugin.generate(d);
     expect(api).not.toHaveBeenCalled();
   });

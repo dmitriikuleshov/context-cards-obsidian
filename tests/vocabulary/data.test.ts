@@ -16,6 +16,12 @@ import { sourceMarkRange } from '../../src/source-mark';
 import { capture, draft } from './fixtures';
 
 describe('untrusted stored vocabulary data', () => {
+  it('restores the extended vocabulary context and rejects values above its limit', () => {
+    expect(restoreData({ settings: { contextSize: 12000 } }).settings.contextSize).toBe(12000);
+    expect(restoreData({ settings: { contextSize: 12001 } }).settings.contextSize).toBe(
+      DEFAULTS.contextSize,
+    );
+  });
   it('restores pronunciation variants, timing and note references without resuming work', () => {
     const result = restoreData({
       drafts: [draft({ ipaVariant: 'british', seconds: 1.5, noteId: 42, phase: 'generating' })],

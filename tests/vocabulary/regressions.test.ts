@@ -6,6 +6,60 @@ import * as http from '../../src/http';
 import { pluginFixture, rawContent, response } from './fixtures';
 afterEach(() => vi.restoreAllMocks());
 describe('generation lifecycle regressions', () => {
+  it.each([
+    [6000, 1800, 6144],
+    [6001, 1800, 12288],
+    [12000, 1800, 12288],
+    [20, 12000, 12288],
+  ])(
+    'uses a consistent model window for source length %i and setting %i',
+    async (length, contextSize, tokens) => {
+      const source = 'A record. ' + 'x'.repeat(length - 10);
+      const request = vi.spyOn(http, 'jsonRequest').mockImplementation(async (_url, body) => {
+        const props = (body as any).format.properties;
+        if (props.lemma) return response(rawContent({ lemma: 'record', examples: [] })) as any;
+        if (props.american_ipa)
+          return response({ american_ipa: props.american_ipa.enum[0] }) as any;
+        if (props.general_meaning)
+          return response({ general_meaning: ['First.', 'Second.'] }) as any;
+        if (props.base_word)
+          return response({ base_word: 'base', base_meaning: 'Base meaning.' }) as any;
+        return response({ examples: [{ meaning: 'Usage', examples: ['One.', 'Two.'] }] }) as any;
+      });
+      await new Ollama({ ...DEFAULTS, contextSize }).generate(
+        'record',
+        source,
+        new AbortController().signal,
+      );
+      expect(request).toHaveBeenCalledTimes(5);
+      expect(request.mock.calls.every((call) => (call[1] as any).options.num_ctx === tokens)).toBe(
+        true,
+      );
+      expect(request.mock.calls.every((call) => (call[1] as any).think === false)).toBe(true);
+      expect(JSON.parse((request.mock.calls[0]![1] as any).messages[1].content).source).toBe(
+        source,
+      );
+    },
+  );
+  it.each(['generalMeaning', 'wordFormation', 'usageExamples'] as const)(
+    'uses the extended configured window for standalone %s',
+    async (method) => {
+      const request = vi.spyOn(http, 'jsonRequest').mockResolvedValue(
+        response({
+          general_meaning: ['First.', 'Second.'],
+          base_word: 'base',
+          base_meaning: 'Base meaning.',
+          examples: [{ meaning: 'Usage', examples: ['One.', 'Two.'] }],
+        }),
+      );
+      await new Ollama({ ...DEFAULTS, contextSize: 12000 })[method](
+        'record',
+        'noun',
+        new AbortController().signal,
+      );
+      expect((request.mock.calls[0]![1] as any).options.num_ctx).toBe(12288);
+    },
+  );
   for (const method of [
     'generate',
     'generateGeneralMeaning',

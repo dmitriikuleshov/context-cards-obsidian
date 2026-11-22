@@ -5,6 +5,7 @@ import {
   writingOptions,
   EXAMPLE_COUNT,
   MAX_DRAFTS,
+  MAX_VOCABULARY_CONTEXT,
   emptyContent,
   type Capture,
   type Content,
@@ -86,7 +87,7 @@ function settings(value: unknown): Settings {
     if (typeof value[key] === 'boolean') result[key] = value[key];
   for (const [key, min, max] of [
     ['temperature', 0, 2],
-    ['contextSize', 1000, 6000],
+    ['contextSize', 1000, MAX_VOCABULARY_CONTEXT],
   ] as const)
     if (finite(value[key]) && value[key] >= min && value[key] <= max) result[key] = value[key];
   if (validTimeoutSeconds(value.timeoutSeconds)) result.timeoutSeconds = value.timeoutSeconds;

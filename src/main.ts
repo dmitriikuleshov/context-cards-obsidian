@@ -12,6 +12,7 @@ import { createDraft, contextWindow, cleanDeck, issues, answerValid, trimCapture
 import {
   DEFAULTS,
   MAX_DRAFTS,
+  MAX_VOCABULARY_CONTEXT,
   type Capture,
   type Draft,
   type Settings,
@@ -343,8 +344,8 @@ export default class ContextCardsPlugin extends Plugin {
       new Notice('Select the expected answer in the context before generating.');
       return;
     }
-    if (draft.context.length > 6000) {
-      new Notice('Shorten the context to 6,000 characters or fewer before generating.');
+    if (draft.context.length > MAX_VOCABULARY_CONTEXT) {
+      new Notice('Shorten the context to 12,000 characters or fewer before generating.');
       return;
     }
     const controller = new AbortController();
@@ -529,7 +530,7 @@ export default class ContextCardsPlugin extends Plugin {
       draft.capture.text,
       start,
       start + draft.answer.length,
-      Math.min(6000, Math.max(600, draft.context.length * 2)),
+      Math.min(MAX_VOCABULARY_CONTEXT, Math.max(600, draft.context.length * 2)),
     );
     if (expanded.context === draft.context) {
       new Notice('All captured surrounding text is already included.');

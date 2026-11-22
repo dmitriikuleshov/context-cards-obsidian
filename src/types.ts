@@ -1,4 +1,5 @@
 import type { WritingSession } from './writing';
+export const MAX_VOCABULARY_CONTEXT = 12000;
 export interface CardFields {
   grammar: boolean;
   ipa: 'american' | 'british' | 'off';
