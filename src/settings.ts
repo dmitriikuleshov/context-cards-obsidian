@@ -12,9 +12,11 @@ import { Ollama } from './ollama';
 import { Anki } from './anki';
 import { endpoint } from './http';
 import { enhanceSelects } from './select-menu';
+import { ModelControl } from './model-control';
 
 export class ContextSettings extends PluginSettingTab {
   private dropdownCleanup?: () => void;
+  private modelControl?: ModelControl;
   constructor(
     app: App,
     private plugin: ContextCardsPlugin,
@@ -23,6 +25,7 @@ export class ContextSettings extends PluginSettingTab {
   }
   display() {
     this.dropdownCleanup?.();
+    this.modelControl?.destroy();
     const root = this.containerEl;
     root.empty();
     root.createEl('h2', { text: 'Context Cards' });
@@ -46,6 +49,7 @@ export class ContextSettings extends PluginSettingTab {
           input.onChange((value) => {
             Object.assign(settings, { [key]: value });
             this.plugin.persist();
+            if (key === 'ollamaUrl') this.modelControl?.schedule();
           });
         });
     };
@@ -56,36 +60,15 @@ export class ContextSettings extends PluginSettingTab {
       'ollamaUrl',
       DEFAULTS.ollamaUrl,
     );
-    text(
-      'Model',
-      'The model that writes your drafts. Copy its exact installed name from ollama list, including the tag after the colon. Download it with ollama pull first; entering a name here does not download it.',
-      'model',
-      DEFAULTS.model,
+    const model = new Setting(root).setName('Model');
+    this.modelControl = new ModelControl(
+      model.controlEl,
+      settings,
+      () => this.plugin.persist(),
+      (text) => model.setDesc(text),
+      (snapshot, signal) => new Ollama({ ...settings, ...snapshot }).models(signal),
     );
-    new Setting(root)
-      .setName('Check Ollama')
-      .setDesc(
-        'Check whether the server is reachable and list installed models. This does not generate a draft or confirm that the model fits in memory.',
-      )
-      .addButton((button) =>
-        button.setButtonText('Check connection').onClick(async () => {
-          button.setDisabled(true);
-          try {
-            endpoint(settings.ollamaUrl);
-            const models = await new Ollama(settings).models();
-            result.setText(
-              models.length
-                ? `Installed models: ${models.join(', ')}`
-                : 'Connected. No models are installed.',
-            );
-          } catch (error) {
-            result.setText(error instanceof Error ? error.message : String(error));
-          } finally {
-            button.setDisabled(false);
-          }
-        }),
-      );
-    const result = root.createDiv({ cls: 'cc-settings-result', attr: { role: 'status' } });
+    void this.modelControl.load();
     new Setting(root)
       .setName('Context length')
       .setDesc(
@@ -422,6 +405,7 @@ export class ContextSettings extends PluginSettingTab {
   }
   hide() {
     this.dropdownCleanup?.();
+    this.modelControl?.destroy();
     super.hide();
   }
 }

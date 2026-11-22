@@ -93,7 +93,7 @@ Under **Settings → Context Cards → Local model**, start with:
 | Generation temperature | `0.2` |
 | Request timeout | `60 seconds` |
 
-Click **Check connection** in the **Check Ollama** row. You should see a list of installed models. Copy the exact tag from `ollama list`: entering a model name in settings does not download it. This check confirms server access rather than model quality or available memory.
+The **Model** list loads automatically from the configured Ollama server. Choose an installed model from the dropdown. After downloading or removing a model, click **Refresh** next to the list. Refreshing does not download or load models, generate a draft, or confirm that a model fits in memory. If your saved model is missing, it stays selected and is marked **not installed** until you explicitly choose another model. A connection failure also keeps your saved choice.
 
 The first request may take longer while the model loads. Request timeout accepts a whole number of seconds; the default is `60`. For slower hardware, try `300` or `600`. You can use another installed model, but output quality and adherence to the requested format may differ.
 

@@ -31,9 +31,10 @@ Check its installed name:
 
 In Settings > Context Cards > Local model:
   Ollama server: http://127.0.0.1:11434
-  Model: qwen3.5:9b-q4_K_M
+  Model: select qwen3.5:9b-q4_K_M from the installed-model list
   Request timeout: 60 seconds; try 300 or 600 on slower hardware.
-Use Check connection in the Check Ollama row.
+The model list loads automatically. Use Refresh beside Model after installing
+or removing a model. If Ollama is unavailable, your saved choice is kept.
 Keep Ollama running while generating content.
 
 ANKI

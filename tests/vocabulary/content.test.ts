@@ -97,6 +97,32 @@ describe('untrusted vocabulary payloads', () => {
   });
 });
 describe('supplemental generation contracts', () => {
+  it.each([
+    null,
+    [],
+    { models: 'wrong' },
+    { models: [null] },
+    { models: [{}] },
+    { models: [{ name: false }] },
+    { models: [{ name: '' }] },
+    { models: [{ name: ' ' }] },
+    { models: [{ name: ' model' }] },
+  ])('rejects malformed installed-model lists (%#)', async (value) => {
+    vi.spyOn(http, 'jsonRequest').mockResolvedValue(value);
+    await expect(new Ollama(DEFAULTS).models(signal())).rejects.toThrow(
+      'invalid installed-model list',
+    );
+  });
+  it('sorts and deduplicates exact installed names without generating text', async () => {
+    const request = vi
+      .spyOn(http, 'jsonRequest')
+      .mockResolvedValue({
+        models: [{ name: 'z:model' }, { name: 'a:model' }, { name: 'z:model' }],
+      });
+    expect(await new Ollama(DEFAULTS).models(signal())).toEqual(['a:model', 'z:model']);
+    expect(request.mock.calls[0]?.[0]).toBe(`${DEFAULTS.ollamaUrl}/api/tags`);
+    expect(request.mock.calls[0]?.[1]).toBeUndefined();
+  });
   it('reads installed models and handles an empty model list', async () => {
     const request = vi
       .spyOn(http, 'jsonRequest')

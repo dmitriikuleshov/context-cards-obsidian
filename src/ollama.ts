@@ -176,7 +176,17 @@ export class Ollama {
       signal,
       8000,
     );
-    return (response.models ?? []).map((v) => v.name);
+    if (!response || typeof response !== 'object' || Array.isArray(response))
+      throw new Error('Ollama returned an invalid installed-model list. Try Refresh again.');
+    const models = response.models ?? [];
+    if (
+      !Array.isArray(models) ||
+      models.some(
+        (v) => !v || typeof v.name !== 'string' || !v.name.trim() || v.name !== v.name.trim(),
+      )
+    )
+      throw new Error('Ollama returned an invalid installed-model list. Try Refresh again.');
+    return [...new Set(models.map((v) => v.name))].sort((a, b) => a.localeCompare(b));
   }
   async generalMeaning(
     word: string,

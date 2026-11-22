@@ -1060,6 +1060,24 @@ button.cc-select-button:disabled {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.cc-model-control {
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
+  gap: 8px;
+}
+.cc-model-choice {
+  flex: 1 1 180px;
+  width: 260px;
+  max-width: 100%;
+  min-width: 0;
+}
+.cc-model-choice > .cc-select-button {
+  width: 100%;
+}
+.cc-model-control > button {
+  flex-shrink: 0;
+}
 .cc-select-chevron {
   flex: 0 0 7px;
   width: 7px;
