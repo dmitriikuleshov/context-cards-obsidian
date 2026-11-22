@@ -622,6 +622,10 @@
   margin: 18px 0;
   padding: 18px;
 }
+.cc-writing-workflow .cc-writing-back {
+  display: block;
+  margin-bottom: 18px;
+}
 .cc-writing-workflow .cc-writing-edit-card {
   display: block;
   width: 100%;

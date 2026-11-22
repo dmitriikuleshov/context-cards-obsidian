@@ -593,10 +593,11 @@ export class WritingView extends ItemView {
     ).disabled = s.phase !== 'idle' || !!f.noteId;
   }
   private renderPreviews(body: HTMLElement, s: WritingSession) {
-    this.button(body, '← Corrections', () => {
+    const back = this.button(body, '← Corrections', () => {
       this.screen = 'review';
       this.render();
     });
+    back.addClass('cc-writing-back');
     body.createEl('h2', { text: 'Review your cards' });
     body.createEl('p', { cls: 'cc-muted', text: 'Check the question and answer before adding.' });
     for (const [i, f] of this.selected(s).entries()) {
