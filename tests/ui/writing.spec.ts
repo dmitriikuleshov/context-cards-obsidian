@@ -185,7 +185,10 @@ test('editing keeps focus, cancels safely, validates and supports gap cards', as
   await expect(page.getByRole('alert').last()).toContainText('must change');
   await input.fill('written');
   await page.locator('[data-writing-section=edit-details]>summary').click();
-  await page.getByLabel('Exercise type').selectOption('gap');
+  await page.getByLabel('Exercise type').click();
+  await page
+    .getByRole('menuitemcheckbox', { name: 'Fill in the missing word', exact: true })
+    .click();
   await button(page, 'Save changes').click();
   await choice(page).check();
   await button(page, 'Review 1 card').click();

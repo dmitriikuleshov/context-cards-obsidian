@@ -1043,3 +1043,128 @@
 .cc-destination-tools .cc-field {
   margin-bottom: 10px;
 }
+
+/* Themed select controls. Open lists use Obsidian's DOM menu, never the OS popup. */
+select.cc-native-select {
+  display: none !important;
+}
+button.cc-select-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 38px;
+  height: auto;
+  padding: 9px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 9px;
+  background: var(--background-primary-alt, var(--background-secondary));
+  box-shadow: none;
+  color: var(--text-normal);
+  font: 13px/1.4 var(--font-interface);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease;
+}
+button.cc-select-button:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--text-muted) 50%, var(--background-modifier-border));
+  background: var(--interactive-hover, var(--background-secondary));
+}
+button.cc-select-button:focus-visible,
+button.cc-select-button[aria-expanded='true'] {
+  outline: none;
+  border-color: var(--cc-accent, #82966b);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--cc-accent, #82966b) 18%, transparent);
+}
+button.cc-select-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.cc-select-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cc-select-chevron {
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  margin: -3px 3px 0 0;
+  border-right: 1.5px solid var(--text-muted);
+  border-bottom: 1.5px solid var(--text-muted);
+  transform: rotate(45deg);
+  transition: transform 120ms ease;
+}
+[aria-expanded='true'] > .cc-select-chevron {
+  margin-top: 3px;
+  transform: rotate(225deg);
+}
+.cc-draft-switcher > .cc-select-button {
+  flex: 1;
+  width: 0;
+  font-weight: 600;
+}
+.cc-field > .cc-select-button {
+  width: 100%;
+}
+.cc-select-menu-host .menu {
+  min-width: min(var(--cc-select-width), calc(100vw - 24px));
+  max-width: min(520px, calc(100vw - 24px));
+  max-height: min(360px, calc(100vh - 24px));
+  overflow-y: auto;
+  padding: 5px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 11px;
+  background: var(--background-primary);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 22%);
+}
+.cc-select-menu-host .menu-item {
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 6px;
+  font: 13px/1.4 var(--font-interface);
+  color: var(--text-normal);
+}
+.cc-select-menu-host .menu-item.is-selected,
+.cc-select-menu-host .menu-item:not(.is-disabled):hover {
+  background: color-mix(in srgb, #82966b 16%, var(--background-primary));
+}
+.cc-select-menu-host .menu-item-title {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.cc-select-menu-host .menu-item.is-checked .menu-item-icon {
+  color: var(--cc-accent, #82966b);
+}
+.suggestion-container:has(.cc-deck-suggestion) {
+  max-width: calc(100vw - 24px);
+  max-height: min(360px, calc(100vh - 24px));
+  overflow-y: auto;
+  padding: 5px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 11px;
+  background: var(--background-primary);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 22%);
+}
+.cc-deck-suggestion {
+  padding: 9px 10px;
+  border-radius: 6px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font: 13px/1.4 var(--font-interface);
+}
+.cc-deck-suggestion.is-selected,
+.cc-deck-suggestion:hover {
+  background: color-mix(in srgb, #82966b 16%, var(--background-primary));
+}
+@media (prefers-reduced-motion: reduce) {
+  button.cc-select-button,
+  .cc-select-chevron {
+    transition: none;
+  }
+}

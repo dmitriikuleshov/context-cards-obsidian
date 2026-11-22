@@ -68,9 +68,14 @@ test('advanced choices survive redraws, cancel stays safe and scrolling styles a
   await page.goto('/?writing=1');
   await page.getByRole('button', { name: 'Edit', exact: true }).click();
   await page.locator('[data-writing-section=edit-details]>summary').click();
-  await page.getByLabel('Exercise type', { exact: true }).selectOption('gap');
+  await page.getByLabel('Exercise type', { exact: true }).click();
+  await page
+    .getByRole('menuitemcheckbox', { name: 'Fill in the missing word', exact: true })
+    .click();
   await page.evaluate(() => (window as any).writingPreview.view.render());
-  await expect(page.getByLabel('Exercise type', { exact: true })).toHaveValue('gap');
+  await expect(page.getByLabel('Exercise type', { exact: true })).toHaveText(
+    'Fill in the missing word',
+  );
   await expect(page.locator('[data-writing-section=edit-details]')).toHaveAttribute('open', '');
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
   expect(await page.evaluate(() => (window as any).writingPreview.session.findings[0].format)).toBe(

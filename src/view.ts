@@ -4,6 +4,8 @@ import { cardFields, EXAMPLE_COUNT, type Draft } from './types';
 import { answerValid, contextHtml, htmlText, issues, updateContext, typedAnswer } from './text';
 import { visibleDraft } from './fields';
 import { CARD_CSS, examplesHtml } from './templates';
+import { enhanceSelects } from './select-menu';
+import { DeckSuggest } from './deck-suggest';
 
 export const VIEW_TYPE = 'context-cards-review';
 export class ReviewView extends ItemView {
@@ -18,6 +20,8 @@ export class ReviewView extends ItemView {
   private warning?: HTMLElement;
   private answerChip?: HTMLElement;
   private sections = new Map<string, boolean>();
+  private dropdownCleanup?: () => void;
+  private deckSuggest?: DeckSuggest;
   constructor(
     leaf: WorkspaceLeaf,
     private plugin: ContextCardsPlugin,
@@ -37,6 +41,8 @@ export class ReviewView extends ItemView {
     this.render();
   }
   async onClose() {
+    this.deckSuggest?.close();
+    this.dropdownCleanup?.();
     this.previewObserver?.disconnect();
   }
   show(draft: Draft) {
@@ -116,6 +122,8 @@ export class ReviewView extends ItemView {
     return details;
   }
   render() {
+    this.deckSuggest?.close();
+    this.dropdownCleanup?.();
     this.previewObserver?.disconnect();
     this.previewFrame = undefined;
     const root = this.contentEl;
@@ -274,6 +282,7 @@ export class ReviewView extends ItemView {
     else this.renderEditor(body, draft);
     this.footer = root.createDiv({ cls: 'cc-footer' });
     this.refreshFooter(draft);
+    this.dropdownCleanup = enhanceSelects(root);
     if (focusKey) {
       const replacement = Array.from(
         root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-cc-field]'),
@@ -492,10 +501,11 @@ export class ReviewView extends ItemView {
     const technical = this.section(destination, 'anki', 'Tags');
     technical.addClass('cc-technical');
     technical.addClass('cc-destination-tools');
-    const listId = `cc-decks-${crypto.randomUUID()}`;
-    deck.setAttribute('list', listId);
-    const options = technical.createEl('datalist', { attr: { id: listId } });
-    for (const name of this.plugin.deckNames) options.createEl('option', { value: name });
+    this.deckSuggest = new DeckSuggest(
+      this.plugin.app,
+      deck as HTMLInputElement,
+      () => this.plugin.deckNames,
+    );
     this.field(
       technical,
       'Tags',

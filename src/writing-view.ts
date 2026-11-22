@@ -11,6 +11,8 @@ import {
   type WritingSession,
 } from './writing';
 import { writingHighlights } from './writing-workflow';
+import { enhanceSelects } from './select-menu';
+import { DeckSuggest } from './deck-suggest';
 
 export const WRITING_VIEW = 'context-cards-writing';
 type Screen = 'review' | 'preview' | 'done';
@@ -23,7 +25,11 @@ export class WritingView extends ItemView {
   private attempt = 0;
   private renderKey = '';
   private editorValues = new Map<string, string>();
+  private dropdownCleanup?: () => void;
+  private deckSuggest?: DeckSuggest;
   async onClose() {
+    this.deckSuggest?.close();
+    this.dropdownCleanup?.();
     this.editorValues.clear();
   }
   private scrollOwner(): HTMLElement {
@@ -152,6 +158,8 @@ export class WritingView extends ItemView {
     this.render();
   }
   render() {
+    this.deckSuggest?.close();
+    this.dropdownCleanup?.();
     const root = this.contentEl,
       owner = this.scrollOwner(),
       scroll = owner.scrollTop;
@@ -270,6 +278,7 @@ export class WritingView extends ItemView {
       else this.renderReview(body, s);
       this.renderFooter(root, s);
     }
+    this.dropdownCleanup = enhanceSelects(root);
     const key = `${this.current}/${this.screen}/${this.editing ?? ''}`;
     this.scrollOwner().scrollTop = this.renderKey === key ? scroll : 0;
     if (this.renderKey === key && focusKey) {
@@ -627,6 +636,11 @@ export class WritingView extends ItemView {
     deck.parentElement!.querySelector('label')?.addClass('cc-sr-only');
     deck.placeholder = 'Choose an Anki deck';
     deck.title = s.deck;
+    this.deckSuggest = new DeckSuggest(
+      this.host.app,
+      deck as HTMLInputElement,
+      () => this.host.deckNames ?? [],
+    );
     const options = this.section(destination, 'options', 'Options');
     options.addClass('cc-destination-tools');
     options.addEventListener('toggle', () => {

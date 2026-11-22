@@ -11,8 +11,10 @@ import {
 import { Ollama } from './ollama';
 import { Anki } from './anki';
 import { endpoint } from './http';
+import { enhanceSelects } from './select-menu';
 
 export class ContextSettings extends PluginSettingTab {
+  private dropdownCleanup?: () => void;
   constructor(
     app: App,
     private plugin: ContextCardsPlugin,
@@ -20,6 +22,7 @@ export class ContextSettings extends PluginSettingTab {
     super(app, plugin);
   }
   display() {
+    this.dropdownCleanup?.();
     const root = this.containerEl;
     root.empty();
     root.createEl('h2', { text: 'Context Cards' });
@@ -415,5 +418,10 @@ export class ContextSettings extends PluginSettingTab {
       cls: 'cc-muted',
       text: 'Commands: Create cards from selection · Open review panel · Check connections. Assign shortcuts under Obsidian → Hotkeys.',
     });
+    this.dropdownCleanup = enhanceSelects(root);
+  }
+  hide() {
+    this.dropdownCleanup?.();
+    super.hide();
   }
 }
