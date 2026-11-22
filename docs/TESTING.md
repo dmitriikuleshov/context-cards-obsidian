@@ -7,7 +7,7 @@ npm ci
 npm run test:vocabulary
 ```
 
-The vocabulary coverage target includes eleven complete production modules: `main.ts` (plugin lifecycle, capture, commands and draft controller), `ollama.ts`, `capture.ts`, `text.ts`, `storage.ts`, `fields.ts`, `templates.ts`, `pronunciation.ts`, `source-mark.ts`, `anki.ts`, and `http.ts`. Coverage includes whole files without ignored lines. The percentage describes this core, not every plugin file: the review view, settings UI and shared dropdown are checked separately by unit/browser tests and are outside this percentage.
+The vocabulary coverage target includes twelve complete production modules: `main.ts` (plugin lifecycle, capture, commands and draft controller), `ollama.ts`, `capture.ts`, `text.ts`, `target.ts` (soft selection checks and model scope validation), `storage.ts`, `fields.ts`, `templates.ts`, `pronunciation.ts`, `source-mark.ts`, `anki.ts`, and `http.ts`. Coverage includes whole files without ignored lines. The percentage describes this core, not every plugin file: the review view, target picker modal, settings UI and shared dropdown are checked separately by unit/browser tests and are outside this percentage.
 
 Each measured file must cover at least **98% of statements and lines, 97% of branches, and 100% of functions**. Falling below any threshold fails the command. HTML and machine-readable reports are generated at `coverage/vocabulary/index.html` and `coverage/vocabulary/coverage-summary.json`. The Tests workflow publishes a `vocabulary-coverage` artifact; both Tests and Release enforce these thresholds.
 
@@ -15,6 +15,7 @@ These deterministic checks require no downloaded model, running Anki, vault or c
 
 - Malformed, truncated, oversized and incomplete model output; legacy and grouped examples; disabled fields; custom counts; contextual and general meanings; word formation; offline IPA and pronunciation selection.
 - Reading Mode and editor selections, nested inline markup, repeated words, UTF-16 offsets, neighbouring text, HTML escaping, gap answers and optional backtick marking.
+- Passage-to-target selection before generation or source marking; explicit long-phrase confirmation; exact offsets after narrowing; canceled/stale dialogs; legacy draft recovery; rejection of a model that teaches only part of the selected target. Browser checks include narrow dialogs, keyboard selection, Escape and export blocking.
 - Cancellation, late responses, edits during generation, pending replacements, immutable settings snapshots, the shared request deadline and stale callbacks after unload.
 - Bounded draft history, damaged stored records, restoration, independent field settings, debounced/serialized saves and failed disk writes.
 - AnkiConnect response contracts, literal duplicate searches, batching, safe model migration, retry keys, lost export responses, invalid note IDs, queued exports and preservation of edits.
