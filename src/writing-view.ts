@@ -639,15 +639,37 @@ export class WritingView extends ItemView {
       body.createEl('p', { text: 'No cards selected. Return to corrections to keep one.' });
   }
   private renderFooter(root: HTMLElement, s: WritingSession) {
-    const footer = root.createDiv({ cls: 'cc-footer' }),
-      busy = s.phase !== 'idle';
-    const options = this.section(footer, 'options', 'Options');
+    const busy = s.phase !== 'idle';
+    const area = root.createDiv({ cls: 'cc-writing-options' });
+    const options = this.section(area, 'options', 'Options');
+    const syncDestination = () => {
+      const label = root.querySelector<HTMLElement>('[data-writing-destination]');
+      if (!label) return;
+      const count = this.pending(s).length;
+      label.textContent = options.open
+        ? `${count} ${count === 1 ? 'card' : 'cards'} selected`
+        : s.deck;
+      label.title = options.open ? '' : s.deck;
+    };
+    options.addEventListener('toggle', () => {
+      if (options.isConnected) {
+        this.sections.set('options', options.open);
+        syncDestination();
+      }
+    });
+    options.querySelector('summary')!.addEventListener('click', () => {
+      requestAnimationFrame(() => {
+        if (options.isConnected && options.open) options.scrollIntoView({ block: 'nearest' });
+      });
+    });
     this.field(options, 'Writing deck', s.deck, 'deck', s, (v) => {
       s.deck = v;
+      syncDestination();
     });
     this.button(options, 'Recheck selection', () => {
       void this.host.writing.analyse(s);
     }).disabled = busy || s.findings.some((f) => !!f.noteId);
+    const footer = root.createDiv({ cls: 'cc-footer' });
     const actions = footer.createDiv({ cls: 'cc-writing-footer-actions' }),
       pending = this.pending(s);
     if (this.screen === 'done') return;
@@ -661,7 +683,13 @@ export class WritingView extends ItemView {
       return;
     }
     if (this.screen === 'preview') {
-      actions.createSpan({ cls: 'cc-muted', text: s.deck, attr: { title: s.deck } });
+      actions.createSpan({
+        cls: 'cc-muted',
+        text: options.open
+          ? `${pending.length} ${pending.length === 1 ? 'card' : 'cards'} selected`
+          : s.deck,
+        attr: { title: options.open ? '' : s.deck, 'data-writing-destination': '' },
+      });
       const valid = pending.length > 0 && pending.every((f) => this.valid(f));
       this.button(
         actions,

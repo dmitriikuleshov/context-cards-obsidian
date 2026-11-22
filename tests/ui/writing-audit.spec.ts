@@ -96,6 +96,38 @@ test('saving only card feedback returns to previews without another preparation 
 for (const size of [
   { width: 320, height: 520 },
   { width: 390, height: 720 },
+]) {
+  test(`options open inline without enlarging the action bar at ${size.width}x${size.height}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(size);
+    await page.goto('/?writing=1');
+    await page.getByRole('button', { name: 'Review 2 cards', exact: true }).click();
+    const footer = page.locator('.cc-footer'),
+      options = page.locator('[data-writing-section=options]');
+    const before = (await footer.boundingBox())!.height;
+    await options.locator('summary').click();
+    await expect(options).toHaveAttribute('open', '');
+    await expect
+      .poll(async () => {
+        const r = await options.boundingBox();
+        const f = await footer.boundingBox();
+        return !!r && !!f && r.y >= 0 && r.y + r.height <= f.y + 1;
+      })
+      .toBe(true);
+    expect(Math.abs((await footer.boundingBox())!.height - before)).toBeLessThan(2);
+    await expect(footer.locator('details')).toHaveCount(0);
+    await expect(footer.getByText('2 cards selected', { exact: true })).toBeVisible();
+    if (size.width === 390)
+      await page.screenshot({ path: '.test-artifacts/writing-options-inline.png' });
+    await page.getByLabel('Writing deck', { exact: true }).fill('English::My new deck');
+    await options.locator('summary').click();
+    await expect(footer.getByText('English::My new deck', { exact: true })).toBeVisible();
+  });
+}
+for (const size of [
+  { width: 320, height: 520 },
+  { width: 390, height: 720 },
   { width: 600, height: 900 },
 ]) {
   test(`vocabulary actions remain reachable at ${size.width}x${size.height}`, async ({ page }) => {

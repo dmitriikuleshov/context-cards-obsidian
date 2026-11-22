@@ -653,6 +653,15 @@
   gap: 12px;
   flex-wrap: wrap;
 }
+.cc-writing-options {
+  padding: 0 20px 16px;
+}
+.cc-writing-workflow .cc-writing-options > .cc-section {
+  margin: 0;
+}
+.cc-writing-options .cc-field {
+  margin-top: 16px;
+}
 .cc-writing-footer-actions > span {
   flex: 1 1 120px;
   max-width: 100%;
