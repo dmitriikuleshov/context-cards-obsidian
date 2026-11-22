@@ -35,6 +35,112 @@ export function sampleFinding(): WritingFinding {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing analysis and practice validation', () => {
+  it('normalizes broad or partial-word model targets to the actual complete-word edit', () => {
+    for (const [before, after] of [
+      ['have wrote', 'have written'],
+      ['ote', 'itten'],
+    ]) {
+      const result = parseWritingAnalysis(
+        JSON.stringify({
+          summary: '',
+          findings: [{ ...finding, target_before: before, target_after: after }],
+        }),
+        source,
+        true,
+      );
+      expect(result.findings[0]!.before).toBe('wrote');
+      expect(result.findings[0]!.after).toBe('written');
+    }
+  });
+  it('rejects competing selectable corrections instead of silently hiding one in the source', () => {
+    expect(() =>
+      parseWritingAnalysis(
+        JSON.stringify({
+          summary: '',
+          findings: [
+            finding,
+            { ...finding, target_before: 'have wrote', target_after: 'had written' },
+          ],
+        }),
+        source,
+        true,
+      ),
+    ).toThrow('overlap');
+  });
+  it('supports a long sentence within the advertised selection limit', () => {
+    const original = 'I have wrote ' + 'a detailed story about the journey '.repeat(100) + '.';
+    const f = parseWritingAnalysis(
+      JSON.stringify({ summary: '', findings: [{ ...finding, original_sentence: original }] }),
+      original,
+      true,
+    ).findings[0]!;
+    expect(
+      parseWritingCard(
+        JSON.stringify({
+          question: original,
+          target: 'wrote',
+          answer: 'written',
+          corrected_sentence: original.replace('wrote', 'written'),
+          hint: '',
+          explanation: f.explanation,
+          tip: '',
+        }),
+        f,
+      ).question,
+    ).toBe(original);
+  });
+  it('binds a gap card to the approved correction even when a different answer reconstructs its sentence', () => {
+    const f = { ...sampleFinding(), format: 'gap' as const };
+    expect(() =>
+      parseWritingCard(
+        JSON.stringify({
+          question: 'They [[gap]] home.',
+          target: 'wrote',
+          answer: 'went',
+          corrected_sentence: 'They went home.',
+          hint: '',
+          explanation: f.explanation,
+          tip: '',
+        }),
+        f,
+      ),
+    ).toThrow('approved correction');
+  });
+  it('repairs a generated card that ignores the constrained schema and invents its surrounding sentence', async () => {
+    const f = sampleFinding();
+    const request = vi.spyOn(http, 'jsonRequest').mockImplementation(async (_url, body: any) => {
+      const wrong = request.mock.calls.length === 1;
+      return {
+        message: {
+          content: JSON.stringify({
+            question: wrong ? 'She wrote a novel.' : source,
+            target: 'wrote',
+            answer: 'written',
+            corrected_sentence: wrong ? 'She written a novel.' : source.replace('wrote', 'written'),
+            hint: '',
+            explanation: f.explanation,
+            tip: f.tip,
+          }),
+        },
+      };
+    });
+    const card = await new WritingModel(DEFAULTS).exercise(f, new AbortController().signal);
+    expect(card.question).toBe(source);
+    expect(request).toHaveBeenCalledTimes(2);
+  });
+  it('corrects unselected spelling errors surrounding the learning target', () => {
+    const f = { ...sampleFinding(), original: 'I have wrote a stroy.' };
+    const peer = {
+      ...sampleFinding(),
+      id: 'typo',
+      kind: 'typo' as const,
+      original: f.original,
+      before: 'stroy',
+      after: 'story',
+      selected: false,
+    };
+    expect(isolatedQuestion(f, [f, peer])).toBe('I have wrote a story.');
+  });
   it('keeps capitalization selectable even if the model labels it as optional style, and deduplicates identical edits', () => {
     const original = 'I learn english.';
     const item = {

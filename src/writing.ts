@@ -1,5 +1,6 @@
 import type { Capture } from './types';
 import { htmlText } from './text';
+import { writingHighlights } from './writing-workflow';
 
 export const WRITING_LIMIT = 6000;
 export type FindingKind = 'grammar' | 'vocabulary' | 'style' | 'unclear' | 'typo';
@@ -72,10 +73,11 @@ export function writingCorrectionTitle(f: WritingFinding): string {
 }
 /** Reject whole-sentence inventions and multiple separate edits in a one-target exercise. */
 export function validateWritingTarget(f: WritingFinding) {
-  const corrected = correctedSentence(f);
+  correctedSentence(f);
   const words = (text: string) => text.match(/[\p{L}\p{N}]+|[^\s\p{L}\p{N}]/gu) ?? [];
-  const a = words(f.original),
-    b = words(corrected);
+  // Align only the bounded edit, rather than allocating a quadratic table for a long source.
+  const a = words(f.before),
+    b = words(f.after);
   // Word-level edit alignment counts independent changed runs, including case-only changes.
   const table = Array.from({ length: a.length + 1 }, () => new Uint16Array(b.length + 1));
   for (let i = a.length - 1; i >= 0; i--)
@@ -106,7 +108,9 @@ export function validateWritingTarget(f: WritingFinding) {
     throw new Error(
       'A correction changes multiple separate targets. Keep only one issue per finding and recheck the selection.',
     );
-  if (a.length >= 3 && shared === 0)
+  const at = f.original.indexOf(f.before);
+  const outside = words(f.original.slice(0, at) + ' ' + f.original.slice(at + f.before.length));
+  if (words(f.original).length >= 3 && !outside.length && shared === 0)
     throw new Error(
       'A correction replaces the entire sentence with unrelated wording. Recheck the selection.',
     );
@@ -177,7 +181,7 @@ export function isolatedQuestion(finding: WritingFinding, others: WritingFinding
       (f) =>
         f.id !== finding.id &&
         !f.dismissed &&
-        canPractise(f) &&
+        (canPractise(f) || f.kind === 'typo') &&
         f.original === finding.original &&
         unique(f.original, f.before),
     )
@@ -215,7 +219,7 @@ export function parseWritingAnalysis(
       id: crypto.randomUUID(),
       kind: item.kind,
       title: str(item.title, 'title', 120),
-      original: str(item.original_sentence, 'source sentence'),
+      original: str(item.original_sentence, 'source sentence', WRITING_LIMIT),
       before: fragment(item.target_before, 'target'),
       after: fragment(item.target_after, 'correction'),
       explanation: str(item.explanation, 'explanation'),
@@ -229,7 +233,7 @@ export function parseWritingAnalysis(
         'A finding does not match the selected text. No unverified findings were accepted; try again.',
       );
     if (f.kind !== 'unclear' && typeof item.corrected_sentence === 'string') {
-      const corrected = str(item.corrected_sentence, 'corrected sentence');
+      const corrected = str(item.corrected_sentence, 'corrected sentence', WRITING_LIMIT + 300);
       if (corrected === f.original)
         throw new Error('The suggested correction does not change the source.');
       if (strict && (!unique(f.original, f.before) || correctedSentence(f) !== corrected))
@@ -245,7 +249,12 @@ export function parseWritingAnalysis(
     if (f.kind !== 'unclear') correctedSentence(f);
     else if (!unique(f.original, f.before))
       throw new Error('The unclear fragment does not match its source sentence.');
-    if (strict && f.kind !== 'unclear') validateWritingTarget(f);
+    if (strict && f.kind !== 'unclear') {
+      const delta = minimalCorrection(f.original, correctedSentence(f));
+      f.before = fragment(delta.before, 'target');
+      f.after = fragment(delta.after, 'correction');
+      validateWritingTarget(f);
+    }
     if (strict && f.before !== f.after && f.before.toLowerCase() === f.after.toLowerCase()) {
       f.kind = 'grammar';
       f.selected = true;
@@ -262,6 +271,13 @@ export function parseWritingAnalysis(
         findings[index] = f;
     }
   }
+  if (strict) {
+    const visible = new Set(writingHighlights(source, findings).map((range) => range.id));
+    if (findings.some((f) => canPractise(f) && !visible.has(f.id)))
+      throw new Error(
+        'Selectable corrections overlap. Return one precise, independent correction per target.',
+      );
+  }
   return { summary: str(data.summary, 'summary'), findings };
 }
 export function parseWritingCard(raw: string, finding: WritingFinding): WritingCard {
@@ -269,10 +285,10 @@ export function parseWritingCard(raw: string, finding: WritingFinding): WritingC
   if (!data || typeof data !== 'object') throw new Error('Invalid practice card.');
   const card: WritingCard = {
     kind: finding.format,
-    question: str(data.question, 'question'),
+    question: str(data.question, 'question', WRITING_LIMIT + 300),
     target: fragment(data.target, 'target'),
     answer: fragment(data.answer, 'answer'),
-    corrected: str(data.corrected_sentence, 'corrected sentence'),
+    corrected: str(data.corrected_sentence, 'corrected sentence', WRITING_LIMIT + 300),
     hint: str(data.hint, 'hint', 500),
     explanation: str(data.explanation, 'explanation'),
     tip: str(data.tip, 'tip', 500),
@@ -285,6 +301,8 @@ export function parseWritingCard(raw: string, finding: WritingFinding): WritingC
   )
     throw new Error('The practice card has empty required fields.');
   if (card.kind === 'gap') {
+    if (card.target !== finding.before || card.answer !== finding.after)
+      throw new Error('The gap card does not test the approved correction. Try generating again.');
     if (
       !unique(card.question, '[[gap]]') ||
       card.question.replace('[[gap]]', () => card.answer) !== card.corrected
