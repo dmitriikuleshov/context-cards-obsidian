@@ -239,6 +239,10 @@ If exporting partly fails, the preview marks successful cards **Already added** 
 
 The model uses the original sentence for the exercise and fixes other recognised, non-overlapping mistakes in that same sentence so there is one target to practise. Review the result: schema checks can verify that the question and answer agree, not that the English advice is always correct.
 
+Analysis now checks proposed edits in a separate model pass before keeping them. Both passes share the configured analysis timeout. This can take a little longer. Card preparation keeps the checked explanation and tip, and source/preview headings show the actual replacement. Narrow grammar/vocabulary highlights take priority over overlapping optional suggestions. Whole-sentence inventions and corrections that combine separate targets are rejected. These checks reduce inconsistent feedback; they do not make a local model infallible.
+
+Existing drafts keep their captured content. After updating, use **Options → Recheck selection** to replace an older, inconsistent analysis, then prepare its cards again. Rechecking is disabled for already-exported reviews; start a fresh selection in that case.
+
 ### Writing settings and saved reviews
 
 Under **Settings → Context Cards → Writing practice**:

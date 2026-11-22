@@ -28,6 +28,21 @@ it('repairs invalid analysis over HTTP and prepares both formats using the appro
     calls++;
     if (calls === 1) return { message: { content: '{"findings":[{}]}' } };
     const fields = data.format.properties;
+    if (fields.decisions) {
+      const { candidates } = JSON.parse(data.messages[1].content);
+      return {
+        message: {
+          content: JSON.stringify({
+            decisions: candidates.map((c: any) => ({
+              id: c.id,
+              valid: true,
+              explanation: 'Use the participle.',
+              tip: '',
+            })),
+          }),
+        },
+      };
+    }
     if (fields.findings)
       return {
         message: {
@@ -51,7 +66,7 @@ it('repairs invalid analysis over HTTP and prepares both formats using the appro
         },
       };
     const result: any = { hint: 'Use write.', explanation: 'Use the participle.', tip: '' };
-    for (const key of ['question', 'target', 'answer', 'corrected_sentence'])
+    for (const key of ['question', 'target', 'answer', 'corrected_sentence', 'explanation', 'tip'])
       result[key] = fields[key].enum[0];
     return { message: { content: JSON.stringify(result) } };
   });
@@ -63,7 +78,7 @@ it('repairs invalid analysis over HTTP and prepares both formats using the appro
   expect((await model.exercise(f, signal)).answer).toBe('written');
   f.format = 'gap';
   expect((await model.exercise(f, signal)).question).toContain('[[gap]]');
-  expect(calls).toBe(4);
+  expect(calls).toBe(5);
 });
 it('honours timeout and cancellation against an unresponsive model server', async () => {
   const url = await serve(() => undefined);

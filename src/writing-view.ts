@@ -5,6 +5,7 @@ import {
   correctedSentence,
   parseWritingAnalysis,
   writingPracticeFields,
+  writingCorrectionTitle,
   type WritingFinding,
   type WritingSession,
 } from './writing';
@@ -283,7 +284,7 @@ export class WritingView extends ItemView {
       mark.setAttribute('aria-pressed', String(f?.id === finding.id));
       mark.setAttribute(
         'aria-label',
-        `${finding.title}${finding.noteId ? ', added' : finding.dismissed ? ', skipped' : finding.selected ? ', kept' : ''}`,
+        `${writingCorrectionTitle(finding)}${finding.noteId ? ', added' : finding.dismissed ? ', skipped' : finding.selected ? ', kept' : ''}`,
       );
       mark.createEl('sup', {
         text:
@@ -307,7 +308,7 @@ export class WritingView extends ItemView {
     body.createEl('hr');
     if (!f) return;
     const row = body.createDiv({ cls: 'cc-writing-row' });
-    row.createEl('h3', { text: f.title });
+    row.createEl('h3', { text: writingCorrectionTitle(f) });
     const change = body.createDiv({ cls: 'cc-writing-change' });
     change.createEl('del', { text: f.before });
     change.createSpan({ text: '→', attr: { 'aria-hidden': 'true' } });
@@ -510,7 +511,7 @@ export class WritingView extends ItemView {
     for (const [i, f] of this.selected(s).entries()) {
       const card = body.createDiv({ cls: 'cc-writing-preview' }),
         row = card.createDiv({ cls: 'cc-writing-row' });
-      row.createEl('h3', { text: `Card ${i + 1} · ${f.title}` });
+      row.createEl('h3', { text: `Card ${i + 1} · ${writingCorrectionTitle(f)}` });
       if (f.noteId)
         card.createEl('p', {
           cls: 'cc-writing-success',

@@ -64,7 +64,7 @@ test('Edit and the labeled checkbox change inclusion without navigation or gener
   await expect(button(page, 'Undo')).toHaveCount(0);
   await choice(page).check();
   await expect(choice(page)).toBeChecked();
-  await expect(page.getByRole('heading', { name: 'Past participle', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'wrote → written', exact: true })).toBeVisible();
   expect(
     await page.evaluate(() => (window as any).writingPreview.session.findings[0].card),
   ).toBeUndefined();
@@ -74,7 +74,7 @@ test('Edit and the labeled checkbox change inclusion without navigation or gener
   await expect(choice(page)).toBeVisible();
   await expect(word(page, 'wrote')).not.toHaveClass(/is-kept/);
   await expect(button(page, 'Review cards')).toBeDisabled();
-  await expect(page.getByRole('heading', { name: 'Past participle', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'wrote → written', exact: true })).toBeVisible();
   await page.evaluate(() => {
     const p = (window as any).writingPreview;
     p.session.findings = p.session.findings.slice(0, 1);
@@ -96,6 +96,53 @@ test('new analysis defaults to checked grammar/vocabulary, with style excluded',
   await word(page, 'stories').click();
   await expect(choice(page)).not.toBeChecked();
   await expect(choice(page)).toBeDisabled();
+});
+test('an overlapping style finding never masks the capitalization card or gives it a copied title', async ({
+  page,
+}) => {
+  await page.evaluate(() => {
+    const p = (window as any).writingPreview,
+      s = p.session,
+      original = 'I started to learn english a few years ago.';
+    const capital = {
+      ...s.findings[0],
+      id: 'capital',
+      kind: 'grammar',
+      title: 'Collocation: make a mistake',
+      original,
+      before: 'english',
+      after: 'English',
+      explanation: 'Names of languages are capitalized.',
+      tip: 'Capitalize language names.',
+      selected: true,
+    };
+    const style = {
+      ...capital,
+      id: 'style',
+      kind: 'style',
+      before: 'started to learn english',
+      after: 'have started to learn English',
+      explanation: 'An unrelated tense suggestion.',
+      selected: false,
+    };
+    s.capture.selected = s.capture.text = original;
+    s.findings = [style, capital];
+    p.view.show(s);
+  });
+  await page.locator('.cc-writing-word').filter({ hasText: 'english' }).click();
+  await expect(page.getByRole('heading', { name: 'english → English', exact: true })).toBeVisible();
+  await expect(
+    page.getByText('Names of languages are capitalized.', { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText('An unrelated tense suggestion.', { exact: true })).toHaveCount(0);
+  await button(page, 'Review 1 card').click();
+  await expect(
+    page.getByRole('heading', { name: 'Card 1 · english → English', exact: true }),
+  ).toBeVisible();
+  await expect(page.locator('.cc-writing-question mark')).toHaveText('english');
+  await expect(page.locator('.cc-writing-answer')).toHaveText(
+    'I started to learn English a few years ago.',
+  );
 });
 test('word navigation preserves independent choices and exports the selected batch', async ({
   page,

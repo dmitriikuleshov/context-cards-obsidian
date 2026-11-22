@@ -1,6 +1,6 @@
 import type { WritingFinding } from './writing';
 
-/** Only annotate exact captured quotes. Overlapping findings remain reachable through navigation. */
+/** Prefer precise learning targets over broader optional suggestions at the same location. */
 export function writingHighlights(source: string, findings: WritingFinding[]) {
   const candidates: Array<{ start: number; end: number; id: string }> = [];
   for (const f of findings) {
@@ -13,11 +13,17 @@ export function writingHighlights(source: string, findings: WritingFinding[]) {
       at = source.indexOf(f.original, at + f.original.length);
     }
   }
-  candidates.sort((a, b) => a.start - b.start || a.end - b.end);
-  let end = 0;
-  return candidates.filter((range) => {
-    if (range.start < end) return false;
-    end = range.end;
-    return true;
-  });
+  const priority = (id: string) => {
+    const f = findings.find((f) => f.id === id)!;
+    return f.kind === 'grammar' || f.kind === 'vocabulary' ? 0 : 1;
+  };
+  candidates.sort(
+    (a, b) =>
+      priority(a.id) - priority(b.id) || a.end - a.start - (b.end - b.start) || a.start - b.start,
+  );
+  const chosen: typeof candidates = [];
+  for (const range of candidates)
+    if (!chosen.some((other) => range.start < other.end && range.end > other.start))
+      chosen.push(range);
+  return chosen.sort((a, b) => a.start - b.start);
 }

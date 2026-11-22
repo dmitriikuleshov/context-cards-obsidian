@@ -65,6 +65,52 @@ export function correctedSentence(f: WritingFinding): string {
   if (f.before === f.after) throw new Error('The correction must change the highlighted text.');
   return f.original.replace(f.before, () => f.after);
 }
+/** A label derived from the actual edit cannot inherit an unrelated model-generated lesson title. */
+export function writingCorrectionTitle(f: WritingFinding): string {
+  const short = (value: string) => (value.length > 60 ? value.slice(0, 57) + '…' : value);
+  return `${short(f.before.trim())} → ${short(f.after.trim()) || '(remove)'}`;
+}
+/** Reject whole-sentence inventions and multiple separate edits in a one-target exercise. */
+export function validateWritingTarget(f: WritingFinding) {
+  const corrected = correctedSentence(f);
+  const words = (text: string) => text.match(/[\p{L}\p{N}]+|[^\s\p{L}\p{N}]/gu) ?? [];
+  const a = words(f.original),
+    b = words(corrected);
+  // Word-level edit alignment counts independent changed runs, including case-only changes.
+  const table = Array.from({ length: a.length + 1 }, () => new Uint16Array(b.length + 1));
+  for (let i = a.length - 1; i >= 0; i--)
+    for (let j = b.length - 1; j >= 0; j--)
+      table[i]![j] =
+        a[i] === b[j] ? table[i + 1]![j + 1]! + 1 : Math.max(table[i + 1]![j]!, table[i]![j + 1]!);
+  let i = 0,
+    j = 0,
+    runs = 0,
+    changing = false,
+    shared = 0;
+  while (i < a.length || j < b.length) {
+    if (i < a.length && j < b.length && a[i] === b[j]) {
+      shared++;
+      changing = false;
+      i++;
+      j++;
+    } else {
+      if (!changing) {
+        runs++;
+        changing = true;
+      }
+      if (i < a.length && (j === b.length || table[i + 1]![j]! >= table[i]![j + 1]!)) i++;
+      else j++;
+    }
+  }
+  if (runs > 1)
+    throw new Error(
+      'A correction changes multiple separate targets. Keep only one issue per finding and recheck the selection.',
+    );
+  if (a.length >= 3 && shared === 0)
+    throw new Error(
+      'A correction replaces the entire sentence with unrelated wording. Recheck the selection.',
+    );
+}
 export function minimalCorrection(
   original: string,
   corrected: string,
@@ -156,6 +202,7 @@ export function isolatedQuestion(finding: WritingFinding, others: WritingFinding
 export function parseWritingAnalysis(
   raw: string,
   source: string,
+  strict = false,
 ): { summary: string; findings: WritingFinding[] } {
   const data = JSON.parse(raw);
   if (!data || !Array.isArray(data.findings) || data.findings.length > 10)
@@ -185,6 +232,10 @@ export function parseWritingAnalysis(
       const corrected = str(item.corrected_sentence, 'corrected sentence');
       if (corrected === f.original)
         throw new Error('The suggested correction does not change the source.');
+      if (strict && (!unique(f.original, f.before) || correctedSentence(f) !== corrected))
+        throw new Error(
+          'The target replacement and corrected_sentence disagree. Describe exactly one correction without changing other words.',
+        );
       const delta = minimalCorrection(f.original, corrected);
       if (!delta.before || delta.before.length > 300 || delta.after.length > 300)
         throw new Error('The correction needs a clearer single target.');
@@ -194,10 +245,21 @@ export function parseWritingAnalysis(
     if (f.kind !== 'unclear') correctedSentence(f);
     else if (!unique(f.original, f.before))
       throw new Error('The unclear fragment does not match its source sentence.');
-    const key = `${f.kind}|${f.before.toLowerCase()}|${f.after.toLowerCase()}|${f.pattern.toLowerCase()}`;
+    if (strict && f.kind !== 'unclear') validateWritingTarget(f);
+    if (strict && f.before !== f.after && f.before.toLowerCase() === f.after.toLowerCase()) {
+      f.kind = 'grammar';
+      f.selected = true;
+    }
+    const key = JSON.stringify([f.original, f.before, f.after]);
     if (!seen.has(key)) {
       findings.push(f);
       seen.add(key);
+    } else if (f.kind === 'grammar' || f.kind === 'vocabulary') {
+      const index = findings.findIndex(
+        (old) => old.original === f.original && old.before === f.before && old.after === f.after,
+      );
+      if (index >= 0 && (findings[index]!.kind === 'style' || findings[index]!.kind === 'typo'))
+        findings[index] = f;
     }
   }
   return { summary: str(data.summary, 'summary'), findings };
@@ -326,6 +388,7 @@ export function restoreWritingSessions(value: unknown): WritingSession[] {
 }
 
 export function writingPracticeFields(f: WritingFinding): Record<string, string> {
+  validateWritingTarget(f);
   if (!f.card) throw new Error('Generate and review the exercise first.');
   const c = parseWritingCard(
     JSON.stringify({ ...f.card, corrected_sentence: f.card.corrected }),

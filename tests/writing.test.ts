@@ -8,6 +8,8 @@ import {
   isolatedQuestion,
   canPractise,
   restoreWritingSessions,
+  validateWritingTarget,
+  writingCorrectionTitle,
   type WritingFinding,
 } from '../src/writing';
 import { writingNoteFields, WRITING_TEMPLATE, WRITING_FIELDS } from '../src/writing-anki';
@@ -33,12 +35,119 @@ export function sampleFinding(): WritingFinding {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing analysis and practice validation', () => {
+  it('keeps capitalization selectable even if the model labels it as optional style, and deduplicates identical edits', () => {
+    const original = 'I learn english.';
+    const item = {
+      ...finding,
+      kind: 'style',
+      original_sentence: original,
+      target_before: 'english',
+      target_after: 'English',
+    };
+    const result = parseWritingAnalysis(
+      JSON.stringify({
+        summary: '',
+        findings: [item, { ...item, title: 'Another title', pattern: 'Another pattern' }],
+      }),
+      original,
+      true,
+    );
+    expect(result.findings).toHaveLength(1);
+    expect(result.findings[0]!.kind).toBe('grammar');
+    expect(result.findings[0]!.selected).toBe(true);
+  });
+  it('rejects copied example sentences and multiple independent corrections', () => {
+    const invented = {
+      ...sampleFinding(),
+      original: 'This is good',
+      before: 'This is good',
+      after: 'I made a mistake yesterday.',
+    };
+    expect(() => validateWritingTarget(invented)).toThrow('unrelated wording');
+    const combined = {
+      ...sampleFinding(),
+      original: 'I started to learn english a few years ago.',
+      before: 'started to learn english',
+      after: 'have started to learn English',
+    };
+    expect(() => validateWritingTarget(combined)).toThrow('multiple separate targets');
+  });
+  it('does not silently retarget a model correction and keep its unrelated explanation', () => {
+    expect(() =>
+      parseWritingAnalysis(
+        JSON.stringify({
+          summary: '',
+          findings: [
+            {
+              ...finding,
+              target_before: 'have',
+              target_after: 'written',
+              corrected_sentence: 'I have written three stories this week.',
+            },
+          ],
+        }),
+        source,
+        true,
+      ),
+    ).toThrow('disagree');
+  });
+  it('uses the actual target for display labels even if a saved model title is unrelated', () => {
+    const f = {
+      ...sampleFinding(),
+      before: 'english',
+      after: 'English',
+      title: 'Collocation: make a mistake',
+    };
+    expect(writingCorrectionTitle(f)).toBe('english → English');
+  });
+  it.each([true, false])(
+    'uses the independent correction check before accepting feedback: %s',
+    async (valid) => {
+      const request = vi
+        .spyOn(http, 'jsonRequest')
+        .mockResolvedValueOnce({
+          message: { content: JSON.stringify({ summary: '', findings: [finding] }) },
+        })
+        .mockImplementation(async (_url, body: any) => {
+          const input = JSON.parse(body.messages[1].content);
+          return {
+            message: {
+              content: JSON.stringify({
+                decisions: input.candidates.map((f: any) => ({
+                  id: f.id,
+                  valid,
+                  explanation: valid
+                    ? 'Use the participle.'
+                    : 'The original is already acceptable.',
+                  tip: '',
+                })),
+              }),
+            },
+          };
+        });
+      const result = await new WritingModel(DEFAULTS).analyse(source, new AbortController().signal);
+      expect(result.findings).toHaveLength(valid ? 1 : 0);
+      if (valid) expect(result.findings[0]!.explanation).toBe('Use the participle.');
+      expect(request).toHaveBeenCalledTimes(2);
+    },
+  );
+  it('rejects an incomplete independent check instead of accepting unchecked findings', async () => {
+    vi.spyOn(http, 'jsonRequest')
+      .mockResolvedValueOnce({
+        message: { content: JSON.stringify({ summary: '', findings: [finding] }) },
+      })
+      .mockResolvedValue({ message: { content: '{"decisions":[]}' } });
+    await expect(
+      new WritingModel(DEFAULTS).analyse(source, new AbortController().signal),
+    ).rejects.toThrow('every proposed edit');
+  });
   it('repairs invalid analysis once within the original timeout budget', async () => {
     const now = vi
       .spyOn(Date, 'now')
       .mockReturnValueOnce(1000)
       .mockReturnValueOnce(1000)
-      .mockReturnValueOnce(3000);
+      .mockReturnValueOnce(1000)
+      .mockReturnValue(3000);
     const request = vi
       .spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce({
@@ -51,15 +160,31 @@ describe('writing analysis and practice validation', () => {
       })
       .mockResolvedValueOnce({
         message: { content: JSON.stringify({ summary: 'One issue.', findings: [finding] }) },
+      })
+      .mockImplementation(async (_url, body: any) => {
+        const input = JSON.parse(body.messages[1].content);
+        return {
+          message: {
+            content: JSON.stringify({
+              decisions: input.candidates.map((f: any) => ({
+                id: f.id,
+                valid: true,
+                explanation: 'Use the participle.',
+                tip: '',
+              })),
+            }),
+          },
+        };
       });
     const result = await new WritingModel({ ...DEFAULTS, timeoutSeconds: 60 }).analyse(
       source,
       new AbortController().signal,
     );
     expect(result.findings).toHaveLength(1);
-    expect(request).toHaveBeenCalledTimes(2);
+    expect(request).toHaveBeenCalledTimes(3);
     expect(request.mock.calls[0]![3]).toBe(60000);
     expect(request.mock.calls[1]![3]).toBe(58000);
+    expect(request.mock.calls[2]![3]).toBe(58000);
     expect(JSON.stringify(request.mock.calls[1]![1])).toContain('validation_error');
     now.mockRestore();
   });
@@ -88,8 +213,8 @@ describe('writing analysis and practice validation', () => {
             answer: 'written',
             corrected_sentence: 'I have written three stories this week.',
             hint: '',
-            explanation: 'Use the participle.',
-            tip: '',
+            explanation: f.explanation,
+            tip: f.tip,
           }),
         },
       });
@@ -261,7 +386,7 @@ describe('writing analysis and practice validation', () => {
     const restored = restoreWritingSessions([s]);
     expect(restored[0]!.phase).toBe('idle');
     expect(restored[0]!.findings[0]!.noteId).toBe(42);
-    f.selected=false;
+    f.selected = false;
     expect(restoreWritingSessions([s])[0]!.findings[0]!.selected).toBe(false);
     expect(restoreWritingSessions([{ ...s, capture: {} }])).toEqual([]);
   });

@@ -26,6 +26,16 @@ describe('exact source annotations', () => {
       f('b', source, 'wrote'),
     ]);
     expect(ranges).toHaveLength(1);
-    expect(source.slice(ranges[0]!.start, ranges[0]!.end)).toBe('have wrote');
+    expect(source.slice(ranges[0]!.start, ranges[0]!.end)).toBe('wrote');
+  });
+  it('clicking english selects capitalization, not an overlapping broad style suggestion', () => {
+    const source = 'I started to learn english a few years ago.';
+    const ranges = writingHighlights(source, [
+      { ...f('style', source, 'started to learn english'), kind: 'style' },
+      { ...f('capital', source, 'english'), kind: 'grammar' },
+    ]);
+    expect(ranges).toHaveLength(1);
+    expect(ranges[0]!.id).toBe('capital');
+    expect(source.slice(ranges[0]!.start, ranges[0]!.end)).toBe('english');
   });
 });
