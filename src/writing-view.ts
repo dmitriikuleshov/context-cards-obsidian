@@ -13,6 +13,7 @@ import {
 import { writingHighlights } from './writing-workflow';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
+import { renderPanelHeader, renderSourceHeading } from './panel-header';
 
 export const WRITING_VIEW = 'context-cards-writing';
 type Screen = 'review' | 'preview' | 'done';
@@ -175,12 +176,7 @@ export class WritingView extends ItemView {
     root.empty();
     root.addClass('cc-panel', 'cc-writing-panel', 'cc-writing-workflow');
     root.lang = 'en';
-    const header = root.createDiv({ cls: 'cc-panel-header' });
-    header.createEl('strong', { text: 'Writing practice' });
-    const nav = header.createDiv({ cls: 'cc-writing-navigation' });
-    const settings = this.button(nav, '', () => this.host.openSettings());
-    settings.setAttribute('aria-label', 'Context Cards settings');
-    setIcon(settings, 'sliders-horizontal');
+    renderPanelHeader(root, () => this.host.openSettings());
     const sessions = this.host.writing.sessions,
       s = sessions.find((s) => s.id === this.current) ?? sessions.at(-1);
     if (!s) {
@@ -194,35 +190,36 @@ export class WritingView extends ItemView {
     }
     this.current = s.id;
     const draftRow = root.createDiv({ cls: 'cc-draft-switcher' });
-    if (sessions.length > 1) {
-      const picker = draftRow.createEl('select', { attr: { 'aria-label': 'Writing review' } });
-      for (const item of sessions)
-        picker.createEl('option', {
-          text: `${item.capture.book} · ${item.created.slice(0, 16).replace('T', ' ')}`,
-          attr: { value: item.id },
-        });
-      picker.value = s.id;
-      picker.addEventListener('change', () =>
-        this.show(sessions.find((s) => s.id === picker.value)!),
-      );
-    } else {
-      draftRow.createSpan({ cls: 'cc-writing-draft-title', text: `Draft · ${s.capture.book}` });
-    }
-    const clear = this.button(draftRow, sessions.length > 1 ? 'Clear all' : 'Clear draft', () => {
+    const picker = draftRow.createEl('select', { attr: { 'aria-label': 'Writing review' } });
+    for (const item of sessions)
+      picker.createEl('option', {
+        text: `${item.capture.book} · ${item.created.slice(0, 16).replace('T', ' ')}`,
+        attr: { value: item.id },
+      });
+    picker.value = s.id;
+    picker.addEventListener('change', () =>
+      this.show(sessions.find((s) => s.id === picker.value)!),
+    );
+    const clear = draftRow.createEl('button', {
+      text: 'Clear all',
+      cls: 'cc-clear-drafts',
+      attr: { type: 'button', 'aria-label': 'Clear all writing drafts' },
+    });
+    clear.addEventListener('click', () => {
       this.attempt++;
       this.editing = undefined;
       this.screen = 'review';
       this.current = '';
       void this.host.writing.clear();
     });
-    clear.addClass('cc-clear-drafts');
-    clear.setAttribute(
-      'aria-label',
-      sessions.length > 1 ? 'Clear all writing drafts' : 'Clear writing draft',
-    );
     clear.title =
       'Clear writing drafts and cancel analysis/preparation. Existing Anki cards and saved reviews are kept.';
     clear.disabled = sessions.some((s) => s.phase === 'exporting' || s.phase === 'saving');
+    renderSourceHeading(
+      root,
+      s.capture.book,
+      () => void this.host.app.workspace.openLinkText(s.capture.file, '', true),
+    );
     const body = root.createDiv({ cls: 'cc-panel-body' }),
       busy = s.phase !== 'idle';
     if (busy) {
@@ -297,13 +294,6 @@ export class WritingView extends ItemView {
     heading.createEl('h2', { text: 'Review your writing' });
     if (s.analysed)
       heading.createSpan({ cls: 'cc-muted', text: `${s.findings.length} suggestions` });
-    const source = body.createDiv({ cls: 'cc-writing-row cc-writing-source-heading' });
-    source.createSpan({ text: `${s.capture.book} · Original text` });
-    this.button(
-      source,
-      'Open source',
-      () => void this.host.app.workspace.openLinkText(s.capture.file, '', true),
-    );
     if (s.findings.length)
       body.createEl('p', {
         cls: 'cc-writing-instruction',

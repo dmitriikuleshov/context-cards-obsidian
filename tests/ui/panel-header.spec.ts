@@ -1,0 +1,90 @@
+import { test, expect } from '@playwright/test';
+
+for (const width of [390, 1000]) {
+  test(`vocabulary and writing use the same header layout (${width}px)`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 850 });
+    const snapshots = [];
+    for (const mode of ['vocabulary', 'writing']) {
+      await page.goto(mode === 'writing' ? '/?writing=1' : '/');
+      await expect(page.locator('.cc-panel-header .cc-brand')).toHaveText('Context Cards');
+      await expect(
+        page.getByRole('button', { name: 'Open Context Cards settings', exact: true }),
+      ).toBeVisible();
+      await expect(page.locator('.cc-draft-switcher > .cc-select-button')).toHaveCount(1);
+      await expect(page.locator('.cc-clear-drafts')).toHaveText('Clear all');
+      await expect(page.getByRole('button', { name: 'Open source', exact: true })).toHaveCount(1);
+      snapshots.push(
+        await page.locator('.cc-panel').evaluate((root) => {
+          const geometry = (selector: string) => {
+            const element = root.querySelector<HTMLElement>(selector)!;
+            const rect = element.getBoundingClientRect(),
+              style = getComputedStyle(element);
+            return {
+              height: rect.height,
+              width: rect.width,
+              padding: style.padding,
+              margin: style.margin,
+              fontSize: style.fontSize,
+              fontWeight: style.fontWeight,
+              border: style.border,
+              background: style.backgroundColor,
+            };
+          };
+          return {
+            order: [...root.children].slice(0, 3).map((el) => el.className),
+            header: geometry('.cc-panel-header'),
+            brand: geometry('.cc-brand'),
+            settings: geometry('.cc-panel-header > button'),
+            switcher: geometry('.cc-draft-switcher'),
+            picker: geometry('.cc-draft-switcher > .cc-select-button'),
+            clear: geometry('.cc-clear-drafts'),
+            source: geometry('.cc-source-heading'),
+            open: geometry('.cc-source-heading > button'),
+          };
+        }),
+      );
+      const root = (await page.locator('.cc-panel').boundingBox())!,
+        source = (await page.locator('.cc-source-heading').boundingBox())!;
+      await page.screenshot({
+        path: `.test-artifacts/header-${mode}-${width}.png`,
+        clip: {
+          x: root.x,
+          y: root.y,
+          width: root.width,
+          height: source.y + source.height - root.y,
+        },
+      });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+        true,
+      );
+    }
+    expect(snapshots[1]).toEqual(snapshots[0]);
+  });
+}
+
+test('writing header actions work in both corrections and card preview', async ({ page }) => {
+  await page.goto('/?writing=1');
+  await page.evaluate(() => {
+    const p = (window as any).writingPreview;
+    p.controls.settingsOpened = 0;
+    p.host.openSettings = () => p.controls.settingsOpened++;
+    p.host.app.workspace.openLinkText = (...args: unknown[]) => (p.controls.sourceRequest = args);
+    p.view.render();
+  });
+  await page.getByRole('button', { name: 'Open Context Cards settings', exact: true }).click();
+  expect(await page.evaluate(() => (window as any).writingPreview.controls.settingsOpened)).toBe(1);
+  for (const screen of ['corrections', 'preview']) {
+    if (screen === 'preview') {
+      await page.getByRole('button', { name: 'Review 2 cards', exact: true }).click();
+      await expect(
+        page.getByRole('heading', { name: 'Review your cards', exact: true }),
+      ).toBeVisible();
+    }
+    await page.getByRole('button', { name: 'Open source', exact: true }).click();
+    expect(
+      await page.evaluate(() => (window as any).writingPreview.controls.sourceRequest),
+    ).toEqual(['My story.md', '', true]);
+    await expect(page.locator('.cc-panel-header .cc-brand')).toHaveText('Context Cards');
+    await expect(page.getByLabel('Writing review', { exact: true })).toBeVisible();
+  }
+});

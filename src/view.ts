@@ -6,6 +6,7 @@ import { visibleDraft } from './fields';
 import { CARD_CSS, examplesHtml } from './templates';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
+import { renderPanelHeader, renderSourceHeading } from './panel-header';
 
 export const VIEW_TYPE = 'context-cards-review';
 export class ReviewView extends ItemView {
@@ -144,14 +145,7 @@ export class ReviewView extends ItemView {
     root.empty();
     root.addClass('cc-panel');
     root.lang = 'en';
-    const header = root.createDiv({ cls: 'cc-panel-header' });
-    const brand = header.createDiv({ cls: 'cc-brand' });
-    const icon = brand.createSpan();
-    setIcon(icon, 'book-open-check');
-    brand.createSpan({ text: 'Context Cards' });
-    const settings = this.button(header, '', () => this.plugin.openSettings(), 'clickable-icon');
-    setIcon(settings, 'settings-2');
-    settings.setAttribute('aria-label', 'Open Context Cards settings');
+    renderPanelHeader(root, () => this.plugin.openSettings());
     const draft = this.active();
     if (!draft) {
       const empty = root.createDiv({ cls: 'cc-empty' });
@@ -188,10 +182,7 @@ export class ReviewView extends ItemView {
     clear.setAttribute('aria-label', 'Clear all drafts');
     clear.title =
       'Remove all drafts from this panel and cancel pending generations. Anki notes are kept.';
-    const source = root.createDiv({ cls: 'cc-source-heading' });
-    source.createSpan({ text: draft.capture.book });
-    const original = this.button(source, 'Open source', () => this.plugin.openSource(draft));
-    original.addClass('cc-link-button');
+    renderSourceHeading(root, draft.capture.book, () => this.plugin.openSource(draft));
     const tabs = root.createDiv({ cls: 'cc-tabs' });
     this.button(
       tabs,

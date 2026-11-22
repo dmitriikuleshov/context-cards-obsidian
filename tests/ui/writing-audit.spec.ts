@@ -117,10 +117,19 @@ test('long preview opens at the top and Edit card opens the editor at the top', 
   });
   await page.getByRole('button', { name: 'Review 6 cards', exact: true }).click();
   const previewHeading = page.getByRole('heading', { name: 'Review your cards', exact: true });
+  const content = page.locator('.cc-writing-panel > .cc-panel-body');
   await expect
     .poll(async () => {
       const box = await previewHeading.boundingBox();
-      return !!box && box.y >= 0 && box.y < 200;
+      const body = await content.boundingBox();
+      return (
+        !!box &&
+        !!body &&
+        (await content.evaluate((el) => el.scrollTop === 0)) &&
+        box.y >= body.y &&
+        box.y < body.y + 110 &&
+        box.y + box.height <= body.y + body.height
+      );
     })
     .toBe(true);
   await page.getByRole('button', { name: 'Edit card', exact: true }).last().click();
@@ -128,7 +137,15 @@ test('long preview opens at the top and Edit card opens the editor at the top', 
   await expect
     .poll(async () => {
       const box = await heading.boundingBox();
-      return !!box && box.y >= 0 && box.y < 200;
+      const body = await content.boundingBox();
+      return (
+        !!box &&
+        !!body &&
+        (await content.evaluate((el) => el.scrollTop === 0)) &&
+        box.y >= body.y &&
+        box.y < body.y + 110 &&
+        box.y + box.height <= body.y + body.height
+      );
     })
     .toBe(true);
   await expect(page.getByLabel('Correction', { exact: true })).toBeVisible();

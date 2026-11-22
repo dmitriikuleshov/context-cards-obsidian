@@ -18,11 +18,8 @@ test.beforeEach(async ({ page }) => {
 });
 test('draft controls adapt to one, multiple and empty drafts during clearing', async ({ page }) => {
   const clear = page.getByRole('button', { name: 'Clear all writing drafts', exact: true });
-  await expect(
-    page.getByRole('button', { name: 'Clear writing draft', exact: true }),
-  ).toBeVisible();
-  await expect(page.getByText('Draft · My story', { exact: true })).toBeVisible();
-  await expect(clear).toHaveCount(0);
+  await expect(clear).toBeVisible();
+  await expect(page.getByLabel('Writing review')).toContainText('My story');
   await page.evaluate(() => {
     const p = (window as any).writingPreview;
     const second = structuredClone(p.session);
@@ -52,7 +49,7 @@ test('draft controls adapt to one, multiple and empty drafts during clearing', a
 test('clearing the only draft leaves an empty state without a clearing button', async ({
   page,
 }) => {
-  await page.getByRole('button', { name: 'Clear writing draft', exact: true }).click();
+  await page.getByRole('button', { name: 'Clear all writing drafts', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'No writing drafts', exact: true })).toBeVisible();
   await expect(page.locator('.cc-draft-switcher')).toHaveCount(0);
 });

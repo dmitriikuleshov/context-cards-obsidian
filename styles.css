@@ -344,21 +344,6 @@
 .cc-writing-panel {
   padding: 0 !important;
 }
-.cc-writing-navigation {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.cc-writing-workflow .cc-clear-drafts {
-  margin-left: auto;
-}
-.cc-writing-draft-title {
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: anywhere;
-  color: var(--text-muted);
-  font-size: 12px;
-}
 .cc-writing-panel .cc-panel-body > p {
   margin: 16px 0;
 }
@@ -412,7 +397,8 @@
   overflow: hidden;
 }
 .cc-writing-workflow > .cc-panel-header,
-.cc-writing-workflow > .cc-draft-switcher {
+.cc-writing-workflow > .cc-draft-switcher,
+.cc-writing-workflow > .cc-source-heading {
   flex-shrink: 0;
 }
 .cc-panel.cc-writing-workflow > .cc-footer {
@@ -429,22 +415,6 @@
 }
 .cc-writing-workflow .cc-spinner {
   flex-shrink: 0;
-}
-.cc-writing-workflow .cc-panel-header .cc-writing-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  padding: 8px;
-}
-.cc-writing-workflow .cc-panel-header svg {
-  width: 18px;
-  height: 18px;
-}
-.cc-writing-source-heading > span {
-  flex: 1 1 120px;
-  min-width: 0;
-  overflow-wrap: anywhere;
 }
 .cc-writing-row > * {
   min-width: 0;
@@ -465,11 +435,6 @@
   justify-content: space-between;
   gap: 10px;
   flex-wrap: wrap;
-}
-.cc-writing-source-heading {
-  color: var(--text-muted);
-  font-size: 12px;
-  margin: 12px 0;
 }
 .cc-writing-text {
   white-space: pre-wrap;
@@ -567,10 +532,6 @@
   color: var(--text-muted);
   font-size: 12px;
   margin: 14px 0 8px;
-}
-.cc-writing-workflow .cc-panel-header .cc-writing-button,
-.cc-writing-source-heading .cc-writing-button {
-  font-size: 12px;
 }
 .cc-writing-change {
   display: flex;
