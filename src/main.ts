@@ -324,7 +324,8 @@ export default class ContextCardsPlugin extends Plugin {
       (leaf.view as ReviewView).render();
   }
   async generate(draft: Draft) {
-    if (this.jobs.has(draft.id) || ['sending', 'saved'].includes(draft.phase)) return;
+    if (this.unloaded || this.jobs.has(draft.id) || ['sending', 'saved'].includes(draft.phase))
+      return;
     if (!answerValid(draft)) {
       new Notice('Select the expected answer in the context before generating.');
       return;
@@ -378,6 +379,7 @@ export default class ContextCardsPlugin extends Plugin {
   }
   async generateGeneralMeaning(draft: Draft) {
     if (
+      this.unloaded ||
       this.jobs.has(draft.id) ||
       ['sending', 'saved'].includes(draft.phase) ||
       !draft.expression.trim()
@@ -420,6 +422,7 @@ export default class ContextCardsPlugin extends Plugin {
   }
   async generateWordFormation(draft: Draft) {
     if (
+      this.unloaded ||
       this.jobs.has(draft.id) ||
       ['sending', 'saved'].includes(draft.phase) ||
       !draft.expression.trim()
@@ -523,7 +526,12 @@ export default class ContextCardsPlugin extends Plugin {
     this.refresh();
   }
   async approve(draft: Draft) {
-    if (['sending', 'generating', 'saved'].includes(draft.phase) || draft.pendingContent) return;
+    if (
+      this.unloaded ||
+      ['sending', 'generating', 'saved'].includes(draft.phase) ||
+      draft.pendingContent
+    )
+      return;
     const problems = issues(draft, this.settings);
     if (problems.length) {
       new Notice(problems[0]!);

@@ -398,6 +398,11 @@ export class Ollama {
         '- american_ipa: Modern standard non-rhotic British IPA pronunciation of the standalone displayed entry, between slashes. Do not pronounce a post-vocalic r unless followed by a vowel within the expression: after /ˈɑːftə/, car /kɑː/. This technical field name does not imply an American accent.',
       );
     const started = performance.now();
+    const remaining = () => {
+      const timeout = this.settings.timeoutSeconds * 1000 - (performance.now() - started);
+      if (timeout <= 0) throw new Error('The model request timed out. Try generating again.');
+      return timeout;
+    };
     const response = await jsonRequest<ChatResponse>(
       `${endpoint(this.settings.ollamaUrl)}/api/chat`,
       {
@@ -428,6 +433,8 @@ export class Ollama {
       );
     if (!response.message?.content) throw new Error('The model returned an empty response.');
     const raw = JSON.parse(response.message.content);
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw))
+      throw new Error('The model returned an invalid card object. Try generating again.');
     for (const key of ['meaning', 'explanation'])
       if (Array.isArray(raw[key]))
         raw[key] = raw[key].map((v: unknown) => boundedText(v, `${key} sentence`)).join(' ');
@@ -475,7 +482,7 @@ export class Ollama {
             options: { num_ctx: 6144, num_predict: 150, temperature: 0 },
           },
           signal,
-          Math.max(1, this.settings.timeoutSeconds * 1000 - (performance.now() - started)),
+          remaining(),
         );
         let selected: unknown;
         try {
@@ -493,21 +500,21 @@ export class Ollama {
         content.expression,
         content.partOfSpeech,
         signal,
-        Math.max(1, this.settings.timeoutSeconds * 1000 - (performance.now() - started)),
+        remaining(),
       );
     if (content.status === 'ready' && f.wordFormation)
       content.wordFormation = await this.wordFormation(
         content.expression,
         content.partOfSpeech,
         signal,
-        Math.max(1, this.settings.timeoutSeconds * 1000 - (performance.now() - started)),
+        remaining(),
       );
     if (content.status === 'ready' && f.examples) {
       content.exampleGroups = await this.usageExamples(
         content.expression,
         content.partOfSpeech,
         signal,
-        Math.max(1, this.settings.timeoutSeconds * 1000 - (performance.now() - started)),
+        remaining(),
       );
       content.examples = content.exampleGroups.flatMap((g) => g.examples);
     }

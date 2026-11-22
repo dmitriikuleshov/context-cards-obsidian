@@ -172,7 +172,8 @@ export class Anki {
           options: { allowDuplicate: false },
         },
       });
-      if (!id) throw new Error('Anki did not return a note ID.');
+      if (!Number.isSafeInteger(id) || id <= 0)
+        throw new Error('Anki did not return a valid note ID.');
       return id;
     } catch (error) {
       try {

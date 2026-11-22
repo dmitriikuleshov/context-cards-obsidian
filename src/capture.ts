@@ -97,7 +97,12 @@ export function readCapture(app: App, view: MarkdownView, limit = 12000): Captur
   const first = topChild(root, range.startContainer),
     last = topChild(root, range.endContainer);
   let roots: Node[];
-  if (first && last) {
+  // Inline Markdown can sit directly in a rendered root. Selecting an element there
+  // must not drop its surrounding text nodes when collecting neighbouring blocks.
+  const inlineText = Array.from(root.childNodes).some(
+    (node) => node.nodeType === 3 && !!node.textContent?.trim(),
+  );
+  if (first && last && !inlineText) {
     const children = Array.from(root.children);
     const a = children.indexOf(first),
       b = children.indexOf(last);
