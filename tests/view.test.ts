@@ -68,6 +68,23 @@ function setup() {
   return { draft, plugin, view, click, field };
 }
 describe('editable review panel', () => {
+  it('disables Clear all while any draft is exporting and unlocks it when the export finishes', () => {
+    const { plugin, view, click } = setup();
+    const other = { ...structuredClone(plugin.drafts[0]!), id: 'sending' };
+    other.phase = 'sending';
+    plugin.drafts.push(other);
+    view.render();
+    const clear = () =>
+      view.contentEl.querySelector<HTMLButtonElement>('[aria-label="Clear all drafts"]')!;
+    expect(clear().disabled).toBe(true);
+    click('Clear all drafts');
+    expect(plugin.clearDrafts).not.toHaveBeenCalled();
+    other.phase = 'saved';
+    view.render();
+    expect(clear().disabled).toBe(false);
+    click('Clear all drafts');
+    expect(plugin.clearDrafts).toHaveBeenCalledOnce();
+  });
   it('keeps the deck visible in the footer and preserves typing focus', () => {
     const { view, field } = setup();
     const explanation = view.contentEl.querySelector<HTMLDetailsElement>(

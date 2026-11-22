@@ -243,6 +243,12 @@ export default class ContextCardsPlugin extends Plugin {
   async openPanel(): Promise<ReviewView> {
     return (await this.openMode(VIEW_TYPE)).view as ReviewView;
   }
+  private captureCapacityAvailable(): boolean {
+    if (this.drafts.length < MAX_DRAFTS || this.drafts.some((d) => d.phase !== 'sending'))
+      return true;
+    new Notice('Wait for an Anki export to finish before starting another draft.');
+    return false;
+  }
   async capture(captured: Capture) {
     if (this.unloaded) return;
     const epoch = this.captureEpoch;
@@ -263,6 +269,7 @@ export default class ContextCardsPlugin extends Plugin {
           d.capture.text === captured.text,
       );
     let same = findExisting();
+    if (!same && !this.captureCapacityAvailable()) return;
     if (this.settings.markSourceWord && !same) {
       const sourceView = this.app.workspace.getActiveViewOfType(MarkdownView);
       if (sourceView?.file?.path === captured.file) {
@@ -306,11 +313,17 @@ export default class ContextCardsPlugin extends Plugin {
     }
     if (this.unloaded || epoch !== this.captureEpoch) return;
     same ??= findExisting();
+    // Source marking can await disk I/O; other captures/exports may have filled the list.
+    if (!same && !this.captureCapacityAvailable()) return;
     const draft = same ?? createDraft(captured, this.settings);
     if (!same) {
+      // An in-flight export cannot be cancelled safely: keep its result in the panel.
+      while (this.drafts.length >= MAX_DRAFTS) {
+        const index = this.drafts.findIndex((d) => d.phase !== 'sending');
+        const [old] = this.drafts.splice(index, 1);
+        this.cancel(old!);
+      }
       this.drafts.push(draft);
-      const removed = this.drafts.splice(0, Math.max(0, this.drafts.length - MAX_DRAFTS));
-      for (const old of removed) this.cancel(old);
       this.persist();
     }
     const view = await this.openPanel();
@@ -467,6 +480,10 @@ export default class ContextCardsPlugin extends Plugin {
     this.jobs.get(draft.id)?.abort();
   }
   async clearDrafts() {
+    if (this.drafts.some((d) => d.phase === 'sending')) {
+      new Notice('Wait for the Anki export to finish before clearing drafts.');
+      return;
+    }
     this.captureEpoch++;
     for (const controller of this.jobs.values()) controller.abort();
     this.drafts = [];

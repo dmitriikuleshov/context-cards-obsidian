@@ -142,6 +142,22 @@ describe('vocabulary controller guards and failures', () => {
   });
 });
 describe('vocabulary persistence and export', () => {
+  it('keeps the exporting draft visible when clear is requested and allows clearing afterwards', async () => {
+    const { plugin, d, flush } = pluginFixture(),
+      work = deferred<number>();
+    const add = vi.spyOn(Anki.prototype, 'add').mockReturnValue(work.promise);
+    const sending = plugin.approve(d);
+    await vi.waitFor(() => expect(add).toHaveBeenCalledOnce());
+    await plugin.clearDrafts();
+    expect(plugin.drafts).toEqual([d]);
+    expect(d.phase).toBe('sending');
+    work.resolve(42);
+    await sending;
+    expect(plugin.drafts[0]?.noteId).toBe(42);
+    await plugin.clearDrafts();
+    expect(plugin.drafts).toEqual([]);
+    expect(flush).toHaveBeenCalledTimes(3);
+  });
   it('allows another export after an earlier queued export failed', async () => {
     const { plugin, d } = pluginFixture(),
       next = draft();
@@ -266,6 +282,65 @@ describe('vocabulary persistence and export', () => {
   });
 });
 describe('vocabulary navigation and source capture', () => {
+  it('evicts an idle draft instead of losing the oldest in-flight Anki export', async () => {
+    const { plugin, d } = pluginFixture();
+    d.phase = 'sending';
+    const idle = draft(),
+      other = [draft({ phase: 'sending' }), draft({ phase: 'sending' })];
+    plugin.drafts = [d, idle, ...other];
+    vi.spyOn(plugin, 'openPanel').mockResolvedValue({ show: vi.fn() } as any);
+    vi.spyOn(plugin, 'generate').mockResolvedValue();
+    const cancel = vi.spyOn(plugin, 'cancel');
+    await plugin.capture(capture({ file: 'New.md' }));
+    expect(plugin.drafts).toHaveLength(4);
+    expect(plugin.drafts).toContain(d);
+    expect(plugin.drafts).not.toContain(idle);
+    expect(cancel).toHaveBeenCalledExactlyOnceWith(idle);
+    expect(plugin.drafts.at(-1)?.capture.file).toBe('New.md');
+  });
+  it('refuses a fifth capture before touching source text when every draft is exporting', async () => {
+    const { plugin, workspace, vault } = pluginFixture();
+    plugin.drafts = Array.from({ length: 4 }, () => draft({ phase: 'sending' }));
+    plugin.settings.markSourceWord = true;
+    workspace.getActiveViewOfType.mockReturnValue({
+      file: { path: 'New.md' },
+      getMode: () => 'preview',
+    });
+    const open = vi.spyOn(plugin, 'openPanel');
+    await plugin.capture(capture({ file: 'New.md' }));
+    expect(plugin.drafts).toHaveLength(4);
+    expect(vault.process).not.toHaveBeenCalled();
+    expect(open).not.toHaveBeenCalled();
+  });
+  it('rechecks capacity after asynchronous source marking and preserves active exports', async () => {
+    const { plugin, d, workspace, vault } = pluginFixture(),
+      work = deferred<void>();
+    plugin.settings.markSourceWord = true;
+    workspace.getActiveViewOfType.mockReturnValue({
+      file: { path: 'New.md' },
+      getMode: () => 'preview',
+    });
+    vault.process.mockReturnValue(work.promise);
+    const open = vi.spyOn(plugin, 'openPanel');
+    const capturing = plugin.capture(capture({ file: 'New.md' }));
+    plugin.drafts = [d, draft(), draft(), draft()];
+    for (const item of plugin.drafts) item.phase = 'sending';
+    work.resolve();
+    await capturing;
+    expect(plugin.drafts).toHaveLength(4);
+    expect(plugin.drafts.every((item) => item.phase === 'sending')).toBe(true);
+    expect(open).not.toHaveBeenCalled();
+  });
+  it('can reopen an existing draft even when all four exports are active', async () => {
+    const { plugin, d } = pluginFixture();
+    plugin.drafts = [d, draft(), draft(), draft()];
+    for (const item of plugin.drafts) item.phase = 'sending';
+    const show = vi.fn();
+    vi.spyOn(plugin, 'openPanel').mockResolvedValue({ show } as any);
+    await plugin.capture(d.capture);
+    expect(show).toHaveBeenCalledExactlyOnceWith(d);
+    expect(plugin.drafts).toHaveLength(4);
+  });
   it('expands a unique matching excerpt even when the original selection was outside it', () => {
     const { plugin, d } = pluginFixture();
     d.capture.text = 'First. A word. Later.';

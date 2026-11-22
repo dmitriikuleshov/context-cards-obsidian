@@ -45,6 +45,28 @@ test('clears all drafts from the top of the panel', async ({ page }) => {
   await expect(page.getByLabel('Choose a draft')).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Keep the words worth keeping.' })).toBeVisible();
 });
+
+test('clear drafts stays disabled while another draft is being sent to Anki', async ({ page }) => {
+  await page.setViewportSize({ width: 340, height: 850 });
+  await page.goto('/');
+  await page.evaluate(() => {
+    const { host, draft, view } = (window as any).contextCardsPreview;
+    host.drafts.unshift({ ...structuredClone(draft), id: 'export-in-progress', phase: 'sending' });
+    view.render();
+  });
+  const clear = page.getByRole('button', { name: 'Clear all drafts', exact: true });
+  await expect(clear).toBeDisabled();
+  await expect(clear).toHaveAttribute('title', /Wait for the Anki export/);
+  await page.evaluate(() => {
+    const { host, view } = (window as any).contextCardsPreview;
+    host.drafts[0].phase = 'saved';
+    host.drafts[0].noteId = 42;
+    view.render();
+  });
+  await expect(clear).toBeEnabled();
+  await clear.click();
+  await expect(page.getByRole('heading', { name: 'Keep the words worth keeping.' })).toBeVisible();
+});
 test('review, edit and both expandable hints work in a real browser', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));

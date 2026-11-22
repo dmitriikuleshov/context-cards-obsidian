@@ -149,7 +149,7 @@ describe('draft state and asynchronous operations', () => {
     expect(save.mock.calls.at(-1)![0]).toMatchObject({ drafts: [], settings: plugin.settings });
     expect(add).not.toHaveBeenCalled();
   });
-  it('does not restore cleared drafts when an already approved Anki export finishes', async () => {
+  it('keeps an approved Anki export visible until it finishes, then allows clearing', async () => {
     const { plugin, draft } = setup(),
       work = deferred<number>();
     Object.assign(draft, structuredClone(content));
@@ -157,10 +157,13 @@ describe('draft state and asynchronous operations', () => {
     const exportTask = plugin.approve(draft);
     await vi.waitFor(() => expect(add).toHaveBeenCalledOnce());
     await plugin.clearDrafts();
+    expect(plugin.drafts).toEqual([draft]);
     work.resolve(42);
     await exportTask;
-    expect(plugin.drafts).toEqual([]);
+    expect(plugin.drafts).toEqual([draft]);
     expect(draft.noteId).toBe(42);
+    await plugin.clearDrafts();
+    expect(plugin.drafts).toEqual([]);
   });
   it('keeps the last four captures and cancels generation for the evicted draft', async () => {
     const { plugin, draft } = setup();

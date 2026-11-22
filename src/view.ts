@@ -180,8 +180,10 @@ export class ReviewView extends ItemView {
       'cc-clear-drafts',
     );
     clear.setAttribute('aria-label', 'Clear all drafts');
-    clear.title =
-      'Remove all drafts from this panel and cancel pending generations. Anki notes are kept.';
+    clear.disabled = this.plugin.drafts.some((d) => d.phase === 'sending');
+    clear.title = clear.disabled
+      ? 'Wait for the Anki export to finish before clearing drafts.'
+      : 'Remove all drafts from this panel and cancel pending generations. Anki notes are kept.';
     renderSourceHeading(root, draft.capture.book, () => this.plugin.openSource(draft));
     const tabs = root.createDiv({ cls: 'cc-tabs' });
     this.button(
