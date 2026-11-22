@@ -20,6 +20,53 @@ export class WritingView extends ItemView {
   private editing?: string;
   private sections = new Map<string, boolean>();
   private attempt = 0;
+  private renderKey = '';
+  private editorValues = new Map<string, string>();
+  private footerObserver?: ResizeObserver;
+  private paddedOwner?: HTMLElement;
+  private previousPadding = '';
+  private releaseFooter() {
+    this.footerObserver?.disconnect();
+    if (this.paddedOwner) {
+      this.paddedOwner.style.scrollPaddingBottom = this.previousPadding;
+      this.paddedOwner = undefined;
+    }
+  }
+  async onClose() {
+    this.releaseFooter();
+    this.editorValues.clear();
+  }
+  private watchFooter(footer: HTMLElement) {
+    const update = () => {
+      if (!footer.isConnected) return;
+      const owner = this.scrollOwner();
+      if (owner !== this.paddedOwner) {
+        if (this.paddedOwner) this.paddedOwner.style.scrollPaddingBottom = this.previousPadding;
+        this.paddedOwner = owner;
+        this.previousPadding = owner.style.scrollPaddingBottom;
+      }
+      owner.style.scrollPaddingBottom =
+        getComputedStyle(footer).position === 'sticky'
+          ? `${footer.getBoundingClientRect().height + 12}px`
+          : this.previousPadding;
+    };
+    this.footerObserver = new ResizeObserver(update);
+    this.footerObserver.observe(footer);
+    update();
+  }
+  private scrollOwner(): HTMLElement {
+    let node: HTMLElement | null = this.contentEl;
+    while (node) {
+      if (/auto|scroll/.test(getComputedStyle(node).overflowY)) return node;
+      node = node.parentElement;
+    }
+    return (this.contentEl.ownerDocument.scrollingElement as HTMLElement) ?? this.contentEl;
+  }
+  private openEditor(f: WritingFinding) {
+    this.editorValues.clear();
+    this.editing = f.id;
+    this.render();
+  }
   constructor(
     leaf: WorkspaceLeaf,
     private host: ContextCardsPlugin,
@@ -42,6 +89,7 @@ export class WritingView extends ItemView {
     this.current = s.id;
     this.screen = 'review';
     this.editing = undefined;
+    this.editorValues.clear();
     this.attempt++;
     this.render();
   }
@@ -108,10 +156,11 @@ export class WritingView extends ItemView {
       ? wrap.createEl('textarea', { attr: { rows: '3' } })
       : wrap.createEl('input', { type: 'text' });
     input.id = id;
-    input.value = value;
+    input.value = this.editing ? (this.editorValues.get(key) ?? value) : value;
     input.dataset.writingField = key;
     input.disabled = s.phase !== 'idle' || locked;
     input.addEventListener('input', () => {
+      if (this.editing) this.editorValues.set(key, input.value);
       change(input.value);
       s.error = '';
       this.host.persist();
@@ -136,8 +185,17 @@ export class WritingView extends ItemView {
     this.render();
   }
   render() {
+    this.releaseFooter();
     const root = this.contentEl,
-      scroll = root.scrollTop;
+      owner = this.scrollOwner(),
+      scroll = owner.scrollTop;
+    const focused = root.ownerDocument.activeElement as
+      HTMLInputElement | HTMLTextAreaElement | null;
+    const focusKey = focused && root.contains(focused) ? focused.dataset.writingField : undefined;
+    const caret =
+      focusKey && typeof focused?.selectionStart === 'number'
+        ? [focused.selectionStart, focused.selectionEnd]
+        : undefined;
     for (const d of Array.from(root.querySelectorAll<HTMLDetailsElement>('[data-writing-section]')))
       this.sections.set(d.dataset.writingSection!, d.open);
     root.empty();
@@ -155,6 +213,9 @@ export class WritingView extends ItemView {
       const empty = root.createDiv({ cls: 'cc-empty' });
       empty.createEl('h2', { text: 'No writing drafts' });
       empty.createEl('p', { text: 'Select your English writing and choose Check writing.' });
+      this.editorValues.clear();
+      this.renderKey = '';
+      owner.scrollTop = 0;
       return;
     }
     this.current = s.id;
@@ -242,8 +303,19 @@ export class WritingView extends ItemView {
       } else if (this.screen === 'preview') this.renderPreviews(body, s);
       else this.renderReview(body, s);
       this.renderFooter(root, s);
+      const footer = root.querySelector<HTMLElement>('.cc-footer');
+      if (footer) this.watchFooter(footer);
     }
-    root.scrollTop = scroll;
+    const key = `${this.current}/${this.screen}/${this.editing ?? ''}`;
+    owner.scrollTop = this.renderKey === key ? scroll : 0;
+    if (this.renderKey === key && focusKey) {
+      const replacement = Array.from(
+        root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-writing-field]'),
+      ).find((el) => el.dataset.writingField === focusKey);
+      replacement?.focus({ preventScroll: true });
+      if (replacement && caret) replacement.setSelectionRange(caret[0]!, caret[1]!);
+    }
+    this.renderKey = key;
   }
   private renderReview(body: HTMLElement, s: WritingSession) {
     const busy = s.phase !== 'idle',
@@ -275,6 +347,9 @@ export class WritingView extends ItemView {
       const mark = this.button(text, s.capture.selected.slice(range.start, range.end), () => {
         this.findingIds.set(s.id, range.id);
         this.render();
+        Array.from(this.contentEl.querySelectorAll<HTMLButtonElement>('.cc-writing-word'))
+          .find((el) => el.dataset.findingId === range.id)
+          ?.focus({ preventScroll: true });
         this.contentEl.querySelector('.cc-writing-change')?.scrollIntoView({ block: 'nearest' });
       });
       mark.className = 'cc-writing-word';
@@ -329,8 +404,7 @@ export class WritingView extends ItemView {
       });
     const decisions = body.createDiv({ cls: 'cc-writing-decisions' });
     this.button(decisions, 'Edit', () => {
-      this.editing = f.id;
-      this.render();
+      this.openEditor(f);
     }).disabled = busy || !!f.noteId;
     let valid = true;
     try {
@@ -389,10 +463,17 @@ export class WritingView extends ItemView {
       false,
       !!f.noteId,
     );
-    const category = more.createEl('select', { attr: { 'aria-label': 'Finding category' } });
+    const categoryWrap = more.createDiv({ cls: 'cc-field' }),
+      categoryId = `writing-category-${crypto.randomUUID()}`;
+    categoryWrap.createEl('label', { text: 'Finding category', attr: { for: categoryId } });
+    const category = categoryWrap.createEl('select', {
+      attr: { id: categoryId, 'aria-label': 'Finding category' },
+    });
     for (const kind of ['grammar', 'vocabulary', 'style', 'unclear', 'typo'])
       category.createEl('option', { text: kind, attr: { value: kind } });
-    category.value = f.kind;
+    category.value = this.editorValues.get('category') ?? f.kind;
+    category.dataset.writingField = 'category';
+    category.addEventListener('change', () => this.editorValues.set('category', category.value));
     category.disabled = s.phase !== 'idle' || !!f.noteId;
     const tip = this.field(more, 'Tip', f.tip, `${f.id}-tip`, s, () => {}, true, !!f.noteId);
     const before = this.field(
@@ -405,10 +486,17 @@ export class WritingView extends ItemView {
       false,
       !!f.noteId,
     );
-    const format = more.createEl('select', { attr: { 'aria-label': 'Exercise type' } });
+    const formatWrap = more.createDiv({ cls: 'cc-field' }),
+      formatId = `writing-format-${crypto.randomUUID()}`;
+    formatWrap.createEl('label', { text: 'Exercise type', attr: { for: formatId } });
+    const format = formatWrap.createEl('select', {
+      attr: { id: formatId, 'aria-label': 'Exercise type' },
+    });
     format.createEl('option', { text: 'Correct the mistake', attr: { value: 'correction' } });
     format.createEl('option', { text: 'Fill in the missing word', attr: { value: 'gap' } });
-    format.value = f.format;
+    format.value = this.editorValues.get('format') ?? f.format;
+    format.dataset.writingField = 'format';
+    format.addEventListener('change', () => this.editorValues.set('format', format.value));
     format.disabled = s.phase !== 'idle' || !!f.noteId;
     const cardInputs: Partial<
       Record<keyof NonNullable<WritingFinding['card']>, HTMLInputElement | HTMLTextAreaElement>
@@ -438,6 +526,7 @@ export class WritingView extends ItemView {
       actions = body.createDiv({ cls: 'cc-writing-decisions' });
     this.button(actions, 'Cancel', () => {
       this.editing = undefined;
+      this.editorValues.clear();
       this.render();
     }).disabled = s.phase !== 'idle';
     this.button(
@@ -492,10 +581,12 @@ export class WritingView extends ItemView {
           if (!canPractise(f)) f.selected = false;
           if (underlyingChanged) this.host.writing.editFinding(f);
           this.editing = undefined;
-          if (this.screen === 'preview') this.screen = 'review';
+          this.editorValues.clear();
+          if (this.screen === 'preview' && underlyingChanged) this.screen = 'review';
           this.changed(s);
         } catch (e) {
           error.textContent = e instanceof Error ? e.message : String(e);
+          error.scrollIntoView({ block: 'nearest' });
         }
       },
       true,
@@ -538,8 +629,7 @@ export class WritingView extends ItemView {
         });
       }
       const edit = this.button(card, 'Edit card', () => {
-        this.editing = f.id;
-        this.render();
+        this.openEditor(f);
       });
       edit.addClass('cc-writing-edit-card');
       edit.disabled = s.phase !== 'idle' || !!f.noteId;
@@ -570,7 +660,7 @@ export class WritingView extends ItemView {
       return;
     }
     if (this.screen === 'preview') {
-      actions.createSpan({ cls: 'cc-muted', text: s.deck });
+      actions.createSpan({ cls: 'cc-muted', text: s.deck, attr: { title: s.deck } });
       const valid = pending.length > 0 && pending.every((f) => this.valid(f));
       this.button(
         actions,

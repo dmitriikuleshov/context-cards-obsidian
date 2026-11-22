@@ -243,6 +243,8 @@ Analysis now checks proposed edits in a separate model pass before keeping them.
 
 Existing drafts keep their captured content. After updating, use **Options → Recheck selection** to replace an older, inconsistent analysis, then prepare its cards again. Rechecking is disabled for already-exported reviews; start a fresh selection in that case.
 
+The editor keeps unsaved text, dropdown choices and cursor position during background redraws. **Cancel** discards those changes. Saving only prepared card fields returns directly to preview; changing the underlying correction returns to corrections so its exercise can be prepared again. The panel accounts for the footer when scrolling to controls. In short windows, the footer scrolls with the page instead of covering content.
+
 ### Writing settings and saved reviews
 
 Under **Settings → Context Cards → Writing practice**:

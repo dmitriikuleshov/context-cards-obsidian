@@ -210,7 +210,6 @@ test('prepared fields can be edited without regenerating the correction', async 
   await page.locator('[data-writing-section=card-fields]>summary').click();
   await page.getByLabel('Card explanation', { exact: true }).fill('My own helpful explanation.');
   await button(page, 'Save changes').click();
-  await button(page, 'Review 1 card').click();
   await expect(page.getByText('My own helpful explanation.', { exact: true })).toBeVisible();
 });
 test('cancellation stays on the correction and preserves the toggle state', async ({ page }) => {

@@ -6,6 +6,9 @@
   --cc-line: var(--background-modifier-border);
   padding: 0 !important;
   font-size: 13px;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .cc-panel-header {
   display: flex;
@@ -205,6 +208,9 @@
   min-height: 34px;
   padding: 8px 10px;
   font-size: 11px;
+  min-width: 0;
+  white-space: normal;
+  line-height: 1.4;
 }
 .cc-panel button.mod-cta {
   background: #657b50;
@@ -394,6 +400,45 @@
 .cc-writing-workflow .cc-panel-body {
   padding-top: 22px;
 }
+.cc-writing-workflow {
+  --cc-answer: color-mix(in srgb, var(--cc-accent) 65%, var(--text-normal));
+}
+.cc-writing-workflow .cc-busy {
+  margin: 0 0 18px;
+}
+.cc-writing-workflow .cc-busy > span:not(.cc-spinner) {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.cc-writing-workflow .cc-spinner {
+  flex-shrink: 0;
+}
+.cc-writing-workflow .cc-panel-header .cc-writing-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  padding: 8px;
+}
+.cc-writing-workflow .cc-panel-header svg {
+  width: 18px;
+  height: 18px;
+}
+.cc-writing-source-heading > span {
+  flex: 1 1 120px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.cc-writing-row > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.cc-writing-workflow .cc-writing-change del,
+.cc-writing-workflow .cc-writing-change ins {
+  min-width: 0;
+  max-width: 100%;
+}
 .cc-writing-workflow h3 {
   font-size: 14px;
   margin: 0;
@@ -467,6 +512,9 @@
   min-height: 36px;
   height: auto;
   cursor: pointer;
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.4;
 }
 .cc-writing-workflow .cc-writing-button:not(.mod-cta):hover {
   background: var(--interactive-hover, var(--background-secondary));
@@ -521,7 +569,7 @@
   color: var(--text-muted);
 }
 .cc-writing-change ins {
-  color: var(--cc-accent);
+  color: var(--cc-answer);
   text-decoration: none;
   font-weight: 600;
 }
@@ -592,7 +640,7 @@
 }
 .cc-writing-answer,
 .cc-writing-success {
-  color: var(--cc-accent);
+  color: var(--cc-answer);
 }
 .cc-writing-footer-actions {
   display: flex;
@@ -602,7 +650,11 @@
   flex-wrap: wrap;
 }
 .cc-writing-footer-actions > span {
-  overflow-wrap: anywhere;
+  flex: 1 1 120px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   min-width: 0;
 }
 .cc-writing-workflow .cc-writing-error {
@@ -611,6 +663,11 @@
 .cc-writing-workflow .cc-footer button {
   white-space: normal;
   height: auto;
+}
+@media (max-height: 640px) {
+  .cc-panel .cc-footer {
+    position: static;
+  }
 }
 @media (max-width: 420px) {
   .cc-writing-footer-actions > button {
