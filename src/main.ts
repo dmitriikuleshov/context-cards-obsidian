@@ -8,12 +8,9 @@ import { Ollama } from './ollama';
 import { ContextSettings } from './settings';
 import { ReviewView, VIEW_TYPE } from './view';
 import { restoreData } from './storage';
-import { TargetPicker } from './target-picker';
-import { MAX_VOCABULARY_SELECTION, reviewTarget, TargetSelectionError } from './target';
 import { createDraft, contextWindow, cleanDeck, issues, answerValid, trimCapture } from './text';
 import {
   DEFAULTS,
-  emptyContent,
   MAX_DRAFTS,
   type Capture,
   type Draft,
@@ -35,7 +32,6 @@ export default class ContextCardsPlugin extends Plugin {
   private unloaded = false;
   private captureEpoch = 0;
   private panelChanges: Promise<unknown> = Promise.resolve();
-  private targetPicker?: TargetPicker;
 
   async onload() {
     const raw = await this.loadData();
@@ -102,7 +98,7 @@ export default class ContextCardsPlugin extends Plugin {
               .setIcon('spell-check')
               .onClick(() => void this.writing.start(captured)),
           );
-        if (captured && captured.selected.length <= MAX_VOCABULARY_SELECTION)
+        if (captured && captured.selected.length <= 240)
           menu.addItem((item) =>
             item
               .setTitle('Create vocabulary cards')
@@ -174,7 +170,7 @@ export default class ContextCardsPlugin extends Plugin {
         return;
       }
       this.lastCapture = captured;
-      vocabulary.hidden = false;
+      vocabulary.hidden = captured.selected.length > 240;
       if (!this.settings.floatingButton) {
         button.hidden = true;
         return;
@@ -251,17 +247,11 @@ export default class ContextCardsPlugin extends Plugin {
     if (this.unloaded) return;
     const epoch = this.captureEpoch;
     captured = trimCapture(captured);
-    if (!captured.selected.trim() || captured.selected.length > MAX_VOCABULARY_SELECTION) {
-      new Notice('Select a word, expression or passage of up to 6,000 characters.');
+    if (!captured.selected.trim() || captured.selected.length > 240) {
+      new Notice('Select a word or a short expression, up to 240 characters.');
       return;
     }
     this.hideFloating();
-    const reviewed = reviewTarget(captured.selected);
-    if (reviewed) {
-      const choice = await this.chooseTarget(captured);
-      if (!choice || this.unloaded || epoch !== this.captureEpoch) return;
-      captured = choice;
-    }
     // Do not accumulate duplicates from repeated clicks on the same selection.
     const findExisting = () =>
       this.drafts.find(
@@ -288,9 +278,7 @@ export default class ContextCardsPlugin extends Plugin {
                   selection.trimStart().length
                 : undefined;
             const range =
-              preferredStart === undefined && !reviewed
-                ? null
-                : sourceMarkRange(text, captured, preferredStart);
+              preferredStart === undefined ? null : sourceMarkRange(text, captured, preferredStart);
             if (range)
               editor.replaceRange(
                 '`' + text.slice(range.start, range.end) + '`',
@@ -335,69 +323,6 @@ export default class ContextCardsPlugin extends Plugin {
     for (const leaf of this.app.workspace.getLeavesOfType(VIEW_TYPE))
       (leaf.view as ReviewView).render();
   }
-  chooseTarget(captured: Capture): Promise<Capture | null> {
-    this.targetPicker?.close();
-    return new Promise((resolve) => {
-      const picker = new TargetPicker(this.app, captured, (choice) => {
-        if (this.targetPicker === picker) this.targetPicker = undefined;
-        resolve(choice);
-      });
-      this.targetPicker = picker;
-      picker.open();
-    });
-  }
-  async refineTarget(draft: Draft) {
-    if (this.unloaded || draft.phase !== 'editing') return;
-    const epoch = this.captureEpoch,
-      revision = draft.revision;
-    const source = draft.context;
-    const choice = await this.chooseTarget({
-      ...draft.capture,
-      text: source,
-      ...(answerValid(draft)
-        ? {
-            selected: draft.answer,
-            start: draft.answerStart,
-            end: draft.answerStart + draft.answer.length,
-          }
-        : { selected: source, start: 0, end: source.length }),
-    });
-    if (
-      !choice ||
-      this.unloaded ||
-      epoch !== this.captureEpoch ||
-      !this.drafts.includes(draft) ||
-      draft.phase !== 'editing' ||
-      draft.revision !== revision ||
-      draft.context !== source
-    )
-      return;
-    if (choice.selected === draft.answer && choice.start === draft.answerStart) {
-      await this.generate(draft);
-      return;
-    }
-    Object.assign(draft, emptyContent(), {
-      expression: choice.selected,
-      answer: choice.selected,
-      answerStart: choice.start,
-      error: '',
-      revision: revision + 1,
-    });
-    delete draft.generalMeaning;
-    delete draft.wordFormation;
-    delete draft.ipaVariant;
-    delete draft.exampleGroups;
-    delete draft.targetNeedsReview;
-    delete draft.targetValidated;
-    delete draft.pendingContent;
-    delete draft.pendingSource;
-    delete draft.seconds;
-    delete draft.duplicates;
-    draft.allowDuplicate = false;
-    this.persist();
-    this.refresh();
-    await this.generate(draft);
-  }
   async generate(draft: Draft) {
     if (this.unloaded || this.jobs.has(draft.id) || ['sending', 'saved'].includes(draft.phase))
       return;
@@ -434,10 +359,6 @@ export default class ContextCardsPlugin extends Plugin {
           'The context or answer changed while generating. Generate again for the updated passage.';
         return;
       }
-      if (result.content.status === 'ready') {
-        delete draft.targetNeedsReview;
-        draft.targetValidated = target;
-      }
       if (hadContent || draft.revision !== revision) {
         draft.pendingContent = result.content;
         draft.pendingSource = { context: source, answer: target };
@@ -447,8 +368,6 @@ export default class ContextCardsPlugin extends Plugin {
       }
       draft.seconds = result.seconds;
     } catch (error) {
-      if (error instanceof TargetSelectionError && !controller.signal.aborted)
-        draft.targetNeedsReview = true;
       if (!controller.signal.aborted)
         draft.error = error instanceof Error ? error.message : String(error);
     } finally {
@@ -549,7 +468,6 @@ export default class ContextCardsPlugin extends Plugin {
   }
   async clearDrafts() {
     this.captureEpoch++;
-    this.targetPicker?.close();
     for (const controller of this.jobs.values()) controller.abort();
     this.drafts = [];
     this.lastCapture = null;
@@ -729,7 +647,6 @@ export default class ContextCardsPlugin extends Plugin {
   }
   onunload() {
     this.unloaded = true;
-    this.targetPicker?.close();
     this.writing.stop();
     for (const controller of this.jobs.values()) controller.abort();
     clearTimeout(this.saveTimer);

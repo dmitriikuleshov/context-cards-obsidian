@@ -284,7 +284,7 @@ describe('vocabulary navigation and source capture', () => {
     plugin.expandContext(d);
     expect(persist).not.toHaveBeenCalled();
   });
-  it.each(['', 'x'.repeat(6001)])('refuses invalid selection %s', async (selected) => {
+  it.each(['', 'x'.repeat(241)])('refuses invalid selection %s', async (selected) => {
     const { plugin } = pluginFixture();
     const open = vi.spyOn(plugin, 'openPanel');
     await plugin.capture(capture({ selected, start: 0, end: selected.length, text: selected }));

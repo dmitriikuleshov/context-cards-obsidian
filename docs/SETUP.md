@@ -125,10 +125,6 @@ The screenshots below show the **actual plugin panel in its standalone preview**
 
 Read Markdown in **Reading Mode** or **Live Preview**, select a word or expression, and click **Create cards**. You can also use the Context Cards commands in Obsidian's command palette.
 
-If the selection looks like a passage, **Choose what to learn** opens first. Highlight the exact word or expression in the text and click **Create cards**. The surrounding source remains available as context. **Use whole phrase** keeps a long idiom, fixed saying or grammar pattern together; **Cancel** leaves the book and drafts untouched.
-
-This is a soft check: more than eight words, multiple sentences or line breaks ask for confirmation, rather than forbidding a phrase. You can select up to 6,000 characters to choose from; the final learning target is limited to 240 characters. The model must analyse the entire confirmed target. If it selects only one word from a larger passage, the result is rejected and **Choose word or phrase** lets you refine it. Older passage drafts also need a refined target or successful regeneration before export.
-
 The panel opens with an editable draft. Use the selector at the top to switch between the latest **four** drafts. Adding a fifth removes the oldest from the list. **Clear all** clears drafts and cancels current generation; it does not delete Anki notes. Unsent content in removed drafts is lost.
 
 ### Edit: the word and its meanings

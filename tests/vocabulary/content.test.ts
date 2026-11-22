@@ -202,7 +202,6 @@ describe('full vocabulary generation', () => {
           meaning: ['One.', 'Two.'],
           explanation: ['A rule.', 'Another rule.'],
           examples: [],
-          target_source_form: 'word',
         }),
       ),
     );
@@ -231,9 +230,7 @@ describe('full vocabulary generation', () => {
   });
   it('clears meaning and explanation when those fields are disabled', async () => {
     vi.spyOn(http, 'jsonRequest').mockResolvedValue(
-      response(
-        rawContent({ meaning: [], explanation: [], examples: [], target_source_form: 'word' }),
-      ),
+      response(rawContent({ meaning: [], explanation: [], examples: [] })),
     );
     const result = await new Ollama({
       ...minimal,
@@ -246,9 +243,7 @@ describe('full vocabulary generation', () => {
     'rejects an invalid pronunciation selection (%#)',
     async (choice) => {
       vi.spyOn(http, 'jsonRequest')
-        .mockResolvedValueOnce(
-          response(rawContent({ lemma: 'record', examples: [], target_source_form: 'record' })),
-        )
+        .mockResolvedValueOnce(response(rawContent({ lemma: 'record', examples: [] })))
         .mockResolvedValueOnce(choice);
       await expect(
         new Ollama({ ...minimal, fields: { ...minimal.fields, ipa: 'american' } }).generate(

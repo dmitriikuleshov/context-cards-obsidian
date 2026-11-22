@@ -242,49 +242,6 @@
   color: var(--text-muted);
   margin-bottom: 9px;
 }
-.cc-target-picker > textarea {
-  width: 100%;
-  min-height: 150px;
-  max-height: 40vh;
-  resize: vertical;
-  padding: 12px;
-  font: inherit;
-  line-height: 1.65;
-  cursor: text;
-}
-.cc-target-picker > p {
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-.cc-target-choice {
-  margin: 12px 0 20px;
-  min-height: 2.5em;
-  overflow-wrap: anywhere;
-}
-.cc-target-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 8px;
-}
-.cc-target-actions > button {
-  white-space: normal;
-  height: auto;
-  min-height: 36px;
-}
-.cc-target-actions > .mod-cta {
-  background: var(--interactive-accent, #637b4f);
-  color: var(--text-on-accent, #fff);
-  border-color: transparent;
-}
-@media (max-width: 500px) {
-  .cc-target-actions > .mod-cta {
-    flex-basis: 100%;
-  }
-}
-.cc-warning > button {
-  margin-top: 10px;
-}
 .cc-warning {
   display: none;
 }
