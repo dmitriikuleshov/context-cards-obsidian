@@ -251,11 +251,18 @@ Under **Settings → Context Cards → Writing practice**:
 
 | Setting | Default | Purpose |
 | --- | --- | --- |
+| English variant | `Accept both` | Accept standard American and British forms, or select one variant to check regional spelling too. |
+| Check grammar | On | Check grammar, tense, agreement, punctuation and capitalization. |
+| Check vocabulary and collocations | On | Check word choice and word combinations. |
+| Check spelling | On | Include spelling feedback; spelling-only findings do not become practice cards. |
+| Default exercise type | `Let AI choose` | Let the model choose a format per correction, or prefer Correct the mistake / Fill in the gap. Deletions always use correction cards. |
 | Writing deck | `English::Writing mistakes` | Destination for writing exercises, separate from reading vocabulary. |
 | Writing review folder | `English/Writing reviews` | Vault-relative folder for saved Markdown feedback. |
 | Writing note type | `Context Cards Writing` | A separate note type with one Practice template. Keep it different from the vocabulary type. |
 
 A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created when exporting cards. Open it from your configured writing review folder or the source link in Anki. Personal notes appended after its managed review block are retained when the plugin updates the review.
+
+Writing preferences apply to the next analysis or **Recheck selection**. Existing drafts and prepared cards keep their saved settings. You can override the exercise type for a specific correction under **Edit → More details → Exercise type** before preparing cards. Enable at least one check category to run an analysis.
 
 The latest four writing sessions are stored with plugin data when **Restore unfinished drafts** is enabled. They are independent of the four vocabulary drafts. Rechecking replaces the session's suggestions and unexported exercise drafts; it is disabled after a finding has been exported. Use a fresh selection for new writing.
 

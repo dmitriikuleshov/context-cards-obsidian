@@ -2,6 +2,7 @@ import {
   DEFAULTS,
   DEFAULT_FIELDS,
   validTimeoutSeconds,
+  writingOptions,
   EXAMPLE_COUNT,
   MAX_DRAFTS,
   emptyContent,
@@ -67,6 +68,7 @@ function content(value: Record<string, unknown>): Content {
 function settings(value: unknown): Settings {
   const result = structuredClone(DEFAULTS);
   if (!record(value)) return result;
+  result.writing = writingOptions({ writing: value.writing as Settings['writing'] });
   for (const key of [
     'writingDeck',
     'writingReviewFolder',

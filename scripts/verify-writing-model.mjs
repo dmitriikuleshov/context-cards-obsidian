@@ -16,11 +16,12 @@ const bundle = await build({
 const { WritingModel, DEFAULTS, writingPracticeFields } = await import(
   `data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString('base64')}`
 );
-const model = new WritingModel({
+const settings = {
   ...DEFAULTS,
   ollamaUrl: process.env.OLLAMA_URL || DEFAULTS.ollamaUrl,
   model: process.env.OLLAMA_MODEL || DEFAULTS.model,
-});
+};
+const model = new WritingModel(settings);
 await mkdir('.test-artifacts', { recursive: true });
 const cases = [
   {
@@ -76,12 +77,58 @@ const cases = [
     text: 'I finished the report yesterday. I finished the report yesterday.',
     expected: [],
   },
+  { name: 'regional-accept-both', text: 'The colour of the centre is beautiful.', expected: [] },
+  {
+    name: 'regional-american',
+    writing: { variant: 'american' },
+    text: 'The colour of the centre is beautiful.',
+    expected: [
+      ['colour', 'color'],
+      ['centre', 'center'],
+    ],
+  },
+  {
+    name: 'regional-british',
+    writing: { variant: 'british' },
+    text: 'The color of the center is beautiful.',
+    expected: [
+      ['color', 'colour'],
+      ['center', 'centre'],
+    ],
+  },
+  {
+    name: 'spelling-only',
+    writing: { grammar: false, vocabulary: false },
+    text: 'I have wrote a stroy.',
+    expected: [['stroy', 'story']],
+  },
+  {
+    name: 'default-correction',
+    writing: { exercise: 'correction' },
+    text: 'I have wrote three stories this week.',
+    expected: [['wrote', 'written']],
+    preferredFormat: 'correction',
+    cards: true,
+  },
+  {
+    name: 'default-gap',
+    writing: { exercise: 'gap' },
+    text: 'I have wrote three stories this week.',
+    expected: [['wrote', 'written']],
+    preferredFormat: 'gap',
+    cards: true,
+  },
 ];
 const results = [];
 for (const c of cases) {
   const started = performance.now();
   try {
-    const analysis = await model.analyse(c.text, new AbortController().signal);
+    const activeModel = c.writing
+      ? new WritingModel({ ...settings, writing: { ...DEFAULTS.writing, ...c.writing } })
+      : model;
+    const analysis = await activeModel.analyse(c.text, new AbortController().signal);
+    if (c.preferredFormat && analysis.findings.some((f) => f.format !== c.preferredFormat))
+      throw new Error(`Expected the ${c.preferredFormat} default for each correction.`);
     const analysisSeconds = +((performance.now() - started) / 1000).toFixed(1);
     const targets = analysis.findings.map((f) => [f.before, f.after]);
     const missing =
@@ -94,7 +141,7 @@ for (const c of cases) {
       for (const f of analysis.findings.filter((f) => f.selected)) {
         for (const format of f.after ? ['correction', 'gap'] : ['correction']) {
           f.format = format;
-          f.card = await model.exercise(f, new AbortController().signal, analysis.findings);
+          f.card = await activeModel.exercise(f, new AbortController().signal, analysis.findings);
           writingPracticeFields(f);
           cards.push({ target: f.before, ...f.card });
         }

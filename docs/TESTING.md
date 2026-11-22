@@ -17,7 +17,7 @@ To check the actual local model, start Ollama with the configured model download
 npm run test:writing-model
 ```
 
-This optional check runs the production analysis and exercise generation code on eight synthetic passages. It covers capitalization, acceptable verb complements and past-time expressions, collocations, adjacent errors in one sentence, spelling around a grammar target, deletions and repeated correct sentences. It checks expected edits and validates generated correction/gap exercises. It never contacts Anki or changes a vault.
+This optional check runs the production analysis and exercise generation code on fourteen synthetic cases. It covers capitalization, acceptable verb complements and past-time expressions, collocations, adjacent errors in one sentence, spelling around a grammar target, deletions and repeated correct sentences. It also checks American/British preferences, disabled categories and default exercise types. It checks expected edits and validates generated correction/gap exercises. It never contacts Anki or changes a vault.
 
 The default is `qwen3.5:9b-q4_K_M` at `http://127.0.0.1:11434`. Override `OLLAMA_MODEL` or `OLLAMA_URL` in your environment to compare another configuration. The JSON report is written to `.test-artifacts/writing-full-live-audit.json`, with timings, findings and prepared exercises. Timings for a complete case include its card generation; `analysisSeconds` measures proofreading separately.
 

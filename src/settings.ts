@@ -281,6 +281,69 @@ export class ContextSettings extends PluginSettingTab {
       text: 'In Anki, enable Bury siblings to separate the two exercises. Scheduling and FSRS remain controlled by Anki.',
     });
     new Setting(root).setName('Writing practice').setHeading();
+    const writing = settings.writing;
+    new Setting(root)
+      .setName('English variant')
+      .setDesc(
+        'Choose the English used to check your writing. Accept both keeps valid American and British forms. A specific variant also checks regional spelling. Applies on the next analysis or recheck.',
+      )
+      .addDropdown((dropdown) =>
+        dropdown
+          .addOptions({
+            both: 'Accept both',
+            american: 'American English',
+            british: 'British English',
+          })
+          .setValue(writing.variant)
+          .onChange((value) => {
+            writing.variant = value as typeof writing.variant;
+            this.plugin.persist();
+          }),
+      );
+    for (const [key, name, description] of [
+      [
+        'grammar',
+        'Check grammar',
+        'Find grammar, tense, agreement, punctuation and capitalization errors.',
+      ],
+      [
+        'vocabulary',
+        'Check vocabulary and collocations',
+        'Find incorrect word choices and word combinations.',
+      ],
+      [
+        'spelling',
+        'Check spelling',
+        'Include spelling corrections in the feedback. Spelling-only findings do not become practice cards.',
+      ],
+    ] as const)
+      new Setting(root)
+        .setName(name)
+        .setDesc(description)
+        .addToggle((toggle) =>
+          toggle.setValue(writing[key]).onChange((value) => {
+            writing[key] = value;
+            this.plugin.persist();
+          }),
+        );
+    new Setting(root)
+      .setName('Default exercise type')
+      .setDesc(
+        'Let AI choose a format for each correction, or set your preferred type. You can change it per correction before preparing cards. Deletions always use Correct the mistake.',
+      )
+      .addDropdown((dropdown) =>
+        dropdown
+          .addOptions({
+            ai: 'Let AI choose',
+            correction: 'Correct the mistake',
+            gap: 'Fill in the gap',
+          })
+          .setValue(writing.exercise)
+          .onChange((value) => {
+            writing.exercise = value as typeof writing.exercise;
+            this.plugin.persist();
+          }),
+      );
     text(
       'Writing deck',
       'Destination for cards made from your own writing mistakes. One approved finding creates one card; vocabulary decks are unchanged.',
