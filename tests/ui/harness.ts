@@ -5,7 +5,6 @@ import { DEFAULTS, type Draft } from '../../src/types';
 import type ContextCardsPlugin from '../../src/main';
 import { installDomHelpers } from '../dom';
 import { enhanceSelects } from '../../src/select-menu';
-import { ThinkingControl } from '../../src/thinking-control';
 installDomHelpers();
 const text =
   'Mara brushed off the first warning. By the time she reached the station, the last train had already left. She wished she had listened.';
@@ -100,6 +99,4 @@ view.show(draft);
 if (new URLSearchParams(location.search).has('writing'))
   mountWritingPanel(document.querySelector('#panel')!);
 else document.querySelector('#panel')!.append(view.contentEl);
-Object.assign(window, {
-  contextCardsPreview: { view, draft, host, enhanceSelects, ThinkingControl },
-});
+Object.assign(window, { contextCardsPreview: { view, draft, host, enhanceSelects } });

@@ -89,7 +89,6 @@ Under **Settings → Context Cards → Local model**, start with:
 | --- | --- |
 | Ollama server | `http://127.0.0.1:11434` |
 | Model | `qwen3.5:9b-q4_K_M` |
-| Thinking | `Off` (when supported) |
 | Context length | `Balanced · 1,800 characters` |
 | Generation temperature | `0.2` |
 | Request timeout | `60 seconds` |
@@ -99,10 +98,6 @@ Click **Check connection** in the **Check Ollama** row. You should see a list of
 The first request may take longer while the model loads. Request timeout accepts a whole number of seconds; the default is `60`. For slower hardware, try `300` or `600`. You can use another installed model, but output quality and adherence to the requested format may differ.
 
 With the default address, generation stays on your computer. Changing the Ollama URL sends the selected text and context to that server instead.
-
-**Thinking** applies to both vocabulary and writing. The plugin reads the selected model's supported controls automatically. Depending on the model, you will see **Off / On / Model default**, named levels such as **Low / Medium / High**, or a disabled **Not supported** control. Models that cannot disable reasoning have no Off option. If Ollama provides no thinking metadata, the control shows **Model default** with **Support unknown**. Use **Check connection** to retry discovery after updating Ollama or installing a model.
-
-Thinking increases the generation and context budgets so the model has room to reason and still return a final answer. It also uses the model's own sampling defaults; **Generation temperature** is unavailable while Thinking is active. This avoids forcing low-temperature settings intended for direct answers onto the reasoning process. Thinking can use more memory and take longer; the plugin still respects Request timeout. Try `300` or `600` seconds with slower models. Reasoning text is not copied into card fields. If the model exhausts its generation budget before producing a complete answer, use a lower thinking level or turn Thinking off. Thinking does not guarantee that a definition or correction is right; review the draft before exporting.
 
 ## 3. Set up Anki
 

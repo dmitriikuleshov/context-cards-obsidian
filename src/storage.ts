@@ -1,4 +1,3 @@
-import { validThinkingChoice } from './thinking-options';
 import {
   DEFAULTS,
   DEFAULT_FIELDS,
@@ -69,7 +68,6 @@ function content(value: Record<string, unknown>): Content {
 function settings(value: unknown): Settings {
   const result = structuredClone(DEFAULTS);
   if (!record(value)) return result;
-  if (validThinkingChoice(value.thinking)) result.thinking = value.thinking;
   result.writing = writingOptions({ writing: value.writing as Settings['writing'] });
   for (const key of [
     'writingDeck',

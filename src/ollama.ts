@@ -1,5 +1,4 @@
 import { endpoint, jsonRequest } from './http';
-import { chatRequest } from './thinking';
 import { cardFields, EXAMPLE_COUNT, type Content, type Settings } from './types';
 import { americanPronunciations } from './pronunciation';
 
@@ -186,8 +185,8 @@ export class Ollama {
     timeout = this.settings.timeoutSeconds * 1000,
   ): Promise<string> {
     const count = cardFields(this.settings).generalMeaningSentences || 2;
-    const response = await chatRequest<ChatResponse>(
-      this.settings,
+    const response = await jsonRequest<ChatResponse>(
+      `${endpoint(this.settings.ollamaUrl)}/api/chat`,
       {
         model: this.settings.model.trim(),
         messages: [
@@ -215,6 +214,7 @@ export class Ollama {
           additionalProperties: false,
         },
         stream: false,
+        think: false,
         keep_alive: '10m',
         options: {
           num_ctx: 6144,
@@ -250,8 +250,8 @@ export class Ollama {
     schema.maxItems = f.maxUsages;
     schema.items.properties.examples.minItems = f.examplesPerUsage;
     schema.items.properties.examples.maxItems = f.examplesPerUsage;
-    const response = await chatRequest<ChatResponse>(
-      this.settings,
+    const response = await jsonRequest<ChatResponse>(
+      `${endpoint(this.settings.ollamaUrl)}/api/chat`,
       {
         model: this.settings.model.trim(),
         messages: [
@@ -273,6 +273,7 @@ export class Ollama {
           additionalProperties: false,
         },
         stream: false,
+        think: false,
         keep_alive: '10m',
         options: {
           num_ctx: 6144,
@@ -315,8 +316,8 @@ export class Ollama {
     signal: AbortSignal,
     timeout = this.settings.timeoutSeconds * 1000,
   ): Promise<string> {
-    const response = await chatRequest<ChatResponse>(
-      this.settings,
+    const response = await jsonRequest<ChatResponse>(
+      `${endpoint(this.settings.ollamaUrl)}/api/chat`,
       {
         model: this.settings.model.trim(),
         messages: [
@@ -334,6 +335,7 @@ export class Ollama {
           additionalProperties: false,
         },
         stream: false,
+        think: false,
         keep_alive: '10m',
         options: { num_ctx: 6144, num_predict: 350, temperature: this.settings.temperature },
       },
@@ -401,8 +403,8 @@ export class Ollama {
       if (timeout <= 0) throw new Error('The model request timed out. Try generating again.');
       return timeout;
     };
-    const response = await chatRequest<ChatResponse>(
-      this.settings,
+    const response = await jsonRequest<ChatResponse>(
+      `${endpoint(this.settings.ollamaUrl)}/api/chat`,
       {
         model: this.settings.model.trim(),
         messages: [
@@ -411,6 +413,7 @@ export class Ollama {
         ],
         format: schema,
         stream: false,
+        think: false,
         keep_alive: '10m',
         options: {
           num_ctx: 6144,
@@ -447,8 +450,8 @@ export class Ollama {
       const candidates = americanPronunciations(content.expression);
       if (candidates.length === 1) content.americanIpa = candidates[0]!;
       else if (candidates.length > 1) {
-        const choice = await chatRequest<ChatResponse>(
-          this.settings,
+        const choice = await jsonRequest<ChatResponse>(
+          `${endpoint(this.settings.ollamaUrl)}/api/chat`,
           {
             model: this.settings.model.trim(),
             messages: [
@@ -474,6 +477,7 @@ export class Ollama {
               additionalProperties: false,
             },
             stream: false,
+            think: false,
             keep_alive: '10m',
             options: { num_ctx: 6144, num_predict: 150, temperature: 0 },
           },
