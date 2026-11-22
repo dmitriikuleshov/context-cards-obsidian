@@ -1,4 +1,40 @@
-# Writing analysis checks
+# Automated checks
+
+## Vocabulary mode
+
+```sh
+npm ci
+npm run test:vocabulary
+```
+
+The vocabulary coverage target includes eleven complete production modules: `main.ts` (plugin lifecycle, capture, commands and draft controller), `ollama.ts`, `capture.ts`, `text.ts`, `storage.ts`, `fields.ts`, `templates.ts`, `pronunciation.ts`, `source-mark.ts`, `anki.ts`, and `http.ts`. Coverage includes whole files without ignored lines. The percentage describes this core, not every plugin file: the review view, settings UI and shared dropdown are checked separately by unit/browser tests and are outside this percentage.
+
+Each measured file must cover at least **98% of statements and lines, 97% of branches, and 100% of functions**. Falling below any threshold fails the command. HTML and machine-readable reports are generated at `coverage/vocabulary/index.html` and `coverage/vocabulary/coverage-summary.json`. The Tests workflow publishes a `vocabulary-coverage` artifact; both Tests and Release enforce these thresholds.
+
+These deterministic checks require no downloaded model, running Anki, vault or credentials. They cover:
+
+- Malformed, truncated, oversized and incomplete model output; legacy and grouped examples; disabled fields; custom counts; contextual and general meanings; word formation; offline IPA and pronunciation selection.
+- Reading Mode and editor selections, nested inline markup, repeated words, UTF-16 offsets, neighbouring text, HTML escaping, gap answers and optional backtick marking.
+- Cancellation, late responses, edits during generation, pending replacements, immutable settings snapshots, the shared request deadline and stale callbacks after unload.
+- Bounded draft history, damaged stored records, restoration, independent field settings, debounced/serialized saves and failed disk writes.
+- AnkiConnect response contracts, literal duplicate searches, batching, safe model migration, retry keys, lost export responses, invalid note IDs, queued exports and preservation of edits.
+
+Integration tests run the actual controller, HTTP client, model parser and Anki adapter together against temporary local servers on OS-assigned ports. They verify that generation never exports without approval, that one note creates Recognition and Recall cards, and that retry recovery does not create another note. Source-marking tests use synthetic editors and mocked vault APIs. Nothing is written to the user's book or Anki collection.
+
+Regressions found while adding coverage include losing direct text beside inline markup in Reading Mode, starting supplemental requests after the shared deadline, starting work after plugin unload, and accepting an invalid Anki note ID as a successful export. Each has a reproducing test.
+
+Run the broader checks after vocabulary changes:
+
+```sh
+npm test -- --maxWorkers=2
+npm run build
+npm run test:ui
+npm run test:anki
+```
+
+The browser suite uses simulated services. The Anki rendering/search check uses a temporary Python Anki collection, never the installed collection. Mocked model responses test software behavior, not the linguistic quality of a particular local model.
+
+## Writing analysis
 
 The focused analysis suite measures five modules: `writing.ts` (validation, alignment and recovery), `writing-model.ts` (generation and independent verification), `writing-controller.ts` (session lifecycle, preparation and saving), `writing-workflow.ts` (source highlights), and `http.ts` (model transport). UI and Anki scheduling are outside this coverage percentage.
 

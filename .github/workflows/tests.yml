@@ -16,11 +16,19 @@ jobs:
           package-manager-cache: false
       - run: npm ci
       - run: npm run test:analysis
+      - run: npm run test:vocabulary
       - run: npm run check
       - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: analysis-coverage
           path: coverage/analysis/
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: vocabulary-coverage
+          path: coverage/vocabulary/
           if-no-files-found: ignore
           retention-days: 14

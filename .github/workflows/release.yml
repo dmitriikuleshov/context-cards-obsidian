@@ -27,6 +27,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run test:analysis
+      - run: npm run test:vocabulary
       - run: node scripts/package.mjs
       - run: npm run verify:package
       - name: Create downloadable draft
