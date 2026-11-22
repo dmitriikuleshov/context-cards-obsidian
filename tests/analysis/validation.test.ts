@@ -212,10 +212,10 @@ describe('source alignment invariants', () => {
       ]),
     ).toThrow('more precise');
     const overlapping = [
-      finding({ id: 'long', original: f.original, before: 'have', after: 'has' }),
-      finding({ id: 'short', original: f.original, before: 'have a', after: 'has a' }),
+      finding({ id: 'long', original: f.original, before: 'a stroy', after: 'one story' }),
+      finding({ id: 'short', original: f.original, before: 'stroy', after: 'story' }),
     ];
-    expect(isolatedQuestion(f, overlapping)).toBe('She has wrote a stroy.');
+    expect(isolatedQuestion(f, overlapping)).toBe('She have wrote a story.');
   });
   it('skips malformed highlights and returns sorted, nonoverlapping, exact source slices', () => {
     const source = 'I have wrote. I have wrote.';

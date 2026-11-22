@@ -20,6 +20,24 @@ const code = (text: string) => {
   );
   return `${fence}text\n${text}\n${fence}`;
 };
+function reviewTail(text: string): string {
+  let fence: string | undefined,
+    offset = 0;
+  for (const segment of text.split(/(?<=\n)/)) {
+    const line = segment.replace(/\r?\n$/, '');
+    if (fence) {
+      if (line === fence) fence = undefined;
+    } else if (line === '<!-- end-context-cards-writing -->') {
+      return text.slice(offset + segment.length);
+    } else {
+      fence = /^(`{3,})text$/.exec(line)?.[1];
+    }
+    offset += segment.length;
+  }
+  throw new Error(
+    'The writing review end marker is missing. Restore it before updating this review.',
+  );
+}
 export function writingReviewMarkdown(s: WritingSession): string {
   const lines = [
     `<!-- context-cards-writing:${s.id} -->`,
@@ -268,9 +286,7 @@ export class WritingController {
               throw new Error(
                 'This file is not owned by this writing review. Choose a new review destination.',
               );
-            const marker = '<!-- end-context-cards-writing -->';
-            const end = text.indexOf(marker);
-            return markdown + (end >= 0 ? text.slice(end + marker.length) : '');
+            return markdown + reviewTail(text);
           });
         } else await this.host.app.vault.create(path, markdown);
         await this.host.flush();
