@@ -653,14 +653,18 @@
   gap: 12px;
   flex-wrap: wrap;
 }
-.cc-writing-options {
-  padding: 0 20px 16px;
+.cc-writing-destination .cc-deck-row {
+  padding-right: 78px;
 }
-.cc-writing-workflow .cc-writing-options > .cc-section {
+.cc-writing-destination .cc-destination-tools {
   margin: 0;
 }
-.cc-writing-options .cc-field {
-  margin-top: 16px;
+.cc-writing-destination .cc-destination-tools > summary {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  margin: 0;
+  color: var(--text-muted);
 }
 .cc-writing-footer-actions > span {
   flex: 1 1 120px;

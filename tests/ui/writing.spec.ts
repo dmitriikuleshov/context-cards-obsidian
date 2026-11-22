@@ -147,7 +147,8 @@ test('an overlapping style finding never masks the capitalization card or gives 
 test('word navigation preserves independent choices and exports the selected batch', async ({
   page,
 }) => {
-  await expect(page.getByRole('textbox')).toBeHidden();
+  await expect(page.getByLabel('Writing deck', { exact: true })).toBeVisible();
+  await expect(page.getByRole('textbox')).toHaveCount(1);
   await page.screenshot({ path: '.test-artifacts/writing-panel.png', fullPage: true });
   await selectTwo(page);
   await word(page, 'wrote').click();

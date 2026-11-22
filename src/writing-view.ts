@@ -640,36 +640,27 @@ export class WritingView extends ItemView {
   }
   private renderFooter(root: HTMLElement, s: WritingSession) {
     const busy = s.phase !== 'idle';
-    const area = root.createDiv({ cls: 'cc-writing-options' });
-    const options = this.section(area, 'options', 'Options');
-    const syncDestination = () => {
-      const label = root.querySelector<HTMLElement>('[data-writing-destination]');
-      if (!label) return;
-      const count = this.pending(s).length;
-      label.textContent = options.open
-        ? `${count} ${count === 1 ? 'card' : 'cards'} selected`
-        : s.deck;
-      label.title = options.open ? '' : s.deck;
-    };
-    options.addEventListener('toggle', () => {
-      if (options.isConnected) {
-        this.sections.set('options', options.open);
-        syncDestination();
-      }
-    });
-    options.querySelector('summary')!.addEventListener('click', () => {
-      requestAnimationFrame(() => {
-        if (options.isConnected && options.open) options.scrollIntoView({ block: 'nearest' });
-      });
-    });
-    this.field(options, 'Writing deck', s.deck, 'deck', s, (v) => {
+    const footer = root.createDiv({ cls: 'cc-footer' });
+    const destination = footer.createDiv({ cls: 'cc-destination cc-writing-destination' });
+    const deckRow = destination.createDiv({ cls: 'cc-deck-row' });
+    const icon = deckRow.createSpan({ cls: 'cc-deck-icon' });
+    setIcon(icon, 'layers');
+    icon.setAttribute('aria-hidden', 'true');
+    const deck = this.field(deckRow, 'Writing deck', s.deck, 'deck', s, (v) => {
       s.deck = v;
-      syncDestination();
+      deck.title = v;
+    });
+    deck.parentElement!.querySelector('label')?.addClass('cc-sr-only');
+    deck.placeholder = 'Choose an Anki deck';
+    deck.title = s.deck;
+    const options = this.section(destination, 'options', 'Options');
+    options.addClass('cc-destination-tools');
+    options.addEventListener('toggle', () => {
+      if (options.isConnected) this.sections.set('options', options.open);
     });
     this.button(options, 'Recheck selection', () => {
       void this.host.writing.analyse(s);
     }).disabled = busy || s.findings.some((f) => !!f.noteId);
-    const footer = root.createDiv({ cls: 'cc-footer' });
     const actions = footer.createDiv({ cls: 'cc-writing-footer-actions' }),
       pending = this.pending(s);
     if (this.screen === 'done') return;
@@ -685,10 +676,7 @@ export class WritingView extends ItemView {
     if (this.screen === 'preview') {
       actions.createSpan({
         cls: 'cc-muted',
-        text: options.open
-          ? `${pending.length} ${pending.length === 1 ? 'card' : 'cards'} selected`
-          : s.deck,
-        attr: { title: options.open ? '' : s.deck, 'data-writing-destination': '' },
+        text: `${pending.length} ${pending.length === 1 ? 'card' : 'cards'} selected`,
       });
       const valid = pending.length > 0 && pending.every((f) => this.valid(f));
       this.button(

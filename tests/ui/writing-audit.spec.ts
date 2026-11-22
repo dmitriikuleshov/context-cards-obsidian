@@ -97,14 +97,21 @@ for (const size of [
   { width: 320, height: 520 },
   { width: 390, height: 720 },
 ]) {
-  test(`options open inline without enlarging the action bar at ${size.width}x${size.height}`, async ({
+  test(`writing destination works like vocabulary at ${size.width}x${size.height}`, async ({
     page,
   }) => {
     await page.setViewportSize(size);
     await page.goto('/?writing=1');
     await page.getByRole('button', { name: 'Review 2 cards', exact: true }).click();
     const footer = page.locator('.cc-footer'),
-      options = page.locator('[data-writing-section=options]');
+      options = footer.locator('[data-writing-section=options]'),
+      deck = footer.getByLabel('Writing deck', { exact: true });
+    await expect(deck).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Recheck selection', exact: true })).toBeHidden();
+    const deckRect = (await deck.boundingBox())!,
+      summaryRect = (await options.locator('summary').boundingBox())!;
+    expect(deckRect.x + deckRect.width).toBeLessThanOrEqual(summaryRect.x);
+    expect(Math.abs(deckRect.y - summaryRect.y)).toBeLessThan(16);
     const before = (await footer.boundingBox())!.height;
     await options.locator('summary').click();
     await expect(options).toHaveAttribute('open', '');
@@ -112,17 +119,26 @@ for (const size of [
       .poll(async () => {
         const r = await options.boundingBox();
         const f = await footer.boundingBox();
-        return !!r && !!f && r.y >= 0 && r.y + r.height <= f.y + 1;
+        return !!r && !!f && r.y >= f.y && r.y + r.height <= f.y + f.height;
       })
       .toBe(true);
-    expect(Math.abs((await footer.boundingBox())!.height - before)).toBeLessThan(2);
-    await expect(footer.locator('details')).toHaveCount(0);
+    expect((await footer.boundingBox())!.height).toBeGreaterThan(before);
+    await expect(
+      page.getByRole('button', { name: 'Recheck selection', exact: true }),
+    ).toBeVisible();
+    await expect(deck).toBeVisible();
     await expect(footer.getByText('2 cards selected', { exact: true })).toBeVisible();
     if (size.width === 390)
-      await page.screenshot({ path: '.test-artifacts/writing-options-inline.png' });
-    await page.getByLabel('Writing deck', { exact: true }).fill('English::My new deck');
+      await page.screenshot({ path: '.test-artifacts/writing-options-vocabulary.png' });
+    await deck.fill('English::My new deck');
     await options.locator('summary').click();
-    await expect(footer.getByText('English::My new deck', { exact: true })).toBeVisible();
+    await expect(deck).toHaveValue('English::My new deck');
+    await expect(page.getByRole('button', { name: 'Recheck selection', exact: true })).toBeHidden();
+    expect(Math.abs((await footer.boundingBox())!.height - before)).toBeLessThan(2);
+    // A background refresh must preserve the collapsed state and the edited deck.
+    await page.evaluate(() => (window as any).writingPreview.view.render());
+    await expect(deck).toHaveValue('English::My new deck');
+    await expect(options).not.toHaveAttribute('open', '');
   });
 }
 for (const size of [
