@@ -76,6 +76,55 @@ function setup() {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing review lifecycle', () => {
+  it('keeps a saving/exporting draft when the fifth selection replaces an older draft', async () => {
+    const { manager, session, host } = setup();
+    session.phase = 'exporting';
+    const others = ['old-idle', 'newer', 'latest'].map((id) => ({
+      ...structuredClone(session),
+      id,
+      phase: 'idle' as const,
+    }));
+    manager.sessions.push(...others);
+    host.openWritingPanel = vi.fn().mockResolvedValue({ show: vi.fn() });
+    vi.spyOn(WritingModel.prototype, 'analyse').mockResolvedValue({ summary: '', findings: [] });
+    await manager.start({ ...session.capture, selected: 'A new selection.', start: 100 });
+    expect(manager.sessions).toHaveLength(4);
+    expect(manager.sessions).toContain(session);
+    expect(manager.sessions).not.toContain(others[0]);
+  });
+  it('does not evict any draft when all four are saving/exporting', async () => {
+    const { manager, session, host } = setup();
+    session.phase = 'exporting';
+    manager.sessions = ['one', 'two', 'three', 'four'].map((id) => ({
+      ...structuredClone(session),
+      id,
+    }));
+    const before = [...manager.sessions];
+    host.openWritingPanel = vi.fn();
+    await manager.start({ ...session.capture, selected: 'A new selection.', start: 100 });
+    expect(manager.sessions).toEqual(before);
+    expect(host.openWritingPanel).not.toHaveBeenCalled();
+  });
+  it('ignores generate/export requests during analysis without changing its error or phase', async () => {
+    const { manager, session, f } = setup();
+    session.phase = 'analysing';
+    session.error = 'Checking...';
+    f.selected = false;
+    await manager.generate(session);
+    await manager.export(session);
+    expect(session.phase).toBe('analysing');
+    expect(session.error).toBe('Checking...');
+  });
+  it('keeps prior feedback and prepared cards after a failed recheck', async () => {
+    const { manager, session, f } = setup();
+    const previous = structuredClone(session);
+    vi.spyOn(WritingModel.prototype, 'analyse').mockRejectedValue(new Error('Model unavailable'));
+    await manager.analyse(session);
+    expect(session.findings).toEqual(previous.findings);
+    expect(session.summary).toBe(previous.summary);
+    expect(session.analysed).toBe(true);
+    expect(session.error).toBe('Model unavailable');
+  });
   it('clears all drafts, aborts model jobs and rejects late responses without deleting saved reviews', async () => {
     const { manager, session, f, host, files } = setup();
     await manager.save(session);

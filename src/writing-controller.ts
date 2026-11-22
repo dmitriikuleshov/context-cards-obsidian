@@ -88,6 +88,17 @@ export class WritingController {
     );
     const fresh = !s;
     if (!s) {
+      if (this.sessions.length >= 4) {
+        const index = this.sessions.findIndex(
+          (old) => old.phase !== 'exporting' && old.phase !== 'saving',
+        );
+        if (index < 0) {
+          new Notice('Wait for a writing export or save to finish before starting another draft.');
+          return;
+        }
+        const [old] = this.sessions.splice(index, 1);
+        this.jobs.get(old!.id)?.abort();
+      }
       s = {
         id: crypto.randomUUID(),
         created: new Date().toISOString(),
@@ -100,8 +111,6 @@ export class WritingController {
         deck: this.host.settings.writingDeck,
       };
       this.sessions.push(s);
-      const removed = this.sessions.splice(0, Math.max(0, this.sessions.length - 4));
-      for (const old of removed) this.jobs.get(old.id)?.abort();
       this.host.persist();
     }
     const view = await this.host.openWritingPanel();
@@ -157,6 +166,7 @@ export class WritingController {
     }
   }
   async analyse(s: WritingSession) {
+    if (this.stopped || s.phase !== 'idle' || !this.sessions.includes(s)) return;
     if (s.findings.some((f) => f.noteId)) {
       s.error = 'Start a new selection to recheck text that already has exported cards.';
       this.refresh();
@@ -174,6 +184,7 @@ export class WritingController {
     });
   }
   async generate(s: WritingSession) {
+    if (this.stopped || s.phase !== 'idle' || !this.sessions.includes(s)) return;
     const selected = s.findings.filter((f) => f.selected && canPractise(f) && !f.noteId);
     if (!selected.length) {
       s.error = 'Select at least one grammar or vocabulary correction.';
@@ -274,6 +285,7 @@ export class WritingController {
     });
   }
   async export(s: WritingSession) {
+    if (this.stopped || s.phase !== 'idle' || !this.sessions.includes(s)) return;
     const selected = s.findings.filter((f) => f.selected && canPractise(f) && !f.noteId);
     if (!selected.length || selected.some((f) => !f.card)) {
       s.error = 'Generate and review a card for each selected correction first.';
