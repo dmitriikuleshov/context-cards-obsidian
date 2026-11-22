@@ -263,6 +263,23 @@ test('excluding a correction removes it from export and preserves its prepared c
     await page.evaluate(() => (window as any).writingPreview.session.findings[1].noteId),
   ).toBeUndefined();
 });
+test('editing rejects unrelated whole-sentence replacements without changing the correction', async ({
+  page,
+}) => {
+  await button(page, 'Edit').click();
+  await page.locator('[data-writing-section=edit-details]>summary').click();
+  const before = await page.getByLabel('Highlighted text', { exact: true }).inputValue();
+  await page
+    .getByLabel('Highlighted text', { exact: true })
+    .fill('I have wrote three stories this week.');
+  await page.getByLabel('Correction', { exact: true }).fill('This is good.');
+  await button(page, 'Save changes').click();
+  await expect(page.getByRole('alert').last()).toContainText('unrelated wording');
+  expect(await page.evaluate(() => (window as any).writingPreview.session.findings[0].before)).toBe(
+    before,
+  );
+  await button(page, 'Cancel').click();
+});
 test('style feedback has two controls with card creation disabled and narrow layout fits', async ({
   page,
 }) => {

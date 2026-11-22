@@ -35,6 +35,58 @@ export function sampleFinding(): WritingFinding {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing analysis and practice validation', () => {
+  it('repairs contradictory reviewer flags instead of silently discarding a genuine error', async () => {
+    const request = vi
+      .spyOn(http, 'jsonRequest')
+      .mockResolvedValueOnce({
+        message: {
+          content: JSON.stringify({ summary: '', findings: [finding] }),
+        },
+      })
+      .mockImplementation(async (_url, body: any) => {
+        const input = JSON.parse(body.messages[1].content);
+        const candidates = input.candidates ?? input.input.candidates;
+        return {
+          message: {
+            content: JSON.stringify({
+              decisions: candidates.map((c: any) => ({
+                id: c.id,
+                original_acceptable: !input.validation_error,
+                valid: true,
+                explanation: 'Use the past participle after have.',
+                tip: '',
+              })),
+            }),
+          },
+        };
+      });
+    const result = await new WritingModel(DEFAULTS).analyse(source, new AbortController().signal);
+    expect(result.findings).toHaveLength(1);
+    expect(request).toHaveBeenCalledTimes(3);
+    expect(JSON.stringify(request.mock.calls[2]![1])).toContain('contradicts itself');
+  });
+  it('uses a correction card for a deletion even if the model requests a typed gap', () => {
+    const original = 'We discussed about the plan.';
+    const f = parseWritingAnalysis(
+      JSON.stringify({
+        summary: '',
+        findings: [
+          {
+            ...finding,
+            original_sentence: original,
+            target_before: 'about the',
+            target_after: 'the',
+            recommended_format: 'gap',
+          },
+        ],
+      }),
+      original,
+      true,
+    ).findings[0]!;
+    expect(f.before).toBe('about ');
+    expect(f.after).toBe('');
+    expect(f.format).toBe('correction');
+  });
   it('normalizes broad or partial-word model targets to the actual complete-word edit', () => {
     for (const [before, after] of [
       ['have wrote', 'have written'],
@@ -141,6 +193,49 @@ describe('writing analysis and practice validation', () => {
     };
     expect(isolatedQuestion(f, [f, peer])).toBe('I have wrote a story.');
   });
+  it('checks each local edit with its exact target and the full paragraph as context', async () => {
+    const text = 'She have wrote three stories this week.';
+    const items = [
+      { ...finding, original_sentence: text, target_before: 'have', target_after: 'has' },
+      { ...finding, original_sentence: text },
+    ];
+    const request = vi
+      .spyOn(http, 'jsonRequest')
+      .mockResolvedValueOnce({
+        message: {
+          content: JSON.stringify({ summary: '', findings: items }),
+        },
+      })
+      .mockImplementation(async (_url, body: any) => {
+        const input = JSON.parse(body.messages[1].content);
+        expect(input.text).toBe(text);
+        expect(input.candidates.map((f: any) => [f.target_before, f.target_after])).toEqual([
+          ['have', 'has'],
+          ['wrote', 'written'],
+        ]);
+        expect(input.candidates.map((f: any) => f.original)).toEqual([
+          'She have written three stories this week.',
+          'She has wrote three stories this week.',
+        ]);
+        return {
+          message: {
+            content: JSON.stringify({
+              decisions: input.candidates.map((c: any) => ({
+                id: c.id,
+                original_acceptable: false,
+                valid: true,
+                explanation: 'A valid local edit.',
+                tip: '',
+              })),
+            }),
+          },
+        };
+      });
+    expect(
+      (await new WritingModel(DEFAULTS).analyse(text, new AbortController().signal)).findings,
+    ).toHaveLength(2);
+    expect(request).toHaveBeenCalledTimes(2);
+  });
   it('keeps capitalization selectable even if the model labels it as optional style, and deduplicates identical edits', () => {
     const original = 'I learn english.';
     const item = {
@@ -170,6 +265,9 @@ describe('writing analysis and practice validation', () => {
       after: 'I made a mistake yesterday.',
     };
     expect(() => validateWritingTarget(invented)).toThrow('unrelated wording');
+    expect(() =>
+      validateWritingTarget({ ...invented, original: 'This is good.', before: 'This is good.' }),
+    ).toThrow('unrelated wording');
     const combined = {
       ...sampleFinding(),
       original: 'I started to learn english a few years ago.',
@@ -221,6 +319,7 @@ describe('writing analysis and practice validation', () => {
               content: JSON.stringify({
                 decisions: input.candidates.map((f: any) => ({
                   id: f.id,
+                  original_acceptable: false,
                   valid,
                   explanation: valid
                     ? 'Use the participle.'
@@ -246,6 +345,30 @@ describe('writing analysis and practice validation', () => {
     await expect(
       new WritingModel(DEFAULTS).analyse(source, new AbortController().signal),
     ).rejects.toThrow('every proposed edit');
+  });
+  it('does not approve an edit when the reviewer says the original is already acceptable', async () => {
+    vi.spyOn(http, 'jsonRequest')
+      .mockResolvedValueOnce({
+        message: {
+          content: JSON.stringify({ summary: '', findings: [finding] }),
+        },
+      })
+      .mockImplementation(async (_url, body: any) => ({
+        message: {
+          content: JSON.stringify({
+            decisions: JSON.parse(body.messages[1].content).candidates.map((c: any) => ({
+              id: c.id,
+              original_acceptable: true,
+              valid: false,
+              explanation: 'An optional alternative.',
+              tip: '',
+            })),
+          }),
+        },
+      }));
+    expect(
+      (await new WritingModel(DEFAULTS).analyse(source, new AbortController().signal)).findings,
+    ).toEqual([]);
   });
   it('repairs invalid analysis once within the original timeout budget', async () => {
     const now = vi
@@ -274,6 +397,7 @@ describe('writing analysis and practice validation', () => {
             content: JSON.stringify({
               decisions: input.candidates.map((f: any) => ({
                 id: f.id,
+                original_acceptable: false,
                 valid: true,
                 explanation: 'Use the participle.',
                 tip: '',
@@ -340,6 +464,10 @@ describe('writing analysis and practice validation', () => {
     });
   });
   it('anchors punctuation insertions and preserves whitespace in deletion targets', () => {
+    expect(minimalCorrection('We discussed about the plan.', 'We discussed the plan.')).toEqual({
+      before: 'about ',
+      after: '',
+    });
     expect(minimalCorrection('I did it', 'I did it.')).toEqual({ before: 'it', after: 'it.' });
     const raw = {
       ...finding,
@@ -495,5 +623,25 @@ describe('writing analysis and practice validation', () => {
     f.selected = false;
     expect(restoreWritingSessions([s])[0]!.findings[0]!.selected).toBe(false);
     expect(restoreWritingSessions([{ ...s, capture: {} }])).toEqual([]);
+  });
+  it('restores valid corrections when one saved finding is damaged, retaining choices and repairing duplicate ids', () => {
+    const f = sampleFinding();
+    f.noteId = 42;
+    const second = { ...sampleFinding(), id: f.id, before: 'have', after: 'had', selected: false };
+    const s = {
+      id: 'saved',
+      capture: { selected: source, file: 'Book.md', vault: 'Test' },
+      summary: '',
+      findings: [f, null, second],
+      analysed: true,
+    };
+    const restored = restoreWritingSessions([s]);
+    expect(restored).toHaveLength(1);
+    expect(restored[0]!.findings).toHaveLength(2);
+    expect(restored[0]!.findings[0]!.noteId).toBe(42);
+    expect(restored[0]!.findings[1]!.selected).toBe(false);
+    expect(restored[0]!.findings[1]!.id).not.toBe(f.id);
+    second.id = '';
+    expect(restoreWritingSessions([s])[0]!.findings[1]!.selected).toBe(false);
   });
 });

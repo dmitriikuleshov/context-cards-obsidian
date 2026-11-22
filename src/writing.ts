@@ -91,7 +91,7 @@ export function validateWritingTarget(f: WritingFinding) {
     shared = 0;
   while (i < a.length || j < b.length) {
     if (i < a.length && j < b.length && a[i] === b[j]) {
-      shared++;
+      if (/[\p{L}\p{N}]/u.test(a[i]!)) shared++;
       changing = false;
       i++;
       j++;
@@ -141,6 +141,7 @@ export function minimalCorrection(
   while (
     endOld < original.length &&
     endNew < corrected.length &&
+    /[\p{L}\p{N}]/u.test(original[endOld - 1] ?? '') &&
     /[\p{L}\p{N}]/u.test(original[endOld]!) &&
     original[endOld] === corrected[endNew]
   ) {
@@ -238,7 +239,7 @@ export function parseWritingAnalysis(
         throw new Error('The suggested correction does not change the source.');
       if (strict && (!unique(f.original, f.before) || correctedSentence(f) !== corrected))
         throw new Error(
-          'The target replacement and corrected_sentence disagree. Describe exactly one correction without changing other words.',
+          `The target replacement and corrected_sentence disagree. For ${JSON.stringify(f.before)} -> ${JSON.stringify(f.after)}, corrected_sentence must be ${JSON.stringify(correctedSentence(f))}. Leave other independent mistakes for separate findings.`,
         );
       const delta = minimalCorrection(f.original, corrected);
       if (!delta.before || delta.before.length > 300 || delta.after.length > 300)
@@ -254,6 +255,7 @@ export function parseWritingAnalysis(
       f.before = fragment(delta.before, 'target');
       f.after = fragment(delta.after, 'correction');
       validateWritingTarget(f);
+      if (!f.after.trim()) f.format = 'correction';
     }
     if (strict && f.before !== f.after && f.before.toLowerCase() === f.after.toLowerCase()) {
       f.kind = 'grammar';
@@ -295,7 +297,7 @@ export function parseWritingCard(raw: string, finding: WritingFinding): WritingC
   };
   if (
     !card.question ||
-    (card.kind === 'gap' && !card.answer) ||
+    (card.kind === 'gap' && !card.answer.trim()) ||
     !card.corrected ||
     !card.explanation
   )
@@ -328,6 +330,7 @@ export function parseWritingCard(raw: string, finding: WritingFinding): WritingC
 export function restoreWritingSessions(value: unknown): WritingSession[] {
   if (!Array.isArray(value)) return [];
   const sessions: WritingSession[] = [];
+  const ids = new Set<string>();
   for (const s of value.slice(-4)) {
     try {
       if (
@@ -343,32 +346,44 @@ export function restoreWritingSessions(value: unknown): WritingSession[] {
         !Array.isArray(s.findings)
       )
         continue;
-      const mapped = s.findings.map((f: WritingFinding) => ({
-        kind: f.kind,
-        title: f.title,
-        original_sentence: f.original,
-        target_before: f.before,
-        target_after: f.after,
-        explanation: f.explanation,
-        tip: f.tip,
-        pattern: f.pattern,
-        recommended_format: f.format,
-      }));
+      const mapped = s.findings.slice(0, 10).flatMap((f: WritingFinding) => {
+        try {
+          const item = {
+            kind: f.kind,
+            title: f.title,
+            original_sentence: f.original,
+            target_before: f.before,
+            target_after: f.after,
+            explanation: f.explanation,
+            tip: f.tip,
+            pattern: f.pattern,
+            recommended_format: f.format,
+          };
+          parseWritingAnalysis(
+            JSON.stringify({ summary: '', findings: [item] }),
+            s.capture.selected,
+          );
+          return [item];
+        } catch {
+          return []; // One damaged correction must not discard the entire saved review.
+        }
+      });
       const result = parseWritingAnalysis(
         JSON.stringify({ summary: s.summary ?? '', findings: mapped }),
         s.capture.selected,
       );
-      result.findings.forEach((f, i) => {
+      result.findings.forEach((f) => {
         const old = s.findings.find(
           (old: WritingFinding) =>
-            old.original === f.original &&
+            old?.original === f.original &&
             old.before === f.before &&
             old.after === f.after &&
             old.kind === f.kind &&
             old.pattern === f.pattern,
         );
-        if (!old || typeof old.id !== 'string') return;
-        f.id = old.id;
+        if (!old) return;
+        if (typeof old.id === 'string' && old.id && !ids.has(old.id)) f.id = old.id;
+        ids.add(f.id);
         f.dismissed = old.dismissed === true;
         f.selected = canPractise(f) && old.selected === true;
         if (old.card) {

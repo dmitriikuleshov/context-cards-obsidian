@@ -6,6 +6,7 @@ import {
   parseWritingAnalysis,
   writingPracticeFields,
   writingCorrectionTitle,
+  validateWritingTarget,
   type WritingFinding,
   type WritingSession,
 } from './writing';
@@ -372,6 +373,7 @@ export class WritingView extends ItemView {
     let valid = true;
     try {
       correctedSentence(f);
+      if (canPractise(f)) validateWritingTarget(f);
       if (!f.explanation.trim()) valid = false;
     } catch {
       valid = false;
@@ -508,6 +510,15 @@ export class WritingView extends ItemView {
             format: format.value as WritingFinding['format'],
           };
           if (draft.kind !== 'unclear') correctedSentence(draft);
+          if (canPractise(draft)) {
+            validateWritingTarget(draft);
+            const findings = s.findings.map((item) => (item.id === f.id ? draft : item));
+            const visible = new Set(
+              writingHighlights(s.capture.selected, findings).map((range) => range.id),
+            );
+            if (findings.some((item) => canPractise(item) && !visible.has(item.id)))
+              throw new Error('Corrections overlap. Choose a smaller highlighted target.');
+          }
           if (!draft.explanation) throw new Error('Enter an explanation.');
           if (!draft.title) throw new Error('Enter an issue title.');
           if (draft.format === 'gap' && !draft.after.trim())
