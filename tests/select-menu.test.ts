@@ -77,3 +77,40 @@ it('names dropdowns in Obsidian settings using their setting name', () => {
   dispose = enhanceSelects(root);
   expect(root.querySelector('button')!.getAttribute('aria-label')).toBe('English variant');
 });
+it('enhances only the real setting, preserving Obsidian width-measurement selects', () => {
+  const root = document.createElement('div');
+  root.innerHTML = `<div class="setting-item"><div class="setting-item-name">Context length</div><div class="setting-item-control">
+    <select class="dropdown"><option value="1800">Balanced</option><option value="6000">Long</option></select>
+    <select class="dropdown is-measuring" aria-hidden="true" tabindex="-1"><option>Balanced</option></select>
+  </div></div>`;
+  document.body.append(root);
+  const [select, measure] = root.querySelectorAll('select');
+  const measurement = measure!.outerHTML,
+    change = vi.fn();
+  select!.addEventListener('change', change);
+  dispose = enhanceSelects(root);
+  expect(root.querySelectorAll('.cc-select-button')).toHaveLength(1);
+  expect(measure!.outerHTML).toBe(measurement);
+  const button = root.querySelector<HTMLButtonElement>('.cc-select-button')!;
+  expect(button.getAttribute('aria-label')).toBe('Context length');
+  expect(button.textContent).toBe('Balanced');
+  button.click();
+  expect(document.querySelectorAll('[role=menuitemcheckbox]')).toHaveLength(2);
+  (document.querySelectorAll('[role=menuitemcheckbox]')[1] as HTMLElement).click();
+  expect(select!.value).toBe('6000');
+  expect(button.textContent).toBe('Long');
+  expect(change).toHaveBeenCalledOnce();
+  expect(measure!.outerHTML).toBe(measurement);
+});
+it('does not duplicate a control or its change callback when enhancement is repeated', () => {
+  const { root, select, button, change } = setup();
+  const second = enhanceSelects(root);
+  const third = enhanceSelects(root);
+  expect(root.querySelectorAll('.cc-select-button')).toHaveLength(1);
+  button.click();
+  (document.querySelectorAll('[role=menuitemcheckbox]')[1] as HTMLElement).click();
+  expect(select.value).toBe('gap');
+  expect(change).toHaveBeenCalledOnce();
+  second();
+  third();
+});

@@ -1,4 +1,81 @@
 import { test, expect } from '@playwright/test';
+for (const width of [390, 1000]) {
+  test(`settings show one control per DropdownComponent, excluding measurement selects (${width}px)`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/');
+    await page.addStyleTag({
+      content: `
+      .cc-settings-fixture{padding:16px}
+      .cc-settings-fixture .setting-item{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:12px;border:1px solid var(--background-modifier-border);border-radius:10px}
+      .cc-settings-fixture .setting-item-name{flex:1;min-width:0}
+      .cc-settings-fixture .setting-item-control{display:flex;min-width:0;max-width:65%}
+      .cc-settings-fixture select.is-measuring{position:absolute;visibility:hidden;pointer-events:none}
+    `,
+    });
+    await page.evaluate(async () => {
+      const { view, enhanceSelects } = (window as any).contextCardsPreview;
+      await view.onClose();
+      const root = document.createElement('section');
+      root.className = 'cc-settings-fixture';
+      document.querySelector('#panel')!.replaceChildren(root);
+      const state = { changes: 0, measureChanges: 0 };
+      (window as any).dropdownFixtureState = state;
+      for (const [name, choices] of [
+        ['Context length', ['Balanced', 'Long']],
+        ['IPA', ['American', 'British', 'Off']],
+        ['Explanation · sentences', ['2', '3']],
+      ] as Array<[string, string[]]>) {
+        const row = document.createElement('div');
+        row.className = 'setting-item';
+        const label = document.createElement('div');
+        label.className = 'setting-item-name';
+        label.textContent = name;
+        const control = document.createElement('div');
+        control.className = 'setting-item-control';
+        const select = document.createElement('select');
+        select.className = 'dropdown';
+        for (const choice of choices) select.add(new Option(choice, choice));
+        const measure = document.createElement('select');
+        measure.className = 'dropdown is-measuring';
+        measure.setAttribute('aria-hidden', 'true');
+        measure.tabIndex = -1;
+        measure.add(new Option(choices[0], choices[0]));
+        select.addEventListener('change', () => {
+          state.changes++;
+          measure.options[0]!.textContent = select.selectedOptions[0]!.textContent;
+        });
+        measure.addEventListener('change', () => state.measureChanges++);
+        control.append(select, measure);
+        row.append(label, control);
+        root.append(row);
+      }
+      enhanceSelects(root);
+      enhanceSelects(root);
+    });
+    const rows = page.locator('.cc-settings-fixture .setting-item');
+    await expect(rows).toHaveCount(3);
+    for (const row of await rows.all()) {
+      await expect(row.locator('button.cc-select-button')).toHaveCount(1);
+      await expect(row.locator('select.is-measuring')).toHaveCount(1);
+      await expect(row.locator('select:visible')).toHaveCount(0);
+    }
+    const context = page.getByRole('button', { name: 'Context length', exact: true });
+    await context.click();
+    await expect(page.getByRole('menuitemcheckbox')).toHaveCount(2);
+    await page.getByRole('menuitemcheckbox', { name: 'Long', exact: true }).click();
+    await expect(context).toHaveText('Long');
+    expect(await page.evaluate(() => (window as any).dropdownFixtureState)).toEqual({
+      changes: 1,
+      measureChanges: 0,
+    });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+    await page.screenshot({ path: `.test-artifacts/settings-single-selects-${width}.png` });
+  });
+}
 for (const dark of [false, true]) {
   test(`themed dropdowns fit narrow panes and support the keyboard (${dark ? 'dark' : 'light'})`, async ({
     page,

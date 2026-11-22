@@ -4,7 +4,11 @@ import { Menu } from 'obsidian';
 export function enhanceSelects(root: HTMLElement): () => void {
   const cleanups: Array<() => void> = [];
   let active: Menu | undefined;
-  for (const select of Array.from(root.querySelectorAll<HTMLSelectElement>('select'))) {
+  // Obsidian DropdownComponent also creates an aria-hidden .is-measuring select
+  // for width calculation; leave that helper untouched rather than adding a button.
+  for (const select of Array.from(
+    root.querySelectorAll<HTMLSelectElement>('select:not(.is-measuring):not(.cc-native-select)'),
+  )) {
     const doc = select.ownerDocument;
     const button = doc.createElement('button');
     button.type = 'button';
