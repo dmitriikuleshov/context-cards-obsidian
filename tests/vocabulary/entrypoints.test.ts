@@ -134,7 +134,7 @@ describe('vocabulary commands and floating selection toolbar', () => {
     expect(f.start).toHaveBeenCalledOnce();
     expect(f.create).toHaveBeenCalledOnce();
     items.length = 0;
-    f.read.mockReturnValue(capture({ selected: 'x'.repeat(241) }));
+    f.read.mockReturnValue(capture({ selected: 'x'.repeat(6001) }));
     f.events.get('editor-menu')!(menu, null, {});
     expect(items).toHaveLength(1);
     items.length = 0;
@@ -193,12 +193,12 @@ describe('vocabulary commands and floating selection toolbar', () => {
       f.update();
       expect(f.floating.hidden).toBe(true);
     });
-  it('shows only the writing button for a long text selection', async () => {
+  it('offers both modes for a long text selection so vocabulary can refine it', async () => {
     const f = await setup();
     f.read.mockReturnValue(capture({ selected: 'x'.repeat(241) }));
     f.update();
     expect(f.floating.hidden).toBe(false);
-    expect(f.buttons[0]!.hidden).toBe(true);
+    expect(f.buttons[0]!.hidden).toBe(false);
     expect(f.buttons[1]!.hidden).toBe(false);
   });
   it.each(['cc-panel', 'cc-floating', 'modal-container'])(

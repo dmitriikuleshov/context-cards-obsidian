@@ -6,6 +6,53 @@ export class ItemView {
   contentEl = document.createElement('div');
   constructor(public leaf: unknown) {}
 }
+export class Modal {
+  contentEl = document.createElement('div');
+  modalEl = document.createElement('div');
+  containerEl = document.createElement('div');
+  private keydown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') this.close();
+  };
+  constructor(_app: unknown) {
+    this.modalEl.append(this.contentEl);
+    this.containerEl.append(this.modalEl);
+  }
+  onOpen() {}
+  onClose() {}
+  open() {
+    this.containerEl.className = 'modal-container';
+    this.modalEl.className = 'modal';
+    this.modalEl.setAttribute('role', 'dialog');
+    this.modalEl.setAttribute('aria-modal', 'true');
+    Object.assign(this.containerEl.style, {
+      position: 'fixed',
+      inset: '0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px',
+      background: 'rgba(0,0,0,.45)',
+      zIndex: '1000',
+    });
+    Object.assign(this.modalEl.style, {
+      width: '100%',
+      maxWidth: '560px',
+      maxHeight: 'calc(100vh - 40px)',
+      overflowY: 'auto',
+      padding: '24px',
+      borderRadius: '12px',
+      background: 'var(--background-primary,#fff)',
+    });
+    document.body.append(this.containerEl);
+    document.addEventListener('keydown', this.keydown);
+    this.onOpen();
+  }
+  close() {
+    document.removeEventListener('keydown', this.keydown);
+    this.containerEl.remove();
+    this.onClose();
+  }
+}
 export class Plugin {
   app: any;
   manifest = { id: 'context-cards' };

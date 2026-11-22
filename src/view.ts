@@ -6,6 +6,7 @@ import { visibleDraft } from './fields';
 import { CARD_CSS, examplesHtml } from './templates';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
+import { needsTargetValidation } from './target';
 
 export const VIEW_TYPE = 'context-cards-review';
 export class ReviewView extends ItemView {
@@ -616,9 +617,23 @@ export class ReviewView extends ItemView {
     if (this.warning) {
       this.warning.empty();
       if (draft.error) this.warning.createDiv({ text: draft.error });
+      if (needsTargetValidation(draft)) {
+        if (!draft.error)
+          this.warning.createDiv({
+            text: 'Check what this card should teach. Choose one word or expression, or generate again to verify the whole phrase.',
+          });
+        this.button(
+          this.warning,
+          'Choose word or phrase',
+          () => void this.plugin.refineTarget(draft),
+        ).disabled = draft.phase !== 'editing';
+      }
       if (draft.status !== 'ready' && draft.question)
         this.warning.createDiv({ text: draft.question });
-      this.warning.toggleClass('is-visible', !!draft.error || draft.status !== 'ready');
+      this.warning.toggleClass(
+        'is-visible',
+        !!draft.error || draft.status !== 'ready' || needsTargetValidation(draft),
+      );
     }
     if (!this.footer) return;
     if (draft.phase === 'saved' || this.tab === 'preview') {

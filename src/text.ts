@@ -1,4 +1,5 @@
 import type { Capture, Draft, Settings } from './types';
+import { needsTargetValidation } from './target';
 import { cardFields, emptyContent, EXAMPLE_COUNT } from './types';
 
 export function escapeHtml(value: string): string {
@@ -178,6 +179,8 @@ export function contextHtml(draft: Draft, blank = false): string {
 export function issues(draft: Draft, settings?: Partial<Settings>): string[] {
   const f = cardFields(settings);
   const result: string[] = [];
+  if (needsTargetValidation(draft))
+    result.push('Choose the word or expression to learn before adding this card.');
   if (!draft.expression.trim()) result.push('Enter a word or expression.');
   if (f.meaningSentences && !draft.meaning.trim())
     result.push('Add a short meaning for the hidden definition.');

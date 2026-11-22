@@ -43,6 +43,7 @@ describe('generation lifecycle regressions', () => {
           rawContent({
             lemma: stage === 'pronunciation' ? 'record' : 'unlistedwordxyz',
             examples: [],
+            target_source_form: 'word',
           }),
         ) as any;
       });
@@ -75,7 +76,9 @@ describe('generation lifecycle regressions', () => {
       const props = (body as any).format.properties;
       now += 1000;
       if (props.lemma)
-        return response(rawContent({ lemma: 'unlistedwordxyz', examples: [] })) as any;
+        return response(
+          rawContent({ lemma: 'unlistedwordxyz', examples: [], target_source_form: 'word' }),
+        ) as any;
       if (props.general_meaning) return response({ general_meaning: ['First.', 'Second.'] }) as any;
       if (props.base_word)
         return response({ base_word: 'base', base_meaning: 'Base meaning.' }) as any;

@@ -175,6 +175,9 @@ export function restoreData(value: unknown): StoredData & { skipped: number } {
       };
       if (finite(item.noteId) && item.noteId > 0) d.noteId = item.noteId;
       if (finite(item.seconds)) d.seconds = item.seconds;
+      if (item.targetNeedsReview === true) d.targetNeedsReview = true;
+      if (typeof item.targetValidated === 'string' && item.targetValidated === d.answer)
+        d.targetValidated = item.targetValidated;
       if (record(item.pendingContent)) {
         d.pendingContent = content(item.pendingContent);
         if (

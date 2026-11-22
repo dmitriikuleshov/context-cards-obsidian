@@ -149,6 +149,8 @@ export interface Draft extends Content {
   revision: number;
   pendingContent?: Content;
   pendingSource?: { context: string; answer: string };
+  targetNeedsReview?: boolean;
+  targetValidated?: string;
 }
 export interface StoredData {
   settings: Settings;

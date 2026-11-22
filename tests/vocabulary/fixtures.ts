@@ -46,6 +46,8 @@ export function rawContent(overrides: Record<string, unknown> = {}) {
   return {
     status: 'ready',
     lemma: c.expression,
+    target_is_single_item: true,
+    target_source_form: 'brushed off',
     part_of_speech: c.partOfSpeech,
     american_ipa: c.americanIpa,
     meaning: c.meaning,

@@ -27,10 +27,12 @@ describe('model response validation', () => {
   const formationResponse = {
     message: { content: JSON.stringify({ base_word: '', base_meaning: '' }) },
   };
-  const response = (lemma: string) => ({
+  const response = (lemma: string, sourceForm = lemma) => ({
     message: {
       content: JSON.stringify({
         status: 'ready',
+        target_is_single_item: true,
+        target_source_form: sourceForm,
         lemma,
         part_of_speech: 'verb',
         american_ipa: '/wrong/',
@@ -73,7 +75,7 @@ describe('model response validation', () => {
   it('constrains pronunciation selection to dictionary candidates for the displayed lemma', async () => {
     const request = vi
       .spyOn(http, 'jsonRequest')
-      .mockResolvedValueOnce(response('seek to'))
+      .mockResolvedValueOnce(response('seek to', 'sought to'))
       .mockResolvedValueOnce({ message: { content: '{"american_ipa":"/siːk tuː/"}' } })
       .mockResolvedValueOnce(generalResponse)
       .mockResolvedValueOnce(formationResponse)

@@ -1,7 +1,8 @@
 import { ReviewView } from '../../src/view';
 import { mountWritingPanel } from './writing-harness';
 import { createDraft } from '../../src/text';
-import { DEFAULTS, type Draft } from '../../src/types';
+import { DEFAULTS, emptyContent, type Draft } from '../../src/types';
+import { TargetPicker } from '../../src/target-picker';
 import type ContextCardsPlugin from '../../src/main';
 import { installDomHelpers } from '../dom';
 installDomHelpers();
@@ -49,6 +50,22 @@ const host = {
   openAnki: () => {},
   checkConnections: () => {},
   expandContext: () => {},
+  refineTarget: async (d: Draft) => {
+    new TargetPicker(
+      {} as any,
+      { ...d.capture, text: d.context, selected: d.context, start: 0, end: d.context.length },
+      (choice) => {
+        if (!choice) return;
+        Object.assign(d, emptyContent(), {
+          answer: choice.selected,
+          answerStart: choice.start,
+          expression: choice.selected,
+        });
+        delete d.targetNeedsReview;
+        view.render();
+      },
+    ).open();
+  },
   generateWordFormation: async (d: Draft) => {
     d.wordFormation = '';
     view.render();
@@ -95,6 +112,19 @@ const host = {
 };
 const view = new ReviewView({} as any, host as unknown as ContextCardsPlugin);
 view.show(draft);
-if (new URLSearchParams(location.search).has('writing')) mountWritingPanel(document.querySelector('#panel')!);
+if (new URLSearchParams(location.search).has('writing'))
+  mountWritingPanel(document.querySelector('#panel')!);
 else document.querySelector('#panel')!.append(view.contentEl);
 Object.assign(window, { contextCardsPreview: { view, draft, host } });
+Object.assign(window, {
+  openTargetPicker: (selected: string) => {
+    const capture = { ...draft.capture, text: selected, selected, start: 0, end: selected.length };
+    new TargetPicker({} as any, capture, (choice) => {
+      (window as any).contextCardsPreview.targetChoice = choice;
+    }).open();
+  },
+});
+if (new URLSearchParams(location.search).has('target-picker'))
+  (window as any).openTargetPicker(
+    'This is my hand-written text and I want AI to check it for mistakes. I started to learn english a few years ago. This is good',
+  );

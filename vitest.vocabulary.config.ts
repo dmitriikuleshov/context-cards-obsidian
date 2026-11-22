@@ -17,6 +17,7 @@ export default defineConfig({
         'src/main.ts',
         'src/ollama.ts',
         'src/text.ts',
+        'src/target.ts',
         'src/storage.ts',
         'src/fields.ts',
         'src/templates.ts',
