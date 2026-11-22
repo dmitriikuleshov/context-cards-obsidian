@@ -1,4 +1,52 @@
 import { test, expect } from '@playwright/test';
+for (const height of [520, 720, 900]) {
+  test(`writing footer stays at the pane bottom with short and long content at ${height}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height });
+    await page.goto('/?writing=1');
+    // Simulate a pane shorter than the window, as in Obsidian's split layout.
+    await page.locator('#panel').evaluate((el, height) => {
+      (el as HTMLElement).style.height = `${height - 60}px`;
+    }, height);
+    const footer = page.locator('.cc-footer'),
+      body = page.locator('.cc-writing-workflow > .cc-panel-body');
+    const pinned = async () => {
+      const panelRect = (await page.locator('#panel').boundingBox())!,
+        footerRect = (await footer.boundingBox())!;
+      expect(
+        Math.abs(footerRect.y + footerRect.height - panelRect.y - panelRect.height),
+      ).toBeLessThan(1);
+      const bodyRect = (await body.boundingBox())!;
+      expect(bodyRect.y + bodyRect.height).toBeLessThanOrEqual(footerRect.y + 1);
+    };
+    await page.evaluate(() => {
+      const p = (window as any).writingPreview;
+      p.session.findings = [];
+      p.view.render();
+    });
+    await pinned();
+    await page.locator('[data-writing-section=options] > summary').click();
+    await pinned();
+    await page.locator('[data-writing-section=options] > summary').click();
+    await page.evaluate(() => {
+      const p = (window as any).writingPreview;
+      p.session.capture.selected = 'A long passage to review. '.repeat(200);
+      p.view.render();
+    });
+    await pinned();
+    await body.evaluate((el) => (el.scrollTop = el.scrollHeight));
+    expect(await body.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+    await pinned();
+    const scroll = await body.evaluate((el) => el.scrollTop);
+    await page.evaluate(() => (window as any).writingPreview.view.render());
+    expect(await body.evaluate((el) => el.scrollTop)).toBe(scroll);
+    await page.locator('[data-writing-section=options] > summary').click();
+    await pinned();
+    if (height === 720)
+      await page.screenshot({ path: '.test-artifacts/writing-footer-pinned.png' });
+  });
+}
 test('background redraw preserves unsaved edits, focus and caret', async ({ page }) => {
   await page.goto('/?writing=1');
   await page.getByRole('button', { name: 'Edit', exact: true }).click();

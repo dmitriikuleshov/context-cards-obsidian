@@ -22,45 +22,11 @@ export class WritingView extends ItemView {
   private attempt = 0;
   private renderKey = '';
   private editorValues = new Map<string, string>();
-  private footerObserver?: ResizeObserver;
-  private paddedOwner?: HTMLElement;
-  private previousPadding = '';
-  private releaseFooter() {
-    this.footerObserver?.disconnect();
-    if (this.paddedOwner) {
-      this.paddedOwner.style.scrollPaddingBottom = this.previousPadding;
-      this.paddedOwner = undefined;
-    }
-  }
   async onClose() {
-    this.releaseFooter();
     this.editorValues.clear();
   }
-  private watchFooter(footer: HTMLElement) {
-    const update = () => {
-      if (!footer.isConnected) return;
-      const owner = this.scrollOwner();
-      if (owner !== this.paddedOwner) {
-        if (this.paddedOwner) this.paddedOwner.style.scrollPaddingBottom = this.previousPadding;
-        this.paddedOwner = owner;
-        this.previousPadding = owner.style.scrollPaddingBottom;
-      }
-      owner.style.scrollPaddingBottom =
-        getComputedStyle(footer).position === 'sticky'
-          ? `${footer.getBoundingClientRect().height + 12}px`
-          : this.previousPadding;
-    };
-    this.footerObserver = new ResizeObserver(update);
-    this.footerObserver.observe(footer);
-    update();
-  }
   private scrollOwner(): HTMLElement {
-    let node: HTMLElement | null = this.contentEl;
-    while (node) {
-      if (/auto|scroll/.test(getComputedStyle(node).overflowY)) return node;
-      node = node.parentElement;
-    }
-    return (this.contentEl.ownerDocument.scrollingElement as HTMLElement) ?? this.contentEl;
+    return this.contentEl.querySelector<HTMLElement>('.cc-panel-body') ?? this.contentEl;
   }
   private openEditor(f: WritingFinding) {
     this.editorValues.clear();
@@ -185,7 +151,6 @@ export class WritingView extends ItemView {
     this.render();
   }
   render() {
-    this.releaseFooter();
     const root = this.contentEl,
       owner = this.scrollOwner(),
       scroll = owner.scrollTop;
@@ -303,11 +268,9 @@ export class WritingView extends ItemView {
       } else if (this.screen === 'preview') this.renderPreviews(body, s);
       else this.renderReview(body, s);
       this.renderFooter(root, s);
-      const footer = root.querySelector<HTMLElement>('.cc-footer');
-      if (footer) this.watchFooter(footer);
     }
     const key = `${this.current}/${this.screen}/${this.editing ?? ''}`;
-    owner.scrollTop = this.renderKey === key ? scroll : 0;
+    this.scrollOwner().scrollTop = this.renderKey === key ? scroll : 0;
     if (this.renderKey === key && focusKey) {
       const replacement = Array.from(
         root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-writing-field]'),
