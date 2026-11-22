@@ -1,4 +1,4 @@
-import { endpoint, jsonRequest } from './http';
+import { chatRequest } from './thinking';
 import { writingOptions, type Settings } from './types';
 import {
   WRITING_LIMIT,
@@ -35,8 +35,8 @@ export class WritingModel {
         throw new Error(
           'Writing generation timed out. Increase Request timeout or select a shorter paragraph.',
         );
-      const result = await jsonRequest<{ message?: { content?: string }; done_reason?: string }>(
-        `${endpoint(this.settings.ollamaUrl)}/api/chat`,
+      const result = await chatRequest<{ message?: { content?: string }; done_reason?: string }>(
+        this.settings,
         {
           model: this.settings.model.trim(),
           messages: [
@@ -57,7 +57,6 @@ export class WritingModel {
           ],
           format,
           stream: false,
-          think: false,
           keep_alive: '10m',
           options: { num_ctx: 6144, num_predict: 3200, temperature: 0 },
         },

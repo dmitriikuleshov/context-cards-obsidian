@@ -25,6 +25,8 @@ export default defineConfig({
         'src/capture.ts',
         'src/anki.ts',
         'src/http.ts',
+        'src/thinking.ts',
+        'src/thinking-options.ts',
       ],
       reportsDirectory: 'coverage/vocabulary',
       reporter: ['text', 'json', 'json-summary', 'html'],

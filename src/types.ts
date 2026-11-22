@@ -1,4 +1,5 @@
 import type { WritingSession } from './writing';
+import type { ThinkingChoice } from './thinking-options';
 export interface CardFields {
   grammar: boolean;
   ipa: 'american' | 'british' | 'off';
@@ -58,6 +59,7 @@ export interface Settings {
   writingNoteType: string;
   ollamaUrl: string;
   model: string;
+  thinking: ThinkingChoice;
   temperature: number;
   contextSize: number;
   timeoutSeconds: number;
@@ -80,6 +82,7 @@ export const DEFAULTS: Settings = {
   writingNoteType: 'Context Cards Writing',
   ollamaUrl: 'http://127.0.0.1:11434',
   model: 'qwen3.5:9b-q4_K_M',
+  thinking: 'off',
   temperature: 0.2,
   contextSize: 1800,
   timeoutSeconds: 60,

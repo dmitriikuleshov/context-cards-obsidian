@@ -1,4 +1,4 @@
-import { PluginSettingTab, Setting, Notice, type App } from 'obsidian';
+import { PluginSettingTab, Setting, Notice, type App, type DropdownComponent } from 'obsidian';
 import type ContextCardsPlugin from './main';
 import {
   DEFAULTS,
@@ -12,9 +12,12 @@ import { Ollama } from './ollama';
 import { Anki } from './anki';
 import { endpoint } from './http';
 import { enhanceSelects } from './select-menu';
+import { ThinkingControl } from './thinking-control';
+import { readThinkingSupport } from './thinking';
 
 export class ContextSettings extends PluginSettingTab {
   private dropdownCleanup?: () => void;
+  private thinkingControl?: ThinkingControl;
   constructor(
     app: App,
     private plugin: ContextCardsPlugin,
@@ -23,6 +26,7 @@ export class ContextSettings extends PluginSettingTab {
   }
   display() {
     this.dropdownCleanup?.();
+    this.thinkingControl?.destroy();
     const root = this.containerEl;
     root.empty();
     root.createEl('h2', { text: 'Context Cards' });
@@ -30,6 +34,8 @@ export class ContextSettings extends PluginSettingTab {
       text: 'Select a word to create vocabulary cards, or select your own writing to review mistakes and create practice. Both modes use your configured Ollama server.',
     });
     const settings = this.plugin.settings;
+    let temperatureControl: DropdownComponent | undefined;
+    let thinkingIsActive = settings.thinking !== 'off';
     const text = (
       name: string,
       description: string,
@@ -46,6 +52,7 @@ export class ContextSettings extends PluginSettingTab {
           input.onChange((value) => {
             Object.assign(settings, { [key]: value });
             this.plugin.persist();
+            if (key === 'model' || key === 'ollamaUrl') this.thinkingControl?.schedule();
           });
         });
     };
@@ -62,6 +69,19 @@ export class ContextSettings extends PluginSettingTab {
       'model',
       DEFAULTS.model,
     );
+    const thinking = new Setting(root).setName('Thinking');
+    this.thinkingControl = new ThinkingControl(
+      thinking.controlEl,
+      settings,
+      () => this.plugin.persist(),
+      (description) => thinking.setDesc(description),
+      (snapshot, signal, force) => readThinkingSupport(snapshot, signal, force),
+      (active) => {
+        thinkingIsActive = active;
+        temperatureControl?.setDisabled(active);
+      },
+    );
+    void this.thinkingControl.load();
     new Setting(root)
       .setName('Check Ollama')
       .setDesc(
@@ -73,6 +93,7 @@ export class ContextSettings extends PluginSettingTab {
           try {
             endpoint(settings.ollamaUrl);
             const models = await new Ollama(settings).models();
+            await this.thinkingControl?.load(true);
             result.setText(
               models.length
                 ? `Installed models: ${models.join(', ')}`
@@ -108,17 +129,19 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root)
       .setName('Generation temperature')
       .setDesc(
-        'Controls variation in generated wording. Start with 0.2 for consistent drafts. Higher values may produce more varied wording but less reliable definitions and examples; they do not make the model more knowledgeable.',
+        'Controls variation in drafts when Thinking is Off. Start with 0.2. While Thinking is active, the model’s own sampling settings are used and this control is unavailable.',
       )
-      .addDropdown((dropdown) =>
+      .addDropdown((dropdown) => {
+        temperatureControl = dropdown;
         dropdown
           .addOptions({ '0.1': '0.1', '0.2': '0.2 · recommended', '0.4': '0.4', '0.7': '0.7' })
           .setValue(String(settings.temperature))
+          .setDisabled(thinkingIsActive)
           .onChange((value) => {
             settings.temperature = Number(value);
             this.plugin.persist();
-          }),
-      );
+          });
+      });
     new Setting(root)
       .setName('Request timeout')
       .setDesc(
@@ -422,6 +445,7 @@ export class ContextSettings extends PluginSettingTab {
   }
   hide() {
     this.dropdownCleanup?.();
+    this.thinkingControl?.destroy();
     super.hide();
   }
 }

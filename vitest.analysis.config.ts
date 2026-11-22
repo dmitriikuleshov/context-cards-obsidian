@@ -5,7 +5,12 @@ export default defineConfig({
   ...base,
   test: {
     ...base.test,
-    include: ['tests/writing*.test.ts', 'tests/http.test.ts', 'tests/analysis/**/*.test.ts'],
+    include: [
+      'tests/writing*.test.ts',
+      'tests/http.test.ts',
+      'tests/thinking.test.ts',
+      'tests/analysis/**/*.test.ts',
+    ],
     maxWorkers: 2,
     coverage: {
       provider: 'v8',
@@ -15,6 +20,8 @@ export default defineConfig({
         'src/writing-controller.ts',
         'src/writing-workflow.ts',
         'src/http.ts',
+        'src/thinking.ts',
+        'src/thinking-options.ts',
       ],
       reportsDirectory: 'coverage/analysis',
       reporter: ['text', 'json', 'json-summary', 'html'],
