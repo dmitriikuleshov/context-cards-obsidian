@@ -6,7 +6,7 @@ import { cloudHTTP } from '../../src/chatgpt-network';
 
 interface Script {
   status?: number;
-  type?: string;
+  type?: string | null;
   chunks?: (string | Buffer)[];
   error?: Error;
   responseError?: boolean;
@@ -36,7 +36,8 @@ function serve(script: Script = {}) {
         }
         const res: any = new EventEmitter();
         res.statusCode = script.status ?? 200;
-        res.headers = { 'content-type': script.type ?? 'application/json' };
+        res.headers =
+          script.type === null ? {} : { 'content-type': script.type ?? 'application/json' };
         callback(res);
         if (script.responseError) {
           res.emit('error', new Error('private server data'));
@@ -102,6 +103,76 @@ describe('authenticated HTTPS transport', () => {
     expect(await cloudHTTP.stream('https://api.openai.com/v1/responses', {})).toBe('answer');
     serve({
       type: 'text/event-stream',
+      chunks: ['data: {"type":"response.output_text.delta","delta":"partial"}\n\n'],
+    });
+    await expect(cloudHTTP.stream('https://api.openai.com/v1/responses', {})).rejects.toThrow(
+      /before.*completed/,
+    );
+  });
+  it.each([null, 'application/json', 'text/plain', 'Text/Event-Stream; charset=utf-8'])(
+    'reads successful SSE from its body when Content-Type is %s',
+    async (type) => {
+      serve({
+        type,
+        chunks: [
+          'event: response.output_text.delta\ndata: {"type":"response.output_text.delta","delta":"consciousness"}\n\n',
+          'event: response.completed\ndata: {"type":"response.completed"}\n\n',
+        ],
+      });
+      expect(await cloudHTTP.stream('https://api.openai.com/v1/responses', {})).toBe(
+        'consciousness',
+      );
+    },
+  );
+  it.each(['data:', 'event: response.created\n', ': keepalive\n\n', 'id: 1\n', 'retry: 1000\n'])(
+    'detects SSE across byte boundaries, starting with %s',
+    async (prefix) => {
+      const body = Buffer.from(
+        '\uFEFF\r\n' +
+          prefix +
+          (prefix === 'data:' ? ' {"type":"response.created"}\n\n' : '') +
+          'data: {"type":"response.output_text.delta","delta":"café"}\n\n' +
+          'data: {"type":"response.completed"}\n\n',
+      );
+      serve({ type: null, chunks: Array.from(body, (byte) => Buffer.from([byte])) });
+      expect(await cloudHTTP.stream('https://api.openai.com/v1/responses', {})).toBe('café');
+    },
+  );
+  it('keeps streaming responses above the JSON body limit bounded by the SSE limit', async () => {
+    serve({
+      type: null,
+      chunks: [
+        ': ' + 'x'.repeat(1_000_000) + '\n\n',
+        'data: {"type":"response.output_text.delta","delta":"answer"}\n\n',
+        'data: {"type":"response.completed"}\n\n',
+      ],
+    });
+    expect(await cloudHTTP.stream('https://api.openai.com/v1/responses', {})).toBe('answer');
+    serve({ type: null, chunks: [': ' + 'x'.repeat(8_000_000)] });
+    await expect(cloudHTTP.stream('https://api.openai.com/v1/responses', {})).rejects.toThrow(
+      /too large/,
+    );
+  });
+  it.each(['', 'da', '\n', '\n'.repeat(4097), '<html>PRIVATE</html>', '{"private":"body"}'])(
+    'rejects empty, incomplete or non-SSE bodies safely (%j)',
+    async (body) => {
+      serve({ type: 'text/event-stream', chunks: [body] });
+      await expect(cloudHTTP.stream('https://api.openai.com/v1/responses', {})).rejects.toThrow(
+        'ChatGPT did not return the required response stream. Try again.',
+      );
+    },
+  );
+  it('does not mistake JSON error responses for successful streams', async () => {
+    serve({
+      status: 429,
+      type: null,
+      chunks: ['{"error":{"code":"subscription_sharing_usage_limit_exceeded"}}'],
+    });
+    await expect(cloudHTTP.stream('https://api.openai.com/v1/responses', {})).rejects.toThrow(
+      /plan usage limit reached/,
+    );
+    serve({
+      type: null,
       chunks: ['data: {"type":"response.output_text.delta","delta":"partial"}\n\n'],
     });
     await expect(cloudHTTP.stream('https://api.openai.com/v1/responses', {})).rejects.toThrow(

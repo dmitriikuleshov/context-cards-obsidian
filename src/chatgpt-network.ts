@@ -174,14 +174,42 @@ function request(url: string, options: CloudOptions = {}, streaming = false): Pr
       (res) => {
         const stream = new ResponsesStream();
         const chunks: Buffer[] = [];
+        let streamPrefix = Buffer.alloc(0);
+        let isSSE = false;
         let size = 0;
         const status = res.statusCode ?? 500;
         const ok = status >= 200 && status < 300;
-        const isSSE = String(res.headers['content-type']).includes('text/event-stream');
         res.on('data', (chunk: Buffer) => {
           try {
-            if (ok && streaming && isSSE) stream.feed(chunk);
-            else {
+            if (ok && streaming) {
+              // Some ChatGPT responses omit Content-Type, or label SSE as JSON.
+              // Inspect a bounded prefix; never parse an entire event stream as JSON.
+              if (!isSSE) {
+                const prefix = Buffer.concat([
+                  streamPrefix,
+                  chunk.subarray(0, 4096 - streamPrefix.length),
+                ]);
+                const text = new TextDecoder().decode(prefix, { stream: true });
+                const firstLine = text.replace(/^[\r\n]*/, '');
+                const fields = ['data:', 'event:', 'id:', 'retry:', ':'];
+                if (fields.some((field) => firstLine.startsWith(field))) {
+                  isSSE = true;
+                  if (streamPrefix.length) stream.feed(streamPrefix);
+                  streamPrefix = Buffer.alloc(0);
+                } else if (
+                  prefix.length === 4096 ||
+                  (firstLine && !fields.some((field) => field.startsWith(firstLine)))
+                ) {
+                  throw new Error(
+                    'ChatGPT did not return the required response stream. Try again.',
+                  );
+                } else {
+                  streamPrefix = prefix;
+                  return;
+                }
+              }
+              stream.feed(chunk);
+            } else {
               size += chunk.length;
               if (size > 1_000_000) throw new Error('ChatGPT returned an oversized response.');
               chunks.push(chunk);
@@ -196,6 +224,12 @@ function request(url: string, options: CloudOptions = {}, streaming = false): Pr
         );
         res.on('end', () => {
           try {
+            if (ok && streaming) {
+              if (!isSSE)
+                throw new Error('ChatGPT did not return the required response stream. Try again.');
+              resolve(stream.finish());
+              return;
+            }
             const raw = Buffer.concat(chunks).toString('utf8');
             let data: any;
             if (raw) {
@@ -206,9 +240,7 @@ function request(url: string, options: CloudOptions = {}, streaming = false): Pr
               }
             }
             if (!ok) throw cloudError(status, data);
-            if (streaming && !isSSE)
-              throw new Error('ChatGPT did not return the required response stream.');
-            resolve(streaming ? stream.finish() : (data ?? {}));
+            resolve(data ?? {});
           } catch (error) {
             reject(error);
           }
