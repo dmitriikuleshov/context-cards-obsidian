@@ -23,6 +23,7 @@ Do not use the automatic Source code ZIP: it has no compiled plugin.
 
 OLLAMA
 
+Choose Settings > Context Cards > AI connection > Provider > Ollama.
 Install and open Ollama: https://ollama.com/download/windows
 In a new PowerShell window, download the recommended starting model:
   ollama pull gemma4:12b-it-qat
@@ -46,6 +47,18 @@ In Settings > Context Cards > Local model:
 The model list loads automatically. Use Refresh beside Model after installing
 or removing a model. If Ollama is unavailable, your saved choice is kept.
 Keep Ollama running while generating content.
+
+OPTIONAL: CHATGPT SUBSCRIPTION (PREVIEW)
+
+Requires Obsidian 1.11.4+ with Secret storage and an eligible ChatGPT account.
+Choose AI connection > Provider > ChatGPT > Continue with ChatGPT.
+Sign in in your browser and grant permission to use your plan, then return
+to Obsidian and choose a ChatGPT model. The browser can be closed afterward.
+Refresh models reloads account-specific choices. Manage usage opens your limits.
+This uses your shared ChatGPT allowance, with no API-key billing fallback.
+Selected text and context are sent to OpenAI. Account eligibility still applies.
+Credentials use Obsidian Secret storage; sign-in refreshes automatically.
+Use Sign out to disconnect, or Provider > Ollama to return to local generation.
 
 ANKI
 

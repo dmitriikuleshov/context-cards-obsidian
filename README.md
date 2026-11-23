@@ -4,7 +4,7 @@
 
 ![Context Cards in Obsidian: reading The Call of Cthulhu alongside an editable vocabulary draft](docs/images/context-cards-obsidian.png)
 
-Turn your reading and writing into useful Anki practice, right inside Obsidian. Select a word to understand it, or select your own writing to find mistakes. Your local AI prepares the material; you review it before adding anything to Anki.
+Turn your reading and writing into useful Anki practice, right inside Obsidian. Select a word to understand it, or select your own writing to find mistakes. Your chosen model prepares the material; you review it before adding anything to Anki.
 
 **[Get started — setup guide](docs/SETUP.md)** · **[Download](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest)** · **[Interface walkthrough](docs/SETUP.md#4-explore-the-interface)**
 
@@ -24,7 +24,7 @@ Collecting vocabulary should not mean copying passages between apps, writing eve
 Context Cards brings that work into Obsidian:
 
 1. **Select a word or expression** in your Markdown reading.
-2. **Click Explain word / phrase.** A local model prepares an English draft from the surrounding passage.
+2. **Click Explain word / phrase.** Your selected model prepares an English draft from the surrounding passage.
 3. **Review, edit, and add to Anki.** One approved note creates two complementary exercises.
 
 No separate vocabulary notes to maintain. Your books stay in Obsidian; your spaced repetition stays in Anki.
@@ -73,11 +73,13 @@ The recall exercise uses the **original source form**. If the book says “brush
 - **Mark words as you go.** Optionally format captured words as inline code in the source Markdown.
 - **Review on your phone.** Sync the finished cards through Anki and study in AnkiDroid or AnkiMobile.
 
-## Your model, on your computer
+## Choose local AI or your ChatGPT subscription
 
-Context Cards uses **Ollama** to generate content and **AnkiConnect** to add approved notes. Both point to local addresses by default. There is no cloud fallback, telemetry, or AI subscription required by the plugin.
+**Ollama is the default:** generate with a model on your computer, without an AI subscription. Ollama and AnkiConnect point to local addresses by default. The plugin has no telemetry or automatic cloud fallback.
 
-You choose the model and stay in control of the result. AI can still get meanings, pronunciation or examples wrong, so review is part of the workflow. If you configure a remote server, the relevant text is sent to that server instead.
+**ChatGPT subscription is an optional preview connection:** choose it in settings, click **Continue with ChatGPT**, and authorize use of your eligible plan, such as Plus. Choose a model available to your account for both vocabulary and writing. Requests consume your shared ChatGPT allowance; they do not automatically switch to API-key billing. Account eligibility and plan limits still apply. [Connect ChatGPT →](docs/SETUP.md#use-a-chatgpt-subscription-preview)
+
+With ChatGPT selected, the chosen text and context are sent to OpenAI. A remote Ollama server receives that material when selected instead. You choose the provider and review the results: AI can still get meanings, pronunciation, examples or corrections wrong.
 
 ## Choose a model for your study
 
@@ -96,13 +98,13 @@ These recommendations come from tests on Windows with an RTX 5070 (12 GB VRAM), 
 
 ## Start with your next chapter
 
-You will need **Obsidian Desktop**, **Ollama with a downloaded model**, and **Anki Desktop with AnkiConnect**. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.
+You will need **Obsidian Desktop**, **Anki Desktop with AnkiConnect**, and either **Ollama with a downloaded model** or an eligible **ChatGPT subscription**. The ChatGPT connection requires Obsidian **1.11.4 or newer** for Secret storage and internet access. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.
 
 Install through **BRAT** for convenient plugin updates, or download a ready-to-use ZIP. You do not need to build the plugin yourself.
 
 **[Follow the setup guide →](docs/SETUP.md)**
 
-The guide covers downloading the plugin, setting up Ollama and Anki, and a screenshot walkthrough of the interface.
+The guide covers downloading the plugin, choosing Ollama or ChatGPT, setting up Anki, and a screenshot walkthrough of the interface.
 
 ---
 

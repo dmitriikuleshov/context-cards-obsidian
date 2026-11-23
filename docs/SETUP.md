@@ -1,6 +1,6 @@
 # Context Cards: setup and interface guide
 
-Set up the plugin on Windows, connect a local model and Anki, then create your first vocabulary or writing card. Keep **Ollama** running while generating content and **Anki Desktop** running while exporting. BRAT installs the Obsidian plugin; Ollama and Anki are separate applications.
+Set up the plugin on Windows, choose Ollama or a ChatGPT subscription, connect Anki, then create your first vocabulary or writing card. Keep **Anki Desktop** running while exporting. Keep **Ollama** running if you use a local model; the ChatGPT provider needs internet access instead. BRAT installs the Obsidian plugin; Ollama and Anki are separate applications.
 
 | Select… | Use… | Result |
 | --- | --- | --- |
@@ -10,7 +10,7 @@ Set up the plugin on Windows, connect a local model and Anki, then create your f
 Both actions prepare material for review. Exporting to Anki is a later step.
 
 1. [Download and install](#1-download-and-install)
-2. [Set up Ollama](#2-set-up-ollama)
+2. [Set up an AI connection](#2-set-up-an-ai-connection)
 3. [Set up Anki](#3-set-up-anki)
 4. [Explore the interface](#4-explore-the-interface)
 5. [Check your own writing](#5-check-your-own-writing)
@@ -58,7 +58,13 @@ Configure update checks in BRAT, or use its update command. Keep your existing p
 
 To update manually, disable the plugin, replace the release files in its existing folder, then enable it again or restart Obsidian. **Keep your existing `data.json`**, which stores settings, API key and drafts. No Node.js, npm or Python is needed to install a release.
 
-## 2. Set up Ollama
+<a id="2-set-up-ollama"></a>
+
+## 2. Set up an AI connection
+
+Open **Settings → Context Cards → AI connection → Provider**. Choose **Ollama · local model** for local generation, or **ChatGPT · subscription** for the optional subscription connection. Both modes use this provider. Switching preserves your Ollama settings and the ChatGPT model choice.
+
+For Ollama, follow the steps below. To use your ChatGPT subscription, skip to [Use a ChatGPT subscription](#use-a-chatgpt-subscription-preview).
 
 ### Choose a model
 
@@ -121,7 +127,7 @@ Keep Ollama running while generating drafts. Its Windows app runs the server in 
 
 ### Connect from Obsidian
 
-Under **Settings → Context Cards → Local model**, start with:
+With **Ollama · local model** selected, under **Settings → Context Cards → Local model**, start with:
 
 | Setting | Value |
 | --- | --- |
@@ -140,6 +146,32 @@ If generation is slow, begin with **Balanced · 1,800 characters** and a short w
 To switch models, download the new tag, click **Refresh** beside **Model**, select it, and generate a new draft or use **Recheck selection** for an unexported writing session. Existing draft content is kept until you regenerate or recheck it. The plugin sends text only and disables thinking in its model requests; no thinking setup is required in Ollama's chat.
 
 With the default address, generation stays on your computer. Changing the Ollama URL sends the selected text and context to that server instead.
+
+### Use a ChatGPT subscription (preview)
+
+This connection uses the official [ChatGPT plan-sharing flow for open-source and locally hosted apps](https://developers.openai.com/siwc/token-sharing-open-source). It requires **Obsidian 1.11.4 or newer** for Secret storage and a ChatGPT account eligible to share its plan. A Plus subscription can provide this usage, subject to account, workspace and serving-region restrictions. Account access is confirmed during sign-in and the first request.
+
+1. Choose **Settings → Context Cards → AI connection → Provider → ChatGPT · subscription**.
+2. Click **Continue with ChatGPT**. Complete sign-in in your browser and explicitly grant permission to use your ChatGPT plan.
+3. Return to Obsidian. The settings should show your account as **Connected**. You can close the browser after connecting.
+4. Choose **ChatGPT model** from the models available to your account. **Refresh models** reloads that list and keeps your saved choice if loading fails. An unavailable saved model remains marked until you choose another one.
+5. Generate a vocabulary draft or check a short writing paragraph. Review the output before adding cards to Anki.
+
+![ChatGPT connection settings with an account, model picker, refresh, usage and sign-out actions](images/chatgpt-connection.png)
+
+This screenshot uses the actual connection control with a simulated account in the standalone preview; it does not show a live account authorization.
+
+The plugin sends the selected text and required context to OpenAI. It uses the subscription's shared allowance; it has no API-key billing fallback. The [ChatGPT model list is account-specific](https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference), so the choices may differ from a separately billed API account.
+
+**Manage usage** opens ChatGPT's usage settings. Your plugin requests share plan limits with other apps; a Plus subscription does not provide a separate pool for Context Cards. Additional paid-credit use is governed by the permissions in your ChatGPT account. [Plan usage and credit controls](https://help.openai.com/en/articles/20001542-using-your-chatgpt-plan-in-other-apps-and-sites)
+
+Sign-in credentials are saved through **Obsidian Secret storage**, separately from plugin settings and drafts. Access refreshes automatically while the renewable session remains valid. You do not need to keep a browser tab open or sign in on every Obsidian launch. **Sign out** clears local credentials and attempts remote session revocation; a network failure is explicitly reported. If needed, disconnect Context Cards from ChatGPT's settings. [Session lifecycle](https://developers.openai.com/siwc/token-sharing-open-source/profiles-and-sessions)
+
+Use **Add another account** to authorize a different account or workspace. When multiple registrations are saved, select the intended **ChatGPT account** before choosing a model. If sign-in succeeds without plan permission, **Enable plan usage** requests that permission again. **Cancel sign-in** stops a pending browser login.
+
+**Generation temperature** is shown only for Ollama. ChatGPT requests use the required subscription transport and automatic reasoning settings. **Context length** and **Request timeout** still apply; start with `60` seconds and try `300` if generation takes longer. Increasing the timeout does not increase your allowance. [Current transport restrictions](https://developers.openai.com/siwc/token-sharing-open-source/preview-limitations)
+
+If your account is ineligible, a limit is reached or sign-in expires, the plugin shows an actionable error and keeps the draft. Choose Ollama in **Provider** whenever you want to return to local generation; switching does not regenerate existing drafts.
 
 ## 3. Set up Anki
 
@@ -270,7 +302,7 @@ Disabling **Context from your book** hides ordinary context display, but preserv
 
 **Reading workflow** controls the selection button, draft restoration and **Mark selected word as inline code**. Source marking wraps the selected word in backticks in the original Markdown when creating cards; it is off by default.
 
-**Reset to defaults**, at the bottom of settings, resets all settings, including connections and remembered deck assignments. Drafts and Anki notes are kept.
+**Reset to defaults**, at the bottom of settings, restores the Ollama provider and resets settings, including server addresses and remembered deck assignments. Drafts, Anki notes and saved ChatGPT sign-in are kept. Use **Sign out** to disconnect ChatGPT.
 
 ### Troubleshooting
 
@@ -279,6 +311,10 @@ Disabling **Context from your book** hides ordinary context display, but preserv
 | No selection buttons | Select text in a Markdown note in Reading Mode or Live Preview. Enable **Reading workflow → Selection button**, or use the command palette. |
 | Plugin missing | Enable it under Community plugins; for ZIP installation, check folder nesting. |
 | Ollama unavailable | Running app, server URL and exact tag from `ollama list`. |
+| ChatGPT sign-in unavailable | Obsidian 1.11.4+, internet access and account/workspace eligibility. Choose Ollama if subscription sharing is unavailable. |
+| ChatGPT plan permission missing | Click **Enable plan usage** and grant permission in the browser. |
+| ChatGPT limit reached | Open **Manage usage**. Check the account's displayed limits; increasing Request timeout does not replenish usage. |
+| ChatGPT session expired | Click **Continue with ChatGPT** to renew the connection. Drafts are kept. |
 | Slow or failed generation | Initial model load, available memory and timeout. Connectivity checks do not test memory capacity. |
 | Anki unavailable | Running Anki Desktop, installed AnkiConnect, URL and API key. |
 | Add to Anki disabled | The message below Edit, enabled required fields, source answer, pending replacement or duplicate warning. |
@@ -356,4 +392,4 @@ The latest four writing sessions are stored with plugin data when **Restore unfi
 
 Successful exports show **Added to Anki**. A matching existing practice note can be reused, and retries skip findings already exported. Matching uses the normalised error/pattern key, not a complete semantic understanding of every equivalent mistake. An export interrupted halfway preserves successful note identifiers so you can retry the remaining cards.
 
-Keep Ollama open while checking/preparing, and Anki Desktop open while exporting. Longer selections can take longer or exceed the local model's output capacity; split a large text into paragraphs if needed. A result with no findings means the model did not flag issues, not that the text is guaranteed error-free.
+Keep Ollama open while checking/preparing with the local provider, or maintain internet access when using ChatGPT. Keep Anki Desktop open while exporting. Longer selections can take longer or exceed the model's output capacity; split a large text into paragraphs if needed. A result with no findings means the model did not flag issues, not that the text is guaranteed error-free.

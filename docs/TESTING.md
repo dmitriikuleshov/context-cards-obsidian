@@ -84,3 +84,17 @@ For changes that only affect local postprocessing, `node scripts/replay-writing-
 For a mixed cached/live comparison, set `AUDIT_CACHE_DIR` to one or more comma-separated prior audit directories. Only byte-identical serialized request payloads (model, messages, options and JSON schema) reuse a response; changed requests go to Ollama. Traces record `cacheSource`, and results count cached and live calls separately. Do not use cached runs for speed comparisons or reuse responses after changing model weights. Gold plans may contain predeclared `alternativeExpected` arrays; corpus errata and manually adjudicated alternatives must be recorded and applied equally to baseline and candidate results.
 
 Passing these passages is a regression check, not a measure of overall linguistic accuracy. A local model can still miss errors or make a poor suggestion. Prepared cards remain editable and require the user's review before export. Existing drafts keep their saved results; use **Recheck selection** to analyse them with the updated checks.
+
+## ChatGPT subscription connection
+
+Run `npm run test:chatgpt` for the provider-specific suite and coverage gates. It uses generated signing keys, in-memory Secret storage and simulated HTTP responses. No test reads a real user's credentials, opens real sign-in or spends a subscription/API allowance. Browser tests also simulate the account. Opening the preview with `?chatgpt` shows the connection control; `?chatgpt&limit` simulates an exhausted allowance.
+
+Coverage includes signed identity verification (issuer, audience, expiry, nonce and signature), PKCE, loopback callback validation/cancellation, persistent registrations, rotating refresh tokens, concurrent refreshes, multiple accounts, revoked permissions, terminal/transient failures, logout and streamed terminal events. It also checks migration from local-only settings, complete vocabulary generation, writing analysis/exercises, provider switching, model discovery, narrow layouts and the existing-draft replacement review.
+
+Credentials are kept through Obsidian Secret storage, outside `data.json`. The plugin requires Obsidian 1.11.4+ only for this optional connection; older versions can continue using Ollama. All direct inference uses the public Responses endpoint, `store: false` and `stream: true`. Unsupported subscription fields are omitted. It never borrows credentials from Codex or other apps, calls ChatGPT backend endpoints or switches to API-key billing.
+
+The suite gates the new modules at 95% statements, 98% lines, 92% branches and 90% functions. Existing per-file vocabulary and analysis coverage thresholds remain unchanged. Both GitHub workflows run the subscription suite.
+
+Manual acceptance still requires signing in to an eligible account through the installed plugin, granting plan permission, selecting an account-visible model and successfully generating a draft. Public discovery being reachable and simulated OAuth tests passing do not establish access for a particular account. Test login, restart/refresh, cancel, reconnect, sign out and a return to Ollama without changing drafts. Account availability and model quality need separate live checks; automated tests do not claim those have happened.
+
+Regenerate the guide image with `node scripts/capture-chatgpt-screenshot.mjs`. It uses simulated account data and never authorizes a real account.
