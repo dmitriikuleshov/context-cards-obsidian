@@ -6,7 +6,7 @@ import { WritingModel } from '../src/writing-model';
 import { restoreData } from '../src/storage';
 import { DEFAULTS } from '../src/types';
 import { Anki } from '../src/anki';
-import { pluginFixture } from './vocabulary/fixtures';
+import { pluginFixture, rawContent } from './vocabulary/fixtures';
 import * as http from '../src/http';
 afterEach(() => vi.restoreAllMocks());
 const settings = {
@@ -16,6 +16,45 @@ const settings = {
   chatgptAccountId: 'account',
 };
 describe('provider routing without changing learning mechanics', () => {
+  it('runs the complete vocabulary draft pipeline through the selected account', async () => {
+    const f = pluginFixture();
+    f.plugin.settings = { ...structuredClone(settings) };
+    const cloud = vi.spyOn(f.plugin.chatgpt, 'chat').mockImplementation(async (body: any) => {
+      const p = body.format.properties;
+      const value = p.lemma
+        ? rawContent({
+            meaning: ['Dismiss something.', 'Treat it as unimportant.'],
+            explanation: ['It suggests dismissal.', 'The concern receives little attention.'],
+            examples: [],
+          })
+        : p.general_meaning
+          ? { general_meaning: ['Dismiss someone or something.', 'Give it little attention.'] }
+          : p.base_word
+            ? { base_word: '', base_meaning: '' }
+            : p.examples
+              ? {
+                  examples: [
+                    {
+                      meaning: 'Dismiss a concern',
+                      examples: ['She brushed off the warning.', 'They brushed off the complaint.'],
+                    },
+                  ],
+                }
+              : { american_ipa: p.american_ipa.enum[0] };
+      return { message: { content: JSON.stringify(value) }, done_reason: 'stop' };
+    });
+    const local = vi
+      .spyOn(http, 'jsonRequest')
+      .mockRejectedValue(new Error('Ollama must not be contacted.'));
+    await f.plugin.generate(f.d);
+    expect(f.d.error).toBe('');
+    expect(f.d.phase).toBe('editing');
+    expect(f.d.pendingContent?.generalMeaning).toContain('Dismiss');
+    expect(f.d.pendingContent?.exampleGroups).toHaveLength(1);
+    expect(f.d.generalMeaning).toContain('To dismiss or ignore');
+    expect(cloud.mock.calls.length).toBeGreaterThanOrEqual(4);
+    expect(local).not.toHaveBeenCalled();
+  });
   it('keeps old settings local and restores only known provider options', () => {
     expect(restoreData({ settings: { model: 'local' } }).settings).toMatchObject({
       provider: 'ollama',
@@ -121,6 +160,13 @@ describe('provider routing without changing learning mechanics', () => {
     expect(f.plugin.modelConnection).toBe(account);
     expect(f.plugin.chatgpt).toBe(account);
     expect(account.state().accounts).toEqual([]);
+    const browser = vi.spyOn(window, 'open').mockReturnValue(null);
+    (account as any).openBrowser('https://auth.openai.com/api/accounts/authorize');
+    expect(browser).toHaveBeenCalledWith(
+      'https://auth.openai.com/api/accounts/authorize',
+      '_blank',
+      'noopener,noreferrer',
+    );
     const stop = vi.spyOn(account, 'dispose');
     f.plugin.onunload();
     expect(stop).toHaveBeenCalled();

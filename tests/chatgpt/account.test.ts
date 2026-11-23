@@ -5,6 +5,120 @@ import { DEFAULTS } from '../../src/types';
 import { accountFixture, jwt } from './fixtures';
 
 describe('ChatGPT subscription session lifecycle', () => {
+  it('cancels browser authorization without replacing a saved account', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    f.callback.mockImplementation(async (_state, signal) => ({
+      uri: 'http://127.0.0.1:1234/auth/callback',
+      close: f.close,
+      result: new Promise((_resolve, reject) =>
+        signal.addEventListener('abort', () => reject(new Error('ChatGPT sign-in cancelled.')), {
+          once: true,
+        }),
+      ),
+    }));
+    const notify = vi.fn();
+    const stop = f.account.subscribe(notify);
+    const work = f.account.signIn(true);
+    const assertion = expect(work).rejects.toThrow(/cancelled/);
+    await vi.waitFor(() => expect(f.open).toHaveBeenCalledTimes(2));
+    await expect(f.account.signIn()).rejects.toThrow(/already in progress/);
+    expect(() => f.account.select(f.config.id)).toThrow(/cancel/);
+    f.account.cancelSignIn();
+    await assertion;
+    expect(f.account.state().accounts[0]!.connected).toBe(true);
+    expect(notify).toHaveBeenCalled();
+    stop();
+  });
+  it('aborts pending requests on logout/unload and handles already-aborted generation', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    const abort = new AbortController();
+    abort.abort();
+    await expect(f.account.models(abort.signal)).rejects.toThrow(/Cancelled/);
+    const original = f.json.getMockImplementation()!;
+    let started = false;
+    f.json.mockImplementation(async (url, options) => {
+      if (url.endsWith('/models')) {
+        started = true;
+        return new Promise((_r, reject) =>
+          options.signal.addEventListener('abort', () => reject(new Error('Cancelled.')), {
+            once: true,
+          }),
+        );
+      }
+      return original(url, options);
+    });
+    const work = f.account.models();
+    const assertion = expect(work).rejects.toThrow(/Cancelled/);
+    await vi.waitFor(() => expect(started).toBe(true));
+    f.account.dispose();
+    await assertion;
+  });
+  it('offers reconnect after rejected credentials and enable permission after revoked plan access', async () => {
+    for (const code of [
+      'http_401',
+      'subscription_sharing_invalid_user',
+      'chatpass_v2_scope_not_authorized',
+      'chatpass_v2_invalid_authorization_context',
+    ]) {
+      const f = accountFixture();
+      await f.account.signIn();
+      f.json.mockRejectedValueOnce(new ChatGPTError(code, 'Reconnect in settings.'));
+      await expect(f.account.models()).rejects.toThrow(/Reconnect/);
+      const state = f.account.state().accounts[0]!;
+      expect(code.startsWith('chatpass') ? state.allowed : state.connected).toBe(false);
+    }
+  });
+  it('retains scope and identity when the refresh response omits optional replacements', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    f.config.now += 3590000;
+    const original = f.json.getMockImplementation()!;
+    f.json.mockImplementation(async (url, options) => {
+      const response = await original(url, options);
+      if (options?.form?.get('grant_type') === 'refresh_token') {
+        delete response.id_token;
+        delete response.scope;
+      }
+      return response;
+    });
+    await f.account.models();
+    expect(f.account.state().accounts[0]!.allowed).toBe(true);
+  });
+  it('rejects changed identity during refresh and incomplete token credentials during sign-in', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    f.config.now += 3590000;
+    f.config.subject = 'other';
+    await expect(f.account.models()).rejects.toThrow(/changed the session identity/);
+    const g = accountFixture();
+    const original = g.json.getMockImplementation()!;
+    g.json.mockImplementation(async (url, options) => {
+      const response = await original(url, options);
+      if (url.endsWith('/oauth/token')) delete response.refresh_token;
+      return response;
+    });
+    await expect(g.account.signIn()).rejects.toThrow(/incomplete sign-in credentials/);
+  });
+  it('handles an empty or unavailable account explicitly and deduplicates visible models', async () => {
+    const f = accountFixture();
+    await f.account.signOut();
+    await expect(f.account.models()).rejects.toThrow(/Sign in/);
+    await f.account.signIn();
+    await expect(f.account.models(undefined, 'missing')).rejects.toThrow(/Sign in/);
+    f.json.mockResolvedValueOnce({
+      models: [
+        { slug: 'one', display_name: 'One', visibility: 'list' },
+        { slug: 'one', display_name: 'One', visibility: 'list' },
+        { slug: 'hidden', display_name: 'Hidden', visibility: 'hidden' },
+      ],
+    });
+    expect(await f.account.models()).toEqual([{ id: 'one', name: 'One' }]);
+    await f.account.signOut();
+    await f.account.signOut();
+    expect(f.account.state().accounts[0]!.connected).toBe(false);
+  });
   it('signs in with dynamic registration and persists secrets separately from settings', async () => {
     const f = accountFixture();
     await f.account.signIn();

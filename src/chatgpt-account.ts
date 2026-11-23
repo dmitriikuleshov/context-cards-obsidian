@@ -61,6 +61,7 @@ export class ChatGPTAccount implements SubscriptionConnection {
   private data?: RecordData;
   private login?: AbortController;
   private refreshing = new Map<string, Promise<void>>();
+  private refreshJobs = new Set<AbortController>();
   private blocked = new Set<string>();
   private jobs = new Set<AbortController>();
   private stopped = false;
@@ -259,7 +260,9 @@ export class ChatGPTAccount implements SubscriptionConnection {
       const tokens = this.tokens(response);
       if (controller.signal.aborted || this.stopped) throw new Error('ChatGPT sign-in cancelled.');
       const account: Registration = { id, ...identity, tokens };
-      data.accounts = [...data.accounts.filter((a) => a.id !== id), account];
+      const index = data.accounts.findIndex((a) => a.id === id);
+      if (index < 0) data.accounts.push(account);
+      else data.accounts[index] = account;
       data.active = id;
       this.save();
       if (!tokens.scopes.includes('chatgpt.tokens.use.direct'))
@@ -317,10 +320,13 @@ export class ChatGPTAccount implements SubscriptionConnection {
   private async refresh(account: Registration) {
     const existing = this.refreshing.get(account.id);
     if (existing) return existing;
+    const controller = new AbortController();
+    this.refreshJobs.add(controller);
     const work = (async () => {
       try {
-        const discovery = await this.discovery();
+        const discovery = await this.discovery(controller.signal);
         const response = await this.http.json(discovery.token_endpoint!, {
+          signal: controller.signal,
           form: new URLSearchParams({
             grant_type: 'refresh_token',
             client_id: account.id,
@@ -329,7 +335,7 @@ export class ChatGPTAccount implements SubscriptionConnection {
           }),
         });
         if (response.id_token) {
-          const keys = await this.http.json(discovery.jwks_uri!);
+          const keys = await this.http.json(discovery.jwks_uri!, { signal: controller.signal });
           const identity = verifyIdentity(
             response.id_token,
             keys,
@@ -358,6 +364,7 @@ export class ChatGPTAccount implements SubscriptionConnection {
       await work;
     } finally {
       this.refreshing.delete(account.id);
+      this.refreshJobs.delete(controller);
     }
   }
   private async access(id?: string) {
@@ -502,6 +509,7 @@ export class ChatGPTAccount implements SubscriptionConnection {
     this.stopped = true;
     this.cancelSignIn();
     for (const controller of this.jobs) controller.abort();
+    for (const controller of this.refreshJobs) controller.abort();
     this.listeners.clear();
   }
 }

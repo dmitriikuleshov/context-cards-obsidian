@@ -81,8 +81,14 @@ export class ChatGPTControl {
   }
   async loadModels() {
     if (this.disposed) return;
-    const state = this.account.state(),
-      active = state.accounts.find((a) => a.id === state.active);
+    let state: AccountState;
+    try {
+      state = this.account.state();
+    } catch {
+      this.render();
+      return;
+    }
+    const active = state.accounts.find((a) => a.id === state.active);
     if (!active?.connected || !active.allowed) return;
     this.controller?.abort();
     const controller = new AbortController();
@@ -136,10 +142,10 @@ export class ChatGPTControl {
     if (state.accounts.length > 1) {
       const select = doc.createElement('select');
       select.setAttribute('aria-label', 'ChatGPT account');
-      for (const a of state.accounts) {
+      for (const [index, a] of state.accounts.entries()) {
         const option = doc.createElement('option');
         option.value = a.id;
-        option.textContent = `${a.email} · ${a.id.slice(-8)}`;
+        option.textContent = `${a.email} · Account ${index + 1}`;
         select.append(option);
       }
       select.value = state.active;
@@ -151,10 +157,16 @@ export class ChatGPTControl {
         this.loading = false;
         this.models = [];
         this.error = '';
-        this.account.select(select.value);
-        this.settings.chatgptAccountId = select.value;
-        this.persist();
-        void this.loadModels();
+        try {
+          this.account.select(select.value);
+          this.settings.chatgptAccountId = select.value;
+          this.persist();
+          void this.loadModels();
+        } catch (error) {
+          this.error =
+            error instanceof Error ? error.message : 'Could not switch ChatGPT accounts.';
+          this.render();
+        }
       });
       this.root.append(select);
     }

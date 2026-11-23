@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   AUTH_ORIGIN,
   loginCallback,
@@ -77,6 +77,18 @@ describe('ChatGPT identity verification', () => {
   });
 });
 describe('loopback browser callback', () => {
+  it('expires a forgotten browser login and releases its listener', async () => {
+    vi.useFakeTimers();
+    try {
+      const cb = await loginCallback('state', new AbortController().signal);
+      const assertion = expect(cb.result).rejects.toThrow(/timed out/);
+      await vi.advanceTimersByTimeAsync(300000);
+      await assertion;
+      cb.close();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
   it('rejects wrong states, paths, methods and duplicate parameters before accepting a real callback', async () => {
     const abort = new AbortController();
     const callback = await loginCallback('expected', abort.signal);

@@ -1,12 +1,12 @@
 {
   "name": "obsidian-context-cards",
-  "version": "0.3.37",
+  "version": "0.3.38",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=22"
   },
-  "description": "Turn passages you read into editable English vocabulary cards with local Ollama and Anki.",
+  "description": "Create vocabulary and writing practice with Ollama or a ChatGPT subscription and Anki.",
   "scripts": {
     "dev": "node esbuild.config.mjs --watch",
     "build": "tsc --noEmit && node esbuild.config.mjs",
@@ -22,7 +22,8 @@
     "package": "npm run build && node scripts/package.mjs",
     "verify:package": "node scripts/verify-package.mjs",
     "test:writing-anki": "node scripts/verify-writing-anki.mjs",
-    "test:writing-model": "node scripts/verify-writing-model.mjs"
+    "test:writing-model": "node scripts/verify-writing-model.mjs",
+    "test:chatgpt": "vitest run --config vitest.chatgpt.config.ts --coverage"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

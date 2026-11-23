@@ -66,6 +66,58 @@ function fixture(connected = false) {
   return { root, settings, state, account, control, persist, open, notify, button };
 }
 describe('ChatGPT connection settings', () => {
+  it('handles storage failure during refresh or account selection without losing the saved choice', async () => {
+    const f = fixture(true);
+    await flush();
+    f.state.accounts.push({
+      id: 'second',
+      email: 'second@example.test',
+      connected: true,
+      allowed: true,
+    });
+    f.notify();
+    f.account.select.mockImplementationOnce(() => {
+      throw new Error('Could not save account.');
+    });
+    const select = Array.from(f.root.querySelectorAll('select')).find(
+      (s) => !s.closest('.cc-chatgpt-model'),
+    )!;
+    select.value = 'second';
+    select.dispatchEvent(new Event('change'));
+    expect(f.settings.chatgptAccountId).toBe('first');
+    expect(f.root.textContent).toContain('Could not save account.');
+    f.account.state.mockImplementation(() => {
+      throw new Error('Secret storage is unavailable.');
+    });
+    await expect(f.control.loadModels()).resolves.toBeUndefined();
+    expect(f.root.textContent).toContain('Secret storage is unavailable.');
+  });
+  it('offers explicit account addition, model refresh and cancellation', async () => {
+    const f = fixture(true);
+    await flush();
+    f.button('Refresh models').click();
+    await flush();
+    expect(f.account.models).toHaveBeenCalledTimes(2);
+    f.button('Add another account').click();
+    await flush();
+    expect(f.account.signIn).toHaveBeenCalledWith(true);
+    f.control.cancel();
+    expect(f.account.cancelSignIn).toHaveBeenCalled();
+    f.account.models.mockResolvedValueOnce([]);
+    await f.control.loadModels();
+    expect(f.root.textContent).toContain('No available models');
+  });
+  it('does not persist late sign-in UI changes after leaving provider settings', async () => {
+    const f = fixture();
+    let resolve!: () => void;
+    f.account.signIn.mockImplementationOnce(() => new Promise<void>((r) => (resolve = r)));
+    f.button('Continue with ChatGPT').click();
+    const calls = f.persist.mock.calls.length;
+    f.control.destroy();
+    resolve();
+    await flush();
+    expect(f.persist).toHaveBeenCalledTimes(calls);
+  });
   it('shows a clear empty state and never sends generation requests on opening settings', () => {
     const f = fixture();
     expect(f.root.textContent).toContain('Not connected');

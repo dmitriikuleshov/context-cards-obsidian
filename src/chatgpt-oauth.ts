@@ -163,6 +163,7 @@ export function verifyIdentity(
       !audiences.includes(clientId) ||
       (audiences.length > 1 && claims.azp !== clientId) ||
       typeof claims.exp !== 'number' ||
+      !Number.isFinite(claims.exp) ||
       claims.exp <= now / 1000 ||
       (claims.iat !== undefined &&
         (typeof claims.iat !== 'number' || claims.iat > now / 1000 + 60)) ||

@@ -6,6 +6,7 @@ import type ContextCardsPlugin from '../../src/main';
 import { installDomHelpers } from '../dom';
 import { enhanceSelects } from '../../src/select-menu';
 import { ModelControl } from '../../src/model-control';
+import { mountChatGPTSettings } from './chatgpt-harness';
 installDomHelpers();
 const text =
   'Mara brushed off the first warning. By the time she reached the station, the last train had already left. She wished she had listened.';
@@ -97,7 +98,9 @@ const host = {
 };
 const view = new ReviewView({} as any, host as unknown as ContextCardsPlugin);
 view.show(draft);
-if (new URLSearchParams(location.search).has('writing'))
+if (new URLSearchParams(location.search).has('chatgpt'))
+  mountChatGPTSettings(document.querySelector('#panel')!);
+else if (new URLSearchParams(location.search).has('writing'))
   mountWritingPanel(document.querySelector('#panel')!);
 else document.querySelector('#panel')!.append(view.contentEl);
 Object.assign(window, { contextCardsPreview: { view, draft, host, enhanceSelects, ModelControl } });
