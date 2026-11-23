@@ -15,6 +15,7 @@ import {
 import { writingNoteFields, WRITING_TEMPLATE, WRITING_FIELDS } from '../src/writing-anki';
 import { DEFAULTS } from '../src/types';
 import * as http from '../src/http';
+import { proofreadingJSON } from './analysis/fixtures';
 const source = 'I have wrote three stories this week.';
 const finding = {
   kind: 'grammar',
@@ -40,7 +41,7 @@ describe('writing analysis and practice validation', () => {
       .spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce({
         message: {
-          content: JSON.stringify({ summary: '', findings: [finding] }),
+          content: proofreadingJSON([finding], source),
         },
       })
       .mockImplementation(async (_url, body: any) => {
@@ -51,7 +52,10 @@ describe('writing analysis and practice validation', () => {
             content: JSON.stringify({
               decisions: candidates.map((c: any) => ({
                 id: c.id,
-                verdict: input.validation_error ? 'keep' : 'yes',
+                verdict: input.validation_error ? 'required' : 'yes',
+                category: 'grammar',
+                pattern: 'Participle',
+                recommended_format: 'correction',
                 explanation: 'Use the past participle after have.',
                 tip: '',
               })),
@@ -202,7 +206,7 @@ describe('writing analysis and practice validation', () => {
       .spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce({
         message: {
-          content: JSON.stringify({ summary: '', findings: items }),
+          content: proofreadingJSON(items, text),
         },
       })
       .mockImplementation(async (_url, body: any) => {
@@ -221,7 +225,10 @@ describe('writing analysis and practice validation', () => {
             content: JSON.stringify({
               decisions: input.candidates.map((c: any) => ({
                 id: c.id,
-                verdict: 'keep',
+                verdict: 'required',
+                category: 'grammar',
+                pattern: 'Participle',
+                recommended_format: 'correction',
                 explanation: 'A valid local edit.',
                 tip: '',
               })),
@@ -308,7 +315,7 @@ describe('writing analysis and practice validation', () => {
       const request = vi
         .spyOn(http, 'jsonRequest')
         .mockResolvedValueOnce({
-          message: { content: JSON.stringify({ summary: '', findings: [finding] }) },
+          message: { content: proofreadingJSON([finding], source) },
         })
         .mockImplementation(async (_url, body: any) => {
           const input = JSON.parse(body.messages[1].content);
@@ -317,7 +324,10 @@ describe('writing analysis and practice validation', () => {
               content: JSON.stringify({
                 decisions: input.candidates.map((f: any) => ({
                   id: f.id,
-                  verdict: valid ? 'keep' : 'reject',
+                  verdict: valid ? 'required' : 'incorrect',
+                  category: 'grammar',
+                  pattern: 'Participle',
+                  recommended_format: 'correction',
                   explanation: valid
                     ? 'Use the participle.'
                     : 'The original is already acceptable.',
@@ -336,7 +346,7 @@ describe('writing analysis and practice validation', () => {
   it('rejects an incomplete independent check instead of accepting unchecked findings', async () => {
     vi.spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce({
-        message: { content: JSON.stringify({ summary: '', findings: [finding] }) },
+        message: { content: proofreadingJSON([finding], source) },
       })
       .mockResolvedValue({ message: { content: '{"decisions":[]}' } });
     await expect(
@@ -347,7 +357,7 @@ describe('writing analysis and practice validation', () => {
     vi.spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce({
         message: {
-          content: JSON.stringify({ summary: '', findings: [finding] }),
+          content: proofreadingJSON([finding], source),
         },
       })
       .mockImplementation(async (_url, body: any) => ({
@@ -355,7 +365,10 @@ describe('writing analysis and practice validation', () => {
           content: JSON.stringify({
             decisions: JSON.parse(body.messages[1].content).candidates.map((c: any) => ({
               id: c.id,
-              verdict: 'reject',
+              verdict: 'optional',
+              category: 'style',
+              pattern: 'Optional wording',
+              recommended_format: 'correction',
               explanation: 'An optional alternative.',
               tip: '',
             })),
@@ -384,7 +397,7 @@ describe('writing analysis and practice validation', () => {
         },
       })
       .mockResolvedValueOnce({
-        message: { content: JSON.stringify({ summary: 'One issue.', findings: [finding] }) },
+        message: { content: proofreadingJSON([finding], source) },
       })
       .mockImplementation(async (_url, body: any) => {
         const input = JSON.parse(body.messages[1].content);
@@ -393,7 +406,10 @@ describe('writing analysis and practice validation', () => {
             content: JSON.stringify({
               decisions: input.candidates.map((f: any) => ({
                 id: f.id,
-                verdict: 'keep',
+                verdict: 'required',
+                category: 'grammar',
+                pattern: 'Participle',
+                recommended_format: 'correction',
                 explanation: 'Use the participle.',
                 tip: '',
               })),

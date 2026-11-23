@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { WritingModel } from '../src/writing-model';
 import { DEFAULTS, type WritingOptions } from '../src/types';
 import * as http from '../src/http';
+import { proofreadingJSON } from './analysis/fixtures';
 
 const text = 'I have wrote stories. I did a mistake. This is a stroy.';
 const fixtures = [
@@ -31,22 +32,15 @@ function setup(options: Partial<WritingOptions> = {}, items = fixtures) {
   const request = vi.spyOn(http, 'jsonRequest').mockImplementation(async (_url, body: any) => {
     const fields = body.format.properties;
     let result: unknown;
-    if (fields.findings)
-      result = {
-        summary: 'Feedback.',
-        findings: items.map((item) => ({
-          ...item,
-          title: 'A correction',
-          explanation: 'Fix this target.',
-          tip: '',
-          pattern: 'A rule',
-        })),
-      };
+    if (fields.sentences)
+      result = JSON.parse(proofreadingJSON(items, JSON.parse(body.messages[1].content).text));
     else if (fields.decisions)
       result = {
         decisions: JSON.parse(body.messages[1].content).candidates.map((c: any) => ({
           id: c.id,
-          verdict: 'keep',
+          verdict: 'required',
+          pattern: 'A rule',
+          recommended_format: c.target_before === 'wrote' ? 'gap' : 'correction',
           category: fixtures.find((f) => f.target_before === c.target_before)?.kind ?? 'grammar',
           explanation: 'Fix this target.',
           tip: '',
@@ -70,10 +64,10 @@ describe('writing preferences', () => {
     const analysis = await model.analyse(text, signal);
     expect(analysis.findings.map((f) => f.format)).toEqual(['gap', 'correction', 'correction']);
     const body = request.mock.calls[0]![1] as any;
-    expect(body.format.properties.findings.items.properties.recommended_format.enum).toEqual([
-      'correction',
-      'gap',
-    ]);
+    expect(
+      (request.mock.calls[1]![1] as any).format.properties.decisions.items.properties
+        .recommended_format.enum,
+    ).toEqual(['correction', 'gap']);
   });
   it.each(['correction', 'gap'] as const)(
     'applies the %s default even if the model ignores it',
@@ -82,10 +76,10 @@ describe('writing preferences', () => {
       const analysis = await model.analyse(text, signal);
       expect(analysis.findings.every((f) => f.format === exercise)).toBe(true);
       const body = request.mock.calls[0]![1] as any;
-      expect(body.format.properties.findings.items.properties.recommended_format.enum).toEqual([
-        'correction',
-        'gap',
-      ]);
+      expect(
+        (request.mock.calls[1]![1] as any).format.properties.decisions.items.properties
+          .recommended_format.enum,
+      ).toEqual(['correction', 'gap']);
     },
   );
   it('keeps per-correction manual choice when preparing an exercise', async () => {
@@ -103,15 +97,17 @@ describe('writing preferences', () => {
     [{ spelling: false }, ['grammar', 'vocabulary']],
     [{ grammar: false, vocabulary: false }, ['typo']],
   ] as const)(
-    'filters disabled categories before the verification request: %j',
+    'filters disabled categories after independent classification: %j',
     async (options, expected) => {
       const { model, signal, request } = setup(options);
       const analysis = await model.analyse(text, signal);
       expect(analysis.findings.map((f) => f.kind)).toEqual(expected);
       const proposal = request.mock.calls[0]![1] as any;
-      expect(proposal.format.properties.findings.items.properties.kind.enum).toEqual(expected);
+      expect(proposal.messages[0].content).toContain(
+        `Enabled correction categories: ${expected.join(', ')}`,
+      );
       const review = JSON.parse((request.mock.calls[1]![1] as any).messages[1].content);
-      expect(review.candidates).toHaveLength(expected.length);
+      expect(review.candidates).toHaveLength(fixtures.length);
     },
   );
   it('does not contact the model if every category is disabled', async () => {

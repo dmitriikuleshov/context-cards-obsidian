@@ -4,7 +4,7 @@ import type { AddressInfo } from 'node:net';
 import { writingPracticeFields } from '../../src/writing';
 import { WritingAnki } from '../../src/writing-anki';
 import { controllerFixture } from './controller-fixture';
-import { SOURCE, analysisJSON, deferred, finding } from './fixtures';
+import { SOURCE, proofreadingJSON, deferred, finding } from './fixtures';
 const servers: Server[] = [];
 async function ollama(handler: (body: any, res: ServerResponse) => void) {
   const server = createServer(async (req, res) => {
@@ -25,7 +25,10 @@ function approved(body: any) {
   return {
     decisions: input.candidates.map((c: any) => ({
       id: c.id,
-      verdict: 'keep',
+      verdict: 'required',
+      category: 'grammar',
+      pattern: 'Participle rule',
+      recommended_format: 'correction',
       explanation: 'Independently verified participle rule.',
       tip: 'Use written.',
     })),
@@ -53,10 +56,10 @@ describe('controller → HTTP → validation → editable exercise', () => {
       calls = 0;
     host.settings.ollamaUrl = await ollama((body, res) => {
       calls++;
-      if (body.format.properties.findings) {
+      if (body.format.properties.sentences) {
         proposals++;
         if (proposals === 1) respond(res, { summary: 'Broken', findings: [null] });
-        else respond(res, JSON.parse(analysisJSON()));
+        else respond(res, JSON.parse(proofreadingJSON()));
       } else if (body.format.properties.decisions) respond(res, approved(body));
       else respond(res, exercise(body));
     });
@@ -111,7 +114,7 @@ describe('controller → HTTP → validation → editable exercise', () => {
     const started = deferred<{ body: any; res: ServerResponse }>();
     const previous = structuredClone(s.findings);
     host.settings.ollamaUrl = await ollama((body, res) => {
-      if (body.format.properties.findings) respond(res, JSON.parse(analysisJSON()));
+      if (body.format.properties.sentences) respond(res, JSON.parse(proofreadingJSON()));
       else started.resolve({ body, res });
     });
     const running = controller.analyse(s);

@@ -12,6 +12,7 @@ export default defineConfig({
       include: [
         'src/writing.ts',
         'src/writing-model.ts',
+        'src/writing-diff.ts',
         'src/writing-controller.ts',
         'src/writing-workflow.ts',
         'src/http.ts',

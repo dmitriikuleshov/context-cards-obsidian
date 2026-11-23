@@ -68,6 +68,32 @@ export function session(overrides: Partial<WritingSession> = {}): WritingSession
 }
 export const analysisJSON = (items: unknown[] = [rawFinding()]) =>
   JSON.stringify({ summary: 'Feedback.', findings: items });
+/** Network fixture for the correction-first protocol (gold never enters production requests). */
+export function proofreadingJSON(items: any[] = [rawFinding()], source?: string) {
+  source ??= [...new Set(items.map((item) => item.original_sentence))].join(' ') || SOURCE;
+  const sentences = Array.from(
+    new Intl.Segmenter('en', { granularity: 'sentence' }).segment(source),
+    (part, i) => {
+      const original = part.segment.trim();
+      let corrected = original;
+      const edits = items
+        .filter((item) => item.original_sentence === original)
+        .map((item) => ({
+          start: original.indexOf(item.target_before),
+          before: item.target_before,
+          after: item.target_after,
+        }))
+        .sort((a, b) => b.start - a.start);
+      for (const edit of edits)
+        corrected =
+          corrected.slice(0, edit.start) +
+          edit.after +
+          corrected.slice(edit.start + edit.before.length);
+      return { id: String(i + 1), corrected };
+    },
+  );
+  return JSON.stringify({ sentences });
+}
 export const cardJSON = (overrides: Record<string, unknown> = {}) =>
   JSON.stringify({
     ...card(),

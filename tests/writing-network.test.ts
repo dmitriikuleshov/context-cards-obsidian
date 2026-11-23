@@ -3,6 +3,7 @@ import { createServer, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { WritingModel } from '../src/writing-model';
 import { DEFAULTS } from '../src/types';
+import { proofreadingJSON } from './analysis/fixtures';
 let server: Server;
 afterEach(async () => {
   server?.closeAllConnections();
@@ -35,7 +36,10 @@ it('repairs invalid analysis over HTTP and prepares both formats using the appro
           content: JSON.stringify({
             decisions: candidates.map((c: any) => ({
               id: c.id,
-              verdict: 'keep',
+              verdict: 'required',
+              category: 'grammar',
+              pattern: 'Participle',
+              recommended_format: 'correction',
               explanation: 'Use the participle.',
               tip: '',
             })),
@@ -43,26 +47,13 @@ it('repairs invalid analysis over HTTP and prepares both formats using the appro
         },
       };
     }
-    if (fields.findings)
+    if (fields.sentences)
       return {
         message: {
-          content: JSON.stringify({
-            summary: 'One issue.',
-            findings: [
-              {
-                kind: 'grammar',
-                title: 'Participle',
-                original_sentence: source,
-                target_before: 'wrote',
-                target_after: 'written',
-                corrected_sentence: 'I have written stories.',
-                explanation: 'Use a participle.',
-                tip: 'write → written',
-                pattern: 'perfect',
-                recommended_format: 'correction',
-              },
-            ],
-          }),
+          content: proofreadingJSON(
+            [{ original_sentence: source, target_before: 'wrote', target_after: 'written' }],
+            source,
+          ),
         },
       };
     const result: any = { hint: 'Use write.', explanation: 'Use the participle.', tip: '' };
