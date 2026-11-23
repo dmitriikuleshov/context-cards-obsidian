@@ -1,0 +1,2922 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vocabulary: проверка новых промптов</title><style>body{margin:0;background:#f4f6f8;color:#202c3b;font:16px/1.65 system-ui}main{max-width:1100px;margin:auto;padding:30px 22px 70px}h1{font-size:32px;line-height:1.3}h2{margin-top:36px}code{font-size:13px;overflow-wrap:anywhere}.wrap{overflow:auto;border:1px solid #d8e0e8;border-radius:10px;background:white}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:12px;text-align:left;border-bottom:1px solid #e2e7ec;vertical-align:top}th{background:#e8eef3}.note{background:#eaf2e5;border-left:4px solid #68895e;padding:16px;border-radius:7px}a{color:#2259b5}.muted{color:#66758a}details{border:1px solid #dce3ea;border-radius:8px;padding:10px 16px;margin:10px 0;background:white}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}li{margin:6px 0}</style><main><p class="muted">Context Cards · 23 ноября 2026 · RTX 5070 12 ГБ</p><h1>Старые и новые промпты Vocabulary</h1>
+<div class="note"><strong>Решение по заданным критериям: оставить новый вариант.</strong> Изменены только Examples и Word formation. Основной промпт, General meaning, схема ответа, параметры и число запросов сохранены.</div>
+<h2>Основное сравнение</h2><p>В каждой строке — 13 уникальных однозначных заданий. Числа обозначают количество полей с существенной ошибкой, а не процент точности модели.</p><div class="wrap"><table><tr><th>Модель</th><th>Examples: ошибки до → после</th><th>Ложная базовая связь до → после</th><th>Время до → после</th><th>Usage-групп до → после</th></tr>
+<tr><td><code>qwen3.5:9b-q4_K_M</code></td><td>4 → 3</td><td>0 → 0</td><td>6.4 → 6.8 с</td><td>3.0 → 2.8</td></tr>
+<tr><td><code>gemma4:12b-it-qat</code></td><td>4 → 1</td><td>1 → 0</td><td>8.0 → 7.1 с</td><td>2.5 → 1.9</td></tr>
+<tr><td><code>qwen3:14b-q4_K_M</code></td><td>4 → 5</td><td>0 → 0</td><td>15.4 → 14.7 с</td><td>3.0 → 2.4</td></tr>
+<tr><td><code>gemma3:12b-it-q4_K_M</code></td><td>3 → 1</td><td>4 → 2</td><td>8.3 → 7.1 с</td><td>3.2 → 1.6</td></tr>
+</table></div><p class="muted">Время — медиана прогретых ready-прогонов, первая загрузка исключена. Повторены 80 генераций: 16 разных заданий и четыре повтора на модель. Исходные 80 результатов взяты из предыдущего аудита; веса моделей и Ollama не изменились.</p>
+<h2>Новые контрольные задания</h2><p>Oversight, run, look forward to, reluctantly, candid; ещё три задания проверяют неопределённость. Задания написаны до просмотра ответов и не включались в промпты. Каждая модель прошла все восемь заданий со старым и новым вариантом: 64 генерации.</p><div class="wrap"><table><tr><th>Модель</th><th>Examples: ошибки до → после / 5</th><th>Ложные базы до → после / 5</th></tr>
+<tr><td><code>qwen3.5:9b-q4_K_M</code></td><td>1 → 1</td><td>1 → 0</td></tr>
+<tr><td><code>gemma4:12b-it-qat</code></td><td>0 → 0</td><td>1 → 0</td></tr>
+<tr><td><code>qwen3:14b-q4_K_M</code></td><td>2 → 2</td><td>0 → 0</td></tr>
+<tr><td><code>gemma3:12b-it-q4_K_M</code></td><td>1 → 0</td><td>1 → 1</td></tr>
+</table></div><h2>Критерии принятия</h2><ul>
+<li>✓ noNewTechnicalFailures</li>
+<li>✓ fewerMaterialExampleErrors</li>
+<li>✓ primaryModelExamplesNotWorse</li>
+<li>✓ noFalseBaseIncreaseQwen</li>
+<li>✓ fewerFalseBasesGemma</li>
+<li>✓ holdoutExamplesNotWorse</li>
+<li>✓ holdoutFalseBasesNotWorse</li>
+<li>✓ noMajorSlowdown</li>
+<li>✓ retainedClearBases</li>
+</ul><h2>Методика и ограничения</h2><p>Examples оценены по шкале 0–2: 0 — существенная ошибка в значении, части речи, выражении или соответствии заголовку; 1 — в основном пригодно, но есть небольшие дефекты, повторы или неполное покрытие; 2 — корректно и полезно. Ложная связь с базовым словом учитывается отдельно. Пустое поле допустимо, но очевидные положительные случаи проверены отдельно.</p>
+<p>Изменения не устраняют все ошибки. У Qwen 14B в основном наборе существенных ошибок Examples стало 5 вместо 4; в новых заданиях осталось 2 из 5. Улучшение для этой модели не подтвердилось. При температуре 0.2 ответы недетерминированы; даже неизменённый основной промпт может дать другой результат. Поэтому изменения определения и выбора ambiguous сами по себе не приписываются двум новым промптам.</p>
+<p>Основной набор использовался при разработке и оценивался открыто. Контрольные ответы проверены под метками A–H без названий модели и варианта, затем метки раскрыты. Порядок запуска был известен, поэтому полностью слепым исследованием это не является. Оценщик — один ассистент. Маленькая выборка не даёт общей гарантии точности.</p>
+<p>Два ранних варианта, переписывавших основной промпт, отвергнуты после обнаружения побочных эффектов. В финальном кандидате основной промпт и General meaning соответствуют исходной версии. Промежуточные коммиты сохранены в экспериментальной ветке. Интерфейс и фактическая отправка в Anki этим сравнением не проверялись.</p>
+<h2>Откат</h2><p>Исходная версия сохранена тегом <code>backup/vocabulary-before-prompt-tuning-0.3.31</code> и релизом 0.3.31. Существующие черновики, настройки и данные Anki экспериментом не изменялись.</p>
+<h2>Данные</h2><p><a href="summary.json">Метрики и решение</a> · <a href="candidate-results.json">80 новых ответов</a> · <a href="candidate-ratings.json">Новые оценки</a> · <a href="baseline-ratings.json">Исходные оценки</a> · <a href="../vocabulary-model-audit-2026-11-23/results.json">80 исходных ответов</a> · <a href="holdout-baseline-results.json">Контроль: исходные промпты</a> · <a href="holdout-candidate-results.json">Контроль: новые промпты</a> · <a href="holdout-ratings.json">Контрольные оценки</a> · <a href="holdout-cases.json">Контрольные задания</a></p><h2>Разбор изменённых полей</h2>
+<details><summary>before · gemma3:12b-it-q4_K_M · power · Examples 2/2</summary><p>Correct electricity sense. Notes loosely extend power collocations to gas/water; useful noun examples.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Physical Strength and Force&quot;,
+    &quot;examples&quot;: [
+      &quot;The athlete demonstrated incredible power during his weightlifting routine.&quot;,
+      &quot;The storm’s power knocked out electricity to several towns.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Authority and Control&quot;,
+    &quot;examples&quot;: [
+      &quot;The new manager has the power to approve all project budgets.&quot;,
+      &quot;The government’s power is being challenged by ongoing protests.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Ability to Influence&quot;,
+    &quot;examples&quot;: [
+      &quot;Social media influencers have the power to shape consumer trends.&quot;,
+      &quot;Her eloquent speech gave her the power to sway the audience’s opinion.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Energy Source&quot;,
+    &quot;examples&quot;: [
+      &quot;The city is investing in renewable power sources like solar and wind.&quot;,
+      &quot;The generator provides emergency power when the main electricity fails.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · charge · Examples 0/2</summary><p>False base charge -&gt; earn. Groups switch to nouns; emotional examples are awkward/unreliable.</p><p><strong>Entry:</strong> charge · verb</p><p><strong>Word formation:</strong> earn — To receive something as a reward for effort or service. It can also mean to deserve something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Electrical Potential&quot;,
+    &quot;examples&quot;: [
+      &quot;The phone’s battery has a full charge, so it’s ready to use.&quot;,
+      &quot;The electrician checked the charge on the car’s hybrid system.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Price or Cost&quot;,
+    &quot;examples&quot;: [
+      &quot;The restaurant added a service charge to the bill.&quot;,
+      &quot;They were surprised by the high charge for the repair work.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To Accuse Formally&quot;,
+    &quot;examples&quot;: [
+      &quot;The police formally charged him with theft after the investigation.&quot;,
+      &quot;She was charged with reckless driving following the accident.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To Attack or Rush&quot;,
+    &quot;examples&quot;: [
+      &quot;The bull charged across the field towards the gate.&quot;,
+      &quot;The soldiers charged into battle with fierce determination.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To Fill with Emotion&quot;,
+    &quot;examples&quot;: [
+      &quot;The sad movie charged her with a wave of emotion.&quot;,
+      &quot;The inspiring speech charged the audience with hope and enthusiasm.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · strain · Examples 0/2</summary><p>Correct effort sense; general explanation invents a testing purpose. Noun examples and an old photograph being strained/faded are unsuitable.</p><p><strong>Entry:</strong> strain · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Physical Exertion/Pressure&quot;,
+    &quot;examples&quot;: [
+      &quot;Running the marathon put a real strain on his knees.&quot;,
+      &quot;She felt a strain in her back after carrying the heavy boxes.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Emotional Stress&quot;,
+    &quot;examples&quot;: [
+      &quot;The constant arguments put a strain on their relationship.&quot;,
+      &quot;Dealing with the crisis put a significant strain on her mental health.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To Stretch or Distort&quot;,
+    &quot;examples&quot;: [
+      &quot;The old photograph was strained and faded with age.&quot;,
+      &quot;He strained his eyes to read the tiny print on the label.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Effort to Hear&quot;,
+    &quot;examples&quot;: [
+      &quot;I had to strain to hear her voice over the loud music.&quot;,
+      &quot;He strained his ears, hoping to catch a snippet of the conversation.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · hitherto · Examples 1/2</summary><p>Overstates surprise/discovery as an implication; until-now/previously groups duplicate one meaning.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Until now; up to this point in time&quot;,
+    &quot;examples&quot;: [
+      &quot;The company&#x27;s profits had been declining hitherto, but recent changes seem to have reversed the trend.&quot;,
+      &quot;Hitherto unknown species of fish were discovered during the deep-sea exploration.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Previously; in the past (formal)&quot;,
+    &quot;examples&quot;: [
+      &quot;Hitherto accepted theories about the universe are being challenged by new observations.&quot;,
+      &quot;The village, hitherto isolated, is now connected to the main road after the construction of the new bridge.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · conceivably · Examples 1/2</summary><p>Reasonable chance and not-most-probable claims overstate what the adverb encodes. Groups paraphrase the same possibility sense.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceive — To form an idea or imagine something. It can also mean to become pregnant.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Possible to Imagine&quot;,
+    &quot;examples&quot;: [
+      &quot;It&#x27;s conceivably true that dinosaurs could have evolved into birds.&quot;,
+      &quot;Conceivably, the company might offer a discount if we ask nicely.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Within the Realm of Possibility&quot;,
+    &quot;examples&quot;: [
+      &quot;It&#x27;s conceivably the best solution, though it requires more research.&quot;,
+      &quot;Conceivably, the project could be completed ahead of schedule.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · vagaries · Examples 1/2</summary><p>Displayed singular vagary conflicts with plural noun label. Vague is not the derivational base; example groups overlap.</p><p><strong>Entry:</strong> vagary · plural noun</p><p><strong>Word formation:</strong> vague — Something vague is not clear, exact, or precise; it is uncertain or indistinct.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Unpredictable Behavior/Change&quot;,
+    &quot;examples&quot;: [
+      &quot;The company&#x27;s marketing strategy has been subject to the vagaries of the CEO’s sudden whims.&quot;,
+      &quot;The stock market is full of vagaries; one day it’s up, the next it’s down.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Whimsical or Fanciful Nature&quot;,
+    &quot;examples&quot;: [
+      &quot;The artist’s work is full of vagaries, blending dreamlike imagery with stark realism.&quot;,
+      &quot;She indulged in the vagaries of her imagination, creating elaborate stories in her head.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Unexplained or Unaccountable Variation&quot;,
+    &quot;examples&quot;: [
+      &quot;The weather in the mountains is prone to vagaries, changing rapidly without warning.&quot;,
+      &quot;The old machine’s performance is affected by the vagaries of its aging components.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · resort-to · Examples 1/2</summary><p>Core meaning/pattern correct. Redundant groups and unlabeled dated visiting sense are poor B2 prioritization.</p><p><strong>Entry:</strong> resort to · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Using something as a last option&quot;,
+    &quot;examples&quot;: [
+      &quot;When negotiations failed, the company was forced to resort to legal action.&quot;,
+      &quot;Exhausted and hungry, we had to resort to eating the emergency rations.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Falling back on a less desirable behaviour&quot;,
+    &quot;examples&quot;: [
+      &quot;I hate to resort to shouting, but I need to make sure you understand how important this is.&quot;,
+      &quot;He didn’t resort to violence, but he did threaten to call the police.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Going to a place for recreation or relaxation&quot;,
+    &quot;examples&quot;: [
+      &quot;Every summer, families resort to the seaside for a holiday.&quot;,
+      &quot;Tourists often resort to mountain villages to experience traditional culture.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · put-up-with · Examples 1/2</summary><p>Core tolerance sense correct. Overstates temporariness/no-choice; groups are the same sense in different situations.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> put — To place something in a specific position or location. It can also mean to use or apply something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Tolerating an unpleasant situation&quot;,
+    &quot;examples&quot;: [
+      &quot;I don&#x27;t know how she can put up with his constant complaining; it&#x27;s incredibly draining.&quot;,
+      &quot;He&#x27;s been putting up with a noisy neighbour for months, and it’s really affecting his sleep.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Accepting something reluctantly&quot;,
+    &quot;examples&quot;: [
+      &quot;The company will have to put up with a slight decrease in profits this quarter due to the new regulations.&quot;,
+      &quot;I might have to put up with a smaller apartment if I want to live in the city centre.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Enduring hardship or difficulty&quot;,
+    &quot;examples&quot;: [
+      &quot;The soldiers put up with freezing temperatures and harsh conditions during the training exercise.&quot;,
+      &quot;She’s putting up with a lot of stress at work right now, but she’s determined to succeed.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · sanction · Examples 1/2</summary><p>Correct approval in source. Sanctify is not the derivational base. Examples mix noun sanctions with verb and repeat approval groups.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> sanctify — To make something holy or sacred; to dedicate or consecrate something to a religious purpose.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Official Permission/Approval&quot;,
+    &quot;examples&quot;: [
+      &quot;The government didn&#x27;t sanction the construction of the new factory near the river.&quot;,
+      &quot;The university requires faculty sanction before students can begin their dissertation research.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To Authorize by Law/Rule&quot;,
+    &quot;examples&quot;: [
+      &quot;The new law sanctions the use of electric scooters in designated areas.&quot;,
+      &quot;Company policy sanctions a maximum of two days’ leave per month without prior approval.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Economic Penalty/Restriction&quot;,
+    &quot;examples&quot;: [
+      &quot;The UN imposed sanctions on the country after the military coup.&quot;,
+      &quot;International trade sanctions severely hampered the nation’s economic growth.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Formal Agreement/Consent&quot;,
+    &quot;examples&quot;: [
+      &quot;They formally sanctioned the merger of the two companies at the board meeting.&quot;,
+      &quot;The treaty was sanctioned by all participating nations, marking a significant step towards peace.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · tabled-uk · Examples 1/2</summary><p>Wrong source sense: postponement despite British/immediate-discussion cues. General meaning omits relevant British sense.</p><p><strong>Entry:</strong> table · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To postpone or delay something&quot;,
+    &quot;examples&quot;: [
+      &quot;The meeting was tabled until next week due to a scheduling conflict.&quot;,
+      &quot;They decided to table the proposal for further discussion and research.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To present something for consideration or discussion&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee will table a new budget plan at the next council meeting.&quot;,
+      &quot;She tabled her concerns about the project&#x27;s timeline with the manager.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · inflammable · Examples 1/2</summary><p>Core flammability correct. Figurative impressionability is less precise than emotional excitability; explanation spends space on prefix.</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> flame — A flame is the visible, gaseous part of a fire; it is produced by combustion.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Capable of easily catching fire; dangerous.&quot;,
+    &quot;examples&quot;: [
+      &quot;The warning label clearly stated that the aerosol cans were highly inflammable and should be stored away from heat.&quot;,
+      &quot;Due to the inflammable nature of the chemicals, only trained personnel are allowed in the laboratory.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Figurative: Easily influenced or excited; impressionable.&quot;,
+    &quot;examples&quot;: [
+      &quot;As a young and inflammable mind, he readily believed everything he read in sensationalist newspapers.&quot;,
+      &quot;The politician targeted the inflammable emotions of the crowd with his fiery rhetoric.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · seek-to · Examples 1/2</summary><p>Preserves seek to. Three groups divide the same attempt-to sense by topic.</p><p><strong>Entry:</strong> seek to · verb + to-infinitive</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Attempt to Achieve (Goal)&quot;,
+    &quot;examples&quot;: [
+      &quot;The company will seek to expand its market share by offering new products.&quot;,
+      &quot;She seeks to improve her public speaking skills through regular practice.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Try to Find/Discover&quot;,
+    &quot;examples&quot;: [
+      &quot;Researchers seek to understand the causes of climate change through extensive data analysis.&quot;,
+      &quot;The police are seeking to locate the missing child as quickly as possible.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Aim to Influence/Persuade&quot;,
+    &quot;examples&quot;: [
+      &quot;The politician sought to reassure voters about the economic recovery.&quot;,
+      &quot;The lawyer sought to convince the jury of his client’s innocence.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma3:12b-it-q4_K_M · long-12000 · Examples 0/2</summary><p>Correct low-weight source sense. False base light -&gt; bright (also defines bright as a verb). Invented promising-future sense; noun/derivative examples.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> bright — To shine brightly; to give off a lot of light. It can also describe something that is cheerful or positive.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Illumination; lacking darkness&quot;,
+    &quot;examples&quot;: [
+      &quot;The room was filled with a soft, light from the candles.&quot;,
+      &quot;Could you turn on the light, please? It’s quite dark in here.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Pale colour&quot;,
+    &quot;examples&quot;: [
+      &quot;She chose a light blue dress for the summer wedding.&quot;,
+      &quot;The walls were painted a light cream colour to make the space feel larger.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not heavy; of low weight&quot;,
+    &quot;examples&quot;: [
+      &quot;He packed a light suitcase for his weekend trip.&quot;,
+      &quot;The box felt surprisingly light when I picked it up.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Cheerful disposition&quot;,
+    &quot;examples&quot;: [
+      &quot;Despite the bad news, she tried to maintain a light and positive attitude.&quot;,
+      &quot;His lighthearted jokes always brighten up the office.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Promising future prospects&quot;,
+    &quot;examples&quot;: [
+      &quot;The young athlete has a light future ahead of him, with the potential to win gold.&quot;,
+      &quot;The company’s new product line looks light, and could significantly increase profits.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · power · Examples 2/2</summary><p>Accurate electricity sense and useful, broadly distinct noun usages.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;The ability to influence or control people, events, or the course of things&quot;,
+    &quot;examples&quot;: [
+      &quot;The CEO wielded immense power over the company&#x27;s global strategy.&quot;,
+      &quot;The citizens protested to strip the government of its absolute power.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Physical strength or the capacity to perform physical actions&quot;,
+    &quot;examples&quot;: [
+      &quot;The athlete was amazed by the raw power of the champion&#x27;s punch.&quot;,
+      &quot;The heavy machinery provides the power needed to move these massive stones.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Electrical energy or the capacity to produce it&quot;,
+    &quot;examples&quot;: [
+      &quot;The city suffered a total blackout when the power grid failed.&quot;,
+      &quot;We are looking for ways to generate clean power from solar energy.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The capacity or ability to do something&quot;,
+    &quot;examples&quot;: [
+      &quot;She didn&#x27;t have the power to change his mind about the decision.&quot;,
+      &quot;The new software gives users the power to edit videos in real-time.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · charge · Examples 2/2</summary><p>Expands entry to charge (someone) with (something); IPA /tshahrdzhd/ corresponds to charged, not displayed entry. Legal explanation is imprecise; general meaning narrower than its entrusting examples.</p><p><strong>Entry:</strong> charge (someone) with (something) · verb; past tense</p><p><strong>Word formation:</strong> charge — To formally accuse someone of a crime or offense.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To formally accuse someone of a crime or offense.&quot;,
+    &quot;examples&quot;: [
+      &quot;The police charged him with shoplifting after the security footage was reviewed.&quot;,
+      &quot;She was charged with reckless driving following the accident on the highway.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To entrust someone with a specific task, responsibility, or duty.&quot;,
+    &quot;examples&quot;: [
+      &quot;The manager charged her with the responsibility of organizing the annual conference.&quot;,
+      &quot;They charged him with the task of overseeing the entire construction project.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · strain · Examples 1/2</summary><p>To the limit of ability is too strong; strain a muscle is not simply physical effort. A filtering-pasta example has a confused purpose; one noun example.</p><p><strong>Entry:</strong> strain · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To force or stretch something to the point of potential damage or breaking&quot;,
+    &quot;examples&quot;: [
+      &quot;The heavy workload began to strain the team&#x27;s resources during the final month of the project.&quot;,
+      &quot;I don&#x27;t want to strain my eyes by looking at the computer screen for too many hours straight.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To exert great physical or mental effort&quot;,
+    &quot;examples&quot;: [
+      &quot;She had to strain every muscle in her body to lift the heavy suitcase onto the luggage rack.&quot;,
+      &quot;He strained to hear the speaker&#x27;s voice over the loud music playing in the background.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To cause someone to feel great pressure or emotional stress&quot;,
+    &quot;examples&quot;: [
+      &quot;The constant demands of the new job are starting to strain her relationship with her family.&quot;,
+      &quot;The sudden increase in travel requirements put a significant strain on the company&#x27;s budget.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To filter a liquid or substance to remove solid particles&quot;,
+    &quot;examples&quot;: [
+      &quot;You should strain the pasta before serving it to ensure no large pieces of vegetable remain.&quot;,
+      &quot;The chef strained the sauce through a fine mesh to achieve a perfectly smooth consistency.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · hitherto · Examples 0/2</summary><p>Unnatural/redundant until hitherto in an example; overfits explanation to unknown information.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Until now or until the present time&quot;,
+    &quot;examples&quot;: [
+      &quot;The company has enjoyed a period of unprecedented growth hitherto.&quot;,
+      &quot;The mysterious ruins had remained unexplored by archaeologists until hitherto.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · conceivably · Examples 1/2</summary><p>Correct possibility sense. Two example groups are paraphrases.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceive — To form an idea or imagine something. It can also mean to become pregnant.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Used to indicate that something is possible or could happen under certain circumstances&quot;,
+    &quot;examples&quot;: [
+      &quot;We could conceivably finish the project by Friday if everyone stays late tonight.&quot;,
+      &quot;It is conceivably the best solution we have, given our current budget constraints.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Used to express a hypothetical possibility that is difficult to imagine&quot;,
+    &quot;examples&quot;: [
+      &quot;Could he conceivably be the secret owner of the company?&quot;,
+      &quot;The plan is so complex that it conceivably needs a team of experts to execute.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · vagaries · Examples 2/2</summary><p>Correct plural entry and examples, but invents vary as derivational base.</p><p><strong>Entry:</strong> vagaries · plural noun</p><p><strong>Word formation:</strong> vary — To change or become different over time or in different situations.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Unpredictable changes or fluctuations in fortune or circumstances&quot;,
+    &quot;examples&quot;: [
+      &quot;The company&#x27;s profits are subject to the vagaries of the global stock market.&quot;,
+      &quot;Farmers must adapt their techniques to cope with the vagaries of the local weather.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · resort-to · Examples 1/2</summary><p>Correct prepositional-verb pattern. Overstates necessity/extremity; two example groups duplicate the same usage.</p><p><strong>Entry:</strong> resort to · prepositional verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To do something because there are no other options available&quot;,
+    &quot;examples&quot;: [
+      &quot;They didn&#x27;t want to resort to violence, but they felt they had no other choice to protect their home.&quot;,
+      &quot;I hope we can settle this through negotiation instead of having to resort to legal action.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To use a specific method or behavior as a last measure&quot;,
+    &quot;examples&quot;: [
+      &quot;The company had to resort to drastic budget cuts to avoid going bankrupt.&quot;,
+      &quot;He eventually had to resort to lying to keep his job during the crisis.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · put-up-with · Examples 0/2</summary><p>Without complaining is an unwarranted restriction. Four examples teach put up (accommodate/build), dropping essential with.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To tolerate or endure something unpleasant or annoying&quot;,
+    &quot;examples&quot;: [
+      &quot;I don&#x27;t know how she can put up with his constant complaining every single day.&quot;,
+      &quot;We have to put up with the noise from the construction site until the project is finished.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To provide someone with a place to stay&quot;,
+    &quot;examples&quot;: [
+      &quot;Could you put me up for a night while I&#x27;m in town for the conference?&quot;,
+      &quot;They were kind enough to put up their cousins in the spare bedroom.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To build or erect something&quot;,
+    &quot;examples&quot;: [
+      &quot;The community decided to put up a new playground for the local children.&quot;,
+      &quot;They plan to put up some temporary fences around the garden area.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · sanction · Examples 0/2</summary><p>Correct core definition and general contronym explanation. Third example-group heading says authorization but examples use punitive sanctions.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To give official permission or approval for an action&quot;,
+    &quot;examples&quot;: [
+      &quot;The government refused to sanction the construction of the new dam due to environmental concerns.&quot;,
+      &quot;The committee will sanction the use of external consultants for the upcoming project.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To impose a penalty or punishment for disobeying a law or rule&quot;,
+    &quot;examples&quot;: [
+      &quot;The league decided to sanction the team for using prohibited substances during the season.&quot;,
+      &quot;The city council might sanction any business that fails to comply with the new safety regulations.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To authorize or support through official decree or diplomatic action&quot;,
+    &quot;examples&quot;: [
+      &quot;The UN might sanction the trade of certain minerals to prevent funding for armed conflicts.&quot;,
+      &quot;The international community could sanction the regime to pressure it into making political reforms.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · tabled-uk · Examples 2/2</summary><p>Meaning mixes opposite senses; explanation explicitly chooses postponement despite British/immediate-discussion context. Notes know British distinction but do not apply it.</p><p><strong>Entry:</strong> table · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To postpone or put aside a discussion or action until a later time&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee decided to table the motion until the next meeting to allow for more research.&quot;,
+      &quot;We should table the discussion about the budget until we have the final figures from the accounting department.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To formally present something for discussion or consideration&quot;,
+    &quot;examples&quot;: [
+      &quot;The CEO plans to table a new proposal regarding the company&#x27;s expansion into Asian markets.&quot;,
+      &quot;I would like to table the issue of remote work policies during today&#x27;s session.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · inflammable · Examples 2/2</summary><p>Correct flammability meaning, useful warning examples and legitimate base flame.</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> flame — To burn or produce light and heat.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Easily set on fire; combustible&quot;,
+    &quot;examples&quot;: [
+      &quot;The warehouse was filled with inflammable liquids that posed a severe risk to the neighborhood.&quot;,
+      &quot;Please ensure that all inflammable materials are kept away from the open flame during the barbecue.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · seek-to · Examples 1/2</summary><p>Correct pattern, but topic-based groups duplicate one sense; aims to seek to is needlessly awkward.</p><p><strong>Entry:</strong> seek to · verb + to-infinitive</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To make an effort or attempt to achieve a specific goal&quot;,
+    &quot;examples&quot;: [
+      &quot;The company aims to seek to expand its market share in Southeast Asia by next year.&quot;,
+      &quot;The government must seek to provide better healthcare facilities for rural communities.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To try to obtain or find something specific&quot;,
+    &quot;examples&quot;: [
+      &quot;The refugees are seeking to find a permanent place of residence in a safe country.&quot;,
+      &quot;The researchers seek to gather more data before publishing their final report.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To try to achieve a state of being or a specific behavior&quot;,
+    &quot;examples&quot;: [
+      &quot;The organization seeks to promote equality and diversity within the workplace.&quot;,
+      &quot;The new policy seeks to ensure that all students have equal access to resources.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · gemma4:12b-it-qat · long-12000 · Examples 0/2</summary><p>Correct low-weight source sense. Invents light = intelligent, substitutes lighthearted, and misuses a light touch.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Not heavy in weight&quot;,
+    &quot;examples&quot;: [
+      &quot;I prefer to carry a light backpack when I go hiking in the mountains.&quot;,
+      &quot;This suitcase is very light, so it shouldn&#x27;t cost extra for the flight.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Pale in color or not dark&quot;,
+    &quot;examples&quot;: [
+      &quot;She decided to paint her bedroom a light shade of blue to make it feel airy.&quot;,
+      &quot;He wore a light grey suit that complemented his skin tone perfectly.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not intense or heavy in amount (e.g., food, sleep, work)&quot;,
+    &quot;examples&quot;: [
+      &quot;I had a very light breakfast this morning, just a piece of toast and some tea.&quot;,
+      &quot;We took a light stroll through the park before heading to the cafe.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Cheerful, carefree, or not serious&quot;,
+    &quot;examples&quot;: [
+      &quot;The movie was a light comedy that kept us laughing the whole time.&quot;,
+      &quot;He has a lighthearted attitude toward his mistakes, which makes him easy to work with.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Intelligent or quick-witted&quot;,
+    &quot;examples&quot;: [
+      &quot;The professor praised the student for being a light and capable researcher.&quot;,
+      &quot;She is a light touch with her humor, knowing exactly how to make people smile without offending them.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · power · Examples 1/2</summary><p>Contextual meaning includes unrelated authority before electricity. Several example groups duplicate ability/authority.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;The ability to control or influence others&quot;,
+    &quot;examples&quot;: [
+      &quot;The president holds a lot of power in the country.&quot;,
+      &quot;She used her position to gain more power within the company.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The ability to do something physically or mentally&quot;,
+    &quot;examples&quot;: [
+      &quot;He has the power to lift heavy weights.&quot;,
+      &quot;Even after the illness, she retained her mental power.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;A source of energy or strength&quot;,
+    &quot;examples&quot;: [
+      &quot;The car runs on electric power.&quot;,
+      &quot;Solar power is becoming a popular alternative energy source.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;A position or role with authority&quot;,
+    &quot;examples&quot;: [
+      &quot;He was given power over the project by the board.&quot;,
+      &quot;In some countries, the military holds too much power.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The ability to achieve something important or difficult&quot;,
+    &quot;examples&quot;: [
+      &quot;It takes a lot of power to change the system.&quot;,
+      &quot;She showed great power in negotiating the deal.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · charge · Examples 2/2</summary><p>Good accusation sense and distinct verb examples. Used in legal/formal contexts only is overbroad; general meaning omits important senses.</p><p><strong>Entry:</strong> charge · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To accuse someone of a crime or wrongdoing&quot;,
+    &quot;examples&quot;: [
+      &quot;The police charged him with theft after finding evidence in his home.&quot;,
+      &quot;She was charged with assault following the incident at the party.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To give someone responsibility for something&quot;,
+    &quot;examples&quot;: [
+      &quot;The manager charged the new employee with organizing the team meeting.&quot;,
+      &quot;He was charged with leading the project to completion by the end of the year.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To ask for payment for a service or product&quot;,
+    &quot;examples&quot;: [
+      &quot;The restaurant charged us extra for the wine we didn&#x27;t order.&quot;,
+      &quot;They charged me $50 for the repair, but I think it was overpriced.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To move quickly forward, often with force&quot;,
+    &quot;examples&quot;: [
+      &quot;The bull charged at the matador with great speed and power.&quot;,
+      &quot;The car charged down the hill, losing control on the way.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To put electricity into a device, such as a battery&quot;,
+    &quot;examples&quot;: [
+      &quot;I need to charge my phone before I leave for the meeting.&quot;,
+      &quot;Make sure to charge the camera fully before the trip.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · strain · Examples 1/2</summary><p>Keeps inflected strained as the entry; grammar/general-definition mismatch. Near-failure claim is too strong; example labels partly circular.</p><p><strong>Entry:</strong> strained · verb</p><p><strong>Word formation:</strong> strain — To exert force or pressure on something, often to the point of causing stress or damage.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To stretch or pull something tightly&quot;,
+    &quot;examples&quot;: [
+      &quot;The musician strained the violin string until it snapped.&quot;,
+      &quot;The fabric was strained during the washing process.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To make a strained effort or attempt&quot;,
+    &quot;examples&quot;: [
+      &quot;She strained to hear the conversation from the other room.&quot;,
+      &quot;He strained his voice to be heard over the noise of the crowd.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To cause a relationship or situation to become tense or difficult&quot;,
+    &quot;examples&quot;: [
+      &quot;The argument strained their friendship beyond repair.&quot;,
+      &quot;The economic crisis has strained relations between the two countries.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · hitherto · Examples 1/2</summary><p>Accurate core meaning and plausible hither base. Overstates discovery/revelation; two groups paraphrase one sense.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> hither — To or toward a place; in the direction of</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Up to now; until the present time&quot;,
+    &quot;examples&quot;: [
+      &quot;Hitherto, no one has discovered a cure for the disease.&quot;,
+      &quot;The company has remained profitable hitherto.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Previously; in the past&quot;,
+    &quot;examples&quot;: [
+      &quot;Hitherto, the project had faced numerous delays.&quot;,
+      &quot;Hitherto unknown challenges have emerged during the negotiations.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · conceivably · Examples 1/2</summary><p>Correct teaching, but two groups repeat the same possibility sense.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceive — To form an idea or imagine something. It can also mean to become pregnant.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;In a way that is logically possible or plausible&quot;,
+    &quot;examples&quot;: [
+      &quot;Conceivably, the project could be completed by next week if everyone works overtime.&quot;,
+      &quot;Conceivably, the company might have made a mistake in the calculations.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;In a way that is imaginable or thinkable, even if not certain&quot;,
+    &quot;examples&quot;: [
+      &quot;Conceivably, the situation could have turned out much worse.&quot;,
+      &quot;Conceivably, he could have been somewhere else at the time of the crime.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · vagaries · Examples 1/2</summary><p>Correct plural and singular base. Some whim examples are awkward, though the sense is established.</p><p><strong>Entry:</strong> vagaries · plural noun</p><p><strong>Word formation:</strong> vagary — A sudden, unexpected, and unpredictable change or occurrence.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Unpredictable changes or variations, especially in weather or circumstances&quot;,
+    &quot;examples&quot;: [
+      &quot;The vagaries of the weather made it difficult to plan the outdoor event.&quot;,
+      &quot;Travelers must be prepared for the vagaries of life in remote regions.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Strange or unusual behavior or actions&quot;,
+    &quot;examples&quot;: [
+      &quot;His sudden change in attitude was the result of some personal vagaries.&quot;,
+      &quot;The artist&#x27;s work is known for its eccentric vagaries and unexpected themes.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · resort-to · Examples 1/2</summary><p>Correct entry and source tense. Unsupported past-perfect frequency note; dated visiting sense is unlabeled.</p><p><strong>Entry:</strong> resort to · phrasal verb; past perfect tense</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To use something (usually something negative or extreme) when other options are not available&quot;,
+    &quot;examples&quot;: [
+      &quot;The company had to resort to layoffs when the economy took a downturn.&quot;,
+      &quot;He resorted to cheating during the exam because he was unprepared.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To go to a place, typically a holiday destination, for relaxation or leisure&quot;,
+    &quot;examples&quot;: [
+      &quot;We decided to resort to the mountains for a weekend getaway.&quot;,
+      &quot;Every summer, they resort to the same beach house in the countryside.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · put-up-with · Examples 0/2</summary><p>Tolerate sense correct but no-action/no-complaining restrictions are too strong. Examples drop with and falsely teach accommodation/display as this expression.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To tolerate or endure something unpleasant&quot;,
+    &quot;examples&quot;: [
+      &quot;I can&#x27;t put up with his constant complaining anymore.&quot;,
+      &quot;She puts up with the noise from the construction site every day.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To provide temporary accommodation for someone&quot;,
+    &quot;examples&quot;: [
+      &quot;We put up with our cousins for a week during the holidays.&quot;,
+      &quot;The hotel put up several families displaced by the flood.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To display or exhibit something, often in a public place&quot;,
+    &quot;examples&quot;: [
+      &quot;The town put up a new sign welcoming visitors.&quot;,
+      &quot;They put up posters around the city to advertise the event.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · sanction · Examples 2/2</summary><p>Correct approval sense and examples, but notes wrongly label punitive meaning as noun-only despite its verb examples.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To officially approve or permit something&quot;,
+    &quot;examples&quot;: [
+      &quot;The government sanctioned the new environmental policy after months of debate.&quot;,
+      &quot;The company sanctioned the use of remote work for all employees.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To impose penalties or restrictions as a form of punishment&quot;,
+    &quot;examples&quot;: [
+      &quot;The UN sanctioned the country for its violation of international law.&quot;,
+      &quot;The sports federation sanctioned the player for using performance-enhancing drugs.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · tabled-uk · Examples 0/2</summary><p>Correct British source sense. Invented moving-a-bill-between-places heading and unnatural tabling-the-dinner-party example.</p><p><strong>Entry:</strong> table · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To put something aside for later consideration or discussion&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee decided to table the proposal until next week.&quot;,
+      &quot;The teacher asked the students to table their questions until after the lecture.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To move a bill or motion from one place to another in a legislative body&quot;,
+    &quot;examples&quot;: [
+      &quot;The senator moved to table the bill, but the majority voted it down.&quot;,
+      &quot;The motion was tabled and will be reconsidered at the next session.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To arrange or set out (food, dishes, etc.) on a table&quot;,
+    &quot;examples&quot;: [
+      &quot;The waiter helped us table the meal before we started eating.&quot;,
+      &quot;They spent hours tabling the dinner party with elegant silverware and fine china.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · inflammable · Examples 0/2</summary><p>Correct flammability definition. Unreliable medical examples of skin/eyes becoming inflammable teach the wrong collocation.</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> flame — A visible, gaseous mixture of hot burning gases produced by combustion.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;easily caught fire&quot;,
+    &quot;examples&quot;: [
+      &quot;The old wooden buildings are highly inflammable and require special fire precautions.&quot;,
+      &quot;Inflammable liquids should be stored in a secure, fireproof cabinet.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;capable of being inflamed or irritated (used in medical contexts)&quot;,
+    &quot;examples&quot;: [
+      &quot;The skin condition caused the area to become easily inflammable and prone to infection.&quot;,
+      &quot;Certain chemicals can cause the eyes to become inflammable and red.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · seek-to · Examples 1/2</summary><p>Keeps sought to instead of dictionary seek to; phrasal-verb label and infinitive explanation are imprecise. Groups duplicate one sense.</p><p><strong>Entry:</strong> sought to · verb; phrasal verb (verb + to-infinitive)</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Attempted to do something, often with a specific goal in mind&quot;,
+    &quot;examples&quot;: [
+      &quot;The company sought to expand its operations into new markets.&quot;,
+      &quot;She sought to improve her skills by taking additional courses.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Strived or aimed to achieve something, often in a formal or serious context&quot;,
+    &quot;examples&quot;: [
+      &quot;The government sought to reduce unemployment through new policies.&quot;,
+      &quot;He sought to make a lasting impact on the community.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Tried to find or obtain something, often in a searching or searching manner&quot;,
+    &quot;examples&quot;: [
+      &quot;They sought to locate the missing documents before the deadline.&quot;,
+      &quot;The researchers sought to gather more data for their study.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3:14b-q4_K_M · long-12000 · Examples 0/2</summary><p>Source low-weight sense is identified but hint adds unrelated brightness sense. Invents light instructions = easy to understand, and includes noun examples.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Not heavy; having little weight&quot;,
+    &quot;examples&quot;: [
+      &quot;The box was so light that I could carry it easily.&quot;,
+      &quot;She bought a light suitcase for her trip.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Bright; not dark&quot;,
+    &quot;examples&quot;: [
+      &quot;The light from the lamp made the room feel warm and welcoming.&quot;,
+      &quot;Evening came quickly, and the light faded fast.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Easy to understand or do&quot;,
+    &quot;examples&quot;: [
+      &quot;The teacher explained the topic in a light way that everyone could follow.&quot;,
+      &quot;The instructions were light and didn&#x27;t confuse anyone.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not serious; humorous&quot;,
+    &quot;examples&quot;: [
+      &quot;He made a light joke about the situation.&quot;,
+      &quot;The conversation stayed light and fun throughout the meeting.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Slight in degree or intensity&quot;,
+    &quot;examples&quot;: [
+      &quot;The pain was light and didn&#x27;t last long.&quot;,
+      &quot;The criticism was light and not meant to hurt.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · power · Examples 0/2</summary><p>Correct electricity definition. Invents a specific office/position sense with appointed to a high-ranking power; groups overlap and examples do not always match headings.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Physical force or energy&quot;,
+    &quot;examples&quot;: [
+      &quot;The sudden power outage left the entire city in darkness.&quot;,
+      &quot;This new engine generates enough power to drive the heavy truck up the hill.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Political authority or control&quot;,
+    &quot;examples&quot;: [
+      &quot;The president has the power to declare a state of emergency.&quot;,
+      &quot;It is important to keep power balanced between different branches of government.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Electrical energy supply&quot;,
+    &quot;examples&quot;: [
+      &quot;Please make sure you plug in your laptop before the power goes out.&quot;,
+      &quot;The storm caused widespread power failures across the northern region.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Ability or capacity to do something&quot;,
+    &quot;examples&quot;: [
+      &quot;She has the power to influence public opinion with her speeches.&quot;,
+      &quot;Do you have the power to change your own password?&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;A specific official position or office&quot;,
+    &quot;examples&quot;: [
+      &quot;He was appointed to a high-ranking power in the military.&quot;,
+      &quot;The new law gives local councils more power over zoning decisions.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · charge · Examples 0/2</summary><p>Correct legal meaning. Payment group contains charging a phone, falsely mapping that example to payment. Charged him to pay is an unhelpful pattern example.</p><p><strong>Entry:</strong> charge · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To ask for payment for goods or services&quot;,
+    &quot;examples&quot;: [
+      &quot;The hotel added a surprise fee to the bill and then tried to charge us extra.&quot;,
+      &quot;Please remember to charge your phone before you leave the house.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To accuse someone of committing a crime or wrongdoing&quot;,
+    &quot;examples&quot;: [
+      &quot;The police decided not to charge him with any traffic violations.&quot;,
+      &quot;She was charged with fraud after the investigation revealed the missing funds.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To move forward quickly and forcefully, often in a game or battle&quot;,
+    &quot;examples&quot;: [
+      &quot;The quarterback took a few steps back before charging toward the end zone.&quot;,
+      &quot;The bull charged at the matador as soon as he stepped into the ring.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To fill an object with electricity or store energy&quot;,
+    &quot;examples&quot;: [
+      &quot;It takes about two hours to fully charge this new laptop battery.&quot;,
+      &quot;Make sure you charge your electric vehicle before the winter storm hits.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To entrust someone with a responsibility, duty, or task&quot;,
+    &quot;examples&quot;: [
+      &quot;The manager charged the team with completing the project by Friday.&quot;,
+      &quot;She was charged with the difficult task of negotiating the peace treaty.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · strain · Examples 0/2</summary><p>Correct source effort. One label says strain causes breaking/failure; another says maintain/avoid conflict, the opposite of strain relations.</p><p><strong>Entry:</strong> strain · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To put excessive physical or mental pressure on something, causing it to break or fail.&quot;,
+    &quot;examples&quot;: [
+      &quot;The old bridge began to strain under the weight of the heavy trucks crossing it.&quot;,
+      &quot;Her patience was finally strained by his constant interruptions during the meeting.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To stretch a muscle, tendon, or ligament, often resulting in pain or injury.&quot;,
+    &quot;examples&quot;: [
+      &quot;I think I strained my ankle while jumping off the curb this morning.&quot;,
+      &quot;He had to stop running because he felt a sharp pain from a strained calf muscle.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To make an effort to avoid conflict or to maintain a difficult relationship.&quot;,
+    &quot;examples&quot;: [
+      &quot;They managed to strain their friendship by arguing over every small detail.&quot;,
+      &quot;The constant political tension has begun to strain relations between the two countries.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To filter a liquid or solid through a cloth, mesh, or sieve to remove impurities.&quot;,
+    &quot;examples&quot;: [
+      &quot;Please strain the pasta water before adding it to the sauce.&quot;,
+      &quot;She strained the coffee through a paper filter to remove the grounds.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To make an intense effort to hear or see something that is difficult to perceive.&quot;,
+    &quot;examples&quot;: [
+      &quot;He strained his ears to catch the faint sound of the siren in the distance.&quot;,
+      &quot;We all strained our eyes against the bright sun to find the lost hiker.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · hitherto · Examples 2/2</summary><p>Contextual definition wrongly makes nonexistence/newness part of hitherto itself; this overfits hitherto unknown. General meaning and examples are accurate.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Until now; up to the present time&quot;,
+    &quot;examples&quot;: [
+      &quot;The company has hitherto ignored customer complaints, but that must change immediately.&quot;,
+      &quot;Hitherto unknown species of deep-sea fish were discovered during this expedition.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · conceivably · Examples 1/2</summary><p>Correct possibility sense and one group. Conceivably possible is redundant despite explicit prompt guidance.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceive — To form an idea or imagine something in your mind.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;In a way that can be imagined or believed to be possible&quot;,
+    &quot;examples&quot;: [
+      &quot;It is conceivably true that the project will face delays due to unexpected weather.&quot;,
+      &quot;Given the current market trends, it is conceivably possible for prices to drop next month.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · vagaries · Examples 1/2</summary><p>Singular vagary contradicts plural-noun label; overstates irrationality/defiance of natural law. Examples prioritize uncommon singular usage.</p><p><strong>Entry:</strong> vagary · plural noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;an unpredictable or eccentric action or behavior&quot;,
+    &quot;examples&quot;: [
+      &quot;The sudden change in weather was a true vagary of nature.&quot;,
+      &quot;His decision to quit the job without notice seemed like a strange vagary.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;a whimsical or fanciful idea or theory&quot;,
+    &quot;examples&quot;: [
+      &quot;The artist&#x27;s latest collection is a series of visual vagaries that defy logic.&quot;,
+      &quot;Critics dismissed the new policy as nothing more than a political vagary.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · resort-to · Examples 1/2</summary><p>Correct main pattern. Necessity is overstated; five topic-based/dated place usages are not useful distinct common senses.</p><p><strong>Entry:</strong> resort to · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To turn to a course of action that is considered extreme, unpleasant, or undesirable because other options have failed.&quot;,
+    &quot;examples&quot;: [
+      &quot;After all negotiations failed, the company was forced to resort to legal action.&quot;,
+      &quot;He never resorts to violence; he prefers to solve problems through dialogue.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To use a specific method or device as a last option or out of necessity.&quot;,
+    &quot;examples&quot;: [
+      &quot;We had no choice but to resort to borrowing money from friends to pay the rent.&quot;,
+      &quot;The hackers resorted to brute force attacks when their passwords were ignored.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To seek refuge or comfort in a particular place, activity, or person during difficult times.&quot;,
+    &quot;examples&quot;: [
+      &quot;During his depression, he resorted to drinking alcohol every night.&quot;,
+      &quot;When the weather turned cold, they resorted to their fireplace for warmth.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To make use of a specific resource or facility that is available for this purpose.&quot;,
+    &quot;examples&quot;: [
+      &quot;Visitors can resort to the main hall for shelter during the rainstorm.&quot;,
+      &quot;In case of an emergency, you should resort to the nearest fire exit.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To rely on a specific strategy or tactic repeatedly in a particular context.&quot;,
+    &quot;examples&quot;: [
+      &quot;The coach resorted to changing formations frequently to confuse the opponents.&quot;,
+      &quot;Politicians often resort to vague promises when asked about their plans.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · put-up-with · Examples 1/2</summary><p>Overstates a temporary endpoint. Notes explicitly call the traffic a gerund, which is false; example groups duplicate tolerance.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To tolerate or endure something unpleasant&quot;,
+    &quot;examples&quot;: [
+      &quot;I can&#x27;t put up with the constant noise from my neighbor anymore.&quot;,
+      &quot;She decided to quit her job because she couldn&#x27;t put up with the toxic management style.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To accept a situation or person as they are, without complaining&quot;,
+    &quot;examples&quot;: [
+      &quot;You have to learn to put up with your roommate&#x27;s messy habits if you want to live together.&quot;,
+      &quot;He tried to put up with the bad weather during his camping trip, but eventually gave in.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · sanction · Examples 1/2</summary><p>Contextual hint unnecessarily includes punitive opposite sense. One noun sanctions example in verb groups; general contronym explanation correct.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To officially approve or authorize something&quot;,
+    &quot;examples&quot;: [
+      &quot;The council voted to sanction the new development project after reviewing the environmental impact report.&quot;,
+      &quot;Without proper sanctions, the construction company cannot legally begin work on the bridge.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To impose a penalty or punishment for wrongdoing&quot;,
+    &quot;examples&quot;: [
+      &quot;The international community decided to sanction the regime following the invasion of neighboring territory.&quot;,
+      &quot;He was sanctioned by the league for repeatedly using abusive language during the match.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · tabled-uk · Examples 1/2</summary><p>Correct British source meaning. General meaning includes only postponement, and physical-surface heading is mismatched to abstract discussion examples.</p><p><strong>Entry:</strong> table · verb; past tense of &#x27;table&#x27; (in British parliamentary usage)</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To postpone or set aside a motion for later consideration&quot;,
+    &quot;examples&quot;: [
+      &quot;The opposition leader moved to table the bill until after the summer recess.&quot;,
+      &quot;We decided to table the controversial issue so we could focus on the budget first.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To place an object or document on a surface for inspection or discussion&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee will table the report at their next meeting.&quot;,
+      &quot;Please table your concerns so we can review the new policy together.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · inflammable · Examples 2/2</summary><p>Core meaning and examples correct. Explanation prioritizes Latin morphemes over useful usage; label on the paint can clearly stated is grammatical (can = container).</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Capable of catching fire easily; flammable&quot;,
+    &quot;examples&quot;: [
+      &quot;Please remember that gasoline is highly inflammable and must be stored away from any heat sources.&quot;,
+      &quot;The warning label on the paint can clearly stated that the liquid was inflammable.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · seek-to · Examples 1/2</summary><p>Correct dictionary pattern and source meaning. General explanation overstates trying hard/determination; three topic groups repeat one sense.</p><p><strong>Entry:</strong> seek to · verb + to-infinitive</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to make a determined effort to achieve something&quot;,
+    &quot;examples&quot;: [
+      &quot;The company seeks to expand its market share in Asia by next year.&quot;,
+      &quot;Scientists seek to find a cure for the disease before winter.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to try to avoid or prevent an undesirable outcome&quot;,
+    &quot;examples&quot;: [
+      &quot;We must seek to minimize the environmental impact of our new factory.&quot;,
+      &quot;The government seeks to reduce inflation without causing unemployment.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to aim to establish a specific relationship or condition&quot;,
+    &quot;examples&quot;: [
+      &quot;Diplomats seek to build trust between the two nations through dialogue.&quot;,
+      &quot;The new policy seeks to promote equality within the workplace.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>before · qwen3.5:9b-q4_K_M · long-12000 · Examples 0/2</summary><p>Correct low-weight source meaning. General definition equates light with dim lighting; example heading reverses illumination, also mixes derivatives and categories.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Having a low level of illumination or brightness&quot;,
+    &quot;examples&quot;: [
+      &quot;The room was too light for reading, so I pulled the curtains closed.&quot;,
+      &quot;Please turn on the main light; it is getting quite light outside.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not heavy in weight&quot;,
+    &quot;examples&quot;: [
+      &quot;I need a light backpack for my hiking trip this weekend.&quot;,
+      &quot;This fabric feels surprisingly light despite its thick texture.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Pale or bright in color; vivid&quot;,
+    &quot;examples&quot;: [
+      &quot;She wore a light blue dress that matched the summer sky perfectly.&quot;,
+      &quot;The artist used only light colors to create a cheerful atmosphere.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not serious, severe, or heavy in tone&quot;,
+    &quot;examples&quot;: [
+      &quot;He made a light joke about the weather to break the ice.&quot;,
+      &quot;The movie was a light-hearted comedy that everyone enjoyed.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Easy to do; requiring little effort or skill&quot;,
+    &quot;examples&quot;: [
+      &quot;Cooking this dish is very light work for someone with experience.&quot;,
+      &quot;The exam questions were surprisingly light compared to the practice tests.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · power · Examples 1/2</summary><p>Useful power senses, but some groups overlap and energy/ability examples are loosely classified.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;The ability to influence or control people or events.&quot;,
+    &quot;examples&quot;: [
+      &quot;The new manager quickly gained power within the company through his decisive leadership.&quot;,
+      &quot;Governments derive their power from the consent of the governed, ideally.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Physical strength or force.&quot;,
+    &quot;examples&quot;: [
+      &quot;The hydroelectric dam harnesses the power of the river to generate electricity.&quot;,
+      &quot;The athlete’s power allowed him to lift the incredibly heavy weight.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The capacity to do something or achieve something.&quot;,
+    &quot;examples&quot;: [
+      &quot;Renewable energy sources offer the power to reduce our reliance on fossil fuels.&quot;,
+      &quot;The team’s collective power and determination led them to victory.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · charge · Examples 2/2</summary><p>Three distinct common verb senses with matching natural examples; no invented base.</p><p><strong>Entry:</strong> charge · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To formally accuse someone of a crime.&quot;,
+    &quot;examples&quot;: [
+      &quot;The police formally charged him with theft after reviewing the security footage.&quot;,
+      &quot;She was charged with fraud following an investigation into the company&#x27;s finances.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To ask an amount of money for a service or product.&quot;,
+    &quot;examples&quot;: [
+      &quot;The hotel charges a resort fee that includes access to the pool and gym.&quot;,
+      &quot;They charge a premium for their handcrafted furniture due to the high-quality materials used.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To fill something with electrical power.&quot;,
+    &quot;examples&quot;: [
+      &quot;Please charge your phone overnight so it’s ready for your trip.&quot;,
+      &quot;He forgot to charge his laptop, so it died halfway through the presentation.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · strain · Examples 0/2</summary><p>The old bridge could not strain the increased traffic incorrectly uses strain as withstand.</p><p><strong>Entry:</strong> strain · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To put a physical or emotional pressure on someone or something.&quot;,
+    &quot;examples&quot;: [
+      &quot;The heavy workload continued to strain her mental health, making it difficult to focus.&quot;,
+      &quot;The old bridge couldn&#x27;t strain the increased traffic, so engineers had to reinforce it.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To use up or deplete a resource.&quot;,
+    &quot;examples&quot;: [
+      &quot;The drought strained the city&#x27;s water supply, leading to restrictions for residents.&quot;,
+      &quot;The unexpected repairs strained the company’s financial resources considerably.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · hitherto · Examples 2/2</summary><p>One correct common sense with usable examples; hither is a genuine component.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> hither — To or toward this place or person.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Until now; up to this point in time.&quot;,
+    &quot;examples&quot;: [
+      &quot;The company’s profits had been declining hitherto, but recent changes seem to have reversed that trend.&quot;,
+      &quot;Hitherto unknown species of fish were discovered during the deep-sea exploration.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · conceivably · Examples 1/2</summary><p>One example substitutes conceivable; the other has redundant conceivably possible.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceive — To form or develop an idea, impression, or notion.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Able to be imagined or understood; possibly.&quot;,
+    &quot;examples&quot;: [
+      &quot;It&#x27;s conceivable that the company will offer bonuses this year, given their recent profits.&quot;,
+      &quot;I can&#x27;t imagine how she managed to finish the marathon, but it&#x27;s conceivably possible with rigorous training.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · vagaries · Examples 2/2</summary><p>Good noun examples; vague is still not an English derivational base.</p><p><strong>Entry:</strong> vagary · plural noun</p><p><strong>Word formation:</strong> vague — Lacking clarity or precision; not clearly defined or easily understood.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;An unpredictable or erratic action or event.&quot;,
+    &quot;examples&quot;: [
+      &quot;The company&#x27;s marketing strategy has been subject to the vagaries of changing consumer tastes.&quot;,
+      &quot;The artist’s career followed a series of unexpected ups and downs, a testament to the vagaries of the art world.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · resort-to · Examples 1/2</summary><p>Correct phrase; heading overstates unpleasant/unacceptable action and uses candles as an example.</p><p><strong>Entry:</strong> resort to · phrasal verb</p><p><strong>Word formation:</strong> resort — To go to or use something as a place of refuge or a source of help.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To do something unpleasant or unacceptable because you have no other option.&quot;,
+    &quot;examples&quot;: [
+      &quot;When the negotiations stalled, the company had to resort to legal action to protect its interests.&quot;,
+      &quot;Faced with a sudden power outage, we were forced to resort to candles for light.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · put-up-with · Examples 2/2</summary><p>Two correct tolerance examples. Put is a real component, though not a useful derivational lesson for this fixed expression.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> put — To place something in a specific position.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To tolerate something unpleasant or annoying.&quot;,
+    &quot;examples&quot;: [
+      &quot;I don’t know how she can put up with his constant complaining.&quot;,
+      &quot;It’s difficult to put up with the noise from the construction site next door.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · sanction · Examples 1/2</summary><p>Both legitimate verb senses, but one example uses the noun sanctions instead.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To give official permission or approval for an action.&quot;,
+    &quot;examples&quot;: [
+      &quot;The government will sanction the construction of a new hospital in the city center.&quot;,
+      &quot;The university doesn&#x27;t sanction student protests that disrupt classes.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To apply penalties or restrictions to a country or organization.&quot;,
+    &quot;examples&quot;: [
+      &quot;The United Nations imposed sanctions on the country after its military aggression.&quot;,
+      &quot;Several companies were sanctioned for violating trade regulations.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · tabled-uk · Examples 1/2</summary><p>Only postponement examples; omits common British discussion sense.</p><p><strong>Entry:</strong> table · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To postpone or delay action until a later time.&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee decided to table the proposal until they could gather more information.&quot;,
+      &quot;Due to the unexpected objections, the motion was tabled for further discussion next week.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · inflammable · Examples 2/2</summary><p>Correct examples; flammable is not the transparent original English base (historical derivation runs the other way).</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> flammable — Capable of being easily set on fire; combustible.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Capable of being easily set on fire; readily combustible.&quot;,
+    &quot;examples&quot;: [
+      &quot;The inflammable materials were stored in a fire-resistant cabinet to prevent accidents.&quot;,
+      &quot;Despite the warning label, some people still underestimate how quickly inflammable liquids can ignite.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · seek-to · Examples 1/2</summary><p>Correct whole expression but two groups divide the same attempt-to sense by topic.</p><p><strong>Entry:</strong> seek to · verb + to-infinitive</p><p><strong>Word formation:</strong> seek — To try to find or obtain something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Attempt to achieve something; try to obtain.&quot;,
+    &quot;examples&quot;: [
+      &quot;The company will seek to expand its market share by offering new products.&quot;,
+      &quot;Many students seek to improve their English skills through online courses.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Try to find or discover something.&quot;,
+    &quot;examples&quot;: [
+      &quot;Researchers seek to understand the causes of climate change through extensive data analysis.&quot;,
+      &quot;The police are seeking to locate the missing child as quickly as possible.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma3:12b-it-q4_K_M · long-12000 · Examples 2/2</summary><p>Correct weight and mild-food meanings; no invented bright/intelligent senses or false base.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Not heavy; of low weight.&quot;,
+    &quot;examples&quot;: [
+      &quot;She packed a light suitcase for her weekend trip, hoping to avoid checked baggage fees.&quot;,
+      &quot;The climber preferred a light rope to make ascending the rock face easier.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Having a small amount of food; not rich or filling.&quot;,
+    &quot;examples&quot;: [
+      &quot;We opted for a light lunch of salad and soup instead of a heavy, greasy meal.&quot;,
+      &quot;The sauce was surprisingly light, with a delicate flavor that didn&#x27;t overpower the fish.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · power · Examples 2/2</summary><p>Three useful established noun senses with matching examples.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;The ability to influence or control people, events, or the success of something.&quot;,
+    &quot;examples&quot;: [
+      &quot;The company is trying to expand its power in the international market.&quot;,
+      &quot;She realized that she had the power to change the lives of the people in her community.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The energy derived from physical or chemical sources, such as electricity.&quot;,
+    &quot;examples&quot;: [
+      &quot;The city suffered a total power cut during the heavy storm last night.&quot;,
+      &quot;We need to find a way to generate more power from renewable sources.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The capacity or strength to do something.&quot;,
+    &quot;examples&quot;: [
+      &quot;He didn&#x27;t have the physical power to lift the heavy crate by himself.&quot;,
+      &quot;The new engine provides the car with much more power on the highway.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · charge · Examples 2/2</summary><p>Five distinct common verb senses; all examples use the verb charge.</p><p><strong>Entry:</strong> charge · verb; past tense</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To demand a price for a service or product&quot;,
+    &quot;examples&quot;: [
+      &quot;The hotel charged us an extra fee for the late check-out.&quot;,
+      &quot;How much did they charge you to repair the broken window?&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To move forward quickly and forcefully, often in an attack&quot;,
+    &quot;examples&quot;: [
+      &quot;The soldiers charged across the field to capture the fort.&quot;,
+      &quot;The bull charged at the matador as soon as the gate opened.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To entrust someone with a responsibility or task&quot;,
+    &quot;examples&quot;: [
+      &quot;The manager charged her with the task of organizing the annual conference.&quot;,
+      &quot;He was charged with the responsibility of keeping the accounts balanced.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To formally accuse someone of a crime&quot;,
+    &quot;examples&quot;: [
+      &quot;The police charged him with theft after the jewelry store robbery.&quot;,
+      &quot;She was charged with speeding during the investigation.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To supply an electrical device with energy&quot;,
+    &quot;examples&quot;: [
+      &quot;I charged my phone before leaving the house this morning.&quot;,
+      &quot;It took three hours to charge the electric car completely.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · strain · Examples 1/2</summary><p>Whole displayed strain to construction preserved; two groups paraphrase the same effort-to sense.</p><p><strong>Entry:</strong> strain to · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To make a great physical or mental effort to do something.&quot;,
+    &quot;examples&quot;: [
+      &quot;I had to strain to hear what he was saying over the loud music.&quot;,
+      &quot;She strained to keep her balance as she walked along the narrow ledge.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To make a great effort to achieve a specific goal or behavior.&quot;,
+    &quot;examples&quot;: [
+      &quot;He strained to remain calm during the heated argument with his boss.&quot;,
+      &quot;The team strained to finish the project before the final deadline.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · hitherto · Examples 1/2</summary><p>One good example; the other omits the target word completely.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Until now&quot;,
+    &quot;examples&quot;: [
+      &quot;The company has enjoyed a period of growth hitherto unknown in the industry.&quot;,
+      &quot;The mysterious ruins had remained unexplored until the recent expedition.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · conceivably · Examples 2/2</summary><p>One established possibility sense with two natural examples. Conceivable is a genuine intermediate adjective base.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceivable — Capable of being imagined or grasped mentally.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Possibly or potentially&quot;,
+    &quot;examples&quot;: [
+      &quot;Could this project be finished by Friday, conceivably, if we hire more staff?&quot;,
+      &quot;It is conceivably the best solution we have, but we need to double-check the costs.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · vagaries · Examples 2/2</summary><p>Correct unpredictable-change group and safe empty base.</p><p><strong>Entry:</strong> vagaries · plural noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Unpredictable changes or fluctuations&quot;,
+    &quot;examples&quot;: [
+      &quot;The company&#x27;s profits are subject to the vagaries of the global market.&quot;,
+      &quot;Farmers must adapt to the vagaries of the weather to ensure a good harvest.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · resort-to · Examples 2/2</summary><p>One common last-option sense with correct whole-expression examples.</p><p><strong>Entry:</strong> resort to · prepositional verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To do something because there are no other options&quot;,
+    &quot;examples&quot;: [
+      &quot;I don&#x27;t want to resort to violence, but I will if I have to defend myself.&quot;,
+      &quot;The company was forced to resort to drastic measures to avoid going bankrupt.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · put-up-with · Examples 2/2</summary><p>Correct whole-expression tolerance examples; no substituted put up.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To tolerate someone or something unpleasant or annoying&quot;,
+    &quot;examples&quot;: [
+      &quot;I don&#x27;t know how you can put up with that constant noise from the neighbors.&quot;,
+      &quot;She has had to put up with his bad temper for many years.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · sanction · Examples 2/2</summary><p>Clear approval and punishment verb groups with matching examples.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To give official permission or approval&quot;,
+    &quot;examples&quot;: [
+      &quot;The government refused to sanction the construction of the new dam.&quot;,
+      &quot;The committee will sanction the use of mobile phones during the exam.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To impose a penalty as a punishment&quot;,
+    &quot;examples&quot;: [
+      &quot;The league decided to sanction the team for using illegal equipment.&quot;,
+      &quot;The company was sanctioned for violating environmental regulations.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · tabled-uk · Examples 0/2</summary><p>Presentation heading contains an example of postponement; labels contradict one sentence.</p><p><strong>Entry:</strong> table · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To formally present a proposal, plan, or idea for discussion.&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee decided to table the motion until the next meeting to allow for more research.&quot;,
+      &quot;We need to table our new marketing strategy at the board meeting on Friday.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To postpone consideration of a matter until a later time.&quot;,
+    &quot;examples&quot;: [
+      &quot;Since we are running out of time, let&#x27;s table the discussion about the budget for now.&quot;,
+      &quot;The chairman suggested that we table the issue of office renovations until next month.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · inflammable · Examples 2/2</summary><p>One correct flammability group and legitimate flame base.</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> flame — A hot glowing body of ignited gas or liquid.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Easily set on fire&quot;,
+    &quot;examples&quot;: [
+      &quot;The warehouse was filled with inflammable liquids like gasoline and oil.&quot;,
+      &quot;Please keep all inflammable materials away from the open flame.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · seek-to · Examples 2/2</summary><p>One coherent attempt-to group, whole construction preserved.</p><p><strong>Entry:</strong> seek to · verb + to-infinitive</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To try to achieve or do something&quot;,
+    &quot;examples&quot;: [
+      &quot;The company is seeking to expand its operations into the European market next year.&quot;,
+      &quot;We should seek to find a solution that benefits everyone involved in the project.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · gemma4:12b-it-qat · long-12000 · Examples 1/2</summary><p>Four established adjective senses; light nap is less idiomatic than light sleep, but invented intelligence/future senses are gone.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Not heavy in weight&quot;,
+    &quot;examples&quot;: [
+      &quot;I prefer to carry a light backpack when I go hiking in the mountains.&quot;,
+      &quot;This suitcase is very light, so I can easily lift it onto the shelf.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Pale in color or not dark&quot;,
+    &quot;examples&quot;: [
+      &quot;She decided to paint her bedroom a light shade of blue to make it feel bigger.&quot;,
+      &quot;He wore a light gray suit to the wedding last weekend.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not intense or heavy (food, sleep, or work)&quot;,
+    &quot;examples&quot;: [
+      &quot;I had a very light breakfast this morning, just a piece of toast and some tea.&quot;,
+      &quot;I&#x27;m feeling a bit tired, so I think I&#x27;ll take a light nap before dinner.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not serious or heavy in style&quot;,
+    &quot;examples&quot;: [
+      &quot;The movie is a light comedy that is perfect for a relaxing evening.&quot;,
+      &quot;We had a light conversation about our hobbies during the coffee break.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · power · Examples 1/2</summary><p>Three valid broad noun senses; no power left to walk is awkward and groups partly overlap.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;The ability to control or influence people or events&quot;,
+    &quot;examples&quot;: [
+      &quot;The president has a lot of power in the government.&quot;,
+      &quot;She used her position to gain more power over the company.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The ability to do physical or mental work&quot;,
+    &quot;examples&quot;: [
+      &quot;After the long hike, he had no power left to walk any further.&quot;,
+      &quot;The machine needs a lot of power to operate correctly.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Electricity or energy used to run machines or devices&quot;,
+    &quot;examples&quot;: [
+      &quot;The power went out during the storm, leaving everyone in the dark.&quot;,
+      &quot;We need to install a backup power supply for the hospital.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · charge · Examples 2/2</summary><p>Five distinct common verb senses with correct headings and examples.</p><p><strong>Entry:</strong> charge · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To ask for or receive money for a service or product&quot;,
+    &quot;examples&quot;: [
+      &quot;The hotel charges $100 per night for each room.&quot;,
+      &quot;The mechanic charged me $50 for the oil change.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To give someone responsibility for a task or duty&quot;,
+    &quot;examples&quot;: [
+      &quot;The manager charged the new employee with organizing the meeting.&quot;,
+      &quot;The teacher charged the students with completing the project by Friday.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To move quickly with force or energy&quot;,
+    &quot;examples&quot;: [
+      &quot;The horse charged at the rider with great speed.&quot;,
+      &quot;The bull charged through the gate, causing chaos in the arena.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To accuse someone of a crime or wrongdoing&quot;,
+    &quot;examples&quot;: [
+      &quot;The police charged him with theft after finding evidence.&quot;,
+      &quot;She was charged with assault following the incident at the party.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To put electricity into a device, such as a battery&quot;,
+    &quot;examples&quot;: [
+      &quot;I need to charge my phone before the meeting starts.&quot;,
+      &quot;Make sure to charge the camera fully before the trip.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · strain · Examples 1/2</summary><p>Valid effort/tension senses; strained fabric after repeated washing is unnatural and category labels partly overlap.</p><p><strong>Entry:</strong> strained · verb</p><p><strong>Word formation:</strong> strain — To exert great physical or mental effort.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To stretch or pull something tightly, often causing it to become taut or damaged&quot;,
+    &quot;examples&quot;: [
+      &quot;The rope was strained during the rescue operation, but it held firm.&quot;,
+      &quot;The fabric of the shirt became strained after repeated washing.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To make an effort to do something, often with difficulty or under pressure&quot;,
+    &quot;examples&quot;: [
+      &quot;She strained her voice trying to be heard over the loud music.&quot;,
+      &quot;He strained to lift the heavy box but couldn&#x27;t move it.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · hitherto · Examples 1/2</summary><p>Two headings paraphrase the same until-then meaning.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> hither — To or toward this place.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;up to this point in time&quot;,
+    &quot;examples&quot;: [
+      &quot;Hitherto, no one has discovered a cure for the disease.&quot;,
+      &quot;The company has made significant progress hitherto, but much remains to be done.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;in a previous state or condition&quot;,
+    &quot;examples&quot;: [
+      &quot;The building has remained unchanged hitherto, despite the passage of time.&quot;,
+      &quot;Hitherto, the situation had been stable, but recent events have caused concern.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · conceivably · Examples 1/2</summary><p>Two duplicate possibility groups; one example substitutes the derived adjective conceivable.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceive — To imagine or think about something in the mind.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;In a way that is possible or imaginable&quot;,
+    &quot;examples&quot;: [
+      &quot;Conceivably, the project could be completed in half the time if more people were involved.&quot;,
+      &quot;It&#x27;s conceivable that the company might change its policies next year.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;In a way that is logically or reasonably possible&quot;,
+    &quot;examples&quot;: [
+      &quot;Conceivably, the solution to the problem could be much simpler than we think.&quot;,
+      &quot;Conceivably, the results of the experiment could have been different if the variables had been controlled.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · vagaries · Examples 1/2</summary><p>Second heading claims erratic behavior but uses the same market-variation sense as the first.</p><p><strong>Entry:</strong> vagaries · plural noun</p><p><strong>Word formation:</strong> vagary — A sudden, unpredictable change or occurrence.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Unpredictable and unusual events or changes, especially in weather or circumstances&quot;,
+    &quot;examples&quot;: [
+      &quot;The vagaries of the weather made it difficult to plan the outdoor event.&quot;,
+      &quot;Travelers must be prepared for the vagaries of life in remote regions.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Unpredictable or erratic behavior or actions&quot;,
+    &quot;examples&quot;: [
+      &quot;The company&#x27;s success is often affected by the vagaries of the market.&quot;,
+      &quot;The vagaries of the stock market can be both exciting and terrifying for investors.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · resort-to · Examples 1/2</summary><p>Correct whole expression; two headings paraphrase the same last-option sense.</p><p><strong>Entry:</strong> resort to · phrasal verb; past perfect tense</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to use something as a last option when other options are not available&quot;,
+    &quot;examples&quot;: [
+      &quot;When the negotiations failed, the company had to resort to legal action.&quot;,
+      &quot;He had already resorted to borrowing money when his savings ran out.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to turn to something, usually something negative, in a difficult situation&quot;,
+    &quot;examples&quot;: [
+      &quot;She resorted to lying when she couldn&#x27;t find a good explanation.&quot;,
+      &quot;The team resorted to cheating during the competition to win.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · put-up-with · Examples 0/2</summary><p>Still falsely teaches accommodation and drops essential with in one example.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to tolerate or accept something unpleasant&quot;,
+    &quot;examples&quot;: [
+      &quot;I can&#x27;t put up with his constant complaining anymore.&quot;,
+      &quot;She puts up with the noise from the construction site every day.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to provide temporary accommodation for someone&quot;,
+    &quot;examples&quot;: [
+      &quot;We put up with our cousins for a week during the holidays.&quot;,
+      &quot;The hotel put up several families displaced by the flood.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · sanction · Examples 0/2</summary><p>An approval group includes a punitive example; another group uses a noun sanctions example.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To officially approve or permit something&quot;,
+    &quot;examples&quot;: [
+      &quot;The government sanctioned the new environmental policy after months of debate.&quot;,
+      &quot;The company was sanctioned by the board for violating the code of conduct.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To impose penalties or restrictions on someone or something&quot;,
+    &quot;examples&quot;: [
+      &quot;Several countries sanctioned the regime for its human rights violations.&quot;,
+      &quot;The UN imposed economic sanctions on the country to pressure it into compliance.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · tabled-uk · Examples 0/2</summary><p>Still invents moving a bill between places in a legislature as a separate meaning.</p><p><strong>Entry:</strong> table · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to put something aside for later consideration or discussion&quot;,
+    &quot;examples&quot;: [
+      &quot;The manager decided to table the proposal until next week&#x27;s meeting.&quot;,
+      &quot;We tabled the issue for further research before making a decision.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to move a bill or motion from one place to another in a legislative body&quot;,
+    &quot;examples&quot;: [
+      &quot;The senator moved to table the bill, arguing it was not ready for debate.&quot;,
+      &quot;The committee voted to table the motion and revisit it later in the session.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · inflammable · Examples 0/2</summary><p>Still invents a medical cause-inflammation meaning.</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> flame — A visible, gaseous mixture of hot burning vapors.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;easily set on fire or ignited&quot;,
+    &quot;examples&quot;: [
+      &quot;The old wooden buildings are highly inflammable and require special fire precautions.&quot;,
+      &quot;Inflammable liquids should be stored in a secure, fireproof cabinet.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;capable of causing inflammation (used in medical contexts)&quot;,
+    &quot;examples&quot;: [
+      &quot;The substance is inflammable and may cause severe irritation to the skin.&quot;,
+      &quot;Some chemicals are inflammable and can lead to inflammation if they come into contact with the eyes.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · seek-to · Examples 1/2</summary><p>Two groups paraphrase the same attempt-to meaning.</p><p><strong>Entry:</strong> sought to · verb; phrasal verb (verb + to-infinitive)</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;attempted to do something, usually with a specific goal in mind&quot;,
+    &quot;examples&quot;: [
+      &quot;The company sought to expand its operations into new markets.&quot;,
+      &quot;He sought to improve his skills by taking online courses.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;tried to achieve something, often in a formal or serious context&quot;,
+    &quot;examples&quot;: [
+      &quot;The government sought to address the issue through legislation.&quot;,
+      &quot;The scientist sought to prove his theory through experimentation.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3:14b-q4_K_M · long-12000 · Examples 0/2</summary><p>Low-weight heading uses light touch (gentleness), brightness group uses a noun, and light-hearted substitutes a derivative.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Not heavy; easy to carry&quot;,
+    &quot;examples&quot;: [
+      &quot;The suitcase was light, so I could carry it easily.&quot;,
+      &quot;She carried the box with a light touch, showing she was careful.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not dark; having a lot of brightness&quot;,
+    &quot;examples&quot;: [
+      &quot;The room was light and airy, which made it feel more comfortable.&quot;,
+      &quot;Evening came quickly, and the light from the sun faded.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not serious; easygoing&quot;,
+    &quot;examples&quot;: [
+      &quot;He gave a light-hearted answer to the serious question.&quot;,
+      &quot;The teacher kept the lesson light to keep the students interested.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · power · Examples 2/2</summary><p>Correct capacity/physical power and electricity examples; no invented official-position sense.</p><p><strong>Entry:</strong> power · uncountable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;The ability to do something or make things happen&quot;,
+    &quot;examples&quot;: [
+      &quot;The new engine gives the car much more power than the old model.&quot;,
+      &quot;It takes a lot of power to lift such a heavy object.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Electricity used to run machines and lights&quot;,
+    &quot;examples&quot;: [
+      &quot;We need to buy a generator because there is no power during the storm.&quot;,
+      &quot;The factory runs on solar power instead of coal.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · charge · Examples 0/2</summary><p>Still mixes a noun charge into a verb group and uses charge the classroom supplies for entrusting.</p><p><strong>Entry:</strong> charge · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to ask someone to pay a specific amount of money&quot;,
+    &quot;examples&quot;: [
+      &quot;The hotel will charge you an extra fee if you leave your luggage behind.&quot;,
+      &quot;Please charge the total cost to my credit card.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to officially accuse someone of committing a crime or wrongdoing&quot;,
+    &quot;examples&quot;: [
+      &quot;The police decided not to charge the suspect with any crimes due to lack of evidence.&quot;,
+      &quot;She was charged with theft after the security camera caught her stealing.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to move forward quickly and forcefully, often in a military or sports context&quot;,
+    &quot;examples&quot;: [
+      &quot;The team made a sudden charge down the field to score a touchdown.&quot;,
+      &quot;The cavalry charged at the enemy lines during the battle.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to connect an electronic device to a power source so it can store energy&quot;,
+    &quot;examples&quot;: [
+      &quot;I need to charge my phone before we leave for the movie.&quot;,
+      &quot;Please plug in your laptop and let it charge while you work.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to entrust someone with a responsibility or task, often involving care&quot;,
+    &quot;examples&quot;: [
+      &quot;The teacher asked a student to charge the classroom supplies for the week.&quot;,
+      &quot;You can charge your friend with looking after your dog while you are away.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · strain · Examples 1/2</summary><p>Real effort, pressure, injury and filtering uses; some headings overstate inevitable weakening/breaking.</p><p><strong>Entry:</strong> strain · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to make something weaker or less effective by putting too much pressure on it&quot;,
+    &quot;examples&quot;: [
+      &quot;The heavy rain strained the old roof until a section collapsed.&quot;,
+      &quot;Constant overtime work has begun to strain the company&#x27;s budget.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to stretch a muscle or tendon, causing pain and injury&quot;,
+    &quot;examples&quot;: [
+      &quot;I heard a loud pop when I lifted the box and immediately strained my back.&quot;,
+      &quot;She woke up with a stiff neck after sleeping in an awkward position that strained her muscles.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to make a serious effort to achieve something difficult&quot;,
+    &quot;examples&quot;: [
+      &quot;The team had to strain every nerve to finish the project before the deadline.&quot;,
+      &quot;He strained his eyes trying to read the tiny print on the menu.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to force a relationship or situation to the point of breaking&quot;,
+    &quot;examples&quot;: [
+      &quot;Their constant arguing began to strain their friendship over the last few months.&quot;,
+      &quot;The unexpected news strained the trust between the two partners.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to filter a liquid by pouring it through a cloth or sieve&quot;,
+    &quot;examples&quot;: [
+      &quot;Please strain the soup before serving so that no vegetables are left in the bowl.&quot;,
+      &quot;She strained the coffee through a paper filter to remove the grounds.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · hitherto · Examples 2/2</summary><p>One coherent until-then group with two examples using the target.</p><p><strong>Entry:</strong> hitherto · adverb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;up until now&quot;,
+    &quot;examples&quot;: [
+      &quot;The company had operated profitably hitherto, but last quarter they suffered a significant loss.&quot;,
+      &quot;She had never traveled abroad hitherto, so the trip to Paris was her first international experience.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · conceivably · Examples 1/2</summary><p>Two paraphrased possibility groups; correct adverb examples and a genuine intermediate base conceivable.</p><p><strong>Entry:</strong> conceivably · adverb</p><p><strong>Word formation:</strong> conceivable — Capable of being imagined or understood.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;In a way that is possible to imagine or believe&quot;,
+    &quot;examples&quot;: [
+      &quot;It is conceivably the best solution we have found so far.&quot;,
+      &quot;There are conceivably other reasons for his absence that we haven&#x27;t considered.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Used to indicate that something might be true, though it is not certain&quot;,
+    &quot;examples&quot;: [
+      &quot;The project could conceivably finish by next month if the team works efficiently.&quot;,
+      &quot;She might conceivably win the award, but she needs to improve her presentation skills first.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · vagaries · Examples 1/2</summary><p>Usable noun examples but the groups overlap and prioritize uncommon singular usage.</p><p><strong>Entry:</strong> vagary · plural noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;an unpredictable or eccentric action, event, or behavior&quot;,
+    &quot;examples&quot;: [
+      &quot;The sudden change in weather was a true vagary of nature that caught everyone off guard.&quot;,
+      &quot;His decision to quit the project without notice seemed like a strange vagary of his personality.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;unpredictable or erratic changes, often referring to patterns or conditions&quot;,
+    &quot;examples&quot;: [
+      &quot;The stock market&#x27;s recent volatility has been described as a series of financial vagaries.&quot;,
+      &quot;Farmers struggle with the vagaries of climate, where one season can be wet and the next dry.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · resort-to · Examples 1/2</summary><p>Whole expression preserved, but duplicate groups and the battery/backpack scenario are awkward.</p><p><strong>Entry:</strong> resort to · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To turn to a particular action or method, often one that is extreme, unpleasant, or undesirable, as a last option.&quot;,
+    &quot;examples&quot;: [
+      &quot;After all negotiations failed, the company decided to resort to legal action.&quot;,
+      &quot;He never resorts to violence; he prefers to solve problems through conversation.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To begin using something specific (such as a tactic or excuse) in order to achieve a goal.&quot;,
+    &quot;examples&quot;: [
+      &quot;The politician resorted to lying when the facts became too difficult to deny.&quot;,
+      &quot;When the battery died, we had to resort to carrying heavy backpacks for our hike.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · put-up-with · Examples 1/2</summary><p>No other-expression substitution, but headings repeat tolerance and overstate without complaining.</p><p><strong>Entry:</strong> put up with · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To tolerate or endure something unpleasant without complaining.&quot;,
+    &quot;examples&quot;: [
+      &quot;I cannot put up with this constant noise; it is driving me crazy.&quot;,
+      &quot;She decided to put up with the bad weather until her flight was delayed.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To accept a situation or condition that one finds difficult or unsatisfactory.&quot;,
+    &quot;examples&quot;: [
+      &quot;He has to put up with long queues every morning at the subway station.&quot;,
+      &quot;We won&#x27;t put up with being treated rudely by our customers.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · sanction · Examples 1/2</summary><p>Legitimate approval/punishment senses; one example still uses the noun official sanction in a verb group.</p><p><strong>Entry:</strong> sanction · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to officially approve or authorize something&quot;,
+    &quot;examples&quot;: [
+      &quot;The council voted to sanction the new building project after reviewing the safety reports.&quot;,
+      &quot;Without official sanction, the employees were not allowed to use company funds for personal travel.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to impose a penalty or punishment as a form of disapproval&quot;,
+    &quot;examples&quot;: [
+      &quot;The United Nations decided to sanction countries that violated human rights laws.&quot;,
+      &quot;The bank sanctioned the account holder for repeatedly overdrawing their funds.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · tabled-uk · Examples 1/2</summary><p>Legitimate tabulation/postponement/literal-placement senses, but rare placement examples are unlabelled and the British source sense is omitted.</p><p><strong>Entry:</strong> table · verb; past tense</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To present data or information in a structured format with rows and columns&quot;,
+    &quot;examples&quot;: [
+      &quot;The researcher decided to table the complex statistics so they could be analyzed more clearly.&quot;,
+      &quot;Please table your notes before we begin the presentation next week.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To postpone or defer a discussion, decision, or action until a later time&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee chose to table the controversial proposal until the next meeting.&quot;,
+      &quot;Due to lack of consensus, we had to table the vote on the new policy.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To place an object physically onto a flat surface&quot;,
+    &quot;examples&quot;: [
+      &quot;He quickly tabled his books and laptop before leaving the study.&quot;,
+      &quot;She carefully tabled the heavy tray to avoid spilling the coffee.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · inflammable · Examples 0/2</summary><p>Correct flammability definition but the instruction never to store gasoline in a container labelled inflammable is misleading; labels usually identify hazardous contents.</p><p><strong>Entry:</strong> inflammable · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Capable of catching fire easily&quot;,
+    &quot;examples&quot;: [
+      &quot;Flammable and inflammable are synonyms, so you should never store gasoline in a container labeled as inflammable.&quot;,
+      &quot;The safety sign warned that the chemicals stored in the shed were highly inflammable.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · seek-to · Examples 1/2</summary><p>Five groups repeat the same attempt-to construction in different situations.</p><p><strong>Entry:</strong> seek to · verb phrase (seek to)</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to try hard to achieve a specific goal or result&quot;,
+    &quot;examples&quot;: [
+      &quot;The company seeks to expand its market share by launching new products next year.&quot;,
+      &quot;She seeks to improve her English skills through daily practice and conversation.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to attempt to solve a problem or reach an agreement&quot;,
+    &quot;examples&quot;: [
+      &quot;The two nations seek to resolve their border dispute through peaceful negotiations.&quot;,
+      &quot;Doctors seek to find a cure for the disease before it spreads further.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to aim to obtain something desirable, such as knowledge or approval&quot;,
+    &quot;examples&quot;: [
+      &quot;Students often seek to gain admission to top universities by studying hard.&quot;,
+      &quot;The artist seeks to capture the true emotion of the subject in every painting.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to intend to perform an action, often with a sense of purpose&quot;,
+    &quot;examples&quot;: [
+      &quot;He seeks to finish the project before the deadline arrives tomorrow.&quot;,
+      &quot;We seek to complete the renovation work within the allocated budget.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to strive for a particular state or condition, such as peace or justice&quot;,
+    &quot;examples&quot;: [
+      &quot;Activists seek to create a world where everyone has equal rights.&quot;,
+      &quot;The organization seeks to maintain harmony among its diverse members.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>after · qwen3.5:9b-q4_K_M · long-12000 · Examples 0/2</summary><p>Invents revealing/little-clothing sense, mixes noun light/lights with adjective, and has a weak flour example.</p><p><strong>Entry:</strong> light · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Not heavy in weight&quot;,
+    &quot;examples&quot;: [
+      &quot;This suitcase is very light, so I can carry it easily with one hand.&quot;,
+      &quot;The wooden chair feels surprisingly light compared to the metal ones.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Having little intensity or seriousness&quot;,
+    &quot;examples&quot;: [
+      &quot;She made a light joke about the weather to break the tension.&quot;,
+      &quot;His criticism of the movie was light and did not hurt anyone&#x27;s feelings.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Brightly illuminated by natural or artificial sources&quot;,
+    &quot;examples&quot;: [
+      &quot;The room looks much lighter after we opened the curtains.&quot;,
+      &quot;Please turn on the lights, as it is too dark to read in this light.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Wearing little clothing or revealing&quot;,
+    &quot;examples&quot;: [
+      &quot;At the beach party, everyone was dressed in light swimwear.&quot;,
+      &quot;The model walked down the runway wearing a very light evening gown.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Not dark in color; pale&quot;,
+    &quot;examples&quot;: [
+      &quot;She decided to paint the walls a light blue to make the space feel airy.&quot;,
+      &quot;The baker prefers using light flour for making delicate pastries.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma4:12b-it-qat · holdout-oversight · Examples 2/2</summary><p>Correct omission and supervision senses.</p><p><strong>Entry:</strong> oversight · noun</p><p><strong>Word formation:</strong> sight — The faculty or power of seeing. It can also refer to the act of looking at something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;A mistake made because of a failure to notice something&quot;,
+    &quot;examples&quot;: [
+      &quot;Please forgive the oversight in the invoice; the discount was not applied to the final total.&quot;,
+      &quot;Due to a minor oversight, the manager forgot to include the guest list in the meeting folder.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The action of supervising or managing people and tasks&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee was established to provide closer oversight of the company&#x27;s environmental policies.&quot;,
+      &quot;The government has increased its oversight of the banking sector to prevent another financial crisis.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma4:12b-it-qat · holdout-run · Examples 1/2</summary><p>Useful verb senses; promotion under ongoing heading is weakly classified.</p><p><strong>Entry:</strong> run · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To move rapidly on foot using speed&quot;,
+    &quot;examples&quot;: [
+      &quot;I had to run to the station because I didn&#x27;t want to miss the last train.&quot;,
+      &quot;She runs five miles every morning to stay in shape.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To manage, operate, or be in charge of an organization or process&quot;,
+    &quot;examples&quot;: [
+      &quot;He has been running the family business since his father retired.&quot;,
+      &quot;Who is going to run the meeting while the manager is away?&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To function or operate (for machinery, software, or systems)&quot;,
+    &quot;examples&quot;: [
+      &quot;The old computer takes a long time to run this specific software.&quot;,
+      &quot;We need to make sure the irrigation system is running correctly.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To flow or move along a path (for liquids, electricity, or roads)&quot;,
+    &quot;examples&quot;: [
+      &quot;A small stream runs through the middle of the forest.&quot;,
+      &quot;The main highway runs straight through the center of the city.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To be continuous or ongoing&quot;,
+    &quot;examples&quot;: [
+      &quot;The store will run a special promotion on all winter clothing.&quot;,
+      &quot;They have a continuous operation that runs twenty-four hours a day.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma4:12b-it-qat · holdout-look-forward · Examples 2/2</summary><p>Pleasant anticipation and a conventional formal-correspondence formula are useful distinct usages.</p><p><strong>Entry:</strong> look forward to · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Anticipating a future event with pleasure&quot;,
+    &quot;examples&quot;: [
+      &quot;I really look forward to meeting your family during the holiday.&quot;,
+      &quot;We look forward to seeing the results of your hard work next week.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Expressing professional expectation in formal correspondence&quot;,
+    &quot;examples&quot;: [
+      &quot;I look forward to hearing from you regarding the job offer.&quot;,
+      &quot;We look forward to a productive partnership with your company.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma4:12b-it-qat · holdout-reluctantly · Examples 1/2</summary><p>Two headings paraphrase unwillingly; necessity is not a distinct sense.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — Not wanting to do something or feeling hesitant about it.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Doing something with hesitation or a lack of desire&quot;,
+    &quot;examples&quot;: [
+      &quot;She reluctantly agreed to lend her car to her brother for the weekend.&quot;,
+      &quot;He reluctantly admitted that his initial plan was flawed from the start.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Yielding to pressure or necessity despite personal opposition&quot;,
+    &quot;examples&quot;: [
+      &quot;The company reluctantly decided to sell the historic building to make room for a parking lot.&quot;,
+      &quot;They reluctantly signed the contract after months of intense negotiations.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma4:12b-it-qat · holdout-candid · Examples 2/2</summary><p>Good frank/unposed examples; candle is a false derivational base.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> candle — A wax cylinder with a wick that is lit to provide light.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Truthful and straightforward; honest in expression&quot;,
+    &quot;examples&quot;: [
+      &quot;I appreciate your candid opinion about my presentation, even though it was quite harsh.&quot;,
+      &quot;She gave a candid interview about her struggles with addiction and recovery.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Unposed or natural; not staged for the camera&quot;,
+    &quot;examples&quot;: [
+      &quot;The photographer captured some beautiful candid shots of the children playing in the garden.&quot;,
+      &quot;I prefer candid photos because they show people&#x27;s real personalities rather than forced smiles.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma3:12b-it-q4_K_M · holdout-oversight · Examples 1/2</summary><p>Omission and failure-to-notice groups overlap; responsibility heading is vague.</p><p><strong>Entry:</strong> oversight · noun</p><p><strong>Word formation:</strong> sight — Sight is the ability to see, or something that is seen.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;A Mistake or Error&quot;,
+    &quot;examples&quot;: [
+      &quot;The editor apologized for the oversight in the published article; a crucial fact had been left out.&quot;,
+      &quot;It was a simple oversight, but failing to renew the license resulted in a hefty fine.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;A Responsibility or Duty&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee has oversight of the project&#x27;s budget and timeline.&quot;,
+      &quot;Parliamentary oversight ensures that government agencies are acting responsibly.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;A Failure to Notice Something&quot;,
+    &quot;examples&quot;: [
+      &quot;The security guard’s oversight allowed the intruder to enter the building undetected.&quot;,
+      &quot;Her oversight of the details meant the presentation wasn&#x27;t as polished as it could have been.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma3:12b-it-q4_K_M · holdout-run · Examples 0/2</summary><p>Running a marathon as a participant is incorrectly grouped under managing/organizing.</p><p><strong>Entry:</strong> run · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Physical Movement - Quick Pace&quot;,
+    &quot;examples&quot;: [
+      &quot;I need to run to catch the bus before it leaves.&quot;,
+      &quot;The dog loves to run around the park chasing squirrels.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Operating/Functioning (of a machine)&quot;,
+    &quot;examples&quot;: [
+      &quot;The washing machine isn&#x27;t running, so I can&#x27;t do the laundry.&quot;,
+      &quot;Make sure the software is running smoothly before you start the presentation.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Managing/Organizing (an event or business)&quot;,
+    &quot;examples&quot;: [
+      &quot;She runs a successful bakery downtown.&quot;,
+      &quot;He&#x27;s running the marathon to raise money for charity.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Flowing (of liquids)&quot;,
+    &quot;examples&quot;: [
+      &quot;The river runs through the valley, providing water for the farms.&quot;,
+      &quot;Tears ran down her face as she listened to the sad story.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Progressing/Continuing (of a process or campaign)&quot;,
+    &quot;examples&quot;: [
+      &quot;The investigation is running into unexpected difficulties.&quot;,
+      &quot;Their political campaign is running very well in the polls.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma3:12b-it-q4_K_M · holdout-look-forward · Examples 1/2</summary><p>Three groups paraphrase the same anticipation meaning.</p><p><strong>Entry:</strong> look forward to · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Anticipation of a Pleasant Event&quot;,
+    &quot;examples&quot;: [
+      &quot;I’m really looking forward to the concert next weekend; I’ve heard amazing things about the band.&quot;,
+      &quot;We’re all looking forward to the holiday; it’s been a long and stressful year.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Eagerly Awaiting Something Future&quot;,
+    &quot;examples&quot;: [
+      &quot;She’s looking forward to starting her new job and meeting her colleagues.&quot;,
+      &quot;I’m looking forward to seeing you again soon; let’s arrange something next week.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Expressing Pleasure About a Future Event&quot;,
+    &quot;examples&quot;: [
+      &quot;He’s looking forward to presenting his research at the conference; it’s a great opportunity.&quot;,
+      &quot;They’re looking forward to welcoming their new neighbours to the neighbourhood.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma3:12b-it-q4_K_M · holdout-reluctantly · Examples 1/2</summary><p>Groups duplicate unwillingness; slowly is an unwarranted added component.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — To be reluctant is to be unwilling or hesitant to do something. It suggests a lack of enthusiasm or a feeling of resistance.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;With hesitation or unwillingness&quot;,
+    &quot;examples&quot;: [
+      &quot;He reluctantly agreed to help, knowing it would take up his entire weekend.&quot;,
+      &quot;She reluctantly admitted she’d been wrong about the project’s feasibility.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Slowly and unwillingly, physically&quot;,
+    &quot;examples&quot;: [
+      &quot;The old dog reluctantly left the warmth of the fireplace to go outside.&quot;,
+      &quot;He reluctantly backed the car out of the tight parking space.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Showing a lack of enthusiasm&quot;,
+    &quot;examples&quot;: [
+      &quot;She reluctantly participated in the team-building exercise, finding it rather silly.&quot;,
+      &quot;He reluctantly accepted the award, feeling others were more deserving.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · gemma3:12b-it-q4_K_M · holdout-candid · Examples 1/2</summary><p>Three frank/honest paraphrase groups omit photography; candy is a false base.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> candy — Candy is a sweet treat, often made of sugar and other ingredients.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Frank and honest, even if potentially uncomfortable&quot;,
+    &quot;examples&quot;: [
+      &quot;She gave a candid assessment of the project&#x27;s weaknesses, which helped the team improve.&quot;,
+      &quot;I appreciate his candid feedback; it’s better to know the truth, even if it’s difficult to hear.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Open and straightforward in expression&quot;,
+    &quot;examples&quot;: [
+      &quot;The politician offered a candid explanation for the policy change during the press conference.&quot;,
+      &quot;Her candid response to the interviewer revealed a genuine and relatable personality.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Unreservedly truthful; blunt&quot;,
+    &quot;examples&quot;: [
+      &quot;He made a candid admission about his past mistakes, showing a willingness to learn.&quot;,
+      &quot;The review was candid, pointing out both the strengths and flaws of the new restaurant.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3.5:9b-q4_K_M · holdout-oversight · Examples 1/2</summary><p>Valid omission/supervision senses, but one example substitutes the verb overseeing for the noun.</p><p><strong>Entry:</strong> oversight · uncountable noun</p><p><strong>Word formation:</strong> sight — The ability to see or the act of seeing something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Failure to notice or deal with something (negligence)&quot;,
+    &quot;examples&quot;: [
+      &quot;The data breach was caused by an oversight in the company&#x27;s security protocols.&quot;,
+      &quot;It was a terrible oversight that we forgot to submit the final report before the deadline.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Supervision or management (careful attention)&quot;,
+    &quot;examples&quot;: [
+      &quot;The project will be under the direct oversight of the senior engineering team.&quot;,
+      &quot;She took on the role of overseeing the construction of the new wing.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3.5:9b-q4_K_M · holdout-run · Examples 2/2</summary><p>Five coherent established verb senses.</p><p><strong>Entry:</strong> run · past tense verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To move at a speed faster than walking&quot;,
+    &quot;examples&quot;: [
+      &quot;After the rain stopped, we decided to run home before it started again.&quot;,
+      &quot;She ran down the street to catch the last bus.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To operate or function (of a machine/system)&quot;,
+    &quot;examples&quot;: [
+      &quot;The engine won&#x27;t run if you don&#x27;t add enough oil.&quot;,
+      &quot;Please check that the computer is running before the meeting starts.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To manage or be in charge of an organization&quot;,
+    &quot;examples&quot;: [
+      &quot;He has run his own business for over twenty years.&quot;,
+      &quot;Who runs this department? I need to speak with the manager.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To flow or move continuously (of liquids)&quot;,
+    &quot;examples&quot;: [
+      &quot;Water ran down the window after the storm.&quot;,
+      &quot;Tears ran down her cheeks when she heard the news.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To extend or stretch over a distance&quot;,
+    &quot;examples&quot;: [
+      &quot;The road runs along the coast for miles.&quot;,
+      &quot;A fence runs between our two properties.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3.5:9b-q4_K_M · holdout-look-forward · Examples 2/2</summary><p>Pleasant anticipation and formal correspondence are useful distinct usages.</p><p><strong>Entry:</strong> look forward to · phrasal verb + preposition</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Anticipation of a future event&quot;,
+    &quot;examples&quot;: [
+      &quot;I am really looking forward to the summer holidays.&quot;,
+      &quot;She looks forward to receiving her promotion letter next week.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Expectation with pleasure or interest (often used in formal contexts)&quot;,
+    &quot;examples&quot;: [
+      &quot;We look forward to hearing from you soon regarding the proposal.&quot;,
+      &quot;The company looks forward to collaborating with new partners this year.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3.5:9b-q4_K_M · holdout-reluctantly · Examples 1/2</summary><p>Two groups paraphrase unwillingness.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — To feel unwilling or hesitant to do something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;With hesitation or unwillingness&quot;,
+    &quot;examples&quot;: [
+      &quot;He reluctantly agreed to the proposal after realizing there was no other option.&quot;,
+      &quot;She reluctantly admitted that she had made a mistake in the calculation.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Against one&#x27;s own wishes or desires&quot;,
+    &quot;examples&quot;: [
+      &quot;The team reluctantly accepted the new coach, knowing they needed to improve their performance.&quot;,
+      &quot;They reluctantly parted ways after ten years of living together.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3.5:9b-q4_K_M · holdout-candid · Examples 0/2</summary><p>False photographic definition: candid means unposed, not natural lighting or no flash. Candor is not its English derivational base.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> candor — The quality of being open, honest, and straightforward in speech or writing.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Truthful and straightforward; not hiding the truth or being polite at the expense of honesty.&quot;,
+    &quot;examples&quot;: [
+      &quot;The interviewer asked a candid question about my biggest weakness during the job assessment.&quot;,
+      &quot;I appreciate your candid feedback, even though it was harsh.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Photographic; taken without using a flash or with natural lighting to show true colors and details.&quot;,
+    &quot;examples&quot;: [
+      &quot;The museum displayed several candid shots of the famous actor captured by paparazzi in 1985.&quot;,
+      &quot;She prefers candid portraits that look like a snapshot rather than a formal studio pose.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Open and frank; characterized by a lack of pretense or reserve in expression.&quot;,
+    &quot;examples&quot;: [
+      &quot;Their candid conversation revealed deep misunderstandings between the two neighbors.&quot;,
+      &quot;The documentary features candid interviews with refugees who rarely speak to journalists.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3:14b-q4_K_M · holdout-oversight · Examples 1/2</summary><p>First and third groups overlap; error in judgment is broader than the usual omission sense.</p><p><strong>Entry:</strong> oversight · noun</p><p><strong>Word formation:</strong> sight — The ability to see or the act of looking at something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;A failure to notice or pay attention to something&quot;,
+    &quot;examples&quot;: [
+      &quot;The oversight of the safety regulations led to a serious accident.&quot;,
+      &quot;It was a simple oversight, but it caused a lot of problems later.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The act of supervising or managing something&quot;,
+    &quot;examples&quot;: [
+      &quot;The project was handled with careful oversight from the management team.&quot;,
+      &quot;The government has strict oversight of all financial institutions.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;A mistake or error in judgment&quot;,
+    &quot;examples&quot;: [
+      &quot;His oversight in not checking the contract details was costly.&quot;,
+      &quot;The oversight in the planning stage caused delays in the construction.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3:14b-q4_K_M · holdout-run · Examples 0/2</summary><p>The lights ran out is incorrect; runners substitutes a derivative and several headings mismatch examples.</p><p><strong>Entry:</strong> run · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To move quickly on foot&quot;,
+    &quot;examples&quot;: [
+      &quot;She ran across the street to catch the bus.&quot;,
+      &quot;The children were running around the park.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To manage or operate something&quot;,
+    &quot;examples&quot;: [
+      &quot;He runs a successful restaurant in the city center.&quot;,
+      &quot;She runs her own business from home.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To cause something to happen or continue&quot;,
+    &quot;examples&quot;: [
+      &quot;The meeting ran over by thirty minutes.&quot;,
+      &quot;The lights ran out during the power failure.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To compete in a race&quot;,
+    &quot;examples&quot;: [
+      &quot;He is training hard to run in the marathon next month.&quot;,
+      &quot;The runners gathered at the starting line before the race began.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To move something along a track or path&quot;,
+    &quot;examples&quot;: [
+      &quot;The train ran smoothly along the tracks.&quot;,
+      &quot;The machine runs on a conveyor belt.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3:14b-q4_K_M · holdout-look-forward · Examples 1/2</summary><p>Two headings paraphrase pleasant anticipation.</p><p><strong>Entry:</strong> look forward to · phrasal verb; verb + preposition</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To anticipate a future event with pleasure or interest&quot;,
+    &quot;examples&quot;: [
+      &quot;I am really looking forward to my holiday next week.&quot;,
+      &quot;She is looking forward to starting her new job.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To expect something to happen, often with a sense of anticipation or hope&quot;,
+    &quot;examples&quot;: [
+      &quot;We are looking forward to hearing the results of the meeting.&quot;,
+      &quot;They are looking forward to the success of their new project.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3:14b-q4_K_M · holdout-reluctantly · Examples 1/2</summary><p>Obligation is an associated circumstance, not a separate meaning.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — Unwilling to do something, especially because it is difficult or unpleasant.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;With hesitation or unwillingness&quot;,
+    &quot;examples&quot;: [
+      &quot;She reluctantly agreed to go on the trip.&quot;,
+      &quot;He reluctantly admitted that he had made a mistake.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;With a sense of duty or obligation despite personal feelings&quot;,
+    &quot;examples&quot;: [
+      &quot;Reluctantly, I took on the extra responsibility at work.&quot;,
+      &quot;He reluctantly left his family to pursue his career abroad.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-control · qwen3:14b-q4_K_M · holdout-candid · Examples 0/2</summary><p>Naked/bare is an invented candid meaning; no-makeup example misdefines photographic usage.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Honest and open, without hiding or avoiding the truth&quot;,
+    &quot;examples&quot;: [
+      &quot;She gave a candid opinion about the company&#x27;s weaknesses during the meeting.&quot;,
+      &quot;The journalist is known for his candid interviews with political figures.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Naked or bare, often used in a literal or artistic context&quot;,
+    &quot;examples&quot;: [
+      &quot;The sculpture was displayed in the candid, unadorned form of a human figure.&quot;,
+      &quot;The photographer is famous for his candid portraits that show subjects without makeup.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma3:12b-it-q4_K_M · holdout-oversight · Examples 1/2</summary><p>Correct omission examples but omits common supervision sense.</p><p><strong>Entry:</strong> oversight · countable noun</p><p><strong>Word formation:</strong> sight — The ability to see; something seen or that can be seen.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;A failure to notice or do something.&quot;,
+    &quot;examples&quot;: [
+      &quot;The company blamed the accounting error on an oversight by a junior employee.&quot;,
+      &quot;It was a simple oversight, and they’ve already corrected the mistake in the report.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma3:12b-it-q4_K_M · holdout-run · Examples 2/2</summary><p>Three coherent common verb senses and natural examples.</p><p><strong>Entry:</strong> run · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To move quickly using your legs.&quot;,
+    &quot;examples&quot;: [
+      &quot;I like to run in the park every morning for exercise.&quot;,
+      &quot;The dog started to run across the street when he saw a squirrel.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To operate or manage something.&quot;,
+    &quot;examples&quot;: [
+      &quot;She runs a successful bakery in the town center.&quot;,
+      &quot;My brother is learning to run his own small business.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To flow or discharge.&quot;,
+    &quot;examples&quot;: [
+      &quot;The river runs through a beautiful valley.&quot;,
+      &quot;The tap was left on, and the water started to run.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma3:12b-it-q4_K_M · holdout-look-forward · Examples 2/2</summary><p>Correct anticipation examples. Base look is a real component, but its definition wrongly inherits anticipate with pleasure from the whole phrase.</p><p><strong>Entry:</strong> look forward to · phrasal verb</p><p><strong>Word formation:</strong> look — To direct one&#x27;s gaze in a specific direction; to expect or anticipate with pleasure.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Anticipate with pleasure&quot;,
+    &quot;examples&quot;: [
+      &quot;I’m really looking forward to the concert next weekend; I’ve heard amazing things about the band.&quot;,
+      &quot;We’re all looking forward to the holiday; it’s been a long and stressful year.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma3:12b-it-q4_K_M · holdout-reluctantly · Examples 2/2</summary><p>One correct unwillingness group and valid reluctant base.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — Unwilling or hesitant to do something.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;With hesitation and unwillingness.&quot;,
+    &quot;examples&quot;: [
+      &quot;He reluctantly agreed to help with the project, knowing it would take up a lot of his free time.&quot;,
+      &quot;She reluctantly admitted that she had made a mistake, despite wanting to appear perfect.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma3:12b-it-q4_K_M · holdout-candid · Examples 1/2</summary><p>Correct frank examples but omits common photographic sense; candidate is a false base.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> candidate — A person who applies for or is nominated for a position.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Expressing opinions honestly and openly, even if they are unpleasant.&quot;,
+    &quot;examples&quot;: [
+      &quot;The manager gave a candid assessment of the team&#x27;s performance, highlighting both their successes and areas for improvement.&quot;,
+      &quot;She offered a candid response to the interviewer&#x27;s question about her biggest weakness, which showed her self-awareness.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma4:12b-it-qat · holdout-oversight · Examples 2/2</summary><p>Correct omission/supervision noun senses.</p><p><strong>Entry:</strong> oversight · noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;A mistake made because of a failure to notice something&quot;,
+    &quot;examples&quot;: [
+      &quot;The clerk&#x27;s oversight meant that the wrong invoice was sent to the customer.&quot;,
+      &quot;Due to a minor oversight, the name of the guest of honor was left off the invitation list.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The action of supervising or managing something&quot;,
+    &quot;examples&quot;: [
+      &quot;The committee was formed to provide closer oversight of the company&#x27;s spending.&quot;,
+      &quot;The project failed because there was very little management oversight during the construction phase.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma4:12b-it-qat · holdout-run · Examples 1/2</summary><p>Useful common verb senses, but functioning and continuous operation groups overlap; diagnostic-test example is a looser fit.</p><p><strong>Entry:</strong> run · verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To move at a speed faster than walking&quot;,
+    &quot;examples&quot;: [
+      &quot;I usually run to the bus stop because I am often late for work.&quot;,
+      &quot;She decided to run a marathon to raise money for charity.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To manage or be in charge of a business, organization, or system&quot;,
+    &quot;examples&quot;: [
+      &quot;He has been running this small bakery for over twenty years.&quot;,
+      &quot;Who is going to run the meeting while the manager is away?&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To function or operate (for machines or software)&quot;,
+    &quot;examples&quot;: [
+      &quot;I need to run a diagnostic test to see why my computer is so slow.&quot;,
+      &quot;The factory runs twenty-four hours a day to meet the demand.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To flow or move rapidly in a specific direction&quot;,
+    &quot;examples&quot;: [
+      &quot;A small stream runs through the middle of the forest.&quot;,
+      &quot;Be careful not to slip on the wet grass where the water runs down the hill.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To be in a state of continuous operation or movement&quot;,
+    &quot;examples&quot;: [
+      &quot;The air conditioner has been running all day, so the room is very cool.&quot;,
+      &quot;I can hear the engine running in the garage.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma4:12b-it-qat · holdout-look-forward · Examples 2/2</summary><p>One coherent pleasure-anticipation group with whole expression preserved.</p><p><strong>Entry:</strong> look forward to · phrasal verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To feel pleased or excited about something that is going to happen in the future.&quot;,
+    &quot;examples&quot;: [
+      &quot;I really look forward to meeting your family during the holidays.&quot;,
+      &quot;We look forward to seeing the results of your hard work next week.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma4:12b-it-qat · holdout-reluctantly · Examples 2/2</summary><p>One correct unwillingness group and genuine reluctant base.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — Unwilling and hesitant.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Unwillingly or with hesitation&quot;,
+    &quot;examples&quot;: [
+      &quot;She reluctantly agreed to lend him her car for the weekend.&quot;,
+      &quot;He reluctantly admitted that he had made a mistake in the calculations.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · gemma4:12b-it-qat · holdout-candid · Examples 2/2</summary><p>Correct frank and unposed-photo senses; safe empty base.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;truthful and straightforward; honest&quot;,
+    &quot;examples&quot;: [
+      &quot;I appreciate your candid opinion about my new business plan.&quot;,
+      &quot;The politician gave a candid interview about his past mistakes.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;not posed or staged; spontaneous&quot;,
+    &quot;examples&quot;: [
+      &quot;The photographer captured some beautiful candid shots of the wedding guests.&quot;,
+      &quot;I prefer candid photos because they show people&#x27;s real expressions.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3:14b-q4_K_M · holdout-oversight · Examples 2/2</summary><p>Correct omission and supervision senses; oversee is a valid corresponding verb.</p><p><strong>Entry:</strong> oversight · noun</p><p><strong>Word formation:</strong> oversee — To watch or monitor something carefully to ensure that it is done correctly.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;A failure to notice or pay attention to something important&quot;,
+    &quot;examples&quot;: [
+      &quot;The accident was due to a moment of oversight by the driver.&quot;,
+      &quot;The manager was reprimanded for the oversight in the financial report.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;The act of supervising or managing something&quot;,
+    &quot;examples&quot;: [
+      &quot;The project was handled with careful oversight from the senior team.&quot;,
+      &quot;The company has strict oversight to ensure all safety regulations are followed.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3:14b-q4_K_M · holdout-run · Examples 0/2</summary><p>Several headings confuse causative/intransitive uses, run out, or invent continuous-supply meaning.</p><p><strong>Entry:</strong> run · verb; past tense in source</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To move quickly on foot, using the legs&quot;,
+    &quot;examples&quot;: [
+      &quot;He ran to the store before the rain started.&quot;,
+      &quot;The children ran around the playground for an hour.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To operate or manage something, especially a business or organization&quot;,
+    &quot;examples&quot;: [
+      &quot;She runs a successful bakery in the city center.&quot;,
+      &quot;He used to run a small IT company before retiring.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To cause something to happen or continue, especially a machine or system&quot;,
+    &quot;examples&quot;: [
+      &quot;The machine runs on solar energy.&quot;,
+      &quot;The computer runs very slowly when it&#x27;s overheating.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To move or operate something, such as a machine or vehicle&quot;,
+    &quot;examples&quot;: [
+      &quot;The car runs smoothly after the service.&quot;,
+      &quot;The printer runs out of ink after a few pages.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To have a continuous supply of something, such as money or resources&quot;,
+    &quot;examples&quot;: [
+      &quot;The company runs on a tight budget.&quot;,
+      &quot;The hospital runs on donations from the community.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3:14b-q4_K_M · holdout-look-forward · Examples 2/2</summary><p>Correct anticipation and conventional formal-expectation examples.</p><p><strong>Entry:</strong> look forward to · phrasal verb; verb + preposition</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To anticipate something with pleasure or interest, usually in the future.&quot;,
+    &quot;examples&quot;: [
+      &quot;I am looking forward to my vacation next week.&quot;,
+      &quot;She is looking forward to meeting her friends at the party.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To expect something to happen, often in a formal or official context.&quot;,
+    &quot;examples&quot;: [
+      &quot;The company is looking forward to receiving your application.&quot;,
+      &quot;The committee is looking forward to discussing the proposal in detail.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3:14b-q4_K_M · holdout-reluctantly · Examples 1/2</summary><p>Two groups paraphrase unwillingness.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — Unwilling to do something because of hesitation or unwillingness.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;With hesitation or unwillingness&quot;,
+    &quot;examples&quot;: [
+      &quot;She reluctantly agreed to go on the trip, even though she wasn&#x27;t excited about it.&quot;,
+      &quot;He reluctantly admitted that he had made a mistake.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;In a way that shows a lack of enthusiasm or eagerness&quot;,
+    &quot;examples&quot;: [
+      &quot;The student reluctantly raised his hand when the teacher asked for volunteers.&quot;,
+      &quot;They reluctantly accepted the job offer, though they had hoped for something better.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3:14b-q4_K_M · holdout-candid · Examples 0/2</summary><p>Invents candid as related to candidate and uses the nonexistent noun candid.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Honest and open, without trying to hide or disguise anything&quot;,
+    &quot;examples&quot;: [
+      &quot;She gave a candid answer to the difficult question.&quot;,
+      &quot;The journalist is known for his candid interviews with politicians.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Relating to or resembling a candidate&quot;,
+    &quot;examples&quot;: [
+      &quot;The candid&#x27;s name was written on the ballot paper.&quot;,
+      &quot;The election officials checked the candid&#x27;s eligibility carefully.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3.5:9b-q4_K_M · holdout-oversight · Examples 2/2</summary><p>Correct omission and supervision noun usages.</p><p><strong>Entry:</strong> oversight · countable noun</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Failure to notice or deal with something important&quot;,
+    &quot;examples&quot;: [
+      &quot;The accident was caused by a momentary oversight on the part of the driver.&quot;,
+      &quot;We must ensure there is no oversight in the safety checks before launch.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Supervision or management of an organization or activity&quot;,
+    &quot;examples&quot;: [
+      &quot;The board of directors is responsible for the overall oversight of the company.&quot;,
+      &quot;She took on the role of project oversight to keep the team on schedule.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3.5:9b-q4_K_M · holdout-run · Examples 2/2</summary><p>Five established verb usages with matching examples; race participation is a conventional construction.</p><p><strong>Entry:</strong> run · past tense verb</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;To move quickly on foot&quot;,
+    &quot;examples&quot;: [
+      &quot;She decided to run to catch the bus before it left.&quot;,
+      &quot;The children love to run in the park during summer.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To operate or function (of a machine/system)&quot;,
+    &quot;examples&quot;: [
+      &quot;The engine will not run without enough oil.&quot;,
+      &quot;Our computer program runs very smoothly on this device.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To manage or be in charge of an organization&quot;,
+    &quot;examples&quot;: [
+      &quot;He has run the company successfully for over ten years.&quot;,
+      &quot;Who will run the new department after the merger?&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To participate in a race or competition&quot;,
+    &quot;examples&quot;: [
+      &quot;They plan to run in the marathon next month.&quot;,
+      &quot;She ran her first 5K race last weekend.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;To flow or move continuously (of liquid or abstract concepts)&quot;,
+    &quot;examples&quot;: [
+      &quot;Tears began to run down his cheeks when he heard the news.&quot;,
+      &quot;Water runs off the roof during heavy storms.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3.5:9b-q4_K_M · holdout-look-forward · Examples 1/2</summary><p>Five groups paraphrase anticipation and split it by event/topic.</p><p><strong>Entry:</strong> look forward to · phrasal verb + preposition</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;to feel happy and excited about an event or experience that will happen in the future&quot;,
+    &quot;examples&quot;: [
+      &quot;I really look forward to my summer vacation every year.&quot;,
+      &quot;She looks forward to hearing from her friends regularly.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to anticipate something with pleasure, often used when talking about receiving letters, emails, or visits&quot;,
+    &quot;examples&quot;: [
+      &quot;We look forward to receiving your reply by Friday.&quot;,
+      &quot;The team looks forward to welcoming the new coach next month.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to express enthusiasm for a specific activity or task that is scheduled ahead&quot;,
+    &quot;examples&quot;: [
+      &quot;He looks forward to starting his new job on Monday.&quot;,
+      &quot;They look forward to attending the concert this weekend.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to show eagerness about a future meeting or conversation with someone&quot;,
+    &quot;examples&quot;: [
+      &quot;I look forward to speaking with you soon.&quot;,
+      &quot;The students look forward to their discussion with the principal.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;to anticipate a positive outcome or result in a future situation&quot;,
+    &quot;examples&quot;: [
+      &quot;Everyone looks forward to seeing the results of the experiment.&quot;,
+      &quot;We look forward to enjoying the beautiful weather tomorrow.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3.5:9b-q4_K_M · holdout-reluctantly · Examples 1/2</summary><p>Sadness/regret is an associated circumstance rather than a separate sense.</p><p><strong>Entry:</strong> reluctantly · adverb</p><p><strong>Word formation:</strong> reluctant — Not willing to do something; showing hesitation or unwillingness.</p><pre>[
+  {
+    &quot;meaning&quot;: &quot;With hesitation or unwillingness to do something&quot;,
+    &quot;examples&quot;: [
+      &quot;She reluctantly agreed to the proposal after realizing there was no other option.&quot;,
+      &quot;He reluctantly admitted that he had made a mistake in his calculations.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Doing an action with a sense of sadness or regret&quot;,
+    &quot;examples&quot;: [
+      &quot;They reluctantly left the party before it was over because they were enjoying themselves.&quot;,
+      &quot;The old man reluctantly sold his family heirloom to pay for medical bills.&quot;
+    ]
+  }
+]</pre></details>
+<details><summary>holdout-candidate · qwen3.5:9b-q4_K_M · holdout-candid · Examples 0/2</summary><p>False photography definition based on no filters/editing; one example substitutes candor for candid.</p><p><strong>Entry:</strong> candid · adjective</p><p><strong>Word formation:</strong> </p><pre>[
+  {
+    &quot;meaning&quot;: &quot;Frankly honest and open about one&#x27;s true feelings or opinions&quot;,
+    &quot;examples&quot;: [
+      &quot;The interviewer asked for a candid assessment of the project&#x27;s weaknesses.&quot;,
+      &quot;I appreciate your candor when you give me direct feedback on my work.&quot;
+    ]
+  },
+  {
+    &quot;meaning&quot;: &quot;Photographed without filters, editing, or artificial enhancement&quot;,
+    &quot;examples&quot;: [
+      &quot;The magazine published a candid shot of the celebrity at home.&quot;,
+      &quot;This candid photo captures the moment just before the surprise party began.&quot;
+    ]
+  }
+]</pre></details>
+</main></html>

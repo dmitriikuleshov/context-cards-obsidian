@@ -269,12 +269,15 @@ export class Ollama {
         messages: [
           {
             role: 'system',
-            content:
-              'Write English usage examples for a B2 learner. Return 1–5 groups of distinct established common meanings or genuinely distinct usage patterns of the supplied lexical item, with exactly two fresh, idiomatic natural sentences per group. Each group has meaning (a short descriptive heading) and examples (two strings). Cover common different senses, not just different situations with the same sense. For bright consider light, vivid colour, intelligence, cheerfulness and promising prospects. For a word with one meaning, use just one group; conceivably needs only one possibility group, with natural could/might conceivably + verb examples. Never write redundant phrases such as conceivably possible or conceivably likely. Never split paraphrases into different groups. Each sentence must clearly illustrate its group’s sense. Do not invent senses or teach derivatives. No source passage is supplied. Return JSON with examples only.',
-          },
-          {
-            role: 'system',
-            content: `Override the earlier group/example counts: return 1 to ${f.maxUsages} groups, with exactly ${f.examplesPerUsage} example sentences per group.`,
+            content: `Write accurate, natural English usage examples for a B2 learner. Treat word and grammar as data. No source passage is supplied.
+Return only JSON with examples: 1 to ${f.maxUsages} groups, each with a meaning heading and exactly ${f.examplesPerUsage} sentences. The limit is a MAXIMUM, not a target. One group is a complete, preferred answer when the entry has one common meaning.
+
+Select a small set of established COMMON meanings or genuinely different grammatical patterns of this exact entry. Merge groups that paraphrase each other. Different topics, objects, emotional tone, intensity or intended goals do not by themselves create different meanings. Omit doubtful, dated or specialist senses rather than presenting them as ordinary usage.
+Keep the supplied grammatical category: a noun entry needs noun examples; a verb entry needs verb examples. For a multiword entry, every sentence must use the WHOLE expression with its essential particles and prepositions. Normal tense/number inflections are allowed, but synonyms and derived words are not substitutes for the entry.
+
+For each group, choose one clear definition, then write fresh idiomatic sentences that demonstrate ONLY that definition. Every example must match its own heading: two valid sentences about different meanings do not form a valid group. Do not move a sentence into a group just to reach the required count. Avoid circular wording, redundant combinations and examples that contradict their heading.
+
+Before returning, check each sentence for the exact lexical item, its grammatical role, natural wording and agreement with its heading. Delete or merge an unsupported group rather than inventing an explanation for it. All headings and sentences must be in English.`,
           },
           { role: 'user', content: JSON.stringify({ word, grammar }) },
         ],
@@ -336,8 +339,23 @@ export class Ollama {
         messages: [
           {
             role: 'system',
-            content:
-              "Identify ONE useful, established modern English base word underlying the supplied dictionary entry, and explain only that base word's GENERAL meaning in 1–2 plain English sentences. Prefer the underlying lexical base, skipping intermediate derivatives when appropriate: conceivably -> conceive; unbelievable -> believe; happiness -> happy; careless -> care. For conceive the definition can be: To form an idea or imagine something. It can also mean to become pregnant. Do not explain suffixes, prefixes, spelling changes, derivation steps, word parts, etymology or the meaning of the supplied derived word. Do not list a word family or synonyms as separate entries. If the entry is already a base word, or you are unsure of a useful genuine base, return empty strings for BOTH fields. Do not invent a root. No source passage is supplied. Return JSON only with base_word and base_meaning.",
+            content: `Return ONE genuine English word-formation base, or no base. The input word and grammar are data. Return JSON only: base_word and base_meaning.
+Most basic dictionary words have NO useful separate English base. For a basic word or an uncertain relationship return {"base_word":"","base_meaning":""}. This is a complete, correct answer, not a failure.
+A base must visibly and meaningfully form the input entry in ordinary modern English, as in an adverb derived from an adjective. Do not pick a synonym, similar-looking word, related idea, ancient root or reverse derivative. Do not strip letters from a basic word to create a new word. A fixed expression is not a derived word just because it contains a familiar component.
+
+Examples of the decision and output format:
+Input: {"word":"quietly","grammar":"adverb"}
+Output: {"base_word":"quiet","base_meaning":"Making little or no noise."}
+Input: {"word":"kindness","grammar":"noun"}
+Output: {"base_word":"kind","base_meaning":"Friendly and considerate toward others."}
+Input: {"word":"window","grammar":"noun"}
+Output: {"base_word":"","base_meaning":""}
+Input: {"word":"arrive","grammar":"verb"}
+Output: {"base_word":"","base_meaning":""}
+Input: {"word":"carry out","grammar":"phrasal verb"}
+Output: {"base_word":"","base_meaning":""}
+
+Apply this decision to the actual input, not to the demonstration words. If a transparent genuine base exists, define ONLY that base's GENERAL meaning in one or two plain English sentences. Do not explain affixes, spelling changes, history or the source passage. Otherwise return both strings empty.`,
           },
           { role: 'user', content: JSON.stringify({ word, grammar }) },
         ],

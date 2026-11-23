@@ -1,0 +1,366 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "power",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Useful power senses, but some groups overlap and energy/ability examples are loosely classified."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "charge",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Three distinct common verb senses with matching natural examples; no invented base."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "strain",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "The old bridge could not strain the increased traffic incorrectly uses strain as withstand."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "hitherto",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One correct common sense with usable examples; hither is a genuine component."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "conceivably",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "One example substitutes conceivable; the other has redundant conceivably possible."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "vagaries",
+    "examplesScore": 2,
+    "falseBase": true,
+    "note": "Good noun examples; vague is still not an English derivational base."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "resort-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct phrase; heading overstates unpleasant/unacceptable action and uses candles as an example."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "put-up-with",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Two correct tolerance examples. Put is a real component, though not a useful derivational lesson for this fixed expression."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "sanction",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Both legitimate verb senses, but one example uses the noun sanctions instead."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "tabled-uk",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Only postponement examples; omits common British discussion sense."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "inflammable",
+    "examplesScore": 2,
+    "falseBase": true,
+    "note": "Correct examples; flammable is not the transparent original English base (historical derivation runs the other way)."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "seek-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct whole expression but two groups divide the same attempt-to sense by topic."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "long-12000",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct weight and mild-food meanings; no invented bright/intelligent senses or false base."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "power",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Three useful established noun senses with matching examples."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "charge",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Five distinct common verb senses; all examples use the verb charge."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "strain",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Whole displayed strain to construction preserved; two groups paraphrase the same effort-to sense."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "hitherto",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "One good example; the other omits the target word completely."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "conceivably",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One established possibility sense with two natural examples. Conceivable is a genuine intermediate adjective base."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "vagaries",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct unpredictable-change group and safe empty base."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "resort-to",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One common last-option sense with correct whole-expression examples."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "put-up-with",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct whole-expression tolerance examples; no substituted put up."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "sanction",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Clear approval and punishment verb groups with matching examples."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "tabled-uk",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Presentation heading contains an example of postponement; labels contradict one sentence."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "inflammable",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One correct flammability group and legitimate flame base."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "seek-to",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One coherent attempt-to group, whole construction preserved."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "long-12000",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Four established adjective senses; light nap is less idiomatic than light sleep, but invented intelligence/future senses are gone."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "power",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Three valid broad noun senses; no power left to walk is awkward and groups partly overlap."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "charge",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Five distinct common verb senses with correct headings and examples."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "strain",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Valid effort/tension senses; strained fabric after repeated washing is unnatural and category labels partly overlap."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "hitherto",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two headings paraphrase the same until-then meaning."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "conceivably",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two duplicate possibility groups; one example substitutes the derived adjective conceivable."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "vagaries",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Second heading claims erratic behavior but uses the same market-variation sense as the first."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "resort-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct whole expression; two headings paraphrase the same last-option sense."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "put-up-with",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Still falsely teaches accommodation and drops essential with in one example."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "sanction",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "An approval group includes a punitive example; another group uses a noun sanctions example."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "tabled-uk",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Still invents moving a bill between places in a legislature as a separate meaning."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "inflammable",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Still invents a medical cause-inflammation meaning."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "seek-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two groups paraphrase the same attempt-to meaning."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "long-12000",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Low-weight heading uses light touch (gentleness), brightness group uses a noun, and light-hearted substitutes a derivative."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "power",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct capacity/physical power and electricity examples; no invented official-position sense."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "charge",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Still mixes a noun charge into a verb group and uses charge the classroom supplies for entrusting."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "strain",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Real effort, pressure, injury and filtering uses; some headings overstate inevitable weakening/breaking."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "hitherto",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One coherent until-then group with two examples using the target."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "conceivably",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two paraphrased possibility groups; correct adverb examples and a genuine intermediate base conceivable."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "vagaries",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Usable noun examples but the groups overlap and prioritize uncommon singular usage."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "resort-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Whole expression preserved, but duplicate groups and the battery/backpack scenario are awkward."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "put-up-with",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "No other-expression substitution, but headings repeat tolerance and overstate without complaining."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "sanction",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Legitimate approval/punishment senses; one example still uses the noun official sanction in a verb group."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "tabled-uk",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Legitimate tabulation/postponement/literal-placement senses, but rare placement examples are unlabelled and the British source sense is omitted."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "inflammable",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct flammability definition but the instruction never to store gasoline in a container labelled inflammable is misleading; labels usually identify hazardous contents."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "seek-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Five groups repeat the same attempt-to construction in different situations."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "long-12000",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Invents revealing/little-clothing sense, mixes noun light/lights with adjective, and has a weak flour example."
+  }
+]
