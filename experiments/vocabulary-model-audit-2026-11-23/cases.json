@@ -1,0 +1,126 @@
+[
+  {
+    "id": "power",
+    "target": "power",
+    "source": "After the storm damaged the cables, the whole village was without power for two days.",
+    "gold": "Ready. Uncountable noun; electricity. General noun meanings and examples may cover ability, authority/influence, electricity, mathematical power. Merge paraphrases; do not add unrelated lexical derivatives."
+  },
+  {
+    "id": "charge",
+    "target": "charged",
+    "source": "The police charged Daniel with theft, but the court later found him not guilty.",
+    "gold": "Ready. Lemma charge, verb, formally accuse; not conviction or a fee. General verb usages may include payment, accusation, charging a battery, rushing/attacking and assigning responsibility."
+  },
+  {
+    "id": "strain",
+    "target": "strained",
+    "source": "Mara strained to hear the distant voice, but the wind drowned out every word.",
+    "gold": "Ready. Lemma strain; make great effort. No actual injury or damage is implied. Could not hear despite effort; do not invent physical damage or inevitable failure."
+  },
+  {
+    "id": "hitherto",
+    "target": "hitherto",
+    "source": "The newly discovered letters revealed a hitherto unknown friendship between the two writers.",
+    "gold": "Ready. Adverb meaning until then/up to the point in time in question. Fairly formal/literary. Unknown before discovery, not unknown forever; no invented derivational base."
+  },
+  {
+    "id": "conceivably",
+    "target": "conceivably",
+    "source": "The missing receipt could conceivably be in the drawer, although I checked it yesterday.",
+    "gold": "Ready. Adverb: possibly/as can be imagined; not likely/probably. Normally one common sense/group, not redundant topic-based groups or conceivably possible."
+  },
+  {
+    "id": "vagaries",
+    "target": "vagaries",
+    "source": "Farmers must plan for the vagaries of the weather, which can change without warning.",
+    "gold": "Ready. Normally plural noun vagaries; unpredictable changes or variations, not personal eccentric behaviour exclusively. Do not reduce the entry to vague."
+  },
+  {
+    "id": "resort-to",
+    "target": "had resorted to",
+    "source": "After every polite request failed, they had resorted to legal action to recover the money.",
+    "gold": "Ready. Lemma resort to, verb plus noun/gerund, not to-infinitive; turn to a method when alternatives fail, often undesirable/last resort. Do not use holiday-resort noun examples."
+  },
+  {
+    "id": "put-up-with",
+    "target": "put up with",
+    "source": "I can put up with the noise during the day, but I need silence at night.",
+    "gold": "Ready. Preserve put up with, tolerate something unpleasant; not accommodation, building, offering or postponing."
+  },
+  {
+    "id": "sanction",
+    "target": "sanction",
+    "source": "The ethics board refused to sanction the experiment: without its official approval, the trial could not begin.",
+    "gold": "Ready. Verb sanction = officially approve/authorize in this context. General explanation/examples may mention penalize as a contrasting established sense, clearly separated. Source meaning must not be punish."
+  },
+  {
+    "id": "tabled-uk",
+    "target": "tabled",
+    "source": "At the British committee meeting, the chair tabled a motion for discussion, and the members began debating it immediately.",
+    "gold": "Ready. Lemma table, verb. Here formally present for discussion, not US postpone. If describing dialect differences, do not reverse them or forbid attested uses."
+  },
+  {
+    "id": "inflammable",
+    "target": "inflammable",
+    "source": "Keep this solvent away from sparks: it is highly inflammable and can catch fire very easily.",
+    "gold": "Ready. Adjective: easily set on fire. Flammable has the same core meaning; NOT non-flammable. Do not invent a base verb inflame meaning to make less combustible."
+  },
+  {
+    "id": "seek-to",
+    "target": "sought to",
+    "source": "The report sought to explain the sudden decline in attendance, but the evidence remained inconclusive.",
+    "gold": "Ready. Lemma seek to (verb plus to-infinitive), attempted/tried to, not necessarily succeeded or physically searched for an object. Preserve essential to in this selected pattern."
+  },
+  {
+    "id": "ambiguous-bank",
+    "target": "bank",
+    "source": "She waited near the bank.",
+    "gold": "Ambiguous: financial institution/building or river bank; ask for clarification, no confident invented teaching fields."
+  },
+  {
+    "id": "ambiguous-crane",
+    "target": "crane",
+    "source": "When I looked out of the window, I saw a crane.",
+    "gold": "Ambiguous: bird or lifting machine; ask for clarification, no confident definition."
+  },
+  {
+    "id": "unknown-word",
+    "target": "zindlebrate",
+    "source": "We should zindlebrate the plan before Friday.",
+    "gold": "Unknown/coined expression; do not invent a definition or pronunciation. Ask for clarification."
+  },
+  {
+    "id": "long-12000",
+    "target": "light",
+    "source": "Journal entry 1. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 2. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 3. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 4. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 5. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 6. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 7. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 8. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 9. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 10. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 11. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 12. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 13. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 14. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 15. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 16. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 17. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 18. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 19. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 20. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 21. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 22. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 23. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 24. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 25. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at th\nThe suitcase was light enough for her to lift with one hand, although it contained all her clothes.\nJournal entry 1. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 2. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 3. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 4. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 5. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 6. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 7. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 8. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 9. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 10. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 11. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 12. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 13. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 14. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 15. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 16. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 17. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 18. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 19. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 20. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 21. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 22. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 23. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 24. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 25. We compared the route maps, booked a room near the station and wrote down the address of the museum. The tickets were kept in a blue envelope. We agreed to leave after breakfast and meet the others at the station cafe.\nJournal entry 26. We compared the route maps, booked a room near the station and wr",
+    "gold": "Ready. Adjective light = not heavy/easy to lift, not illumination, pale colour or brightness in source. General adjective examples may cover low weight, illumination (a light room), pale colour, mildness, small amount. Do not treat the source as ambiguous."
+  },
+  {
+    "id": "strain-repeat",
+    "target": "strained",
+    "source": "Mara strained to hear the distant voice, but the wind drowned out every word.",
+    "gold": "Ready. Lemma strain; make great effort. No actual injury or damage is implied. Could not hear despite effort; do not invent physical damage or inevitable failure.",
+    "repeatOf": "strain"
+  },
+  {
+    "id": "resort-to-repeat",
+    "target": "had resorted to",
+    "source": "After every polite request failed, they had resorted to legal action to recover the money.",
+    "gold": "Ready. Lemma resort to, verb plus noun/gerund, not to-infinitive; turn to a method when alternatives fail, often undesirable/last resort. Do not use holiday-resort noun examples.",
+    "repeatOf": "resort-to"
+  },
+  {
+    "id": "ambiguous-bank-repeat",
+    "target": "bank",
+    "source": "She waited near the bank.",
+    "gold": "Ambiguous: financial institution/building or river bank; ask for clarification, no confident invented teaching fields.",
+    "repeatOf": "ambiguous-bank"
+  },
+  {
+    "id": "inflammable-repeat",
+    "target": "inflammable",
+    "source": "Keep this solvent away from sparks: it is highly inflammable and can catch fire very easily.",
+    "gold": "Ready. Adjective: easily set on fire. Flammable has the same core meaning; NOT non-flammable. Do not invent a base verb inflame meaning to make less combustible.",
+    "repeatOf": "inflammable"
+  }
+]

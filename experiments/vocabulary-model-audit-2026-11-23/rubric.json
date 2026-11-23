@@ -1,0 +1,15 @@
+{
+ "scope": "Vocabulary generation through the real plugin client; not Writing mode, UI interaction, Anki delivery, or a population-wide accuracy estimate.",
+ "uniqueCases": 16,
+ "expectedReady": 13,
+ "expectedClarification": 3,
+ "repeatCases": 4,
+ "manualReadyRubric": {
+  "lemmaAndGrammar": "0 wrong lexical item/category; 1 partially correct/incomplete; 2 correct",
+  "sourceMeaning": "0 wrong meaning; 1 partly correct/misleading boundary; 2 correct source meaning",
+  "explanationAndNotes": "0 substantive false teaching; 1 minor overstatement or weak notes; 2 accurate/useful",
+  "generalMeaningAndFormation": "0 false base relation/substantive error; 1 incomplete or minor error; 2 correct (empty formation acceptable)",
+  "examples": "0 invented sense/seriously incorrect examples; 1 mostly useful but some category drift, overlap or awkward examples; 2 natural established usages of the requested lexical category"
+ },
+ "scoring": "Manual assessment by the assistant; 0-2 per dimension, max 10 per ready case. Failed ready generations count as 0 for a usability-adjusted average. Repeat runs are assessed for consistency separately and excluded from primary quality averages. Uncertainty handling is separate. Automatic structural validation is not semantic accuracy."
+}

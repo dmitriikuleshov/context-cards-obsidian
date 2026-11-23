@@ -1,0 +1,1307 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "power",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "power",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "charge",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "charged",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "strain",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 3,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "hitherto",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "hitherto",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "conceivably",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "conceivably",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 3,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "vagaries",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "vagaries",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "resort-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "put-up-with",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "put up with",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "sanction",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sanction",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 3,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "tabled-uk",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "tabled",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "inflammable",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 3,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "seek-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sought to",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "ambiguous-bank",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "bank",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "ambiguous-crane",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "crane",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "unknown-word",
+    "status": "unknown"
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "long-12000",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "light",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 3,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "strain-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "resort-to-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "ambiguous-bank-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "bank",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "inflammable-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 3,
+    "explanationSentences": 3,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "power",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "power",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "charge",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "charged",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 3,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "strain",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 4,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 3,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "hitherto",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "hitherto",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "conceivably",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "conceivably",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "vagaries",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "vagaries",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 3,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "resort-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "put-up-with",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "put up with",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "sanction",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sanction",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "tabled-uk",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "tabled",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "inflammable",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 3,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "seek-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sought to",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "ambiguous-bank",
+    "status": "ambiguous"
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "ambiguous-crane",
+    "status": "ambiguous"
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "unknown-word",
+    "status": "unknown"
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "long-12000",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "light",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "strain-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "resort-to-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "ambiguous-bank-repeat",
+    "status": "ambiguous"
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "inflammable-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "power",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "power",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "charge",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "charged",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "strain",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "hitherto",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "hitherto",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "conceivably",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "conceivably",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "vagaries",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "vagaries",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "resort-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "put-up-with",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "put up with",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "sanction",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sanction",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "tabled-uk",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "tabled",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "inflammable",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "seek-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sought to",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "ambiguous-bank",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "bank",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "ambiguous-crane",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "crane",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "unknown-word",
+    "status": "unknown"
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "long-12000",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "light",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "strain-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "resort-to-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "ambiguous-bank-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "bank",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "inflammable-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "power",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "power",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "charge",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "charged",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "strain",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "hitherto",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "hitherto",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "conceivably",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "conceivably",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "vagaries",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "vagaries",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "resort-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "put-up-with",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "put up with",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "sanction",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sanction",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "tabled-uk",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "tabled",
+    "exampleGroups": 2,
+    "examplesPerGroup": [
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "inflammable",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "seek-to",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "sought to",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "ambiguous-bank",
+    "status": "ambiguous"
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "ambiguous-crane",
+    "status": "ambiguous"
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "unknown-word",
+    "status": "unknown"
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "long-12000",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "light",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "strain-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "strained",
+    "exampleGroups": 5,
+    "examplesPerGroup": [
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "resort-to-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "had resorted to",
+    "exampleGroups": 3,
+    "examplesPerGroup": [
+      2,
+      2,
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "ambiguous-bank-repeat",
+    "status": "ambiguous"
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "inflammable-repeat",
+    "status": "ready",
+    "exportIssues": [],
+    "gapPresent": true,
+    "typedAnswer": "inflammable",
+    "exampleGroups": 1,
+    "examplesPerGroup": [
+      2
+    ],
+    "meaningSentences": 2,
+    "explanationSentences": 2,
+    "generalSentences": 2,
+    "answerLeaksIntoHint": false
+  }
+]
