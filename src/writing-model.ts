@@ -1,5 +1,6 @@
 import { endpoint, jsonRequest } from './http';
 import { writingEdits } from './writing-diff';
+import { americanSpellingPolicy } from './writing-american';
 import { writingOptions, type Settings } from './types';
 import {
   WRITING_LIMIT,
@@ -278,16 +279,26 @@ export class WritingModel {
     const decisions = readDecisions(reviewed);
     analysis.findings = candidates.flatMap((f) => {
       const d = decisions.find((d) => reviewIds.get(d.id) === f.id)!;
-      const category = f.before.toLowerCase() === f.after.toLowerCase() ? 'grammar' : d.category;
-      if (d.verdict !== 'required' || !allowedKinds.includes(category)) return [];
+      const spelling = americanSpellingPolicy(f.original, f.before, f.after);
+      if (spelling === 'preserve') return [];
+      const regional = spelling === 'normalize' && d.verdict !== 'incorrect';
+      const category =
+        f.before.toLowerCase() === f.after.toLowerCase()
+          ? 'grammar'
+          : regional
+            ? 'typo'
+            : d.category;
+      if ((!regional && d.verdict !== 'required') || !allowedKinds.includes(category)) return [];
       return [
         {
           ...f,
           kind: category,
           selected: category === 'grammar' || category === 'vocabulary',
-          explanation: d.explanation.trim(),
-          tip: d.tip.trim(),
-          pattern: d.pattern.trim(),
+          explanation: regional
+            ? `Use '${f.after}', the American English spelling of '${f.before}'.`
+            : d.explanation.trim(),
+          tip: regional ? 'Use American English spelling consistently.' : d.tip.trim(),
+          pattern: regional ? 'American spelling' : d.pattern.trim(),
           format: !f.after.trim()
             ? ('correction' as const)
             : options.exercise === 'ai'
