@@ -14,6 +14,9 @@ describe('one grammatical restructuring', () => {
     ['She explained me the problem.', 'She explained the problem to me.'],
     ['He suggested me to take a break.', 'He suggested that I take a break.'],
     ['What means this word?', 'What does this word mean?'],
+    ['He avoided to answer the question.', 'He avoided answering the question.'],
+    ['I enjoyed to read the novel.', 'I enjoyed reading the novel.'],
+    ['I am knowing the answer.', 'I know the answer.'],
     [
       'Only after lunch I understood the problem.',
       'Only after lunch did I understand the problem.',

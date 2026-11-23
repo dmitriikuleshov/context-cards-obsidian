@@ -212,8 +212,10 @@ export function parseWritingAnalysis(
   strict = false,
 ): { summary: string; findings: WritingFinding[] } {
   const data = JSON.parse(raw);
-  if (!data || !Array.isArray(data.findings) || data.findings.length > MAX_WRITING_FINDINGS)
+  if (!data || !Array.isArray(data.findings))
     throw new Error('Invalid writing analysis. Try a shorter selection.');
+  if (data.findings.length > MAX_WRITING_FINDINGS)
+    throw new Error(`This passage needs more than ${MAX_WRITING_FINDINGS} corrections. Check a shorter selection.`);
   const seen = new Set<string>();
   const findings: WritingFinding[] = [];
   for (const item of data.findings) {

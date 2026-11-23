@@ -1,6 +1,7 @@
 import { endpoint, jsonRequest } from './http';
 import { writingEdits } from './writing-diff';
 import { americanSpellingPolicy } from './writing-american';
+import { protectedWritingLiteral } from './writing-literals';
 import { writingOptions, type Settings } from './types';
 import {
   WRITING_LIMIT,
@@ -137,6 +138,7 @@ export class WritingModel {
         )
           corrected = corrected.slice(0, -1);
         for (const edit of writingEdits(original, corrected)) {
+          if (protectedWritingLiteral(original, edit.before, edit.after)) continue;
           findings.push({
             kind: 'grammar',
             title: `${edit.before.trim()} → ${edit.after.trim() || '(remove)'}`.slice(0, 120),

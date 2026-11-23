@@ -1,5 +1,21 @@
-const words = (text: string) => text.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? [];
-const doForms = new Set(['do', 'does', 'did']);
+const words = (text: string) => text.match(/[\p{L}\p{N}]+/gu) ?? [];
+const doForms = new Set([
+  'do',
+  'does',
+  'did',
+  'am',
+  'is',
+  'are',
+  'was',
+  'were',
+  'be',
+  'been',
+  'being',
+  'have',
+  'has',
+  'had',
+  'to',
+]);
 // Identity of common irregular verb forms is used only for alignment. No spelling
 // or grammatical correction is produced from this table.
 const irregular: Record<string, string> = {
@@ -54,7 +70,7 @@ function inflections(word: string) {
   return new Set(
     [
       word,
-      irregular[word] ?? word,
+      irregular[word.toLowerCase()] ?? word,
       word.replace(/(?:s|es|ed|ing)$/, ''),
       word.replace(/d$/, ''),
       word.replace(/(?:ies|ied)$/, 'y'),
@@ -72,8 +88,8 @@ export function linkedWritingEdit(before: string, after: string) {
     b = words(after);
   if (before.length > 120 || after.length > 120 || a.length > 10 || b.length > 10) return false;
   // Relocating existing words (including a preposition inserted to place a receiver).
-  const plainA = a.filter((w) => w !== 'to'),
-    plainB = b.filter((w) => w !== 'to');
+  const plainA = a.filter((w) => w.toLowerCase() !== 'to').map((w) => w.toLowerCase()),
+    plainB = b.filter((w) => w.toLowerCase() !== 'to').map((w) => w.toLowerCase());
   if (
     plainA.length >= 2 &&
     plainA.length === plainB.length &&
@@ -81,9 +97,9 @@ export function linkedWritingEdit(before: string, after: string) {
     plainA.join('|') !== plainB.join('|')
   )
     return true;
-  // Do-support and the corresponding verb inflection form one question/inversion rule.
-  const coreA = a.filter((w) => !doForms.has(w)),
-    coreB = b.filter((w) => !doForms.has(w));
+  // An auxiliary/complement marker and its dependent verb form one structure.
+  const coreA = a.filter((w) => !doForms.has(w.toLowerCase())),
+    coreB = b.filter((w) => !doForms.has(w.toLowerCase()));
   if (
     a.length - coreA.length !== b.length - coreB.length &&
     coreA.length &&
@@ -103,6 +119,10 @@ export function linkedWritingEdit(before: string, after: string) {
     return true;
   }
   return (
-    a.length === 2 && b.length === 2 && a[1] === 'to' && b[0] === 'that' && subjects[a[0]!] === b[1]
+    a.length === 2 &&
+    b.length === 2 &&
+    a[1]!.toLowerCase() === 'to' &&
+    b[0]!.toLowerCase() === 'that' &&
+    subjects[a[0]!.toLowerCase()] === b[1]!.toLowerCase()
   );
 }
