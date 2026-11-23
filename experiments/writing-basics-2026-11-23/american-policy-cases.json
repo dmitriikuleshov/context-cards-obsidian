@@ -1,0 +1,38 @@
+[
+  {
+    "id": "practise",
+    "text": "I practise French every day.",
+    "expected": [
+      "I practice French every day."
+    ]
+  },
+  {
+    "id": "flavour",
+    "text": "The flavour of the soup is unusual.",
+    "expected": [
+      "The flavor of the soup is unusual."
+    ]
+  },
+  {
+    "id": "licence",
+    "text": "The licence is valid.",
+    "expected": [
+      "The license is valid."
+    ]
+  },
+  {
+    "id": "code-literal",
+    "text": "The variable `colour` stores the value.",
+    "expected": []
+  },
+  {
+    "id": "quoted-literal",
+    "text": "The label is 'colour'.",
+    "expected": []
+  },
+  {
+    "id": "clean-american",
+    "text": "I practice French every day. The color is blue.",
+    "expected": []
+  }
+]

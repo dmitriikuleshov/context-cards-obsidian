@@ -1,0 +1,281 @@
+[
+  {
+    "id": "legacy-filters-vocabulary",
+    "text": "I have wrote a stroy. I did a mistake.",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "writing": {
+      "grammar": false,
+      "spelling": false
+    },
+    "cards": false
+  },
+  {
+    "id": "plural",
+    "text": "I have two child.",
+    "expected": [
+      "I have two children."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "modal",
+    "text": "She can sings well.",
+    "expected": [
+      "She can sing well."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "negative-past",
+    "text": "They didn't knew the answer.",
+    "expected": [
+      "They didn't know the answer."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "there-agreement",
+    "text": "There is three chairs in the room.",
+    "expected": [
+      "There are three chairs in the room."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "past-be",
+    "text": "They was late for the meeting.",
+    "expected": [
+      "They were late for the meeting."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "adverb",
+    "text": "She speaks English fluent.",
+    "expected": [
+      "She speaks English fluently."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "homework",
+    "text": "I make my homework every evening.",
+    "expected": [
+      "I do my homework every evening."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "finished-time",
+    "text": "I have visited Paris last year.",
+    "expected": [
+      "I visited Paris last year."
+    ],
+    "heldOut": true,
+    "cards": true
+  },
+  {
+    "id": "past-simple",
+    "text": "Yesterday, I go to the library.",
+    "expected": [
+      "Yesterday, I went to the library."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "possessive",
+    "text": "The cat licked it's paw.",
+    "expected": [
+      "The cat licked its paw."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "contraction",
+    "text": "Its a lovely day.",
+    "expected": [
+      "It's a lovely day."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "pronoun",
+    "text": "He gave the book to I.",
+    "expected": [
+      "He gave the book to me."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "plural-agreement",
+    "text": "These book are expensive.",
+    "expected": [
+      "These books are expensive."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "language",
+    "text": "I practise french every day.",
+    "expected": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "clean-contractions",
+    "text": "Its tail was wet. It's raining.",
+    "expected": [],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "clean-sounds",
+    "text": "It was a university with an unusual name.",
+    "expected": [],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "clean-timeline",
+    "text": "I met her two years ago. We have been friends ever since.",
+    "expected": [],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "clean-complement",
+    "text": "She suggested going home.",
+    "expected": [],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "clean-compound",
+    "text": "I received an e-mail yesterday.",
+    "expected": [],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "clean-news",
+    "text": "The news is good.",
+    "expected": [],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "repeat-adjacent",
+    "text": "She have wrote a letter.",
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "heldOut": true,
+    "cards": true
+  },
+  {
+    "id": "repeat-user",
+    "text": "This is my hand-written text and I want AI to check it for mistakes. I started to learn english a few years ago. This is good",
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "heldOut": true,
+    "cards": true
+  },
+  {
+    "id": "repeat-question",
+    "text": "What she want?",
+    "expected": [
+      "What does she want?"
+    ],
+    "heldOut": true,
+    "cards": true
+  },
+  {
+    "id": "clean-article",
+    "text": "She bought a new car yesterday.",
+    "expected": [],
+    "heldOut": true,
+    "cards": false
+  },
+  {
+    "id": "legacy-filters-grammar",
+    "text": "I have wrote a stroy. I did a mistake.",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "writing": {
+      "vocabulary": false,
+      "spelling": false
+    },
+    "cards": false
+  },
+  {
+    "id": "legacy-filters-spelling",
+    "text": "I have wrote a stroy. I did a mistake.",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "writing": {
+      "grammar": false,
+      "vocabulary": false
+    },
+    "cards": false
+  },
+  {
+    "id": "variant-american",
+    "text": "The colour of the building in the city centre is unusual.",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "writing": {
+      "variant": "american"
+    },
+    "cards": false
+  },
+  {
+    "id": "legacy-british-ignored",
+    "text": "The color of the building in the city center is unusual.",
+    "expected": [],
+    "writing": {
+      "variant": "british"
+    },
+    "cards": false
+  },
+  {
+    "id": "legacy-both-ignored",
+    "text": "The colour of the building in the city centre is unusual.",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "writing": {
+      "variant": "both"
+    },
+    "cards": false
+  }
+]

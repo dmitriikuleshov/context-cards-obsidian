@@ -1,0 +1,3814 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "legacy-filters-vocabulary",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "a8013831-fbc9-4339-8133-f13aafa696f9",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written,' not 'wrote.' The edit changes the incorrect verb form to the correct one.",
+        "tip": "Remember to use the correct past participle form after auxiliary verbs like 'have.'",
+        "pattern": "participle_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "b1d2ba50-b30d-4266-b88b-c7e9cf299bfe",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "'Stroy' is a misspelling of 'story.' The edit corrects the typo.",
+        "tip": "Double-check your spelling, especially for common words.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "0e1ba335-af1d-435a-8589-c02c02407118",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The correct collocation is 'make a mistake,' not 'do a mistake.' The edit replaces the incorrect verb with the correct one.",
+        "tip": "Pay attention to common verb collocations.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "plural",
+    "expected": [
+      "I have two children."
+    ],
+    "actual": [
+      "I have two children."
+    ],
+    "findings": [
+      {
+        "id": "23e806e8-775a-4dbc-a925-0f31067fde01",
+        "kind": "grammar",
+        "title": "child → children",
+        "original": "I have two child.",
+        "before": "child",
+        "after": "children",
+        "explanation": "The singular noun 'child' needs to be pluralized to agree with the quantity 'two'. The corrected form uses the irregular plural 'children' to indicate more than one child.",
+        "tip": "Remember that some nouns have irregular plural forms.",
+        "pattern": "number agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "modal",
+    "expected": [
+      "She can sing well."
+    ],
+    "actual": [
+      "She can sing well."
+    ],
+    "findings": [
+      {
+        "id": "be76f8bf-c2ff-4615-b96c-2da8dbe4ce85",
+        "kind": "grammar",
+        "title": "sings → sing",
+        "original": "She can sings well.",
+        "before": "sings",
+        "after": "sing",
+        "explanation": "The verb form after 'can' should be the base form. 'Can' is a modal verb and does not take the -s ending in the present tense.",
+        "tip": "After modal verbs like 'can,' 'could,' 'may,' and 'might,' use the base form of the verb.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "negative-past",
+    "expected": [
+      "They didn't know the answer."
+    ],
+    "actual": [
+      "They didn't know the answer."
+    ],
+    "findings": [
+      {
+        "id": "f2d74c05-9a36-4776-91ec-2fa6c078d6aa",
+        "kind": "grammar",
+        "title": "knew → know",
+        "original": "They didn't knew the answer.",
+        "before": "knew",
+        "after": "know",
+        "explanation": "The verb 'know' requires the past tense form 'knew' after 'did not'. The proposed correction replaces 'knew' with 'know', correcting the verb tense.",
+        "tip": "After auxiliary verbs like 'did', use the base form of the verb.",
+        "pattern": "verb_tense",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "there-agreement",
+    "expected": [
+      "There are three chairs in the room."
+    ],
+    "actual": [
+      "There are three chairs in the room."
+    ],
+    "findings": [
+      {
+        "id": "89e6bf9f-f15b-4c69-b3ac-9cad3703bed1",
+        "kind": "grammar",
+        "title": "is → are",
+        "original": "There is three chairs in the room.",
+        "before": "is",
+        "after": "are",
+        "explanation": "The verb 'is' does not agree with the plural subject 'three chairs'. The verb should be 'are' to match the number of the subject.",
+        "tip": "Remember that plural subjects require plural verbs.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "past-be",
+    "expected": [
+      "They were late for the meeting."
+    ],
+    "actual": [
+      "They were late for the meeting."
+    ],
+    "findings": [
+      {
+        "id": "23cf2677-b816-478d-b65a-fce14e173044",
+        "kind": "grammar",
+        "title": "was → were",
+        "original": "They was late for the meeting.",
+        "before": "was",
+        "after": "were",
+        "explanation": "The verb 'was' does not agree with the plural subject 'They'; the correct form is 'were'. This corrects a subject-verb agreement error.",
+        "tip": "Remember that plural subjects require plural verbs.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "adverb",
+    "expected": [
+      "She speaks English fluently."
+    ],
+    "actual": [
+      "She speaks English fluently."
+    ],
+    "findings": [
+      {
+        "id": "9dace056-a15e-4af2-8409-c4904cf60292",
+        "kind": "grammar",
+        "title": "fluent → fluently",
+        "original": "She speaks English fluent.",
+        "before": "fluent",
+        "after": "fluently",
+        "explanation": "The original sentence uses an adjective where an adverb is needed to modify the verb 'speaks'. 'Fluently' is the adverb form of 'fluent'.",
+        "tip": "Adverbs modify verbs, adjectives, or other adverbs.",
+        "pattern": "adverb_form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "homework",
+    "expected": [
+      "I do my homework every evening."
+    ],
+    "actual": [
+      "I do my homework every evening."
+    ],
+    "findings": [
+      {
+        "id": "3be8ce93-b10a-484c-b658-5fb9d8fe4e03",
+        "kind": "vocabulary",
+        "title": "make → do",
+        "original": "I make my homework every evening.",
+        "before": "make",
+        "after": "do",
+        "explanation": "The verb 'make' is incorrectly used with 'homework'; the correct verb is 'do'. The edit changes 'make' to 'do' to reflect the standard collocation.",
+        "tip": "Use 'do' with subjects like 'homework' and 'exercise'.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "finished-time",
+    "expected": [
+      "I visited Paris last year."
+    ],
+    "actual": [
+      "I visited Paris last year."
+    ],
+    "findings": [
+      {
+        "id": "2fe0b640-f539-4334-ac1f-3468447505c9",
+        "kind": "grammar",
+        "title": "have → (remove)",
+        "original": "I have visited Paris last year.",
+        "before": "have ",
+        "after": "",
+        "explanation": "The present perfect tense 'have visited' is incorrect with a finished time expression 'last year'; the simple past 'visited' is required. Use the simple past tense to describe completed actions in the past.",
+        "tip": "When using time expressions like 'last year,' use the simple past tense.",
+        "pattern": "verb_tense",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "2fe0b640-f539-4334-ac1f-3468447505c9",
+        "kind": "correction",
+        "question": "I have visited Paris last year.",
+        "target": "have ",
+        "answer": "",
+        "corrected": "I visited Paris last year.",
+        "hint": "simple past verb",
+        "explanation": "The present perfect tense 'have visited' is incorrect with a finished time expression 'last year'; the simple past 'visited' is required. Use the simple past tense to describe completed actions in the past.",
+        "tip": "When using time expressions like 'last year,' use the simple past tense."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "past-simple",
+    "expected": [
+      "Yesterday, I went to the library."
+    ],
+    "actual": [
+      "Yesterday, I went to the library."
+    ],
+    "findings": [
+      {
+        "id": "761c433e-cc7e-4e81-95cf-651051f59d53",
+        "kind": "grammar",
+        "title": "go → went",
+        "original": "Yesterday, I go to the library.",
+        "before": "go",
+        "after": "went",
+        "explanation": "The verb 'go' is in the present tense, but the sentence describes a past action. The corrected form 'went' is the past tense of 'go'.",
+        "tip": "Use the past tense of verbs to describe completed actions.",
+        "pattern": "verb_tense",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "possessive",
+    "expected": [
+      "The cat licked its paw."
+    ],
+    "actual": [
+      "The cat licked its paw."
+    ],
+    "findings": [
+      {
+        "id": "7162688a-8559-4a28-9797-824412ff7a6a",
+        "kind": "grammar",
+        "title": "' → (remove)",
+        "original": "The cat licked it's paw.",
+        "before": "'",
+        "after": "",
+        "explanation": "The possessive pronoun 'its' replaces the contraction 'it's', which indicates possession. 'It's' is a contraction of 'it is' or 'it has'.",
+        "tip": "Remember that 'its' shows possession, while 'it's' is a contraction.",
+        "pattern": "possessive_pronoun",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "contraction",
+    "expected": [
+      "It's a lovely day."
+    ],
+    "actual": [
+      "It's a lovely day."
+    ],
+    "findings": [
+      {
+        "id": "78c78ef2-3dea-4673-8263-35cf1cb8eeba",
+        "kind": "grammar",
+        "title": "Its → It's",
+        "original": "Its a lovely day.",
+        "before": "Its",
+        "after": "It's",
+        "explanation": "The original uses a possessive form where a contraction is needed. 'It's' is the contraction of 'it is'.",
+        "tip": "Remember that 'it's' means 'it is' or 'it has'.",
+        "pattern": "contraction",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "pronoun",
+    "expected": [
+      "He gave the book to me."
+    ],
+    "actual": [
+      "He gave the book to me."
+    ],
+    "findings": [
+      {
+        "id": "406b7877-34da-499f-9491-f3fa28cc158a",
+        "kind": "grammar",
+        "title": "I → me",
+        "original": "He gave the book to I.",
+        "before": "I",
+        "after": "me",
+        "explanation": "The original sentence uses the incorrect pronoun after the preposition 'to'. The corrected sentence uses the objective pronoun 'me' after the preposition.",
+        "tip": "After prepositions, use objective case pronouns (me, him, her, us, them).",
+        "pattern": "pronoun_case",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "plural-agreement",
+    "expected": [
+      "These books are expensive."
+    ],
+    "actual": [
+      "These books are expensive."
+    ],
+    "findings": [
+      {
+        "id": "d3e2062e-771c-491a-8b4c-9126e29e8fb4",
+        "kind": "grammar",
+        "title": "book → books",
+        "original": "These book are expensive.",
+        "before": "book",
+        "after": "books",
+        "explanation": "The singular noun 'book' does not agree in number with the plural pronoun 'These'. The noun must be pluralized to 'books' to match the subject.",
+        "tip": "Ensure nouns and pronouns agree in number (singular or plural).",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "language",
+    "expected": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "actual": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "findings": [
+      {
+        "id": "50090168-24f7-4ca7-a826-4098006607e0",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise french every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "744aeb70-f54b-4cb3-a35c-03525665cf79",
+        "kind": "grammar",
+        "title": "french → French",
+        "original": "I practise french every day.",
+        "before": "french",
+        "after": "French",
+        "explanation": "'French' is a proper noun and should be capitalized. The edit corrects the lowercase 'french' to the capitalized 'French'.",
+        "tip": "Always capitalize proper nouns, such as names of languages.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-contractions",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-sounds",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-timeline",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-complement",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-compound",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-news",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "repeat-adjacent",
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "actual": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "131f695e-23a2-42d6-a6f4-4fa077562311",
+        "kind": "grammar",
+        "title": "have → has",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "The auxiliary verb 'have' must agree with the subject 'She', so it should be 'has'. The past participle of 'write' is 'written'.",
+        "tip": "Remember that 'has' is used with third-person singular subjects like 'she', 'he', and 'it'.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "0e230dca-4787-46ae-bda5-295945f2549e",
+        "kind": "vocabulary",
+        "title": "wrote → written",
+        "original": "She have wrote a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'. The auxiliary verb 'has' is correct here.",
+        "tip": "Use a past participle form after auxiliary verbs like 'has' and 'have'.",
+        "pattern": "past participle",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "131f695e-23a2-42d6-a6f4-4fa077562311",
+        "kind": "correction",
+        "question": "She have written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "Auxiliary verb (has/have)",
+        "explanation": "The auxiliary verb 'have' must agree with the subject 'She', so it should be 'has'. The past participle of 'write' is 'written'.",
+        "tip": "Remember that 'has' is used with third-person singular subjects like 'she', 'he', and 'it'."
+      },
+      {
+        "finding": "131f695e-23a2-42d6-a6f4-4fa077562311",
+        "kind": "gap",
+        "question": "She [[gap]] written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "Auxiliary verb (has)",
+        "explanation": "The auxiliary verb 'have' must agree with the subject 'She', so it should be 'has'. The past participle of 'write' is 'written'.",
+        "tip": "Remember that 'has' is used with third-person singular subjects like 'she', 'he', and 'it'."
+      },
+      {
+        "finding": "0e230dca-4787-46ae-bda5-295945f2549e",
+        "kind": "correction",
+        "question": "She has wrote a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "Write (verb, base form)",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'. The auxiliary verb 'has' is correct here.",
+        "tip": "Use a past participle form after auxiliary verbs like 'has' and 'have'."
+      },
+      {
+        "finding": "0e230dca-4787-46ae-bda5-295945f2549e",
+        "kind": "gap",
+        "question": "She has [[gap]] a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "write (past participle)",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'. The auxiliary verb 'has' is correct here.",
+        "tip": "Use a past participle form after auxiliary verbs like 'has' and 'have'."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "repeat-user",
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "actual": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [
+      {
+        "id": "a77b9575-55bf-4318-9666-0ecf33884437",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I started to learn english a few years ago.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The word 'english' is not capitalized, but proper nouns and adjectives derived from them should be. The edit corrects the capitalization of 'english' to 'English'.",
+        "tip": "Remember to capitalize proper nouns and adjectives derived from them.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "a77b9575-55bf-4318-9666-0ecf33884437",
+        "kind": "correction",
+        "question": "I started to learn english a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "Capitalization",
+        "explanation": "The word 'english' is not capitalized, but proper nouns and adjectives derived from them should be. The edit corrects the capitalization of 'english' to 'English'.",
+        "tip": "Remember to capitalize proper nouns and adjectives derived from them."
+      },
+      {
+        "finding": "a77b9575-55bf-4318-9666-0ecf33884437",
+        "kind": "gap",
+        "question": "I started to learn [[gap]] a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "Capitalize proper nouns.",
+        "explanation": "The word 'english' is not capitalized, but proper nouns and adjectives derived from them should be. The edit corrects the capitalization of 'english' to 'English'.",
+        "tip": "Remember to capitalize proper nouns and adjectives derived from them."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "repeat-question",
+    "expected": [
+      "What does she want?"
+    ],
+    "actual": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "792139c0-64f1-476b-80a3-fbe589190766",
+        "kind": "grammar",
+        "title": "she → does she",
+        "original": "What she want?",
+        "before": "she",
+        "after": "does she",
+        "explanation": "The original sentence lacks the auxiliary verb 'does' for a question in the present simple tense. The corrected version adds 'does she' before the main verb 'want' to form a grammatically correct question.",
+        "tip": "Remember to use auxiliary verbs like 'do,' 'does,' 'did' when forming questions in the present and past simple tenses.",
+        "pattern": "auxiliary_verb",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "792139c0-64f1-476b-80a3-fbe589190766",
+        "kind": "correction",
+        "question": "What she want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "auxiliary verb",
+        "explanation": "The original sentence lacks the auxiliary verb 'does' for a question in the present simple tense. The corrected version adds 'does she' before the main verb 'want' to form a grammatically correct question.",
+        "tip": "Remember to use auxiliary verbs like 'do,' 'does,' 'did' when forming questions in the present and past simple tenses."
+      },
+      {
+        "finding": "792139c0-64f1-476b-80a3-fbe589190766",
+        "kind": "gap",
+        "question": "What [[gap]] want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "auxiliary verb",
+        "explanation": "The original sentence lacks the auxiliary verb 'does' for a question in the present simple tense. The corrected version adds 'does she' before the main verb 'want' to form a grammatically correct question.",
+        "tip": "Remember to use auxiliary verbs like 'do,' 'does,' 'did' when forming questions in the present and past simple tenses."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-article",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "legacy-filters-grammar",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "d024b0a5-72b0-4cc8-a15b-ec6c38d552e7",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written,' not 'wrote.' The corrected sentence uses the correct past participle form with 'have.'",
+        "tip": "Remember to use the correct past participle form after auxiliary verbs like 'have.'",
+        "pattern": "participle_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "42a67ea3-360f-410b-a5ee-094ab5b51417",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "'Stroy' is a misspelling of 'story.' The corrected sentence replaces the misspelling with the correct word.",
+        "tip": "Double-check your spelling, especially for common words.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "127ea00e-9d17-4620-8ec9-b638dd5c9dd5",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The correct collocation is 'make a mistake,' not 'do a mistake.' The corrected sentence uses the appropriate verb in the idiom.",
+        "tip": "Pay attention to common collocations and fixed expressions.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "legacy-filters-spelling",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "6216a529-f631-476e-874b-490af18eb47d",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written,' not 'wrote.' The corrected sentence uses the correct past participle after 'have.'",
+        "tip": "Remember to use the correct past participle form after auxiliary verbs like 'have.'",
+        "pattern": "participle_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "f7b43528-f4c3-4e2f-914c-73cd77dbbb49",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "'Stroy' is a misspelling of 'story.' The corrected sentence replaces the misspelling with the correct word.",
+        "tip": "Double-check your spelling, especially for common words.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "0c20e65b-8f04-42ef-b5d0-1be256db124c",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The correct collocation is 'make a mistake,' not 'do a mistake.' The corrected sentence uses the appropriate verb in the idiom.",
+        "tip": "Pay attention to common collocations and fixed expressions.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "variant-american",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "9769d519-bd3e-4e8d-ba78-c959ff78b4ab",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "71a9e6f6-2d67-43b4-9aae-001f6ba5451f",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "legacy-british-ignored",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "legacy-both-ignored",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "007870b6-1a2a-4f11-baad-eb123530ba0d",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "996a95ab-46ac-4e75-aad9-9969da22190e",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "legacy-filters-vocabulary",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "42e47522-ac56-40f2-93d4-5944282e672c",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The present perfect tense requires the past participle 'written' instead of the simple past 'wrote'.",
+        "tip": "Use 'written' with the auxiliary verb 'have' to form the present perfect tense.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "457d6cf9-64c9-414b-8d55-535ace826a89",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The word 'stroy' is a typo for 'story'.",
+        "tip": "Double-check your spelling for common nouns.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "39cd29bb-9506-4961-987a-922e24604f31",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The correct collocation is 'make a mistake' rather than 'do a mistake'.",
+        "tip": "In English, we use the verb 'make' for errors and mistakes.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "plural",
+    "expected": [
+      "I have two children."
+    ],
+    "actual": [
+      "I have two children."
+    ],
+    "findings": [
+      {
+        "id": "37db5790-4eff-4a10-9e12-e15504b37c38",
+        "kind": "grammar",
+        "title": "child → children",
+        "original": "I have two child.",
+        "before": "child",
+        "after": "children",
+        "explanation": "The plural form of 'child' is 'children'.",
+        "tip": "Use 'children' when referring to more than one child.",
+        "pattern": "pluralization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "modal",
+    "expected": [
+      "She can sing well."
+    ],
+    "actual": [
+      "She can sing well."
+    ],
+    "findings": [
+      {
+        "id": "fb74725c-a415-49c3-9346-d3f1059ba809",
+        "kind": "grammar",
+        "title": "sings → sing",
+        "original": "She can sings well.",
+        "before": "sings",
+        "after": "sing",
+        "explanation": "The modal verb 'can' must be followed by the base form of the verb.",
+        "tip": "After modal verbs like can, could, should, and must, always use the base form of the verb without 's', 'es', or 'ing'.",
+        "pattern": "modal verb + base form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "negative-past",
+    "expected": [
+      "They didn't know the answer."
+    ],
+    "actual": [
+      "They didn't know the answer."
+    ],
+    "findings": [
+      {
+        "id": "665ce310-c2b3-4d0e-b0ff-c6f52d8c86ab",
+        "kind": "grammar",
+        "title": "knew → know",
+        "original": "They didn't knew the answer.",
+        "before": "knew",
+        "after": "know",
+        "explanation": "The auxiliary verb 'did' must be followed by the base form of the verb.",
+        "tip": "After 'do', 'does', or 'did', always use the base form of the verb (e.g., 'did not know' instead of 'did not knew').",
+        "pattern": "auxiliary verb + base form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "there-agreement",
+    "expected": [
+      "There are three chairs in the room."
+    ],
+    "actual": [
+      "There are three chairs in the room."
+    ],
+    "findings": [
+      {
+        "id": "aa992428-c8f2-472f-bcf7-07eee6e4cf9e",
+        "kind": "grammar",
+        "title": "is → are",
+        "original": "There is three chairs in the room.",
+        "before": "is",
+        "after": "are",
+        "explanation": "The subject 'three chairs' is plural, so the verb must be 'are' instead of 'is'.",
+        "tip": "Use 'there are' for plural subjects and 'there is' for singular subjects.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "past-be",
+    "expected": [
+      "They were late for the meeting."
+    ],
+    "actual": [
+      "They were late for the meeting."
+    ],
+    "findings": [
+      {
+        "id": "667a8a51-5ba1-4318-bbe7-ec9b447a7589",
+        "kind": "grammar",
+        "title": "was → were",
+        "original": "They was late for the meeting.",
+        "before": "was",
+        "after": "were",
+        "explanation": "The subject 'They' is plural and requires the plural verb 'were' instead of the singular 'was'.",
+        "tip": "Ensure the verb agrees with the subject in number: 'I/He/She/It' uses 'was', while 'You/We/They' use 'were'.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "adverb",
+    "expected": [
+      "She speaks English fluently."
+    ],
+    "actual": [
+      "She speaks English fluently."
+    ],
+    "findings": [
+      {
+        "id": "6ba2c6f7-a94c-43b6-96d2-b6282e404526",
+        "kind": "grammar",
+        "title": "fluent → fluently",
+        "original": "She speaks English fluent.",
+        "before": "fluent",
+        "after": "fluently",
+        "explanation": "The word 'fluent' is an adjective and must be changed to the adverb 'fluently' to modify the verb 'speaks'.",
+        "tip": "Use an adverb (ending in -ly) to describe how an action is performed.",
+        "pattern": "adverb_usage",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "homework",
+    "expected": [
+      "I do my homework every evening."
+    ],
+    "actual": [
+      "I do my homework every evening."
+    ],
+    "findings": [
+      {
+        "id": "08cc0f95-9f27-4dbf-b61c-1b226600e8c9",
+        "kind": "vocabulary",
+        "title": "make → do",
+        "original": "I make my homework every evening.",
+        "before": "make",
+        "after": "do",
+        "explanation": "The verb 'do' is the correct collocation for homework, whereas 'make' is incorrect in this context.",
+        "tip": "Use 'do' for tasks, work, or chores (e.g., do homework, do the laundry), and 'make' for creating or producing something physical.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "finished-time",
+    "expected": [
+      "I visited Paris last year."
+    ],
+    "actual": [
+      "I visited Paris last year."
+    ],
+    "findings": [
+      {
+        "id": "c2852e1b-8ebf-4307-88ff-8ff1f4053aa2",
+        "kind": "grammar",
+        "title": "have → (remove)",
+        "original": "I have visited Paris last year.",
+        "before": "have ",
+        "after": "",
+        "explanation": "The present perfect tense ('have visited') cannot be used with a specific past time expression like 'last year'. The simple past tense is required.",
+        "tip": "Use the simple past tense when mentioning a specific finished time in the past, such as 'yesterday' or 'last year'.",
+        "pattern": "present perfect with specific past time",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "c2852e1b-8ebf-4307-88ff-8ff1f4053aa2",
+        "kind": "correction",
+        "question": "I have visited Paris last year.",
+        "target": "have ",
+        "answer": "",
+        "corrected": "I visited Paris last year.",
+        "hint": "remove present perfect auxiliary",
+        "explanation": "The present perfect tense ('have visited') cannot be used with a specific past time expression like 'last year'. The simple past tense is required.",
+        "tip": "Use the simple past tense when mentioning a specific finished time in the past, such as 'yesterday' or 'last year'."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "past-simple",
+    "expected": [
+      "Yesterday, I went to the library."
+    ],
+    "actual": [
+      "Yesterday, I went to the library."
+    ],
+    "findings": [
+      {
+        "id": "4b521ee0-d706-4c1b-bc6c-233b5920988b",
+        "kind": "grammar",
+        "title": "go → went",
+        "original": "Yesterday, I go to the library.",
+        "before": "go",
+        "after": "went",
+        "explanation": "The sentence describes a completed action in the past ('Yesterday'), so the past tense 'went' is required instead of the present tense 'go'.",
+        "tip": "Use the past tense for actions that happened at a specific time in the past.",
+        "pattern": "verb tense",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "possessive",
+    "expected": [
+      "The cat licked its paw."
+    ],
+    "actual": [
+      "The cat licked its paw."
+    ],
+    "findings": [
+      {
+        "id": "592c3691-e6e6-4c13-8aa0-b0f6d5d59a66",
+        "kind": "grammar",
+        "title": "' → (remove)",
+        "original": "The cat licked it's paw.",
+        "before": "'",
+        "after": "",
+        "explanation": "The possessive pronoun 'its' should not have an apostrophe. 'It's' is a contraction for 'it is' or 'it has'.",
+        "tip": "Use 'its' for possession and 'it's' only as a contraction for 'it is'.",
+        "pattern": "possessive pronoun",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "contraction",
+    "expected": [
+      "It's a lovely day."
+    ],
+    "actual": [
+      "It's a lovely day."
+    ],
+    "findings": [
+      {
+        "id": "c1383c32-95ad-46cd-a3c5-139b47a94109",
+        "kind": "grammar",
+        "title": "Its → It's",
+        "original": "Its a lovely day.",
+        "before": "Its",
+        "after": "It's",
+        "explanation": "The word 'Its' is a possessive pronoun, but the sentence requires the contraction 'It's' (it is).",
+        "tip": "Use 'it's' for 'it is' and 'its' for possession.",
+        "pattern": "contraction vs possessive",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "pronoun",
+    "expected": [
+      "He gave the book to me."
+    ],
+    "actual": [
+      "He gave the book to me."
+    ],
+    "findings": [
+      {
+        "id": "2140ed7d-469c-4dcd-a245-97585dd14419",
+        "kind": "grammar",
+        "title": "I → me",
+        "original": "He gave the book to I.",
+        "before": "I",
+        "after": "me",
+        "explanation": "The objective case pronoun 'me' must be used instead of the subjective pronoun 'I' after a preposition.",
+        "tip": "Use 'me' instead of 'I' when the pronoun is the object of a preposition like 'to', 'with', or 'for'.",
+        "pattern": "objective case pronoun",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "plural-agreement",
+    "expected": [
+      "These books are expensive."
+    ],
+    "actual": [
+      "These books are expensive."
+    ],
+    "findings": [
+      {
+        "id": "35de3864-5d90-467a-adad-4594b4c78279",
+        "kind": "grammar",
+        "title": "book → books",
+        "original": "These book are expensive.",
+        "before": "book",
+        "after": "books",
+        "explanation": "The demonstrative pronoun 'These' requires a plural noun.",
+        "tip": "Use 'these' with plural nouns and 'this' with singular nouns.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "language",
+    "expected": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "actual": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "findings": [
+      {
+        "id": "45a0df17-1025-4043-940d-e3093ce48d10",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise french every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "fe4a4ecb-afb0-4cf8-86cf-0444b5a50a79",
+        "kind": "grammar",
+        "title": "french → French",
+        "original": "I practise french every day.",
+        "before": "french",
+        "after": "French",
+        "explanation": "Languages, such as French, must be capitalized when used as proper nouns.",
+        "tip": "Always capitalize the names of languages and nationalities.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-contractions",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-sounds",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-timeline",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-complement",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-compound",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-news",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "repeat-adjacent",
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "actual": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "8bbaebce-430a-406b-aba9-9e2a313cff2e",
+        "kind": "grammar",
+        "title": "have → has",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "The subject 'She' requires the third-person singular auxiliary verb 'has' instead of 'have'.",
+        "tip": "Use 'has' with third-person singular subjects (he, she, it) in the present perfect tense.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "badb1a39-dbe1-49f7-a194-e0c77da0ba97",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "She have wrote a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The present perfect tense requires the past participle 'written' rather than the simple past 'wrote'.",
+        "tip": "The present perfect structure is 'have/has' + past participle.",
+        "pattern": "verb form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "8bbaebce-430a-406b-aba9-9e2a313cff2e",
+        "kind": "correction",
+        "question": "She have written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "third-person singular",
+        "explanation": "The subject 'She' requires the third-person singular auxiliary verb 'has' instead of 'have'.",
+        "tip": "Use 'has' with third-person singular subjects (he, she, it) in the present perfect tense."
+      },
+      {
+        "finding": "8bbaebce-430a-406b-aba9-9e2a313cff2e",
+        "kind": "gap",
+        "question": "She [[gap]] written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "auxiliary verb",
+        "explanation": "The subject 'She' requires the third-person singular auxiliary verb 'has' instead of 'have'.",
+        "tip": "Use 'has' with third-person singular subjects (he, she, it) in the present perfect tense."
+      },
+      {
+        "finding": "badb1a39-dbe1-49f7-a194-e0c77da0ba97",
+        "kind": "correction",
+        "question": "She has wrote a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "past participle of 'write'",
+        "explanation": "The present perfect tense requires the past participle 'written' rather than the simple past 'wrote'.",
+        "tip": "The present perfect structure is 'have/has' + past participle."
+      },
+      {
+        "finding": "badb1a39-dbe1-49f7-a194-e0c77da0ba97",
+        "kind": "gap",
+        "question": "She has [[gap]] a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "write",
+        "explanation": "The present perfect tense requires the past participle 'written' rather than the simple past 'wrote'.",
+        "tip": "The present perfect structure is 'have/has' + past participle."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "repeat-user",
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "actual": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [
+      {
+        "id": "3122b456-15d2-44c3-8063-785872927c17",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I started to learn english a few years ago.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The name of a language must be capitalized.",
+        "tip": "Always capitalize proper nouns, including the names of languages like English, Spanish, or French.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "3122b456-15d2-44c3-8063-785872927c17",
+        "kind": "correction",
+        "question": "I started to learn english a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "capitalize the language name",
+        "explanation": "The name of a language must be capitalized.",
+        "tip": "Always capitalize proper nouns, including the names of languages like English, Spanish, or French."
+      },
+      {
+        "finding": "3122b456-15d2-44c3-8063-785872927c17",
+        "kind": "gap",
+        "question": "I started to learn [[gap]] a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "capitalize the language name",
+        "explanation": "The name of a language must be capitalized.",
+        "tip": "Always capitalize proper nouns, including the names of languages like English, Spanish, or French."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "repeat-question",
+    "expected": [
+      "What does she want?"
+    ],
+    "actual": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "b1af7230-3c4f-46ca-9cf2-dbb3db902bc9",
+        "kind": "grammar",
+        "title": "she → does she",
+        "original": "What she want?",
+        "before": "she",
+        "after": "does she",
+        "explanation": "The sentence requires the auxiliary verb 'does' to form a question in the present simple tense.",
+        "tip": "Use 'do' or 'does' to form questions with most verbs in the present simple tense.",
+        "pattern": "auxiliary verb in questions",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "b1af7230-3c4f-46ca-9cf2-dbb3db902bc9",
+        "kind": "correction",
+        "question": "What she want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "auxiliary verb",
+        "explanation": "The sentence requires the auxiliary verb 'does' to form a question in the present simple tense.",
+        "tip": "Use 'do' or 'does' to form questions with most verbs in the present simple tense."
+      },
+      {
+        "finding": "b1af7230-3c4f-46ca-9cf2-dbb3db902bc9",
+        "kind": "gap",
+        "question": "What [[gap]] want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "auxiliary verb",
+        "explanation": "The sentence requires the auxiliary verb 'does' to form a question in the present simple tense.",
+        "tip": "Use 'do' or 'does' to form questions with most verbs in the present simple tense."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-article",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "legacy-filters-grammar",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "c2e3aec3-7e14-44e2-a393-cde9d27fa609",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The present perfect tense requires the past participle 'written' instead of the simple past 'wrote'.",
+        "tip": "Use 'written' with the auxiliary verb 'have' to form the present perfect tense.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "1a7d1548-fb17-45f8-8820-c80ae4211873",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The word 'stroy' is a typo for 'story'.",
+        "tip": "Double-check your spelling for common nouns.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "d3182201-9631-4238-a579-94f591d70daf",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The correct collocation is 'make a mistake' rather than 'do a mistake'.",
+        "tip": "In English, we use the verb 'make' for errors and mistakes.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "legacy-filters-spelling",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "6fd66299-06cc-479c-aa00-3d167c421be8",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The present perfect tense requires the past participle 'written' instead of the simple past 'wrote'.",
+        "tip": "Use 'written' with the auxiliary verb 'have' to form the present perfect tense.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "876407f9-87fd-45e0-b65d-66cb0af8f54f",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The word 'stroy' is a typo for 'story'.",
+        "tip": "Double-check your spelling for common nouns.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "b325f47f-7443-4eca-9463-5bd05ec15f8f",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The correct collocation is 'make a mistake' rather than 'do a mistake'.",
+        "tip": "In English, we use the verb 'make' for errors and mistakes.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "variant-american",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "d782ae5e-b557-4873-a5bf-e62f30cc7668",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "6af4569b-b4cc-4747-ae97-fd9cc7be26a3",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "legacy-british-ignored",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "legacy-both-ignored",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "aceaf9d5-9d49-45c4-8dea-18de560eaff5",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "d372ace8-cc33-4486-a22b-d0f358390991",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "legacy-filters-vocabulary",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "715df476-509b-4d6a-9a67-553107ea48a4",
+        "kind": "vocabulary",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'.",
+        "tip": "Use 'written' after 'have' for present perfect tense.",
+        "pattern": "incorrect past participle",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "4fdd98a1-ef15-4247-bbc1-7b4f2b739796",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The word 'stroy' is a misspelling of 'story'.",
+        "tip": "Check spelling of common words like 'story'.",
+        "pattern": "misspelled word",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "300b8277-45c0-4aeb-8f06-f538eff67548",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'make' is more appropriate than 'do' when referring to mistakes.",
+        "tip": "Use 'make a mistake' as a common collocation.",
+        "pattern": "incorrect verb choice",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "plural",
+    "expected": [
+      "I have two children."
+    ],
+    "actual": [
+      "I have two children."
+    ],
+    "findings": [
+      {
+        "id": "d73450d4-a384-4221-813a-a757d9f61468",
+        "kind": "vocabulary",
+        "title": "child → children",
+        "original": "I have two child.",
+        "before": "child",
+        "after": "children",
+        "explanation": "The singular noun 'child' must be pluralized to 'children' when referring to more than one child.",
+        "tip": "Use 'children' when referring to multiple children.",
+        "pattern": "singular noun used in plural context",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "modal",
+    "expected": [
+      "She can sing well."
+    ],
+    "actual": [
+      "She can sing well."
+    ],
+    "findings": [
+      {
+        "id": "e5b84589-b91f-4d39-baf7-14a0492bb689",
+        "kind": "grammar",
+        "title": "sings → sing",
+        "original": "She can sings well.",
+        "before": "sings",
+        "after": "sing",
+        "explanation": "The verb 'sings' is incorrect after 'can'; the correct form is 'sing' because 'can' is followed by the base form of the verb.",
+        "tip": "Use the base form of the verb after modal verbs like 'can'.",
+        "pattern": "modal verb + base form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "negative-past",
+    "expected": [
+      "They didn't know the answer."
+    ],
+    "actual": [
+      "They didn't know the answer."
+    ],
+    "findings": [
+      {
+        "id": "649c4e44-334a-4240-b8b1-046ceb165d8a",
+        "kind": "grammar",
+        "title": "knew → know",
+        "original": "They didn't knew the answer.",
+        "before": "knew",
+        "after": "know",
+        "explanation": "The verb 'knew' is incorrect after 'didn't'; the correct form is 'know'.",
+        "tip": "Use the base form of the verb after 'did not'.",
+        "pattern": "auxiliary verb + base form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "there-agreement",
+    "expected": [
+      "There are three chairs in the room."
+    ],
+    "actual": [
+      "There are three chairs in the room."
+    ],
+    "findings": [
+      {
+        "id": "0d373d39-2422-4d68-899c-6f800d03f02d",
+        "kind": "grammar",
+        "title": "is → are",
+        "original": "There is three chairs in the room.",
+        "before": "is",
+        "after": "are",
+        "explanation": "The verb 'is' does not agree with the plural subject 'three chairs'; 'are' is the correct form.",
+        "tip": "Use 'are' when the subject is plural.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "past-be",
+    "expected": [
+      "They were late for the meeting."
+    ],
+    "actual": [
+      "They were late for the meeting."
+    ],
+    "findings": [
+      {
+        "id": "36afdfe1-164a-4f4b-9556-86c2fb616caa",
+        "kind": "grammar",
+        "title": "was → were",
+        "original": "They was late for the meeting.",
+        "before": "was",
+        "after": "were",
+        "explanation": "The verb 'was' is incorrect for the subject 'They'; the correct form is 'were'.",
+        "tip": "Use 'were' with plural subjects like 'they'.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "adverb",
+    "expected": [
+      "She speaks English fluently."
+    ],
+    "actual": [
+      "She speaks English fluently."
+    ],
+    "findings": [
+      {
+        "id": "7b52a633-cc09-4a39-acdd-ca8daf0c4aa1",
+        "kind": "vocabulary",
+        "title": "fluent → fluently",
+        "original": "She speaks English fluent.",
+        "before": "fluent",
+        "after": "fluently",
+        "explanation": "The adjective 'fluent' must be replaced with the adverb 'fluently' to correctly modify the verb 'speaks'.",
+        "tip": "Use the adverb form to describe how an action is performed.",
+        "pattern": "adjective used where adverb is required",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "homework",
+    "expected": [
+      "I do my homework every evening."
+    ],
+    "actual": [
+      "I do my homework every evening."
+    ],
+    "findings": [
+      {
+        "id": "3ede47ae-b0f3-4454-94ab-66abdf2c0e63",
+        "kind": "vocabulary",
+        "title": "make → do",
+        "original": "I make my homework every evening.",
+        "before": "make",
+        "after": "do",
+        "explanation": "The verb 'make' is not typically used with 'homework'; the correct collocation is 'do homework'.",
+        "tip": "Use 'do' when referring to completing homework.",
+        "pattern": "incorrect collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "finished-time",
+    "expected": [
+      "I visited Paris last year."
+    ],
+    "actual": [
+      "I visited Paris last year."
+    ],
+    "findings": [
+      {
+        "id": "41761d6e-839b-46ef-8cf8-9bd30671508c",
+        "kind": "grammar",
+        "title": "have → (remove)",
+        "original": "I have visited Paris last year.",
+        "before": "have ",
+        "after": "",
+        "explanation": "The present perfect tense ('have visited') is incorrect here because the action (visiting Paris) occurred at a specific time in the past ('last year'). The simple past tense ('visited') is the correct form for this context.",
+        "tip": "Use the simple past tense for actions that happened at a specific time in the past.",
+        "pattern": "incorrect use of present perfect tense",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "41761d6e-839b-46ef-8cf8-9bd30671508c",
+        "kind": "correction",
+        "question": "I have visited Paris last year.",
+        "target": "have ",
+        "answer": "",
+        "corrected": "I visited Paris last year.",
+        "hint": "Use the simple past tense for actions that happened at a specific time in the past.",
+        "explanation": "The present perfect tense ('have visited') is incorrect here because the action (visiting Paris) occurred at a specific time in the past ('last year'). The simple past tense ('visited') is the correct form for this context.",
+        "tip": "Use the simple past tense for actions that happened at a specific time in the past."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "past-simple",
+    "expected": [
+      "Yesterday, I went to the library."
+    ],
+    "actual": [
+      "Yesterday, I went to the library."
+    ],
+    "findings": [
+      {
+        "id": "c63beb83-aa37-45c3-9dc4-27963d895547",
+        "kind": "grammar",
+        "title": "go → went",
+        "original": "Yesterday, I go to the library.",
+        "before": "go",
+        "after": "went",
+        "explanation": "The verb 'go' is in the present tense, but the time reference 'Yesterday' requires the past tense 'went'.",
+        "tip": "Use the past tense verb when referring to actions that happened in the past.",
+        "pattern": "tense agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "possessive",
+    "expected": [
+      "The cat licked its paw."
+    ],
+    "actual": [
+      "The cat licked its paw."
+    ],
+    "findings": [
+      {
+        "id": "85072097-025f-465f-920c-1594c739ac88",
+        "kind": "vocabulary",
+        "title": "' → (remove)",
+        "original": "The cat licked it's paw.",
+        "before": "'",
+        "after": "",
+        "explanation": "The possessive form 'it's' is incorrectly used here; the correct form is 'its' to indicate possession.",
+        "tip": "Use 'its' to show ownership, not 'it's' (which means 'it is').",
+        "pattern": "incorrect possessive form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "contraction",
+    "expected": [
+      "It's a lovely day."
+    ],
+    "actual": [
+      "It's a lovely day."
+    ],
+    "findings": [
+      {
+        "id": "8f151543-2907-4f84-bfae-7d077d21e42f",
+        "kind": "grammar",
+        "title": "Its → It's",
+        "original": "Its a lovely day.",
+        "before": "Its",
+        "after": "It's",
+        "explanation": "The word 'Its' is incorrectly used here. The correct contraction for 'It is' is 'It's'.",
+        "tip": "Use 'It's' when you mean 'It is'.",
+        "pattern": "contraction error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "pronoun",
+    "expected": [
+      "He gave the book to me."
+    ],
+    "actual": [
+      "He gave the book to me."
+    ],
+    "findings": [
+      {
+        "id": "be528310-7d60-40b6-bbbe-46248ee6e456",
+        "kind": "grammar",
+        "title": "I → me",
+        "original": "He gave the book to I.",
+        "before": "I",
+        "after": "me",
+        "explanation": "The pronoun 'I' is incorrect in the objective case; it should be 'me' after a preposition.",
+        "tip": "Use 'me' when the pronoun is the object of a preposition.",
+        "pattern": "incorrect objective pronoun after preposition",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "plural-agreement",
+    "expected": [
+      "These books are expensive."
+    ],
+    "actual": [
+      "These books are expensive."
+    ],
+    "findings": [
+      {
+        "id": "038ce62b-d713-4a2e-804a-dbd964ab3d05",
+        "kind": "grammar",
+        "title": "book → books",
+        "original": "These book are expensive.",
+        "before": "book",
+        "after": "books",
+        "explanation": "The singular noun 'book' should be plural 'books' to agree with the plural subject 'These'.",
+        "tip": "Make sure subject and noun agreement when using 'these'.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "language",
+    "expected": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "actual": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "findings": [
+      {
+        "id": "f79f76aa-9b3f-4ec4-bbc3-7d8904a131e9",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise french every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "724efbed-635e-4e25-b70c-ad063d979882",
+        "kind": "grammar",
+        "title": "french → French",
+        "original": "I practise french every day.",
+        "before": "french",
+        "after": "French",
+        "explanation": "The word 'french' is lowercase; it should be capitalized as it refers to the language. The correction capitalizes the word correctly.",
+        "tip": "Capitalize proper nouns like languages.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-contractions",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-sounds",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-timeline",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-complement",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-compound",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-news",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "repeat-adjacent",
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "actual": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "2ea64667-6d39-4fab-bfbd-587862cf1a9d",
+        "kind": "grammar",
+        "title": "have → has",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "The verb 'have' is incorrect in the third person singular subject 'She'; it should be 'has'.",
+        "tip": "Use 'has' with third person singular subjects like 'she'.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "5c9fac65-a43b-4d31-afa9-031e05b62810",
+        "kind": "vocabulary",
+        "title": "wrote → written",
+        "original": "She have wrote a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'.",
+        "tip": "Use 'written' after 'has' to form the present perfect tense.",
+        "pattern": "correct past participle",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "2ea64667-6d39-4fab-bfbd-587862cf1a9d",
+        "kind": "correction",
+        "question": "She have written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "Third person singular subject",
+        "explanation": "The verb 'have' is incorrect in the third person singular subject 'She'; it should be 'has'.",
+        "tip": "Use 'has' with third person singular subjects like 'she'."
+      },
+      {
+        "finding": "2ea64667-6d39-4fab-bfbd-587862cf1a9d",
+        "kind": "gap",
+        "question": "She [[gap]] written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "Use 'has' with third person singular subjects like 'she'.",
+        "explanation": "The verb 'have' is incorrect in the third person singular subject 'She'; it should be 'has'.",
+        "tip": "Use 'has' with third person singular subjects like 'she'."
+      },
+      {
+        "finding": "5c9fac65-a43b-4d31-afa9-031e05b62810",
+        "kind": "correction",
+        "question": "She has wrote a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "past participle of 'write'",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'.",
+        "tip": "Use 'written' after 'has' to form the present perfect tense."
+      },
+      {
+        "finding": "5c9fac65-a43b-4d31-afa9-031e05b62810",
+        "kind": "gap",
+        "question": "She has [[gap]] a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "past participle of 'write'",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'.",
+        "tip": "Use 'written' after 'has' to form the present perfect tense."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "repeat-user",
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "actual": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [
+      {
+        "id": "5b67694a-fab6-4184-a5d5-2f3fd0543c6d",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I started to learn english a few years ago.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The word 'english' should be capitalized as 'English' when referring to the language.",
+        "tip": "Capitalize the first letter of proper nouns, such as languages, countries, and specific names.",
+        "pattern": "lowercase proper noun",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "5b67694a-fab6-4184-a5d5-2f3fd0543c6d",
+        "kind": "correction",
+        "question": "I started to learn english a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "Capitalize the first letter of proper nouns, such as languages, countries, and specific names.",
+        "explanation": "The word 'english' should be capitalized as 'English' when referring to the language.",
+        "tip": "Capitalize the first letter of proper nouns, such as languages, countries, and specific names."
+      },
+      {
+        "finding": "5b67694a-fab6-4184-a5d5-2f3fd0543c6d",
+        "kind": "gap",
+        "question": "I started to learn [[gap]] a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "Capitalize the first letter of proper nouns, such as languages, countries, and specific names.",
+        "explanation": "The word 'english' should be capitalized as 'English' when referring to the language.",
+        "tip": "Capitalize the first letter of proper nouns, such as languages, countries, and specific names."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "repeat-question",
+    "expected": [
+      "What does she want?"
+    ],
+    "actual": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "1b5db33c-ce58-4828-89b4-284be2535acf",
+        "kind": "grammar",
+        "title": "she → does she",
+        "original": "What she want?",
+        "before": "she",
+        "after": "does she",
+        "explanation": "The original sentence 'What she want?' is grammatically incorrect. The correct form uses the auxiliary verb 'does' before the subject 'she' in a question.",
+        "tip": "Use 'does she' to form a correct question in present tense.",
+        "pattern": "question structure",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "1b5db33c-ce58-4828-89b4-284be2535acf",
+        "kind": "correction",
+        "question": "What she want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "auxiliary verb for present tense questions",
+        "explanation": "The original sentence 'What she want?' is grammatically incorrect. The correct form uses the auxiliary verb 'does' before the subject 'she' in a question.",
+        "tip": "Use 'does she' to form a correct question in present tense."
+      },
+      {
+        "finding": "1b5db33c-ce58-4828-89b4-284be2535acf",
+        "kind": "gap",
+        "question": "What [[gap]] want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "auxiliary verb for present tense questions",
+        "explanation": "The original sentence 'What she want?' is grammatically incorrect. The correct form uses the auxiliary verb 'does' before the subject 'she' in a question.",
+        "tip": "Use 'does she' to form a correct question in present tense."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-article",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "legacy-filters-grammar",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "84d22ef8-3248-45bd-bbec-1d2a434ff68b",
+        "kind": "vocabulary",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'.",
+        "tip": "Use 'written' after 'have' for present perfect tense.",
+        "pattern": "incorrect past participle",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "4be9a3b2-7527-47c6-bc12-7bfaa09ffd04",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The word 'stroy' is a misspelling of 'story'.",
+        "tip": "Check spelling of common words like 'story'.",
+        "pattern": "misspelled word",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "482c2e2f-e402-4930-bcca-5e85e1003047",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'make' is more appropriate than 'do' when referring to making a mistake.",
+        "tip": "Use 'make' for errors or mistakes.",
+        "pattern": "incorrect verb choice",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "legacy-filters-spelling",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "31ddbc42-cde2-4068-b926-078c5171338f",
+        "kind": "vocabulary",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'.",
+        "tip": "Use 'written' after 'have' for present perfect tense.",
+        "pattern": "incorrect past participle",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "27cae4be-b898-450b-aa97-427d7c3e082a",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The word 'stroy' is a misspelling of 'story'.",
+        "tip": "Check spelling of common words like 'story'.",
+        "pattern": "misspelled word",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "0d8b3501-c259-4ca4-aa35-1ed0bf559e69",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'make' is more appropriate than 'do' when referring to mistakes.",
+        "tip": "Use 'make a mistake' as a common collocation.",
+        "pattern": "incorrect verb choice",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "variant-american",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "e9f974b7-7d8c-45d6-88ed-7305133db839",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "3f949894-954d-42d4-a61b-3d42c4687e38",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "legacy-british-ignored",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "legacy-both-ignored",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "1b7be22b-2c73-4125-b29c-36fe9c2d2aed",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "b0e0b8c1-b3ab-455e-b39f-6f79deb81e3e",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "legacy-filters-vocabulary",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "05a57185-fe86-43b4-bf3f-06227d34a0d5",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The original sentence uses 'wrote' after the auxiliary 'have', which is grammatically incorrect; the past participle 'written' is required for the present perfect tense.",
+        "tip": "Use the past participle form of the verb with 'have' to create the present perfect tense.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "72bd67ad-0b6a-417d-aaf3-17d4fd7fc09f",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The original sentence contains a spelling error in 'stroy', which is corrected to 'story' without changing the grammatical structure.",
+        "tip": "Ensure proper nouns and common words are spelled correctly according to standard dictionaries.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "be8357bf-613d-454b-8f94-6275d2899b84",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'do' is incorrectly used with the noun 'mistake'; the correct collocation requires the verb 'made'.",
+        "tip": "Use the verb 'make' when referring to creating or committing a mistake.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "plural",
+    "expected": [
+      "I have two children."
+    ],
+    "actual": [
+      "I have two children."
+    ],
+    "findings": [
+      {
+        "id": "340c1ebb-390e-49ed-88ae-5d5db0537058",
+        "kind": "grammar",
+        "title": "child → children",
+        "original": "I have two child.",
+        "before": "child",
+        "after": "children",
+        "explanation": "The original text uses the singular noun 'child' after the quantifier 'two', which is grammatically incorrect; the plural form 'children' is required. The proposed correction fixes this agreement error.",
+        "tip": "Use the plural form of a noun when preceded by a number greater than one.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "modal",
+    "expected": [
+      "She can sing well."
+    ],
+    "actual": [
+      "She can sing well."
+    ],
+    "findings": [
+      {
+        "id": "e0251289-1460-409c-9dab-0ac31e4eff98",
+        "kind": "grammar",
+        "title": "sings → sing",
+        "original": "She can sings well.",
+        "before": "sings",
+        "after": "sing",
+        "explanation": "The original text contains a grammatical error where the base verb 'sing' is incorrectly conjugated as 'sings' after the modal auxiliary 'can'. The proposed correction changes 'sings' to 'sing', which is the required form following a modal verb.",
+        "tip": "After modal verbs like can, must, or should, always use the base form of the verb without adding -s or -ing.",
+        "pattern": "modal_verb_base_form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "negative-past",
+    "expected": [
+      "They didn't know the answer."
+    ],
+    "actual": [
+      "They didn't know the answer."
+    ],
+    "findings": [
+      {
+        "id": "cf2d7891-adee-4dfc-890b-182343f523ff",
+        "kind": "grammar",
+        "title": "knew → know",
+        "original": "They didn't knew the answer.",
+        "before": "knew",
+        "after": "know",
+        "explanation": "The original sentence uses 'knew' after the auxiliary 'didn't', which is grammatically incorrect because the past simple tense requires the base form 'know'. The proposed correction changes 'knew' to 'know', fixing this verb form error.",
+        "tip": "After negative auxiliaries like 'did not' or 'didn't', always use the base form of the verb (e.g., know, go, see), never the past tense form.",
+        "pattern": "verb_form_past_simple_after_auxiliary",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "there-agreement",
+    "expected": [
+      "There are three chairs in the room."
+    ],
+    "actual": [
+      "There are three chairs in the room."
+    ],
+    "findings": [
+      {
+        "id": "831d2a4a-cbc0-44e1-b497-436c0b4497d4",
+        "kind": "grammar",
+        "title": "is → are",
+        "original": "There is three chairs in the room.",
+        "before": "is",
+        "after": "are",
+        "explanation": "The original text uses 'is' with the plural noun phrase 'three chairs', which violates subject-verb agreement rules. The proposed correction changes 'is' to 'are' to match the plural subject.",
+        "tip": "Use 'are' for plural subjects and 'is' for singular subjects.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "past-be",
+    "expected": [
+      "They were late for the meeting."
+    ],
+    "actual": [
+      "They were late for the meeting."
+    ],
+    "findings": [
+      {
+        "id": "acb360e0-133a-479c-bae4-61a91200254b",
+        "kind": "grammar",
+        "title": "was → were",
+        "original": "They was late for the meeting.",
+        "before": "was",
+        "after": "were",
+        "explanation": "The original sentence uses 'was' with the plural subject 'They', which is a subject-verb agreement error. The correction changes 'was' to 'were' to match the plural subject.",
+        "tip": "Use 'were' with plural subjects like 'they', 'we', and 'you'.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "adverb",
+    "expected": [
+      "She speaks English fluently."
+    ],
+    "actual": [
+      "She speaks English fluently."
+    ],
+    "findings": [
+      {
+        "id": "496a7b48-e5fb-43f5-8386-69e0bf34ca92",
+        "kind": "grammar",
+        "title": "fluent → fluently",
+        "original": "She speaks English fluent.",
+        "before": "fluent",
+        "after": "fluently",
+        "explanation": "The original sentence uses the adjective 'fluent' to modify the verb 'speaks', which is grammatically incorrect; the adverb 'fluently' is required. The proposed correction changes the word form from an adjective to an adverb, fixing this error.",
+        "tip": "Use an adverb ending in -ly to modify a verb of action.",
+        "pattern": "adjective_to_adverb",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "homework",
+    "expected": [
+      "I do my homework every evening."
+    ],
+    "actual": [
+      "I do my homework every evening."
+    ],
+    "findings": [
+      {
+        "id": "17411c29-76a0-4d79-bd6c-ef08a4fa0184",
+        "kind": "vocabulary",
+        "title": "make → do",
+        "original": "I make my homework every evening.",
+        "before": "make",
+        "after": "do",
+        "explanation": "The original sentence uses the verb 'make' with 'homework', which is an incorrect collocation. The standard verb for completing school assignments is 'do'. Changing 'make' to 'do' fixes this vocabulary error without altering the meaning or removing information.",
+        "tip": "Use the verb 'do' with uncountable nouns like homework, housework, and chores, while 'make' is used for creating something new (e.g., make a cake, make a decision).",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "finished-time",
+    "expected": [
+      "I visited Paris last year."
+    ],
+    "actual": [
+      "I visited Paris last year."
+    ],
+    "findings": [
+      {
+        "id": "a4e57caf-50f3-469f-9ca4-7730a038dd88",
+        "kind": "grammar",
+        "title": "have → (remove)",
+        "original": "I have visited Paris last year.",
+        "before": "have ",
+        "after": "",
+        "explanation": "The original sentence uses the present perfect tense ('have visited') with a specific past time marker ('last year'), which is grammatically incorrect. The proposed correction changes the verb to the simple past tense ('visited'), which correctly pairs with the past time expression.",
+        "tip": "Use the simple past tense when referring to actions completed at a specific time in the past, such as 'last year'.",
+        "pattern": "tense_consistency",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "a4e57caf-50f3-469f-9ca4-7730a038dd88",
+        "kind": "correction",
+        "question": "I have visited Paris last year.",
+        "target": "have ",
+        "answer": "",
+        "corrected": "I visited Paris last year.",
+        "hint": "Remove the auxiliary verb to change the tense from present perfect to simple past.",
+        "explanation": "The original sentence uses the present perfect tense ('have visited') with a specific past time marker ('last year'), which is grammatically incorrect. The proposed correction changes the verb to the simple past tense ('visited'), which correctly pairs with the past time expression.",
+        "tip": "Use the simple past tense when referring to actions completed at a specific time in the past, such as 'last year'."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "past-simple",
+    "expected": [
+      "Yesterday, I went to the library."
+    ],
+    "actual": [
+      "Yesterday, I went to the library."
+    ],
+    "findings": [
+      {
+        "id": "ec351492-6d66-40ab-a211-bcbfbcf7779b",
+        "kind": "grammar",
+        "title": "go → went",
+        "original": "Yesterday, I go to the library.",
+        "before": "go",
+        "after": "went",
+        "explanation": "The original sentence uses the present tense 'go' with a past time marker 'Yesterday', which is a grammatical error. The proposed correction changes the verb to the simple past form 'went', fixing the tense agreement.",
+        "tip": "Use the simple past tense for actions that happened in the past, indicated by words like 'yesterday'.",
+        "pattern": "verb_tense_agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "possessive",
+    "expected": [
+      "The cat licked its paw."
+    ],
+    "actual": [
+      "The cat licked its paw."
+    ],
+    "findings": [
+      {
+        "id": "45108c3a-004a-448a-bd8d-b9d22ca843fc",
+        "kind": "grammar",
+        "title": "' → (remove)",
+        "original": "The cat licked it's paw.",
+        "before": "'",
+        "after": "",
+        "explanation": "The original text uses 'it's', which is a contraction for 'it is', whereas the possessive form required for the cat's paw is 'its'. The proposed correction replaces the incorrect apostrophe with the correct possessive pronoun.",
+        "tip": "Remember that 'it's' means 'it is' and never indicates possession; use 'its' to show ownership.",
+        "pattern": "possessive_verb_form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "contraction",
+    "expected": [
+      "It's a lovely day."
+    ],
+    "actual": [
+      "It's a lovely day."
+    ],
+    "findings": [
+      {
+        "id": "cc5faacb-cf69-4b69-8a49-40135f0db7eb",
+        "kind": "grammar",
+        "title": "Its → It's",
+        "original": "Its a lovely day.",
+        "before": "Its",
+        "after": "It's",
+        "explanation": "The original text uses 'Its' which is a possessive pronoun, but the sentence requires the contraction for 'it is'. The proposed correction changes 'Its' to 'It's', fixing this grammatical error.",
+        "tip": "Remember that 'its' shows possession (e.g., the dog wagged its tail), while 'it's' is a contraction for 'it is' or 'it has'.",
+        "pattern": "contraction_omission",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "pronoun",
+    "expected": [
+      "He gave the book to me."
+    ],
+    "actual": [
+      "He gave the book to me."
+    ],
+    "findings": [
+      {
+        "id": "992f3f49-c7cb-48d5-b0e9-ba033a5d1835",
+        "kind": "grammar",
+        "title": "I → me",
+        "original": "He gave the book to I.",
+        "before": "I",
+        "after": "me",
+        "explanation": "The original sentence uses the pronoun 'I' as an object of the preposition 'to', which is grammatically incorrect; it must be the objective case 'me'. The proposed correction fixes this error by changing 'I' to 'me'.",
+        "tip": "Use the objective pronoun (me, him, her, us, them) after prepositions like 'to', not the subjective form (I, he, she, we, they).",
+        "pattern": "pronoun_case_error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "plural-agreement",
+    "expected": [
+      "These books are expensive."
+    ],
+    "actual": [
+      "These books are expensive."
+    ],
+    "findings": [
+      {
+        "id": "4453f8ac-a390-4c91-b112-5f35e6411e23",
+        "kind": "grammar",
+        "title": "book → books",
+        "original": "These book are expensive.",
+        "before": "book",
+        "after": "books",
+        "explanation": "The original text contains a grammatical error where the singular noun 'book' is used with the plural demonstrative 'These' and the plural verb 'are'. The proposed correction changes 'book' to 'books' to match the plural context.",
+        "tip": "Use the plural form 'books' when referring to more than one book, especially after a plural word like 'these'.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "language",
+    "expected": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "actual": [
+      "I practice french every day.",
+      "I practise French every day."
+    ],
+    "findings": [
+      {
+        "id": "b9aa1ae1-bbe9-4171-a93b-9424b72f81bc",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise french every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "ca7cd1d5-b3ed-4896-81ff-ea3c62b8f635",
+        "kind": "grammar",
+        "title": "french → French",
+        "original": "I practise french every day.",
+        "before": "french",
+        "after": "French",
+        "explanation": "The original text uses 'french' in lowercase, which is a capitalization error for a proper noun. The correction changes it to 'French'.",
+        "tip": "Always capitalize the names of languages.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-contractions",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-sounds",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-timeline",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-complement",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-compound",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-news",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "repeat-adjacent",
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "actual": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "ac47c3a4-6e5b-4c41-93ab-7afe248e23c7",
+        "kind": "grammar",
+        "title": "have → has",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "The original target uses 'have' which is grammatically incorrect for the third-person singular subject 'She'; it must be 'has'. The proposed edit fixes this subject-verb agreement error.",
+        "tip": "Use 'has' with third-person singular subjects (he, she, it) and 'have' with others.",
+        "pattern": "subject-verb-agreement",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "24d18c1e-d290-4c6b-8fd2-d7571a888df5",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "She have wrote a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The original target uses the past tense verb 'wrote' after the auxiliary 'has', but the present perfect tense requires the past participle 'written'. The proposed edit corrects this verb form error.",
+        "tip": "After the auxiliary 'have' or 'has', use the past participle of the main verb (e.g., written, not wrote).",
+        "pattern": "verb-form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "ac47c3a4-6e5b-4c41-93ab-7afe248e23c7",
+        "kind": "correction",
+        "question": "She have written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "The base verb for the third-person singular subject 'She' is needed here.",
+        "explanation": "The original target uses 'have' which is grammatically incorrect for the third-person singular subject 'She'; it must be 'has'. The proposed edit fixes this subject-verb agreement error.",
+        "tip": "Use 'has' with third-person singular subjects (he, she, it) and 'have' with others."
+      },
+      {
+        "finding": "ac47c3a4-6e5b-4c41-93ab-7afe248e23c7",
+        "kind": "gap",
+        "question": "She [[gap]] written a letter.",
+        "target": "have",
+        "answer": "has",
+        "corrected": "She has written a letter.",
+        "hint": "The base verb for the third-person singular subject 'She'.",
+        "explanation": "The original target uses 'have' which is grammatically incorrect for the third-person singular subject 'She'; it must be 'has'. The proposed edit fixes this subject-verb agreement error.",
+        "tip": "Use 'has' with third-person singular subjects (he, she, it) and 'have' with others."
+      },
+      {
+        "finding": "24d18c1e-d290-4c6b-8fd2-d7571a888df5",
+        "kind": "correction",
+        "question": "She has wrote a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "The auxiliary 'has' requires the past participle of the verb.",
+        "explanation": "The original target uses the past tense verb 'wrote' after the auxiliary 'has', but the present perfect tense requires the past participle 'written'. The proposed edit corrects this verb form error.",
+        "tip": "After the auxiliary 'have' or 'has', use the past participle of the main verb (e.g., written, not wrote)."
+      },
+      {
+        "finding": "24d18c1e-d290-4c6b-8fd2-d7571a888df5",
+        "kind": "gap",
+        "question": "She has [[gap]] a letter.",
+        "target": "wrote",
+        "answer": "written",
+        "corrected": "She has written a letter.",
+        "hint": "The base verb is 'write'. After the auxiliary 'has', use the past participle form.",
+        "explanation": "The original target uses the past tense verb 'wrote' after the auxiliary 'has', but the present perfect tense requires the past participle 'written'. The proposed edit corrects this verb form error.",
+        "tip": "After the auxiliary 'have' or 'has', use the past participle of the main verb (e.g., written, not wrote)."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "repeat-user",
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "actual": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [
+      {
+        "id": "9afba4f5-033d-4fef-b7ff-8ca10bd635d1",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I started to learn english a few years ago.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The original target contains the error 'english' which must be capitalized as 'English' because it is a proper noun. The proposed correction fixes this capitalization rule without altering meaning or information.",
+        "tip": "Always capitalize nationalities, languages, and specific names like English.",
+        "pattern": "Capitalization of Proper Nouns",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "9afba4f5-033d-4fef-b7ff-8ca10bd635d1",
+        "kind": "correction",
+        "question": "I started to learn english a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "The base verb is 'learn' and the object is a language name that requires capitalization.",
+        "explanation": "The original target contains the error 'english' which must be capitalized as 'English' because it is a proper noun. The proposed correction fixes this capitalization rule without altering meaning or information.",
+        "tip": "Always capitalize nationalities, languages, and specific names like English."
+      },
+      {
+        "finding": "9afba4f5-033d-4fef-b7ff-8ca10bd635d1",
+        "kind": "gap",
+        "question": "I started to learn [[gap]] a few years ago.",
+        "target": "english",
+        "answer": "English",
+        "corrected": "I started to learn English a few years ago.",
+        "hint": "The base noun is 'english', which must be capitalized as it refers to the language.",
+        "explanation": "The original target contains the error 'english' which must be capitalized as 'English' because it is a proper noun. The proposed correction fixes this capitalization rule without altering meaning or information.",
+        "tip": "Always capitalize nationalities, languages, and specific names like English."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "repeat-question",
+    "expected": [
+      "What does she want?"
+    ],
+    "actual": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "b27417ac-96ec-4923-915e-484dd45c893d",
+        "kind": "grammar",
+        "title": "she → does she",
+        "original": "What she want?",
+        "before": "she",
+        "after": "does she",
+        "explanation": "The original sentence lacks the auxiliary verb 'does' required for a present tense question with the pronoun 'she', making it grammatically incorrect. The proposed edit adds 'does' to form the correct interrogative structure.",
+        "tip": "Use 'do' or 'does' before the subject in questions and negatives for the simple present tense.",
+        "pattern": "missing auxiliary verb",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "cards": [
+      {
+        "finding": "b27417ac-96ec-4923-915e-484dd45c893d",
+        "kind": "correction",
+        "question": "What she want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "Insert the correct auxiliary verb for a present tense question with 'she'.",
+        "explanation": "The original sentence lacks the auxiliary verb 'does' required for a present tense question with the pronoun 'she', making it grammatically incorrect. The proposed edit adds 'does' to form the correct interrogative structure.",
+        "tip": "Use 'do' or 'does' before the subject in questions and negatives for the simple present tense."
+      },
+      {
+        "finding": "b27417ac-96ec-4923-915e-484dd45c893d",
+        "kind": "gap",
+        "question": "What [[gap]] want?",
+        "target": "she",
+        "answer": "does she",
+        "corrected": "What does she want?",
+        "hint": "Insert the correct auxiliary verb for a present tense question with 'she'.",
+        "explanation": "The original sentence lacks the auxiliary verb 'does' required for a present tense question with the pronoun 'she', making it grammatically incorrect. The proposed edit adds 'does' to form the correct interrogative structure.",
+        "tip": "Use 'do' or 'does' before the subject in questions and negatives for the simple present tense."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-article",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "legacy-filters-grammar",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "252270ba-a4d5-48ac-830c-1410abfce137",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The original sentence uses 'wrote' after the auxiliary 'have', which is grammatically incorrect; the past participle 'written' is required for the present perfect tense.",
+        "tip": "Use the past participle form of the verb with 'have' to create the present perfect tense.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "530ca806-1ed6-420a-8569-cb71a2245cb6",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The original sentence contains a spelling error in 'stroy', which is corrected to 'story' without changing the grammatical structure.",
+        "tip": "Ensure proper nouns and common words are spelled correctly according to standard dictionaries.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "7fd91457-cb54-46ae-986e-c45356e2e7ab",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'do' is incorrectly used with the noun 'mistake'; the correct collocation requires the verb 'made'.",
+        "tip": "Use the verb 'make' when referring to creating or committing a mistake.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "legacy-filters-spelling",
+    "expected": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "actual": [
+      "I have written a stroy.",
+      "I have wrote a story.",
+      "I made a mistake."
+    ],
+    "findings": [
+      {
+        "id": "28ed41ff-3837-4c79-880a-0bf9807a1b0c",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have wrote a stroy.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The original sentence uses 'wrote' after the auxiliary 'have', which is grammatically incorrect; the past participle 'written' is required for the present perfect tense.",
+        "tip": "Use the past participle form of the verb with 'have' to create the present perfect tense.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "4631111f-aa73-427f-9338-4aa3f7b7390e",
+        "kind": "typo",
+        "title": "stroy → story",
+        "original": "I have wrote a stroy.",
+        "before": "stroy",
+        "after": "story",
+        "explanation": "The original sentence contains a spelling error in 'stroy', which is corrected to 'story' without changing the grammatical structure.",
+        "tip": "Ensure proper nouns and common words are spelled correctly according to standard dictionaries.",
+        "pattern": "spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "77fe38e3-2a45-4f02-8e68-f8f40c65ff03",
+        "kind": "vocabulary",
+        "title": "did → made",
+        "original": "I did a mistake.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'do' is incorrectly used with the noun 'mistake'; the correct collocation requires the verb 'made'.",
+        "tip": "Use the verb 'make' when referring to creating or committing a mistake.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "variant-american",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "8f763b6c-c707-4ee1-8e72-2b6f9f9cbe0d",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "9ef7b28d-aff9-4d71-8225-05390d05eb64",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "legacy-british-ignored",
+    "expected": [],
+    "actual": [],
+    "findings": [],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "legacy-both-ignored",
+    "expected": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "actual": [
+      "The color of the building in the city centre is unusual.",
+      "The colour of the building in the city center is unusual."
+    ],
+    "findings": [
+      {
+        "id": "61a7c6bc-f83d-42da-a992-339aa1b07b75",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      },
+      {
+        "id": "0741afd5-9bb1-4c81-bd79-4bcf8fd0d016",
+        "kind": "typo",
+        "title": "centre → center",
+        "original": "The colour of the building in the city centre is unusual.",
+        "before": "centre",
+        "after": "center",
+        "explanation": "Use 'center', the American English spelling of 'centre'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true
+  }
+]

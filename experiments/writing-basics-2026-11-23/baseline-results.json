@@ -1,0 +1,2384 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "user-english",
+    "heldOut": false,
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "I started to learn English a few years ago."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 14916,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "agreement",
+    "heldOut": false,
+    "expected": [
+      "She works in a hospital."
+    ],
+    "findings": [
+      {
+        "id": "d58e0d79-ba1e-4b9e-8f56-2a7433d3413c",
+        "kind": "grammar",
+        "title": "Subject-verb agreement",
+        "original": "She work in a hospital.",
+        "before": "work",
+        "after": "works",
+        "explanation": "This edit corrects the verb tense to agree with the subject 'She', making the sentence grammatically correct.",
+        "tip": "Ensure verbs agree in number and tense with their subjects.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She works in a hospital."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4099,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "past-participle",
+    "heldOut": false,
+    "expected": [
+      "I have written three letters today."
+    ],
+    "findings": [
+      {
+        "id": "87f3d28d-81c3-4f4b-a3e7-455ecd611d63",
+        "kind": "grammar",
+        "title": "Incorrect verb form",
+        "original": "I have wrote three letters today.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The verb 'wrote' is the simple past tense, but the auxiliary verb 'have' requires the past participle 'written' to form the present perfect tense.",
+        "tip": "Remember that with auxiliary verbs like 'have,' 'has,' and 'had,' you need the past participle form of the main verb (e.g., 'have eaten,' 'has gone,' 'had finished').",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have written three letters today."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4421,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "past-perfect",
+    "heldOut": false,
+    "expected": [
+      "I had never seen him before that day."
+    ],
+    "findings": [
+      {
+        "id": "b77f92b9-2d54-40af-8185-7bce544f3034",
+        "kind": "grammar",
+        "title": "Incorrect verb tense",
+        "original": "I had never saw him before that day.",
+        "before": "saw",
+        "after": "seen",
+        "explanation": "This edit corrects the incorrect past tense 'saw' to the past participle 'seen' after 'had never'.",
+        "tip": "Remember that 'had' requires the past participle form of the verb (e.g., 'had seen', 'had gone').",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I had never seen him before that day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4080,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "conditional",
+    "heldOut": false,
+    "expected": [
+      "If I were you, I would take the train."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "If I were you, I would take the train."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 4057,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "article-missing",
+    "heldOut": false,
+    "expected": [
+      "She bought a new car yesterday."
+    ],
+    "findings": [
+      {
+        "id": "1dc855a8-56e7-4fc2-b72f-ffd409787ef6",
+        "kind": "typo",
+        "title": "Missing article",
+        "original": "She bought new car yesterday.",
+        "before": "new",
+        "after": "a",
+        "explanation": "This edit corrects the omission of the indefinite article 'a' before 'car', which is required for grammatical correctness.",
+        "tip": "Remember to use 'a' or 'an' before singular, countable nouns.",
+        "pattern": "grammar",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She bought a car yesterday."
+    ],
+    "missing": [
+      "She bought a new car yesterday."
+    ],
+    "extra": [
+      "She bought a car yesterday."
+    ],
+    "pass": false,
+    "elapsedMs": 4157,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "article-sound",
+    "heldOut": false,
+    "expected": [
+      "It took an hour to finish."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "It took an hour to finish."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 5193,
+    "calls": 3
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "preposition",
+    "heldOut": false,
+    "expected": [
+      "We discussed the problem yesterday."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "We discussed the problem yesterday."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 4950,
+    "calls": 3
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "question-order",
+    "heldOut": false,
+    "expected": [
+      "Where do you live?"
+    ],
+    "findings": [
+      {
+        "id": "8b138427-7be8-44e9-bd0c-c4997b33b641",
+        "kind": "grammar",
+        "title": "Incomplete question",
+        "original": "Where you live?",
+        "before": "you",
+        "after": "do",
+        "explanation": "This edit corrects the missing auxiliary verb in a question, transforming an incomplete sentence into a grammatically correct one.",
+        "tip": "Remember to include auxiliary verbs (do, does, did) when forming questions with 'you'.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "Where do live?"
+    ],
+    "missing": [
+      "Where do you live?"
+    ],
+    "extra": [
+      "Where do live?"
+    ],
+    "pass": false,
+    "elapsedMs": 5508,
+    "calls": 3
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "collocation",
+    "heldOut": false,
+    "expected": [
+      "I made a mistake in my report."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "I made a mistake in my report."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 4095,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "spelling",
+    "heldOut": false,
+    "expected": [
+      "I received a message from my sister."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "I received a message from my sister."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 3808,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "adjacent",
+    "heldOut": false,
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "d0278701-45c5-46dd-ab81-6c5d0335a7c2",
+        "kind": "grammar",
+        "title": "Subject-verb agreement",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "This edit corrects the subject-verb agreement error, changing 'have' to 'has' to match the singular subject 'She'.",
+        "tip": "Ensure verbs agree in number with their subjects.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She has wrote a letter."
+    ],
+    "missing": [
+      "She have written a letter."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 3871,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-user",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3796,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-past",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 572,
+    "calls": 1
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-conditional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 593,
+    "calls": 1
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-complements",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 502,
+    "calls": 1
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-regional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3980,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-good",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 537,
+    "calls": 1
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "held-agreement",
+    "heldOut": true,
+    "expected": [
+      "My brother plays tennis on Sundays."
+    ],
+    "findings": [
+      {
+        "id": "17710bcc-e45b-4465-9abd-9d528ca65412",
+        "kind": "grammar",
+        "title": "Subject-verb agreement",
+        "original": "My brother play tennis on Sundays.",
+        "before": "play",
+        "after": "plays",
+        "explanation": "This edit corrects the verb conjugation to agree with the singular subject 'brother', improving grammatical accuracy.",
+        "tip": "Remember to use the correct verb form based on the subject's number (singular or plural).",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "My brother plays tennis on Sundays."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3875,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "held-participle",
+    "heldOut": true,
+    "expected": [
+      "They have gone home."
+    ],
+    "findings": [
+      {
+        "id": "60317ebc-d6ac-49d6-b226-a7d4add6732e",
+        "kind": "grammar",
+        "title": "Incorrect verb tense",
+        "original": "They have went home.",
+        "before": "went",
+        "after": "gone",
+        "explanation": "This edit corrects the incorrect past participle 'went' to the correct 'gone' after the auxiliary verb 'have'.",
+        "tip": "Remember that after 'have,' 'has,' or 'had,' you need to use the past participle form of the verb.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "They have gone home."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4140,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "held-article",
+    "heldOut": true,
+    "expected": [
+      "He is an engineer."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "He is an engineer."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 3466,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "held-question",
+    "heldOut": true,
+    "expected": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "ead14680-b95a-4add-8d62-38e7f1b8e2d6",
+        "kind": "grammar",
+        "title": "Subject-verb agreement",
+        "original": "What she want?",
+        "before": "want",
+        "after": "wants",
+        "explanation": "This edit corrects the subject-verb agreement error by changing 'want' to 'wants' to match the singular subject 'she'.",
+        "tip": "Ensure verbs agree in number with their subjects.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "What she wants?"
+    ],
+    "missing": [
+      "What does she want?"
+    ],
+    "extra": [
+      "What she wants?"
+    ],
+    "pass": false,
+    "elapsedMs": 3918,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "held-negative",
+    "heldOut": true,
+    "expected": [
+      "He does not like coffee."
+    ],
+    "findings": [
+      {
+        "id": "3dede308-79dc-4d70-a88d-d304673b2b5d",
+        "kind": "grammar",
+        "title": "Subject-verb agreement",
+        "original": "He does not likes coffee.",
+        "before": "likes",
+        "after": "like",
+        "explanation": "This edit corrects the incorrect verb form 'likes' to 'like' to agree with the auxiliary verb 'does not'.",
+        "tip": "Remember that after auxiliary verbs like 'does,' 'did,' and 'have,' use the base form of the verb.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "He does not like coffee."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3967,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "held-clean",
+    "heldOut": true,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3668,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "user-english",
+    "heldOut": false,
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "I started to learn English a few years ago."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 10563,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "agreement",
+    "heldOut": false,
+    "expected": [
+      "She works in a hospital."
+    ],
+    "findings": [
+      {
+        "id": "30a44f74-fd35-45fa-9998-2b05ab87a6ff",
+        "kind": "grammar",
+        "title": "subject-verb agreement",
+        "original": "She work in a hospital.",
+        "before": "work",
+        "after": "works",
+        "explanation": "The subject 'She' requires the third-person singular verb form 'works'.",
+        "tip": "Always ensure the verb agrees with the subject in number and person.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She works in a hospital."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3998,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "past-participle",
+    "heldOut": false,
+    "expected": [
+      "I have written three letters today."
+    ],
+    "findings": [
+      {
+        "id": "32eec905-1f71-4148-b338-5052ab7fbbd1",
+        "kind": "grammar",
+        "title": "verb tense",
+        "original": "I have wrote three letters today.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The present perfect tense requires the past participle 'written' rather than the simple past 'wrote'.",
+        "tip": "Use 'written' after the auxiliary verb 'have' to form the present perfect tense.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have written three letters today."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 29059,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "past-perfect",
+    "heldOut": false,
+    "expected": [
+      "I had never seen him before that day."
+    ],
+    "findings": [
+      {
+        "id": "64a8944e-059f-4076-b121-7d3f1a3e8c48",
+        "kind": "grammar",
+        "title": "verb tense",
+        "original": "I had never saw him before that day.",
+        "before": "saw",
+        "after": "seen",
+        "explanation": "The past participle 'seen' must be used with the auxiliary verb 'had' to form the past perfect tense.",
+        "tip": "Use 'seen' after 'have', 'has', or 'had', and 'saw' for the simple past tense.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I had never seen him before that day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4145,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "conditional",
+    "heldOut": false,
+    "expected": [
+      "If I were you, I would take the train."
+    ],
+    "findings": [
+      {
+        "id": "910323c2-a7cb-4ed3-bd80-4fb960cdd79e",
+        "kind": "grammar",
+        "title": "verb tense",
+        "original": "If I were you, I will take the train.",
+        "before": "will",
+        "after": "would",
+        "explanation": "The sentence uses a second conditional structure ('If I were'), which requires the conditional 'would' instead of the future 'will'.",
+        "tip": "Use 'would' in the main clause of a second conditional sentence to express a hypothetical situation.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "If I were you, I would take the train."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4175,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "article-missing",
+    "heldOut": false,
+    "expected": [
+      "She bought a new car yesterday."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "She bought a new car yesterday."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 635,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "article-sound",
+    "heldOut": false,
+    "expected": [
+      "It took an hour to finish."
+    ],
+    "findings": [
+      {
+        "id": "3657f464-3948-4e1c-b628-3bfc4d95a69a",
+        "kind": "grammar",
+        "title": "article usage",
+        "original": "It took a hour to finish.",
+        "before": "a",
+        "after": "an",
+        "explanation": "The indefinite article 'a' must be replaced with 'an' because 'hour' begins with a silent 'h' and a vowel sound.",
+        "tip": "Use 'an' before words that begin with a vowel sound, even if the first letter is a consonant.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "It took an hour to finish."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3934,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "preposition",
+    "heldOut": false,
+    "expected": [
+      "We discussed the problem yesterday."
+    ],
+    "findings": [
+      {
+        "id": "4ba6bbf0-80e6-4c56-9d02-107fcbea3af8",
+        "kind": "vocabulary",
+        "title": "verb-noun collocation",
+        "original": "We discussed about the problem yesterday.",
+        "before": "about ",
+        "after": "",
+        "explanation": "The verb 'discuss' is transitive and should not be followed by the preposition 'about'.",
+        "tip": "Use 'discuss' directly with an object, or use 'talk about' if a preposition is needed.",
+        "pattern": "vocabulary",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "We discussed the problem yesterday."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4275,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "question-order",
+    "heldOut": false,
+    "expected": [
+      "Where do you live?"
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "Where do you live?"
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 712,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "collocation",
+    "heldOut": false,
+    "expected": [
+      "I made a mistake in my report."
+    ],
+    "findings": [
+      {
+        "id": "96c11469-17c2-45c0-b5ad-bda01be0a2a1",
+        "kind": "vocabulary",
+        "title": "collocation",
+        "original": "I did a mistake in my report.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'make' is the standard collocation for 'mistake' in English.",
+        "tip": "Use 'make a mistake' instead of 'do a mistake' when describing an error.",
+        "pattern": "collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I made a mistake in my report."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4054,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "spelling",
+    "heldOut": false,
+    "expected": [
+      "I received a message from my sister."
+    ],
+    "findings": [
+      {
+        "id": "fed58123-4d8e-4842-bb9e-59a19079948a",
+        "kind": "typo",
+        "title": "typo",
+        "original": "I received a mesage from my sister.",
+        "before": "mesage",
+        "after": "message",
+        "explanation": "The word 'mesage' is a spelling error.",
+        "tip": "Always double-check the spelling of common words like 'message'.",
+        "pattern": "typo",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I received a message from my sister."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3389,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "adjacent",
+    "heldOut": false,
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "fe8e5699-ecf4-4fed-bc3f-38d6a1182c3b",
+        "kind": "grammar",
+        "title": "subject-verb agreement",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "The subject 'She' requires the third-person singular auxiliary verb 'has' rather than 'have'.",
+        "tip": "Use 'has' with third-person singular subjects (he, she, it) in the present perfect tense.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She has wrote a letter."
+    ],
+    "missing": [
+      "She have written a letter."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 3969,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-user",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 480,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-past",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 516,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-conditional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 646,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-complements",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 537,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-regional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 610,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-good",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 730,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "held-agreement",
+    "heldOut": true,
+    "expected": [
+      "My brother plays tennis on Sundays."
+    ],
+    "findings": [
+      {
+        "id": "ff6158e0-2404-40f4-bd4b-7639464317f6",
+        "kind": "grammar",
+        "title": "subject-verb agreement",
+        "original": "My brother play tennis on Sundays.",
+        "before": "play",
+        "after": "plays",
+        "explanation": "The subject 'My brother' is third-person singular, requiring the verb 'play' to be conjugated as 'plays'.",
+        "tip": "Ensure subject-verb agreement by adding an '-s' to the verb for third-person singular subjects in the present tense.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "My brother plays tennis on Sundays."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4375,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "held-participle",
+    "heldOut": true,
+    "expected": [
+      "They have gone home."
+    ],
+    "findings": [
+      {
+        "id": "40bcf113-05ed-4dc7-8e0a-d0c0ba9cedc6",
+        "kind": "grammar",
+        "title": "verb tense",
+        "original": "They have went home.",
+        "before": "went",
+        "after": "gone",
+        "explanation": "The present perfect tense requires the past participle 'gone' rather than the simple past 'went'.",
+        "tip": "Use 'gone' with the auxiliary verb 'have' to form the present perfect tense.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "They have gone home."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4132,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "held-article",
+    "heldOut": true,
+    "expected": [
+      "He is an engineer."
+    ],
+    "findings": [
+      {
+        "id": "7dc220d9-f74b-489a-8b68-1c06f9b5506c",
+        "kind": "grammar",
+        "title": "capitalization",
+        "original": "He is engineer.",
+        "before": "engineer",
+        "after": "an engineer",
+        "explanation": "The noun 'engineer' is a countable singular noun and requires an indefinite article in this context.",
+        "tip": "Use an article (a/an) before singular countable nouns when they are not preceded by a determiner.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "He is an engineer."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3983,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "held-question",
+    "heldOut": true,
+    "expected": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "b5db85ee-3761-452a-b5e7-e7f4c59e5593",
+        "kind": "grammar",
+        "title": "subject-verb agreement",
+        "original": "What she want?",
+        "before": "she",
+        "after": "does she",
+        "explanation": "The original sentence lacks the auxiliary verb 'does' required for a question in the present simple tense.",
+        "tip": "Use 'do' or 'does' as an auxiliary verb to form questions with most main verbs.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "What does she want?"
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3720,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "held-negative",
+    "heldOut": true,
+    "expected": [
+      "He does not like coffee."
+    ],
+    "findings": [
+      {
+        "id": "43164916-3175-477c-a326-b01053d17bff",
+        "kind": "grammar",
+        "title": "subject-verb agreement",
+        "original": "He does not likes coffee.",
+        "before": "likes",
+        "after": "like",
+        "explanation": "The auxiliary verb 'does' requires the base form of the main verb 'like' rather than the third-person singular 'likes'.",
+        "tip": "After 'do', 'does', or 'did', always use the base form of the verb.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "He does not like coffee."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3818,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "held-clean",
+    "heldOut": true,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 466,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "user-english",
+    "heldOut": false,
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [],
+    "actual": [],
+    "missing": [
+      "I started to learn English a few years ago."
+    ],
+    "extra": [],
+    "pass": false,
+    "elapsedMs": 10402,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "agreement",
+    "heldOut": false,
+    "expected": [
+      "She works in a hospital."
+    ],
+    "findings": [
+      {
+        "id": "187c955e-7b90-4c4c-b91f-7c33c4437f1d",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "She work in a hospital.",
+        "before": "work",
+        "after": "works",
+        "explanation": "The verb 'work' is incorrect in this context because the subject 'She' requires the third person singular form 'works'.",
+        "tip": "Use the correct verb form that agrees with the subject in number and person. In this case, 'works' is the correct form for 'She'.",
+        "pattern": "subject-verb agreement error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She works in a hospital."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4903,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "past-participle",
+    "heldOut": false,
+    "expected": [
+      "I have written three letters today."
+    ],
+    "findings": [
+      {
+        "id": "b28ba161-7220-4454-a465-d1cb3eed3568",
+        "kind": "grammar",
+        "title": "Incorrect verb form in present perfect tense",
+        "original": "I have wrote three letters today.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The verb 'wrote' is incorrect in the present perfect tense; 'written' is the correct past participle form of 'write' in this context.",
+        "tip": "Use the past participle form of the verb with 'have' in the present perfect tense. For 'write', the correct form is 'written'.",
+        "pattern": "present perfect tense verb form error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have written three letters today."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4781,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "past-perfect",
+    "heldOut": false,
+    "expected": [
+      "I had never seen him before that day."
+    ],
+    "findings": [
+      {
+        "id": "79b80765-debc-4fad-89d9-6c5d18f31c85",
+        "kind": "grammar",
+        "title": "Incorrect verb tense",
+        "original": "I had never saw him before that day.",
+        "before": "saw",
+        "after": "seen",
+        "explanation": "The verb 'saw' is incorrect in this context because it is the simple past tense, but the sentence requires the past participle 'seen' to agree with the auxiliary verb 'had'.",
+        "tip": "Use the past participle form of the verb after 'had' in perfect tenses.",
+        "pattern": "past perfect tense error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I had never seen him before that day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4674,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "conditional",
+    "heldOut": false,
+    "expected": [
+      "If I were you, I would take the train."
+    ],
+    "findings": [
+      {
+        "id": "f57c26be-5006-4fcc-adc2-953aed71f8ac",
+        "kind": "grammar",
+        "title": "Incorrect verb form in conditional clause",
+        "original": "If I were you, I will take the train.",
+        "before": "will",
+        "after": "would",
+        "explanation": "The use of 'will' is incorrect in a conditional sentence with 'If I were you,' which requires a modal verb that matches the hypothetical nature of the condition.",
+        "tip": "Use 'would' to express a hypothetical action in a conditional sentence.",
+        "pattern": "conditional clause verb form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "If I were you, I would take the train."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4626,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "article-missing",
+    "heldOut": false,
+    "expected": [
+      "She bought a new car yesterday."
+    ],
+    "findings": [
+      {
+        "id": "18d5a74d-4e35-4d49-a95e-108d18cdd187",
+        "kind": "grammar",
+        "title": "Missing article",
+        "original": "She bought new car yesterday.",
+        "before": "new",
+        "after": "a new",
+        "explanation": "The original sentence is missing the article 'a' before 'new car', which is necessary for grammatical correctness in English.",
+        "tip": "In English, countable nouns like 'car' require an article (a/an) when used in a general sense, unless they are part of a specific reference or title.",
+        "pattern": "missing article before singular countable noun",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She bought a new car yesterday."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4742,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "article-sound",
+    "heldOut": false,
+    "expected": [
+      "It took an hour to finish."
+    ],
+    "findings": [
+      {
+        "id": "ecbb2d22-2baa-436a-a1dc-28f20f846b73",
+        "kind": "grammar",
+        "title": "Incorrect article usage",
+        "original": "It took a hour to finish.",
+        "before": "a",
+        "after": "an",
+        "explanation": "The article 'a' is incorrect before the vowel sound 'h' in 'hour'; 'an' is the correct article to use.",
+        "tip": "Use 'an' before words that begin with a vowel sound, even if the word starts with a consonant letter, like 'hour'.",
+        "pattern": "article usage",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "It took an hour to finish."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4663,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "preposition",
+    "heldOut": false,
+    "expected": [
+      "We discussed the problem yesterday."
+    ],
+    "findings": [
+      {
+        "id": "431bf170-3797-4593-be3d-5c056abcdd2c",
+        "kind": "grammar",
+        "title": "Incorrect preposition after verb",
+        "original": "We discussed about the problem yesterday.",
+        "before": "about",
+        "after": "the",
+        "explanation": "The original sentence contains a grammatical error: 'discussed about' is incorrect; 'discussed' is already a verb that takes a direct object, so 'about' is redundant and should be removed.",
+        "tip": "Avoid using 'discussed about'; use 'discussed' followed directly by the object, e.g., 'discussed the problem'.",
+        "pattern": "preposition after verb",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "We discussed the the problem yesterday."
+    ],
+    "missing": [
+      "We discussed the problem yesterday."
+    ],
+    "extra": [
+      "We discussed the the problem yesterday."
+    ],
+    "pass": false,
+    "elapsedMs": 7033,
+    "calls": 3
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "question-order",
+    "heldOut": false,
+    "expected": [
+      "Where do you live?"
+    ],
+    "findings": [
+      {
+        "id": "97a0619c-1f3c-45b8-a66b-e79ca5f99a6a",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "Where you live?",
+        "before": "you",
+        "after": "do you",
+        "explanation": "The original sentence 'Where you live?' is grammatically incorrect because it lacks a helping verb. The corrected version 'Where do you live?' is grammatically correct and natural.",
+        "tip": "Use a helping verb like 'do' when forming questions in the present simple tense with subject-verb inversion.",
+        "pattern": "question formation with auxiliary verb",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "Where do you live?"
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4867,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "collocation",
+    "heldOut": false,
+    "expected": [
+      "I made a mistake in my report."
+    ],
+    "findings": [
+      {
+        "id": "329b1c50-4c50-43eb-8a82-4bf613b693f6",
+        "kind": "grammar",
+        "title": "Incorrect verb-noun collocation",
+        "original": "I did a mistake in my report.",
+        "before": "did",
+        "after": "make",
+        "explanation": "The verb 'did' is incorrect in this context because 'make a mistake' is the correct phrasal verb, not 'do a mistake'.",
+        "tip": "Use 'make a mistake' instead of 'do a mistake' when referring to an error.",
+        "pattern": "verb-noun collocation error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I make a mistake in my report."
+    ],
+    "missing": [
+      "I made a mistake in my report."
+    ],
+    "extra": [
+      "I make a mistake in my report."
+    ],
+    "pass": false,
+    "elapsedMs": 5231,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "spelling",
+    "heldOut": false,
+    "expected": [
+      "I received a message from my sister."
+    ],
+    "findings": [
+      {
+        "id": "29e667ac-a4f1-4053-b78b-67d4b18507ce",
+        "kind": "typo",
+        "title": "Spelling error in 'mesage'",
+        "original": "I received a mesage from my sister.",
+        "before": "mesage",
+        "after": "message",
+        "explanation": "The word 'mesage' is a misspelling of 'message', which is the correct spelling in this context.",
+        "tip": "Always check for common spelling errors, especially with words that are similar in sound but differ in spelling, like 'message' and 'mesage'.",
+        "pattern": "typo",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I received a message from my sister."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4391,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "adjacent",
+    "heldOut": false,
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "3106a894-07c0-4eff-b644-21e0c75b694a",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "The verb 'have' is incorrect with the subject 'She'; 'has' is the correct form.",
+        "tip": "Use 'has' with singular subjects like 'she' and 'have' with plural subjects or 'I/you/we/they'.",
+        "pattern": "subject-verb agreement error",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "fff4dc64-8051-4928-bd51-b4fc066e201a",
+        "kind": "grammar",
+        "title": "Incorrect Verb Form",
+        "original": "She have wrote a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The verb 'wrote' is incorrect in this context; 'written' is the correct past participle form.",
+        "tip": "Use the past participle form of the verb after 'has' in present perfect tense.",
+        "pattern": "incorrect verb form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 7529,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-user",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 367,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-past",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 284,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-conditional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 299,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-complements",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 284,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-regional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 287,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-good",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 300,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "held-agreement",
+    "heldOut": true,
+    "expected": [
+      "My brother plays tennis on Sundays."
+    ],
+    "findings": [
+      {
+        "id": "67fdf001-c132-44ea-b54f-bd9522810813",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "My brother play tennis on Sundays.",
+        "before": "play",
+        "after": "plays",
+        "explanation": "The verb 'play' is incorrect here because the subject 'My brother' is a third-person singular, which requires the verb 'plays'.",
+        "tip": "Use the correct verb form that agrees with the subject in person and number.",
+        "pattern": "subject-verb agreement error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "My brother plays tennis on Sundays."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4286,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "held-participle",
+    "heldOut": true,
+    "expected": [
+      "They have gone home."
+    ],
+    "findings": [
+      {
+        "id": "293ca750-f172-4fca-bb2d-180482d1013d",
+        "kind": "grammar",
+        "title": "Incorrect verb form with present perfect tense",
+        "original": "They have went home.",
+        "before": "went",
+        "after": "gone",
+        "explanation": "The verb 'went' is incorrect in the present perfect tense; 'gone' is the correct past participle form of 'go' in this context.",
+        "tip": "Use the correct past participle form of the verb with 'have' in present perfect tense constructions.",
+        "pattern": "present perfect tense verb form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "They have gone home."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 5474,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "held-article",
+    "heldOut": true,
+    "expected": [
+      "He is an engineer."
+    ],
+    "findings": [
+      {
+        "id": "45d5f79c-dd4e-49b4-9b7c-9091a6d0b68e",
+        "kind": "grammar",
+        "title": "Missing article",
+        "original": "He is engineer.",
+        "before": "engineer",
+        "after": "an engineer",
+        "explanation": "The original sentence 'He is engineer.' is grammatically incorrect because it lacks the article 'an' before the singular countable noun 'engineer'.",
+        "tip": "Use an article (a/an) before singular countable nouns when they are not specific or general.",
+        "pattern": "missing article before singular countable noun after verb 'to be' in general sense",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "He is an engineer."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4558,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "held-question",
+    "heldOut": true,
+    "expected": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "99f3533f-4d0e-4eaa-8822-d75ddcd956f6",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "What she want?",
+        "before": "want",
+        "after": "wants",
+        "explanation": "The verb 'want' is incorrect in this context because the subject 'she' requires the third person singular form 'wants'.",
+        "tip": "Use the correct verb form that agrees with the subject in person and number.",
+        "pattern": "subject-verb agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "What she wants?"
+    ],
+    "missing": [
+      "What does she want?"
+    ],
+    "extra": [
+      "What she wants?"
+    ],
+    "pass": false,
+    "elapsedMs": 4611,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "held-negative",
+    "heldOut": true,
+    "expected": [
+      "He does not like coffee."
+    ],
+    "findings": [
+      {
+        "id": "524c7210-2c14-4d15-9ea5-da65323060c2",
+        "kind": "grammar",
+        "title": "Incorrect verb form",
+        "original": "He does not likes coffee.",
+        "before": "likes",
+        "after": "like",
+        "explanation": "The verb 'likes' is incorrect after 'does not' because the auxiliary verb 'does' requires the base form of the verb 'like'.",
+        "tip": "After 'does not', use the base form of the verb (e.g., 'like' instead of 'likes').",
+        "pattern": "grammar:verb form after auxiliary verb",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "He does not like coffee."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4439,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "held-clean",
+    "heldOut": true,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 317,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "user-english",
+    "heldOut": false,
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "findings": [
+      {
+        "id": "9f2d49a1-fd5d-4fd2-9938-33e1b7ca92da",
+        "kind": "grammar",
+        "title": "Capitalization correction",
+        "original": "I started to learn english a few years ago.",
+        "before": "english",
+        "after": "English",
+        "explanation": "'english' is a proper noun and must be capitalized as 'English'; the edit fixes this capitalization error; valid=true.",
+        "tip": "Always capitalize nationalities, languages, and related terms like 'English'.",
+        "pattern": "proper_noun_capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I started to learn English a few years ago."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 21807,
+    "calls": 3
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "agreement",
+    "heldOut": false,
+    "expected": [
+      "She works in a hospital."
+    ],
+    "findings": [
+      {
+        "id": "3ea34968-e761-4dad-8b56-2b276cfbf157",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "She work in a hospital.",
+        "before": "work",
+        "after": "works",
+        "explanation": "The edit changes the verb from 'work' to 'works' to correctly apply the third-person singular present tense form required for the subject 'She', fixing a genuine grammatical error.",
+        "tip": "Ensure verbs agree with their subjects in number and person; add an 's' or 'es' to the base verb when the subject is third-person singular (he, she, it).",
+        "pattern": "Subject-Verb Agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She works in a hospital."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4170,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "past-participle",
+    "heldOut": false,
+    "expected": [
+      "I have written three letters today."
+    ],
+    "findings": [
+      {
+        "id": "f92aeffc-d4fe-41c4-8eb1-7cb2c197c155",
+        "kind": "grammar",
+        "title": "Incorrect verb form",
+        "original": "I have wrote three letters today.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The original sentence incorrectly uses the past tense 'wrote' with the present perfect auxiliary 'have'; changing it to 'written' correctly forms the present perfect tense.",
+        "tip": "Use the past participle form of the verb after 'have' or 'has' to create the present perfect tense.",
+        "pattern": "incorrect_past_participle",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have written three letters today."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3742,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "past-perfect",
+    "heldOut": false,
+    "expected": [
+      "I had never seen him before that day."
+    ],
+    "findings": [
+      {
+        "id": "9a445a47-b929-4d74-b2d7-6704e074a2cb",
+        "kind": "grammar",
+        "title": "Incorrect verb form in past perfect tense",
+        "original": "I had never saw him before that day.",
+        "before": "saw",
+        "after": "seen",
+        "explanation": "The original sentence incorrectly uses the simple past 'saw' after the auxiliary 'had', which requires the past participle 'seen' to form the past perfect tense.",
+        "tip": "Ensure that verbs following auxiliary forms like 'had' are in their past participle form (e.g., seen, gone, eaten).",
+        "pattern": "past perfect verb form error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I had never seen him before that day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3783,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "conditional",
+    "heldOut": false,
+    "expected": [
+      "If I were you, I would take the train."
+    ],
+    "findings": [
+      {
+        "id": "fde3b5e2-54f7-46fe-88c9-0d48509351e9",
+        "kind": "grammar",
+        "title": "Conditional Mood Consistency",
+        "original": "If I were you, I will take the train.",
+        "before": "will",
+        "after": "would",
+        "explanation": "The conditional 'would' is required to match the subjunctive 'were' in the first clause, making this a necessary grammatical correction.",
+        "tip": "Ensure verb tenses and moods align within conditional sentences, particularly matching 'were' with 'would'.",
+        "pattern": "conditional mood consistency",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "If I were you, I would take the train."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4054,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "article-missing",
+    "heldOut": false,
+    "expected": [
+      "She bought a new car yesterday."
+    ],
+    "findings": [
+      {
+        "id": "6c91d8d1-ad0f-49be-aebf-3c68e7e3a7e0",
+        "kind": "grammar",
+        "title": "Missing article before singular countable noun",
+        "original": "She bought new car yesterday.",
+        "before": "new",
+        "after": "a new",
+        "explanation": "The edit adds the necessary indefinite article 'a' before the singular countable noun 'car', correcting a grammatical error in the original sentence.",
+        "tip": "Ensure singular countable nouns like 'car' are preceded by an appropriate determiner such as 'a', 'an', or 'the'.",
+        "pattern": "article missing before singular noun",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She bought a new car yesterday."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3819,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "article-sound",
+    "heldOut": false,
+    "expected": [
+      "It took an hour to finish."
+    ],
+    "findings": [
+      {
+        "id": "560c384a-fef5-473e-9bf9-73e6f1175be0",
+        "kind": "grammar",
+        "title": "Article usage before vowel sounds",
+        "original": "It took a hour to finish.",
+        "before": "a",
+        "after": "an",
+        "explanation": "The edit is valid because 'an' is the correct article for the vowel sound in 'hour', fixing a genuine grammatical error.",
+        "tip": "Use 'a' before consonant sounds and 'an' before vowel sounds, regardless of whether the word starts with a silent letter like 'h'.",
+        "pattern": "article_vowel_sound_error",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "It took an hour to finish."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4467,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "preposition",
+    "heldOut": false,
+    "expected": [
+      "We discussed the problem yesterday."
+    ],
+    "findings": [
+      {
+        "id": "a75a36ea-3d76-4f9a-914d-192e8b8122ff",
+        "kind": "grammar",
+        "title": "Verb-Noun Collocation",
+        "original": "We discussed about the problem yesterday.",
+        "before": "about ",
+        "after": "",
+        "explanation": "The phrase 'discussed about' is grammatically incorrect because 'discuss' is a transitive verb that does not require the preposition 'about'; removing it corrects this error.",
+        "tip": "Use transitive verbs like 'discuss', 'mention', or 'consider' directly with their objects without adding unnecessary prepositions like 'about'.",
+        "pattern": "Verb-Noun Collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "We discussed the problem yesterday."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4338,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "question-order",
+    "heldOut": false,
+    "expected": [
+      "Where do you live?"
+    ],
+    "findings": [
+      {
+        "id": "d20d6966-1d2b-4521-b729-1841502f662c",
+        "kind": "grammar",
+        "title": "Missing Subject and Auxiliary Verb",
+        "original": "Where you live?",
+        "before": "you",
+        "after": "do you",
+        "explanation": "The original text 'Where you live?' is grammatically incomplete as a question because it lacks the auxiliary verb 'do'; changing 'you' to 'do you' correctly forms the standard interrogative structure.",
+        "tip": "Ensure questions in the present simple tense include the auxiliary verb 'do' or 'does' before the subject.",
+        "pattern": "Missing Subject and Auxiliary Verb",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "Where do you live?"
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4097,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "collocation",
+    "heldOut": false,
+    "expected": [
+      "I made a mistake in my report."
+    ],
+    "findings": [
+      {
+        "id": "3ae425e3-0d92-4ef7-8c9a-cdeea99c0331",
+        "kind": "grammar",
+        "title": "Incorrect verb-noun collocation",
+        "original": "I did a mistake in my report.",
+        "before": "did",
+        "after": "made",
+        "explanation": "The verb 'do' is incorrect with the noun 'mistake'; it must be replaced with 'made' to form the standard collocation 'make a mistake'.",
+        "tip": "Use 'make' for abstract nouns like mistakes, decisions, or plans, and 'do' for general tasks or actions.",
+        "pattern": "incorrect_verb_noun_collocation",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I made a mistake in my report."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4027,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "spelling",
+    "heldOut": false,
+    "expected": [
+      "I received a message from my sister."
+    ],
+    "findings": [
+      {
+        "id": "4c0d5d23-97f7-4476-a420-a9337b2719ec",
+        "kind": "typo",
+        "title": "Spelling correction",
+        "original": "I received a mesage from my sister.",
+        "before": "mesage",
+        "after": "message",
+        "explanation": "The edit corrects the spelling of 'mesage' to 'message', fixing a clear orthographic error while preserving the sentence's meaning.",
+        "tip": "Always verify standard English spellings for common words like 'message' before accepting or proposing edits.",
+        "pattern": "typo",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I received a message from my sister."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3710,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "adjacent",
+    "heldOut": false,
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "findings": [
+      {
+        "id": "630aee45-51b7-4aa6-ab52-3a741382246f",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "She have wrote a letter.",
+        "before": "have",
+        "after": "has",
+        "explanation": "The edit changes the incorrect auxiliary verb 'have' to the correct form 'has' for the third-person singular subject 'She', fixing a genuine grammatical error.",
+        "tip": "Ensure subject-verb agreement by matching the auxiliary verb to the person and number of the subject.",
+        "pattern": "Subject-Verb Agreement",
+        "selected": true,
+        "format": "correction"
+      },
+      {
+        "id": "008f3ffd-5cb7-4720-8eb6-df67301c38ed",
+        "kind": "grammar",
+        "title": "Past Participle Form",
+        "original": "She have wrote a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The edit changes the incorrect past tense form 'wrote' to the correct past participle 'written' required after the auxiliary 'has'.",
+        "tip": "Remember that the present perfect tense requires the past participle, not the simple past form.",
+        "pattern": "Verb Tense Form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 5455,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-user",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 411,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-past",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 391,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-conditional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 392,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-complements",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 396,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-regional",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 388,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-good",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 390,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "held-agreement",
+    "heldOut": true,
+    "expected": [
+      "My brother plays tennis on Sundays."
+    ],
+    "findings": [
+      {
+        "id": "16913ec8-280a-49eb-b8a6-b3a5bc1db93a",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "My brother play tennis on Sundays.",
+        "before": "play",
+        "after": "plays",
+        "explanation": "The original sentence uses the base form 'play' with a third-person singular subject 'brother', which is grammatically incorrect; changing it to 'plays' fixes this error.",
+        "tip": "Ensure verbs agree in number and person with their subjects (e.g., use 'plays' for he/she/it).",
+        "pattern": "Subject-Verb Agreement",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "My brother plays tennis on Sundays."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3931,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "held-participle",
+    "heldOut": true,
+    "expected": [
+      "They have gone home."
+    ],
+    "findings": [
+      {
+        "id": "51136118-c33b-4d5a-a5d5-67f103b7792a",
+        "kind": "grammar",
+        "title": "Verb form error",
+        "original": "They have went home.",
+        "before": "went",
+        "after": "gone",
+        "explanation": "The edit changes the incorrect past participle 'went' to the correct form 'gone' required after the auxiliary verb 'have', fixing a fundamental grammatical error.",
+        "tip": "Ensure that the past participle of irregular verbs (like 'go' -> 'gone') is used with present perfect tense, not the simple past form.",
+        "pattern": "have went -> have gone",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "They have gone home."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 4177,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "held-article",
+    "heldOut": true,
+    "expected": [
+      "He is an engineer."
+    ],
+    "findings": [
+      {
+        "id": "3027586d-eca7-4539-8d62-2975cbf83099",
+        "kind": "grammar",
+        "title": "Missing Article",
+        "original": "He is engineer.",
+        "before": "engineer",
+        "after": "an engineer",
+        "explanation": "The edit adds the necessary indefinite article 'an' to correctly form the noun phrase 'an engineer', fixing a grammatical error in the original sentence.",
+        "tip": "Ensure countable singular nouns like 'engineer' are preceded by an appropriate determiner such as 'a', 'an', or 'the'.",
+        "pattern": "Missing Article",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "He is an engineer."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3695,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "held-question",
+    "heldOut": true,
+    "expected": [
+      "What does she want?"
+    ],
+    "findings": [
+      {
+        "id": "ddbefcbb-55bb-45f6-9dc5-e54e01c5af56",
+        "kind": "grammar",
+        "title": "Subject-Verb Agreement",
+        "original": "What she want?",
+        "before": "want",
+        "after": "does she want",
+        "explanation": "The edit changes the ungrammatical 'What she want?' to 'What does she want?', correctly forming a standard present simple question by adding the auxiliary 'does' and adjusting word order.",
+        "tip": "For present simple questions with subjects other than 'I', 'you', or 'we', add 'do' or 'does' before the subject and keep the main verb in its base form.",
+        "pattern": "grammar",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "What she does she want?"
+    ],
+    "missing": [
+      "What does she want?"
+    ],
+    "extra": [
+      "What she does she want?"
+    ],
+    "pass": false,
+    "elapsedMs": 8984,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "held-negative",
+    "heldOut": true,
+    "expected": [
+      "He does not like coffee."
+    ],
+    "findings": [
+      {
+        "id": "090304f3-2200-4db8-96dc-6d3c115fbb2d",
+        "kind": "grammar",
+        "title": "Verb conjugation",
+        "original": "He does not likes coffee.",
+        "before": "likes",
+        "after": "like",
+        "explanation": "The edit changes the incorrect verb form 'likes' to the correct base form 'like' required after the auxiliary 'does not', which is a valid grammatical correction.",
+        "tip": "After the auxiliary verb 'do/does/did', always use the base form of the main verb without adding -s or -ed.",
+        "pattern": "verb conjugation after do/does/did",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "He does not like coffee."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 3908,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "held-clean",
+    "heldOut": true,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 422,
+    "calls": 1
+  }
+]

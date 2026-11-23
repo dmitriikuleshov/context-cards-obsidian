@@ -1,0 +1,4405 @@
+{
+  "f0c8e059cfbff3411c236647d5565734e19271e3c44073644a385f66c163c196": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "This is my hand-written text and I want AI to check it for mistakes.",
+                "I started to learn english a few years ago.",
+                "This is good"
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "055ba6d04d8fa10444edee82461e26c2867e816052f8bce50273a99769310ff7": {
+    "type": "object",
+    "properties": {
+      "decisions": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "original_acceptable": {
+              "type": "boolean"
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "valid": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "id",
+            "original_acceptable",
+            "valid",
+            "explanation",
+            "tip"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "decisions"
+    ],
+    "additionalProperties": false
+  },
+  "a46c4193ae53b1ab22a59f982393527646cf955630bfce40d93e81a515709289": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "She work in a hospital."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "917db98ba1372c3e3ff682443c7a9cb6f6e3c76b7fc93cb774b246e4eb594322": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "I have wrote three letters today."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "c72acd20fcc1e51b003197dd098a86f4d43c7c6c1e751bafdad82b298eb55ab4": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "I had never saw him before that day."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "4a6e58c417bd4b7822e794f34737110025e88e708a0688b5f2a465ec4e17b072": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "If I were you, I will take the train."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "0214ddc8194378ce7e96d720b503209a8c60195b7a25c06ed8eefaad9803d081": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "She bought new car yesterday."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "257c1399d05db9ece13c6dbaf383c2eed5a5e00e156293beae6c3da79abc8b07": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "It took a hour to finish."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "4779cbaa0608d781ef7c2ad9600f6e11a335a1194fdc0c1f7e67114103523ecf": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "We discussed about the problem yesterday."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "e0d38510535befe6cb614a82a5075ac2b70527d1c531ba023fc4a08c5c137b7d": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "Where you live?"
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "f37597627b34e204a1708b91964bd86e404add288c9eba62830fccb7b1cd1ffc": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "I did a mistake in my report."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "32d9c295adb72595cf3e6fe5596fbd6b05c926ee62e703441de2636346b83eb4": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "I received a mesage from my sister."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "b8021237294721a18126c9d1091a3b592f832296642c37cd4e6d0eebadac11e6": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "She have wrote a letter."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "3fa13f3eb99e19f7a645d203445490809de5ce708d6b39e1ce33eefb3efc83b4": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "This is my hand-written text and I want AI to check it for mistakes.",
+                "I started to learn English a few years ago.",
+                "This is good."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "b34fab1403ac39dc6ef112411668bffc2b8a7d1164a89fa9c5d7f3f5142b7933": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "I started learning English three years ago."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "209c21236b61b2a0484fd7912b0a51bac011b4b1dcf5dea832aeb900bd22ee4e": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "If I were you, I would take the train."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "880ec5f7ec87a92211463704950f79bf527dbb08bc76dd0c77b202ec18605487": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "I like reading.",
+                "I like to read before bed."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "c4e6ad44a1a0049e6d16d86326d7eda2775ba455d1314498a1258e28788c1680": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "The colour of the theatre curtains was grey."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "058bb51b9a0f0ed9ea9ef1469265e7a1640a61d338ebf9ddfd58f533444cf35e": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "This is good.",
+                "She is a good teacher.",
+                "He works hard."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "1b670ff823b2ff254fca374e1810fa2b46006d2f7c84ee310ee6319303418a31": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "My brother play tennis on Sundays."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "3e89365f03bb770a2e7824038b61a0a49b774ce1550e60aca6922249d63dd28e": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "They have went home."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "e985ac56a79d54e73e3f1c31df29e608f7f3b18c711988f29273b445f702f8b6": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "He is engineer."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "82f541176582116537ec9b1d165b9d71c18c2f5ff2017c82d61564f84d3de27d": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "What she want?"
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "420786fbb1e93821d09adc997c469e5a6b5b8df40a84a94bd09a9d411c053624": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "He does not likes coffee."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "25aee24bc278b662699e309c79adee95456907f26c006fc5dd40f3b3a0685a03": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "array",
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "style",
+                "unclear",
+                "typo"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "original_sentence": {
+              "type": "string",
+              "enum": [
+                "She has lived here since 2020.",
+                "Yesterday, she visited her parents."
+              ]
+            },
+            "target_before": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "target_after": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "title",
+            "original_sentence",
+            "target_before",
+            "target_after",
+            "explanation",
+            "tip",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "findings"
+    ],
+    "additionalProperties": false
+  },
+  "2a4cad8ccbe1fe04963e8f2486705e92dab19696da08ee4a357b3aed99593bcc": {
+    "type": "object",
+    "properties": {
+      "decisions": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "original_acceptable": {
+              "type": "boolean"
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "valid": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "id",
+            "original_acceptable",
+            "valid",
+            "explanation",
+            "tip"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "decisions"
+    ],
+    "additionalProperties": false
+  },
+  "c00a11ed05b9e6a109fcb19e9c1764310fbae6f07c9e0d24b10b59722b08c3cd": {
+    "type": "object",
+    "properties": {
+      "decisions": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "original_acceptable": {
+              "type": "boolean"
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "valid": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "id",
+            "original_acceptable",
+            "valid",
+            "explanation",
+            "tip"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "decisions"
+    ],
+    "additionalProperties": false
+  },
+  "0bab5d17024942176a9e08dc73175bb03e23c79d2209c6359cf6d954861b365a": {
+    "type": "object",
+    "properties": {
+      "sentences": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "corrected": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6300
+            }
+          },
+          "required": [
+            "id",
+            "corrected"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "sentences"
+    ],
+    "additionalProperties": false
+  },
+  "26adc80bf76d86ba070f84ce0b07b8abb6d8f34936cb62e157e375191249da3d": {
+    "type": "object",
+    "properties": {
+      "decisions": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "required",
+                "optional",
+                "incorrect"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "typo",
+                "style",
+                "unclear"
+              ]
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "explanation",
+            "tip",
+            "verdict",
+            "category",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "decisions"
+    ],
+    "additionalProperties": false
+  },
+  "60572f29ee097a3e9a7a38328d636a66438f3b3984be9d0db9eb931c79fbbdd1": {
+    "type": "object",
+    "properties": {
+      "sentences": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "corrected": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6300
+            }
+          },
+          "required": [
+            "id",
+            "corrected"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "sentences"
+    ],
+    "additionalProperties": false
+  },
+  "6fb7ff273148e1d823ae201b05de2d6f87136d73da1074ab4db941f1a4718fd6": {
+    "type": "object",
+    "properties": {
+      "decisions": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "required",
+                "optional",
+                "incorrect"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "typo",
+                "style",
+                "unclear"
+              ]
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "explanation",
+            "tip",
+            "verdict",
+            "category",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "decisions"
+    ],
+    "additionalProperties": false
+  },
+  "abe66b0a894fe087c0285f5d2bd3da9fee307d20061726a16ddcb42d28a7c9ae": {
+    "type": "object",
+    "properties": {
+      "sentences": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1",
+                "2"
+              ]
+            },
+            "corrected": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6300
+            }
+          },
+          "required": [
+            "id",
+            "corrected"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "sentences"
+    ],
+    "additionalProperties": false
+  },
+  "11cc79bd317efece074cdcc90c73e2debf73ff376b1e30c5ba14b014b8f2d792": {
+    "type": "object",
+    "properties": {
+      "decisions": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ]
+            },
+            "explanation": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "tip": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "required",
+                "optional",
+                "incorrect"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "grammar",
+                "vocabulary",
+                "typo",
+                "style",
+                "unclear"
+              ]
+            },
+            "pattern": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "recommended_format": {
+              "type": "string",
+              "enum": [
+                "correction",
+                "gap"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "explanation",
+            "tip",
+            "verdict",
+            "category",
+            "pattern",
+            "recommended_format"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "decisions"
+    ],
+    "additionalProperties": false
+  },
+  "1614d23b60b850ba9d96903d579c2fa6b9693c1fab7ef5d04177272d65f1d3af": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I have visited Paris last year."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have "
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          ""
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I visited Paris last year."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The present perfect tense 'have visited' is incorrect with a finished time expression 'last year'; the simple past 'visited' is required. Use the simple past tense to describe completed actions in the past."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "When using time expressions like 'last year,' use the simple past tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "f89ab59863edcd01107f6282fd4f2c42d4078fcad3a1c71a7cad7d362f99430e": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She have written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The auxiliary verb 'have' must agree with the subject 'She', so it should be 'has'. The past participle of 'write' is 'written'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Remember that 'has' is used with third-person singular subjects like 'she', 'he', and 'it'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "73b96a20307f6256e011a818278f5d9e7db47adb4f3a4f75a988593ae2e67f97": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She [[gap]] written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The auxiliary verb 'have' must agree with the subject 'She', so it should be 'has'. The past participle of 'write' is 'written'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Remember that 'has' is used with third-person singular subjects like 'she', 'he', and 'it'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "b0401524d634093097f651e2ed5f7f65693d531fe6c34bfe27f4688a5b355340": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has wrote a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The past participle of 'write' is 'written', not 'wrote'. The auxiliary verb 'has' is correct here."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use a past participle form after auxiliary verbs like 'has' and 'have'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "4d3bbd1b8d19310287b7bc9a3baaa5bd07e39b4d54843bdd37a58c79568eebbc": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has [[gap]] a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The past participle of 'write' is 'written', not 'wrote'. The auxiliary verb 'has' is correct here."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use a past participle form after auxiliary verbs like 'has' and 'have'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "b4c5257493dd9f526f789c092af6c25ad78da7dc7a43f553387b33b5ae3713d9": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn english a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The word 'english' is not capitalized, but proper nouns and adjectives derived from them should be. The edit corrects the capitalization of 'english' to 'English'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Remember to capitalize proper nouns and adjectives derived from them."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "10397e71a5acce61cc6e375ae4c3e4a94aa21976112d1609474c7a3292cb5e39": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn [[gap]] a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The word 'english' is not capitalized, but proper nouns and adjectives derived from them should be. The edit corrects the capitalization of 'english' to 'English'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Remember to capitalize proper nouns and adjectives derived from them."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "2b207604d5fb5f5dff2a5b66d950045e2fb945c39dca6edc0de7f8e46b444723": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What she want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original sentence lacks the auxiliary verb 'does' for a question in the present simple tense. The corrected version adds 'does she' before the main verb 'want' to form a grammatically correct question."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Remember to use auxiliary verbs like 'do,' 'does,' 'did' when forming questions in the present and past simple tenses."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "bb2ea223d1673e43394a2225ceec8fab3a3d1d371926b614f23376a184f6d741": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What [[gap]] want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original sentence lacks the auxiliary verb 'does' for a question in the present simple tense. The corrected version adds 'does she' before the main verb 'want' to form a grammatically correct question."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Remember to use auxiliary verbs like 'do,' 'does,' 'did' when forming questions in the present and past simple tenses."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "812d3187702d60f0b8d590a67c980aa2aa329c78eac161b9d570c09148a1bbdf": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I have visited Paris last year."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have "
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          ""
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I visited Paris last year."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The present perfect tense ('have visited') cannot be used with a specific past time expression like 'last year'. The simple past tense is required."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use the simple past tense when mentioning a specific finished time in the past, such as 'yesterday' or 'last year'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "8892643cc3364f43b332478845b861427e3c121cce17a32cd24117d2d1c570a7": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She have written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The subject 'She' requires the third-person singular auxiliary verb 'has' instead of 'have'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'has' with third-person singular subjects (he, she, it) in the present perfect tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "503f02542fc5720a8e2fcf081402bb2e6b11be6c1134839d3474f604d09853f7": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She [[gap]] written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The subject 'She' requires the third-person singular auxiliary verb 'has' instead of 'have'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'has' with third-person singular subjects (he, she, it) in the present perfect tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "82b246dda68880051a4eb773e9f2c797956df57193456f7b45c9249930b2c952": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has wrote a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The present perfect tense requires the past participle 'written' rather than the simple past 'wrote'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "The present perfect structure is 'have/has' + past participle."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "0670de767613eed55fcafeac7c61703f50dbca040610bb3560368ecfb7556692": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has [[gap]] a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The present perfect tense requires the past participle 'written' rather than the simple past 'wrote'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "The present perfect structure is 'have/has' + past participle."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "618c518e8450e0c6b4c6f68aae2c486808a5b5b829c74724d19790dde792b7f8": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn english a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The name of a language must be capitalized."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Always capitalize proper nouns, including the names of languages like English, Spanish, or French."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "de0bf5842a6bfdf97d1aa38bb8e475be4804e0439b896bc2175296902f866d1f": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn [[gap]] a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The name of a language must be capitalized."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Always capitalize proper nouns, including the names of languages like English, Spanish, or French."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "c197ec38ccbef86bd735bbc54c094a8e477a120fbb3dd15f07686cd624d01bda": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What she want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The sentence requires the auxiliary verb 'does' to form a question in the present simple tense."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'do' or 'does' to form questions with most verbs in the present simple tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "20b01ed50e0dfacd443df2a7d0ff3d6db693580c9f7b5fd8cead7c9d52fa788c": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What [[gap]] want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The sentence requires the auxiliary verb 'does' to form a question in the present simple tense."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'do' or 'does' to form questions with most verbs in the present simple tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "5c054b090f6f4e41e9b03108597d33bee223b860c3eb41a2e91e1f00f1ad1c33": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I have visited Paris last year."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have "
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          ""
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I visited Paris last year."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The present perfect tense ('have visited') is incorrect here because the action (visiting Paris) occurred at a specific time in the past ('last year'). The simple past tense ('visited') is the correct form for this context."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use the simple past tense for actions that happened at a specific time in the past."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "df5c30e8bd923367e56a43c2c304e7ad59d239bc5466e47ce5344b2dcc83baca": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She have written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The verb 'have' is incorrect in the third person singular subject 'She'; it should be 'has'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'has' with third person singular subjects like 'she'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "1562b58ceb5c12e0752c9bbc601946af0baa118e6cdff7abd351ec761eb96bd6": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She [[gap]] written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The verb 'have' is incorrect in the third person singular subject 'She'; it should be 'has'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'has' with third person singular subjects like 'she'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "e18645f0ce018079b66732ebac3c18420d4dada390cb08b972b07dd9a4837adf": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has wrote a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The past participle of 'write' is 'written', not 'wrote'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'written' after 'has' to form the present perfect tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "a2773aeb62b2fa03bab116d74688480cc1745fa32135d22f8471bca7496a2052": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has [[gap]] a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The past participle of 'write' is 'written', not 'wrote'."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'written' after 'has' to form the present perfect tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "5e36e1d205d00c0ad536f9de0fa35957989a3149a815963792550c4cb0992a17": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn english a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The word 'english' should be capitalized as 'English' when referring to the language."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Capitalize the first letter of proper nouns, such as languages, countries, and specific names."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "ddf07bfa9f9805e7019d60d716652cb0ca93d17317d1330ed1d05a4da2877e71": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn [[gap]] a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The word 'english' should be capitalized as 'English' when referring to the language."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Capitalize the first letter of proper nouns, such as languages, countries, and specific names."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "8963e9e2bfc6b1ffc4192aa1e0aeb6909d26c194264892eca1d0969760f58c53": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What she want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original sentence 'What she want?' is grammatically incorrect. The correct form uses the auxiliary verb 'does' before the subject 'she' in a question."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'does she' to form a correct question in present tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "2c9387e034a92e55981fb6cd7ad9415e394d3763f3f2c55d1cc85c16710dedc4": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What [[gap]] want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original sentence 'What she want?' is grammatically incorrect. The correct form uses the auxiliary verb 'does' before the subject 'she' in a question."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'does she' to form a correct question in present tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "b1cd8c1b2f20e7c036e7c12dfe6fa172b04c499820821481dc3418dcc9c75548": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I have visited Paris last year."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have "
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          ""
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I visited Paris last year."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original sentence uses the present perfect tense ('have visited') with a specific past time marker ('last year'), which is grammatically incorrect. The proposed correction changes the verb to the simple past tense ('visited'), which correctly pairs with the past time expression."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use the simple past tense when referring to actions completed at a specific time in the past, such as 'last year'."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "2cfcd24d950ed85c1f554b63d178c2016cb42b64c1d672e88df375df65d84d5e": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She have written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original target uses 'have' which is grammatically incorrect for the third-person singular subject 'She'; it must be 'has'. The proposed edit fixes this subject-verb agreement error."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'has' with third-person singular subjects (he, she, it) and 'have' with others."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "3cf9b5854dd934682f77d0cf36cc7b7e7a1106e7802f75a2bbb667d5dc98faa4": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She [[gap]] written a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "have"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "has"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original target uses 'have' which is grammatically incorrect for the third-person singular subject 'She'; it must be 'has'. The proposed edit fixes this subject-verb agreement error."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'has' with third-person singular subjects (he, she, it) and 'have' with others."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "a8eedb87aa1822d3d357cf51f34b2456db1a96b6bf57b27aaf9202fa9e64bc1d": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has wrote a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original target uses the past tense verb 'wrote' after the auxiliary 'has', but the present perfect tense requires the past participle 'written'. The proposed edit corrects this verb form error."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "After the auxiliary 'have' or 'has', use the past participle of the main verb (e.g., written, not wrote)."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "fef377dbd809ae8658c8ac191a0283f57c9cca35ecfca5d6bc7fdb2c10d7eda6": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "She has [[gap]] a letter."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "wrote"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "written"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "She has written a letter."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original target uses the past tense verb 'wrote' after the auxiliary 'has', but the present perfect tense requires the past participle 'written'. The proposed edit corrects this verb form error."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "After the auxiliary 'have' or 'has', use the past participle of the main verb (e.g., written, not wrote)."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "5db06f942e42d23946886d864ba4cf29514f5c8b3affc65272fe4e974b1914c2": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn english a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original target contains the error 'english' which must be capitalized as 'English' because it is a proper noun. The proposed correction fixes this capitalization rule without altering meaning or information."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Always capitalize nationalities, languages, and specific names like English."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "38170f19b26c0ac31c4a74e28bb9baf611f7ec46dbcda6b83c731bdd2f18592b": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "I started to learn [[gap]] a few years ago."
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "english"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "English"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "I started to learn English a few years ago."
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original target contains the error 'english' which must be capitalized as 'English' because it is a proper noun. The proposed correction fixes this capitalization rule without altering meaning or information."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Always capitalize nationalities, languages, and specific names like English."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "0736f0b2f5f67be13a63375718986f28df78028f17e867fbd45c05c3f14ac427": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What she want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original sentence lacks the auxiliary verb 'does' required for a present tense question with the pronoun 'she', making it grammatically incorrect. The proposed edit adds 'does' to form the correct interrogative structure."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'do' or 'does' before the subject in questions and negatives for the simple present tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  },
+  "fbf3211e56747bfc7255b5f5aa43f6ef4a05b393bf4912f2708515385d2b651c": {
+    "type": "object",
+    "properties": {
+      "question": {
+        "type": "string",
+        "enum": [
+          "What [[gap]] want?"
+        ]
+      },
+      "target": {
+        "type": "string",
+        "enum": [
+          "she"
+        ]
+      },
+      "answer": {
+        "type": "string",
+        "enum": [
+          "does she"
+        ]
+      },
+      "corrected_sentence": {
+        "type": "string",
+        "enum": [
+          "What does she want?"
+        ]
+      },
+      "hint": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "explanation": {
+        "type": "string",
+        "enum": [
+          "The original sentence lacks the auxiliary verb 'does' required for a present tense question with the pronoun 'she', making it grammatically incorrect. The proposed edit adds 'does' to form the correct interrogative structure."
+        ]
+      },
+      "tip": {
+        "type": "string",
+        "enum": [
+          "Use 'do' or 'does' before the subject in questions and negatives for the simple present tense."
+        ]
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "answer",
+      "corrected_sentence",
+      "hint",
+      "explanation",
+      "tip"
+    ],
+    "additionalProperties": false
+  }
+}

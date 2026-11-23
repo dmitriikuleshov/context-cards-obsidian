@@ -1,0 +1,234 @@
+{
+  "version": "0.3.36",
+  "baseline_commit": "467c428",
+  "code_commit": "e1c975ae8c9e1e845183f229e8847af5dab9cf89",
+  "date": "2026-11-23",
+  "models": [
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "common_before": {
+        "cases": 23,
+        "passed": 12,
+        "missing": 11,
+        "extra": 3,
+        "errors": 0,
+        "cards": 0
+      },
+      "common_after": {
+        "cases": 23,
+        "passed": 23,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "base": {
+        "cases": 24,
+        "passed": 24,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "extra": {
+        "cases": 30,
+        "passed": 30,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 9
+      },
+      "policy": {
+        "cases": 6,
+        "passed": 6,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "improvements": 11,
+      "regressions": 0,
+      "warm_positive_median_seconds": 2.37
+    },
+    {
+      "model": "gemma4:12b-it-qat",
+      "common_before": {
+        "cases": 23,
+        "passed": 19,
+        "missing": 4,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "common_after": {
+        "cases": 23,
+        "passed": 23,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "base": {
+        "cases": 24,
+        "passed": 24,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "extra": {
+        "cases": 30,
+        "passed": 30,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 9
+      },
+      "policy": {
+        "cases": 6,
+        "passed": 6,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "improvements": 4,
+      "regressions": 0,
+      "warm_positive_median_seconds": 2.45
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "common_before": {
+        "cases": 23,
+        "passed": 22,
+        "missing": 1,
+        "extra": 1,
+        "errors": 0,
+        "cards": 0
+      },
+      "common_after": {
+        "cases": 23,
+        "passed": 23,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "base": {
+        "cases": 24,
+        "passed": 24,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "extra": {
+        "cases": 30,
+        "passed": 30,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 9
+      },
+      "policy": {
+        "cases": 6,
+        "passed": 6,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "improvements": 1,
+      "regressions": 0,
+      "warm_positive_median_seconds": 2.62
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "common_before": {
+        "cases": 23,
+        "passed": 19,
+        "missing": 4,
+        "extra": 3,
+        "errors": 0,
+        "cards": 0
+      },
+      "common_after": {
+        "cases": 23,
+        "passed": 23,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "base": {
+        "cases": 24,
+        "passed": 24,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "extra": {
+        "cases": 30,
+        "passed": 30,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 9
+      },
+      "policy": {
+        "cases": 6,
+        "passed": 6,
+        "missing": 0,
+        "extra": 0,
+        "errors": 0,
+        "cards": 0
+      },
+      "improvements": 4,
+      "regressions": 0,
+      "warm_positive_median_seconds": 2.45
+    }
+  ],
+  "final": {
+    "cases": 240,
+    "passed": 240,
+    "missing": 0,
+    "extra": 0,
+    "errors": 0,
+    "cards": 36
+  },
+  "live_before_regional_policy": {
+    "cases": 216,
+    "passed": 215,
+    "missing": 1,
+    "extra": 0,
+    "errors": 0,
+    "cards": 36
+  },
+  "replay": {
+    "cases": 216,
+    "identical_request_payloads": 412
+  },
+  "failures": [],
+  "protocol": {
+    "thinking": false,
+    "temperature": 0,
+    "context_tokens": 6144,
+    "timeout_seconds": 300,
+    "generations": "Sequential models; other loaded models unloaded between groups.",
+    "gold": "Expectations are local scorer data, never sent to the model.",
+    "score": "All required local corrections, no extras; equivalent target anchors are accepted by comparing the resulting source sentence.",
+    "comparison": "23 identical basic passages/gold corrections. The former accept-both regional case is excluded; American spelling is tested separately.",
+    "extra": "30 additional regression cases, including clean controls, repeated captures, migration of removed preferences and 36 generated exercises.",
+    "limits": "Finite basic regression corpus, not an expert linguistic score for every explanation or a guarantee on unseen writing. Timings are descriptive, not a controlled speed benchmark.",
+    "timing_note": "Timings are descriptive only. Unit/browser checks and a short exploratory run overlapped portions of the initial baseline; no before/after speed comparison is claimed.",
+    "regional_policy": "216 original live analyses replayed on final code; all 412 outgoing JSON payloads matched the original requests. Fresh six-case regional/literal tests passed on all four models. One previously optional UK-to-US spelling verdict is now normalized by an explicit spelling policy."
+  },
+  "validation": {
+    "unit_and_integration_tests": 702,
+    "analysis_tests": 292,
+    "browser_scenarios": 57,
+    "package_verified": true,
+    "github_checks_for_code_commit": "Tests and Release succeeded"
+  }
+}

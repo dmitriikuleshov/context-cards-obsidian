@@ -1,0 +1,530 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "practise",
+    "heldOut": false,
+    "expected": [
+      "I practice French every day."
+    ],
+    "findings": [
+      {
+        "id": "e1c878f3-8935-48e2-bc17-2c92f25339c3",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise French every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I practice French every day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 12752,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "flavour",
+    "heldOut": false,
+    "expected": [
+      "The flavor of the soup is unusual."
+    ],
+    "findings": [
+      {
+        "id": "88fa2d25-8894-4e2f-9203-4c2301527ac0",
+        "kind": "typo",
+        "title": "flavour → flavor",
+        "original": "The flavour of the soup is unusual.",
+        "before": "flavour",
+        "after": "flavor",
+        "explanation": "Use 'flavor', the American English spelling of 'flavour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The flavor of the soup is unusual."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 7783,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "licence",
+    "heldOut": false,
+    "expected": [
+      "The license is valid."
+    ],
+    "findings": [
+      {
+        "id": "1ff791e5-235d-48ee-8840-e2a9e3cf42a2",
+        "kind": "typo",
+        "title": "licence → license",
+        "original": "The licence is valid.",
+        "before": "licence",
+        "after": "license",
+        "explanation": "Use 'license', the American English spelling of 'licence'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The license is valid."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2438,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "code-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2259,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "quoted-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2189,
+    "calls": 2
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "clean-american",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 745,
+    "calls": 1
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "practise",
+    "heldOut": false,
+    "expected": [
+      "I practice French every day."
+    ],
+    "findings": [
+      {
+        "id": "8386924d-2b4d-475e-a4c9-1d97e7f1e8f2",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise French every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I practice French every day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 11667,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "flavour",
+    "heldOut": false,
+    "expected": [
+      "The flavor of the soup is unusual."
+    ],
+    "findings": [
+      {
+        "id": "39070505-7fe2-4653-8386-5a66916d4e7b",
+        "kind": "typo",
+        "title": "flavour → flavor",
+        "original": "The flavour of the soup is unusual.",
+        "before": "flavour",
+        "after": "flavor",
+        "explanation": "Use 'flavor', the American English spelling of 'flavour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The flavor of the soup is unusual."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2500,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "licence",
+    "heldOut": false,
+    "expected": [
+      "The license is valid."
+    ],
+    "findings": [
+      {
+        "id": "69b82c9d-07d0-4216-9f81-32734f14b6be",
+        "kind": "typo",
+        "title": "licence → license",
+        "original": "The licence is valid.",
+        "before": "licence",
+        "after": "license",
+        "explanation": "Use 'license', the American English spelling of 'licence'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The license is valid."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2532,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "code-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2535,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "quoted-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2472,
+    "calls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "clean-american",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 808,
+    "calls": 1
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "practise",
+    "heldOut": false,
+    "expected": [
+      "I practice French every day."
+    ],
+    "findings": [
+      {
+        "id": "5a050ab5-970f-477a-a6aa-9f3518d5770f",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise French every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I practice French every day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 12815,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "flavour",
+    "heldOut": false,
+    "expected": [
+      "The flavor of the soup is unusual."
+    ],
+    "findings": [
+      {
+        "id": "df08fb79-64ec-465d-bfc4-47dfc372a9b3",
+        "kind": "typo",
+        "title": "flavour → flavor",
+        "original": "The flavour of the soup is unusual.",
+        "before": "flavour",
+        "after": "flavor",
+        "explanation": "Use 'flavor', the American English spelling of 'flavour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The flavor of the soup is unusual."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2277,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "licence",
+    "heldOut": false,
+    "expected": [
+      "The license is valid."
+    ],
+    "findings": [
+      {
+        "id": "107ba345-e7a8-434e-a76c-347bde5bae7e",
+        "kind": "typo",
+        "title": "licence → license",
+        "original": "The licence is valid.",
+        "before": "licence",
+        "after": "license",
+        "explanation": "Use 'license', the American English spelling of 'licence'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The license is valid."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2446,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "code-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2214,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "quoted-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2183,
+    "calls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "clean-american",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 652,
+    "calls": 1
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "practise",
+    "heldOut": false,
+    "expected": [
+      "I practice French every day."
+    ],
+    "findings": [
+      {
+        "id": "8bd12b42-33b5-46ac-8e43-5d61eb6cdfe0",
+        "kind": "typo",
+        "title": "practise → practice",
+        "original": "I practise French every day.",
+        "before": "practise",
+        "after": "practice",
+        "explanation": "Use 'practice', the American English spelling of 'practise'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I practice French every day."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 10982,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "flavour",
+    "heldOut": false,
+    "expected": [
+      "The flavor of the soup is unusual."
+    ],
+    "findings": [
+      {
+        "id": "049f4464-36e5-46f5-bd26-e10e8d4665dd",
+        "kind": "typo",
+        "title": "flavour → flavor",
+        "original": "The flavour of the soup is unusual.",
+        "before": "flavour",
+        "after": "flavor",
+        "explanation": "Use 'flavor', the American English spelling of 'flavour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The flavor of the soup is unusual."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2618,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "licence",
+    "heldOut": false,
+    "expected": [
+      "The license is valid."
+    ],
+    "findings": [
+      {
+        "id": "a1c038a9-9eff-4bdc-9e78-793719789cc9",
+        "kind": "typo",
+        "title": "licence → license",
+        "original": "The licence is valid.",
+        "before": "licence",
+        "after": "license",
+        "explanation": "Use 'license', the American English spelling of 'licence'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The license is valid."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2855,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "code-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2448,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "quoted-literal",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2387,
+    "calls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "clean-american",
+    "heldOut": false,
+    "expected": [],
+    "findings": [],
+    "actual": [],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 970,
+    "calls": 1
+  }
+]
