@@ -35,7 +35,7 @@ export function sampleFinding(): WritingFinding {
 }
 afterEach(() => vi.restoreAllMocks());
 describe('writing analysis and practice validation', () => {
-  it('repairs contradictory reviewer flags instead of silently discarding a genuine error', async () => {
+  it('repairs an invalid reviewer verdict instead of accepting unverified feedback', async () => {
     const request = vi
       .spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce({
@@ -51,8 +51,7 @@ describe('writing analysis and practice validation', () => {
             content: JSON.stringify({
               decisions: candidates.map((c: any) => ({
                 id: c.id,
-                original_acceptable: !input.validation_error,
-                valid: true,
+                verdict: input.validation_error ? 'keep' : 'yes',
                 explanation: 'Use the past participle after have.',
                 tip: '',
               })),
@@ -63,7 +62,7 @@ describe('writing analysis and practice validation', () => {
     const result = await new WritingModel(DEFAULTS).analyse(source, new AbortController().signal);
     expect(result.findings).toHaveLength(1);
     expect(request).toHaveBeenCalledTimes(3);
-    expect(JSON.stringify(request.mock.calls[2]![1])).toContain('contradicts itself');
+    expect(JSON.stringify(request.mock.calls[2]![1])).toContain('invalid feedback');
   });
   it('uses a correction card for a deletion even if the model requests a typed gap', () => {
     const original = 'We discussed about the plan.';
@@ -222,8 +221,7 @@ describe('writing analysis and practice validation', () => {
             content: JSON.stringify({
               decisions: input.candidates.map((c: any) => ({
                 id: c.id,
-                original_acceptable: false,
-                valid: true,
+                verdict: 'keep',
                 explanation: 'A valid local edit.',
                 tip: '',
               })),
@@ -319,8 +317,7 @@ describe('writing analysis and practice validation', () => {
               content: JSON.stringify({
                 decisions: input.candidates.map((f: any) => ({
                   id: f.id,
-                  original_acceptable: false,
-                  valid,
+                  verdict: valid ? 'keep' : 'reject',
                   explanation: valid
                     ? 'Use the participle.'
                     : 'The original is already acceptable.',
@@ -358,8 +355,7 @@ describe('writing analysis and practice validation', () => {
           content: JSON.stringify({
             decisions: JSON.parse(body.messages[1].content).candidates.map((c: any) => ({
               id: c.id,
-              original_acceptable: true,
-              valid: false,
+              verdict: 'reject',
               explanation: 'An optional alternative.',
               tip: '',
             })),
@@ -397,8 +393,7 @@ describe('writing analysis and practice validation', () => {
             content: JSON.stringify({
               decisions: input.candidates.map((f: any) => ({
                 id: f.id,
-                original_acceptable: false,
-                valid: true,
+                verdict: 'keep',
                 explanation: 'Use the participle.',
                 tip: '',
               })),

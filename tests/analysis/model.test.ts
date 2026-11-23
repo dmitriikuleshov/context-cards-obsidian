@@ -10,8 +10,7 @@ function decisions(body: any) {
     input = data.input ?? data;
   return input.candidates.map((c: any) => ({
     id: c.id,
-    valid: true,
-    original_acceptable: false,
+    verdict: 'keep',
     explanation: '  Checked rule.  ',
     tip: '  Checked tip.  ',
     category: 'grammar',
@@ -118,14 +117,14 @@ describe('independent reviewer contracts', () => {
   it.each([
     ['unknown identifier', { id: 'unknown' }],
     ['numeric identifier', { id: 1 }],
-    ['non-boolean verdict', { valid: 'yes' }],
-    ['non-boolean acceptability', { original_acceptable: null }],
+    ['unknown verdict', { verdict: 'yes' }],
+    ['missing verdict', { verdict: undefined }],
     ['missing explanation', { explanation: null }],
     ['empty explanation', { explanation: ' ' }],
     ['oversized explanation', { explanation: 'x'.repeat(1001) }],
     ['invalid tip', { tip: null }],
     ['oversized tip', { tip: 'x'.repeat(501) }],
-    ['contradictory verdict', { valid: true, original_acceptable: true }],
+    ['boolean verdict', { verdict: true }],
   ])('rejects %s in both attempts and never exposes unverified findings', async (_name, patch) => {
     const request = vi
       .spyOn(http, 'jsonRequest')

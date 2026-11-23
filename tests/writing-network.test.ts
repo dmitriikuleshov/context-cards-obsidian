@@ -35,8 +35,7 @@ it('repairs invalid analysis over HTTP and prepares both formats using the appro
           content: JSON.stringify({
             decisions: candidates.map((c: any) => ({
               id: c.id,
-              original_acceptable: false,
-              valid: true,
+              verdict: 'keep',
               explanation: 'Use the participle.',
               tip: '',
             })),

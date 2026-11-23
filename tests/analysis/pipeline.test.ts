@@ -25,8 +25,7 @@ function approved(body: any) {
   return {
     decisions: input.candidates.map((c: any) => ({
       id: c.id,
-      valid: true,
-      original_acceptable: false,
+      verdict: 'keep',
       explanation: 'Independently verified participle rule.',
       tip: 'Use written.',
     })),

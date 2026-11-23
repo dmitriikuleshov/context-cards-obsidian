@@ -46,8 +46,7 @@ function setup(options: Partial<WritingOptions> = {}, items = fixtures) {
       result = {
         decisions: JSON.parse(body.messages[1].content).candidates.map((c: any) => ({
           id: c.id,
-          original_acceptable: false,
-          valid: true,
+          verdict: 'keep',
           category: fixtures.find((f) => f.target_before === c.target_before)?.kind ?? 'grammar',
           explanation: 'Fix this target.',
           tip: '',
