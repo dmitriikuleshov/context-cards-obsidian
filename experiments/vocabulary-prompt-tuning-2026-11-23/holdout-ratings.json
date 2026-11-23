@@ -1,0 +1,362 @@
+[
+  {
+    "label": "A",
+    "id": "holdout-oversight",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct omission and supervision senses.",
+    "variant": "control",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "A",
+    "id": "holdout-run",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Useful verb senses; promotion under ongoing heading is weakly classified.",
+    "variant": "control",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "A",
+    "id": "holdout-look-forward",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Pleasant anticipation and a conventional formal-correspondence formula are useful distinct usages.",
+    "variant": "control",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "A",
+    "id": "holdout-reluctantly",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two headings paraphrase unwillingly; necessity is not a distinct sense.",
+    "variant": "control",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "A",
+    "id": "holdout-candid",
+    "examplesScore": 2,
+    "falseBase": true,
+    "note": "Good frank/unposed examples; candle is a false derivational base.",
+    "variant": "control",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "B",
+    "id": "holdout-oversight",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Omission and failure-to-notice groups overlap; responsibility heading is vague.",
+    "variant": "control",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "B",
+    "id": "holdout-run",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Running a marathon as a participant is incorrectly grouped under managing/organizing.",
+    "variant": "control",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "B",
+    "id": "holdout-look-forward",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Three groups paraphrase the same anticipation meaning.",
+    "variant": "control",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "B",
+    "id": "holdout-reluctantly",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Groups duplicate unwillingness; slowly is an unwarranted added component.",
+    "variant": "control",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "B",
+    "id": "holdout-candid",
+    "examplesScore": 1,
+    "falseBase": true,
+    "note": "Three frank/honest paraphrase groups omit photography; candy is a false base.",
+    "variant": "control",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "C",
+    "id": "holdout-oversight",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct omission examples but omits common supervision sense.",
+    "variant": "candidate",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "C",
+    "id": "holdout-run",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Three coherent common verb senses and natural examples.",
+    "variant": "candidate",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "C",
+    "id": "holdout-look-forward",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct anticipation examples. Base look is a real component, but its definition wrongly inherits anticipate with pleasure from the whole phrase.",
+    "variant": "candidate",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "C",
+    "id": "holdout-reluctantly",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One correct unwillingness group and valid reluctant base.",
+    "variant": "candidate",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "C",
+    "id": "holdout-candid",
+    "examplesScore": 1,
+    "falseBase": true,
+    "note": "Correct frank examples but omits common photographic sense; candidate is a false base.",
+    "variant": "candidate",
+    "model": "gemma3:12b-it-q4_K_M"
+  },
+  {
+    "label": "D",
+    "id": "holdout-oversight",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Valid omission/supervision senses, but one example substitutes the verb overseeing for the noun.",
+    "variant": "control",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "D",
+    "id": "holdout-run",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Five coherent established verb senses.",
+    "variant": "control",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "D",
+    "id": "holdout-look-forward",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Pleasant anticipation and formal correspondence are useful distinct usages.",
+    "variant": "control",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "D",
+    "id": "holdout-reluctantly",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two groups paraphrase unwillingness.",
+    "variant": "control",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "D",
+    "id": "holdout-candid",
+    "examplesScore": 0,
+    "falseBase": true,
+    "note": "False photographic definition: candid means unposed, not natural lighting or no flash. Candor is not its English derivational base.",
+    "variant": "control",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "E",
+    "id": "holdout-oversight",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct omission/supervision noun senses.",
+    "variant": "candidate",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "E",
+    "id": "holdout-run",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Useful common verb senses, but functioning and continuous operation groups overlap; diagnostic-test example is a looser fit.",
+    "variant": "candidate",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "E",
+    "id": "holdout-look-forward",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One coherent pleasure-anticipation group with whole expression preserved.",
+    "variant": "candidate",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "E",
+    "id": "holdout-reluctantly",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "One correct unwillingness group and genuine reluctant base.",
+    "variant": "candidate",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "E",
+    "id": "holdout-candid",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct frank and unposed-photo senses; safe empty base.",
+    "variant": "candidate",
+    "model": "gemma4:12b-it-qat"
+  },
+  {
+    "label": "F",
+    "id": "holdout-oversight",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "First and third groups overlap; error in judgment is broader than the usual omission sense.",
+    "variant": "control",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "F",
+    "id": "holdout-run",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "The lights ran out is incorrect; runners substitutes a derivative and several headings mismatch examples.",
+    "variant": "control",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "F",
+    "id": "holdout-look-forward",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two headings paraphrase pleasant anticipation.",
+    "variant": "control",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "F",
+    "id": "holdout-reluctantly",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Obligation is an associated circumstance, not a separate meaning.",
+    "variant": "control",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "F",
+    "id": "holdout-candid",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Naked/bare is an invented candid meaning; no-makeup example misdefines photographic usage.",
+    "variant": "control",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "H",
+    "id": "holdout-oversight",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct omission and supervision senses; oversee is a valid corresponding verb.",
+    "variant": "candidate",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "H",
+    "id": "holdout-run",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Several headings confuse causative/intransitive uses, run out, or invent continuous-supply meaning.",
+    "variant": "candidate",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "H",
+    "id": "holdout-look-forward",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct anticipation and conventional formal-expectation examples.",
+    "variant": "candidate",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "H",
+    "id": "holdout-reluctantly",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Two groups paraphrase unwillingness.",
+    "variant": "candidate",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "H",
+    "id": "holdout-candid",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Invents candid as related to candidate and uses the nonexistent noun candid.",
+    "variant": "candidate",
+    "model": "qwen3:14b-q4_K_M"
+  },
+  {
+    "label": "G",
+    "id": "holdout-oversight",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct omission and supervision noun usages.",
+    "variant": "candidate",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "G",
+    "id": "holdout-run",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Five established verb usages with matching examples; race participation is a conventional construction.",
+    "variant": "candidate",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "G",
+    "id": "holdout-look-forward",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Five groups paraphrase anticipation and split it by event/topic.",
+    "variant": "candidate",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "G",
+    "id": "holdout-reluctantly",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Sadness/regret is an associated circumstance rather than a separate sense.",
+    "variant": "candidate",
+    "model": "qwen3.5:9b-q4_K_M"
+  },
+  {
+    "label": "G",
+    "id": "holdout-candid",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "False photography definition based on no filters/editing; one example substitutes candor for candid.",
+    "variant": "candidate",
+    "model": "qwen3.5:9b-q4_K_M"
+  }
+]

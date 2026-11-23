@@ -1,0 +1,5240 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-oversight",
+    "target": "oversight",
+    "sourceCharacters": 116,
+    "gold": "Ready. Noun: accidental omission/failure to notice, NOT supervision in this source. Other noun sense supervision may have a separate example group. Do not imply intentional exclusion.",
+    "content": {
+      "status": "ready",
+      "expression": "oversight",
+      "partOfSpeech": "noun",
+      "americanIpa": "/ˈoʊvɚˌsaɪt/",
+      "meaning": "An oversight is a mistake or failure to notice or do something. It often implies a lapse in attention or responsibility, rather than deliberate negligence. In this context, the oversight refers to the unintentional exclusion of a name from an invitation.",
+      "explanation": "The word 'oversight' suggests a minor error that could have been avoided with more careful attention. It implies that the organizer was not intentionally excluding anyone, but simply made a mistake.",
+      "exampleGroups": [
+        {
+          "meaning": "A Mistake or Error",
+          "examples": [
+            "The editor apologized for the oversight in the published article; a crucial fact had been left out.",
+            "It was a simple oversight, but failing to renew the license resulted in a hefty fine."
+          ]
+        },
+        {
+          "meaning": "A Responsibility or Duty",
+          "examples": [
+            "The committee has oversight of the project's budget and timeline.",
+            "Parliamentary oversight ensures that government agencies are acting responsibly."
+          ]
+        },
+        {
+          "meaning": "A Failure to Notice Something",
+          "examples": [
+            "The security guard’s oversight allowed the intruder to enter the building undetected.",
+            "Her oversight of the details meant the presentation wasn't as polished as it could have been."
+          ]
+        }
+      ],
+      "examples": [
+        "The editor apologized for the oversight in the published article; a crucial fact had been left out.",
+        "It was a simple oversight, but failing to renew the license resulted in a hefty fine.",
+        "The committee has oversight of the project's budget and timeline.",
+        "Parliamentary oversight ensures that government agencies are acting responsibly.",
+        "The security guard’s oversight allowed the intruder to enter the building undetected.",
+        "Her oversight of the details meant the presentation wasn't as polished as it could have been."
+      ],
+      "notes": [
+        "Often collocates with 'accidental', 'minor', 'serious', and 'avoidable'."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "An oversight is a mistake or something that is forgotten when someone is trying to do something carefully. It usually refers to a small error or omission that doesn't necessarily cause a big problem, but should have been noticed.",
+      "wordFormation": "sight — Sight is the ability to see, or something that is seen."
+    },
+    "seconds": 18.463800391,
+    "wallSeconds": 18.465055508000003,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "main",
+        "elapsedMs": 13624.920493000001,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 10.1650568,
+        "evalCount": 173,
+        "promptEvalCount": 852,
+        "tokensPerSecond": 59.716062205497124,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "generalMeaning",
+        "elapsedMs": 1117.5564889999987,
+        "timeoutMs": 286366.53632,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041359,
+        "evalCount": 59,
+        "promptEvalCount": 169,
+        "tokensPerSecond": 70.96805234795997,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "wordFormation",
+        "elapsedMs": 597.8390929999987,
+        "timeoutMs": 285241.439188,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.005533,
+        "evalCount": 29,
+        "promptEvalCount": 200,
+        "tokensPerSecond": 71.59981137153143,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "examples",
+        "elapsedMs": 3096.6347449999994,
+        "timeoutMs": 284638.447115,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047057,
+        "evalCount": 200,
+        "promptEvalCount": 222,
+        "tokensPerSecond": 69.03545730122448,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-run",
+    "target": "ran",
+    "sourceCharacters": 87,
+    "gold": "Ready. Lemma run, verb: manage/operate a business. Not jogging, a past participle, or a noun run. Other established verb meanings may be illustrated, all with matching headings.",
+    "content": {
+      "status": "ready",
+      "expression": "run",
+      "partOfSpeech": "verb",
+      "americanIpa": "/ɹʌn/",
+      "meaning": "To manage or operate a business or organization is to be in charge of its day-to-day activities and make decisions. In this context, 'ran' means Elena was the owner and responsible for the bakery's operations.",
+      "explanation": "The word 'ran' here signifies Elena's role as the owner and manager of the bakery, indicating she was responsible for its success. It implies a level of control and responsibility beyond simply working at the bakery; she was the one making the key decisions.",
+      "exampleGroups": [
+        {
+          "meaning": "Physical Movement - Quick Pace",
+          "examples": [
+            "I need to run to catch the bus before it leaves.",
+            "The dog loves to run around the park chasing squirrels."
+          ]
+        },
+        {
+          "meaning": "Operating/Functioning (of a machine)",
+          "examples": [
+            "The washing machine isn't running, so I can't do the laundry.",
+            "Make sure the software is running smoothly before you start the presentation."
+          ]
+        },
+        {
+          "meaning": "Managing/Organizing (an event or business)",
+          "examples": [
+            "She runs a successful bakery downtown.",
+            "He's running the marathon to raise money for charity."
+          ]
+        },
+        {
+          "meaning": "Flowing (of liquids)",
+          "examples": [
+            "The river runs through the valley, providing water for the farms.",
+            "Tears ran down her face as she listened to the sad story."
+          ]
+        },
+        {
+          "meaning": "Progressing/Continuing (of a process or campaign)",
+          "examples": [
+            "The investigation is running into unexpected difficulties.",
+            "Their political campaign is running very well in the polls."
+          ]
+        }
+      ],
+      "examples": [
+        "I need to run to catch the bus before it leaves.",
+        "The dog loves to run around the park chasing squirrels.",
+        "The washing machine isn't running, so I can't do the laundry.",
+        "Make sure the software is running smoothly before you start the presentation.",
+        "She runs a successful bakery downtown.",
+        "He's running the marathon to raise money for charity.",
+        "The river runs through the valley, providing water for the farms.",
+        "Tears ran down her face as she listened to the sad story.",
+        "The investigation is running into unexpected difficulties.",
+        "Their political campaign is running very well in the polls."
+      ],
+      "notes": [
+        "Often used with businesses, organizations, or events; 'He runs a successful consultancy.'"
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "To 'run' generally means to move quickly using your legs, often covering a distance. It can also describe other processes that happen continuously, like a machine operating or a program functioning.",
+      "wordFormation": ""
+    },
+    "seconds": 9.406682171999996,
+    "wallSeconds": 9.407061416000001,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-run",
+        "stage": "main",
+        "elapsedMs": 3209.089796,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042409,
+        "evalCount": 177,
+        "promptEvalCount": 846,
+        "tokensPerSecond": 63.6119741455061,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-run",
+        "stage": "generalMeaning",
+        "elapsedMs": 948.1168369999978,
+        "timeoutMs": 296785.096725,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052676,
+        "evalCount": 50,
+        "promptEvalCount": 168,
+        "tokensPerSecond": 70.99499485286287,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-run",
+        "stage": "wordFormation",
+        "elapsedMs": 646.2565800000011,
+        "timeoutMs": 295831.90963,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004727,
+        "evalCount": 33,
+        "promptEvalCount": 199,
+        "tokensPerSecond": 71.53494482054484,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-run",
+        "stage": "examples",
+        "elapsedMs": 4582.795177,
+        "timeoutMs": 295181.44476,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041638,
+        "evalCount": 305,
+        "promptEvalCount": 221,
+        "tokensPerSecond": 69.75518218109589,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-look-forward",
+    "target": "looked forward to",
+    "sourceCharacters": 90,
+    "gold": "Ready. Lemma look forward to: anticipate with pleasure; to takes a noun/gerund, not an infinitive. Preserve the whole expression; do not teach look forward/look at/forecasting as its senses.",
+    "content": {
+      "status": "ready",
+      "expression": "look forward to",
+      "partOfSpeech": "phrasal verb",
+      "americanIpa": "/lʊk ˈfɔɹwɚd tə/",
+      "meaning": "To anticipate with pleasure or eagerness; to expect something good with excitement. It describes a feeling of positive anticipation about a future event or experience.",
+      "explanation": "This phrase indicates a feeling of excitement and pleasure about something that will happen in the future. It suggests that the people in the sentence are happy and eager for the opportunity to meet their new neighbours.",
+      "exampleGroups": [
+        {
+          "meaning": "Anticipation of a Pleasant Event",
+          "examples": [
+            "I’m really looking forward to the concert next weekend; I’ve heard amazing things about the band.",
+            "We’re all looking forward to the holiday; it’s been a long and stressful year."
+          ]
+        },
+        {
+          "meaning": "Eagerly Awaiting Something Future",
+          "examples": [
+            "She’s looking forward to starting her new job and meeting her colleagues.",
+            "I’m looking forward to seeing you again soon; let’s arrange something next week."
+          ]
+        },
+        {
+          "meaning": "Expressing Pleasure About a Future Event",
+          "examples": [
+            "He’s looking forward to presenting his research at the conference; it’s a great opportunity.",
+            "They’re looking forward to welcoming their new neighbours to the neighbourhood."
+          ]
+        }
+      ],
+      "examples": [
+        "I’m really looking forward to the concert next weekend; I’ve heard amazing things about the band.",
+        "We’re all looking forward to the holiday; it’s been a long and stressful year.",
+        "She’s looking forward to starting her new job and meeting her colleagues.",
+        "I’m looking forward to seeing you again soon; let’s arrange something next week.",
+        "He’s looking forward to presenting his research at the conference; it’s a great opportunity.",
+        "They’re looking forward to welcoming their new neighbours to the neighbourhood."
+      ],
+      "notes": [
+        "Often followed by a noun or gerund (e.g., 'looking forward to the concert')."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "“Look forward to” means to feel happy and excited about something that will happen in the future. People commonly use this phrase to express anticipation for events like vacations, meetings, or seeing someone they enjoy spending time with.",
+      "wordFormation": ""
+    },
+    "seconds": 8.379710709,
+    "wallSeconds": 8.379919216000003,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "main",
+        "elapsedMs": 2979.819059999998,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047226,
+        "evalCount": 161,
+        "promptEvalCount": 848,
+        "tokensPerSecond": 62.72702018991872,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "pronunciation",
+        "elapsedMs": 575.1519950000002,
+        "timeoutMs": 297015.752996,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041332,
+        "evalCount": 21,
+        "promptEvalCount": 144,
+        "tokensPerSecond": 59.533090476122986,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "generalMeaning",
+        "elapsedMs": 987.6832829999985,
+        "timeoutMs": 296436.767826,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041815,
+        "evalCount": 57,
+        "promptEvalCount": 173,
+        "tokensPerSecond": 70.0175166629406,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "wordFormation",
+        "elapsedMs": 377.8463819999961,
+        "timeoutMs": 295444.322542,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.005082,
+        "evalCount": 13,
+        "promptEvalCount": 204,
+        "tokensPerSecond": 73.09571602876598,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "examples",
+        "elapsedMs": 3438.340264999999,
+        "timeoutMs": 295062.831244,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041644,
+        "evalCount": 225,
+        "promptEvalCount": 226,
+        "tokensPerSecond": 69.53251896847118,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-reluctantly",
+    "target": "reluctantly",
+    "sourceCharacters": 89,
+    "gold": "Ready. Adverb: unwillingly/with hesitation, not slowly or enthusiastically. One common usage sufficient. Transparent base reluctant with correct general adjective meaning.",
+    "content": {
+      "status": "ready",
+      "expression": "reluctantly",
+      "partOfSpeech": "adverb",
+      "americanIpa": "/ɹɪˈlʌktəntli/",
+      "meaning": "To do something reluctantly means to do it unwillingly and with some hesitation. It suggests a lack of enthusiasm or a preference for doing something else. The word implies that the person being described felt pressured or had reservations about the action they took.",
+      "explanation": "'Reluctantly' emphasizes the speaker's awareness of the person's inner feelings about the decision. It signals that the agreement wasn't freely given or enthusiastically embraced. The adverb adds a layer of complexity to the situation, suggesting that the decision was difficult or undesirable.",
+      "exampleGroups": [
+        {
+          "meaning": "With hesitation or unwillingness",
+          "examples": [
+            "He reluctantly agreed to help, knowing it would take up his entire weekend.",
+            "She reluctantly admitted she’d been wrong about the project’s feasibility."
+          ]
+        },
+        {
+          "meaning": "Slowly and unwillingly, physically",
+          "examples": [
+            "The old dog reluctantly left the warmth of the fireplace to go outside.",
+            "He reluctantly backed the car out of the tight parking space."
+          ]
+        },
+        {
+          "meaning": "Showing a lack of enthusiasm",
+          "examples": [
+            "She reluctantly participated in the team-building exercise, finding it rather silly.",
+            "He reluctantly accepted the award, feeling others were more deserving."
+          ]
+        }
+      ],
+      "examples": [
+        "He reluctantly agreed to help, knowing it would take up his entire weekend.",
+        "She reluctantly admitted she’d been wrong about the project’s feasibility.",
+        "The old dog reluctantly left the warmth of the fireplace to go outside.",
+        "He reluctantly backed the car out of the tight parking space.",
+        "She reluctantly participated in the team-building exercise, finding it rather silly.",
+        "He reluctantly accepted the award, feeling others were more deserving."
+      ],
+      "notes": [
+        "Often used to describe actions taken under duress or after considerable thought and opposition."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "Reluctantly means doing something when you don't really want to, often because you feel you have to, but without strong resistance. People might act reluctantly when facing a task they find unpleasant or inconvenient, but are still willing to participate.",
+      "wordFormation": "reluctant — To be reluctant is to be unwilling or hesitant to do something. It suggests a lack of enthusiasm or a feeling of resistance."
+    },
+    "seconds": 8.430393227,
+    "wallSeconds": 8.430543955000001,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "main",
+        "elapsedMs": 3562.337247000003,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004147,
+        "evalCount": 192,
+        "promptEvalCount": 847,
+        "tokensPerSecond": 60.73571832798364,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "generalMeaning",
+        "elapsedMs": 1136.3282929999987,
+        "timeoutMs": 296433.40549,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042032,
+        "evalCount": 64,
+        "promptEvalCount": 171,
+        "tokensPerSecond": 70.98460077816868,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "wordFormation",
+        "elapsedMs": 784.5054430000018,
+        "timeoutMs": 295293.256851,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041695,
+        "evalCount": 43,
+        "promptEvalCount": 202,
+        "tokensPerSecond": 71.32501982172062,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "examples",
+        "elapsedMs": 2930.832254000001,
+        "timeoutMs": 294504.628143,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0057862,
+        "evalCount": 190,
+        "promptEvalCount": 224,
+        "tokensPerSecond": 69.55065154318252,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-candid",
+    "target": "candid",
+    "sourceCharacters": 111,
+    "gold": "Ready. Adjective: honest/frank/open in expressing the truth. Common adjective photographic sense unposed may be separated. Do not invent a direct derivational base such as candidate or candor.",
+    "content": {
+      "status": "ready",
+      "expression": "candid",
+      "partOfSpeech": "adjective",
+      "americanIpa": "/ˈkændəd/",
+      "meaning": "The word 'candid' describes someone who speaks honestly and directly, even when the truth might be uncomfortable. It suggests a willingness to be frank and straightforward, without trying to hide or soften difficult information. $candid$ implies a lack of pretense or evasiveness, and often suggests a refreshing openness in communication.",
+      "explanation": "The scientist's 'candid' admission shows they were willing to be honest about the experiment's failure, rather than trying to excuse it or downplay the problem. It suggests a level of trust and transparency in the interview setting, where the scientist felt comfortable being truthful. $candid$ is often used to describe statements or opinions that are blunt but sincere.",
+      "exampleGroups": [
+        {
+          "meaning": "Frank and honest, even if potentially uncomfortable",
+          "examples": [
+            "She gave a candid assessment of the project's weaknesses, which helped the team improve.",
+            "I appreciate his candid feedback; it’s better to know the truth, even if it’s difficult to hear."
+          ]
+        },
+        {
+          "meaning": "Open and straightforward in expression",
+          "examples": [
+            "The politician offered a candid explanation for the policy change during the press conference.",
+            "Her candid response to the interviewer revealed a genuine and relatable personality."
+          ]
+        },
+        {
+          "meaning": "Unreservedly truthful; blunt",
+          "examples": [
+            "He made a candid admission about his past mistakes, showing a willingness to learn.",
+            "The review was candid, pointing out both the strengths and flaws of the new restaurant."
+          ]
+        }
+      ],
+      "examples": [
+        "She gave a candid assessment of the project's weaknesses, which helped the team improve.",
+        "I appreciate his candid feedback; it’s better to know the truth, even if it’s difficult to hear.",
+        "The politician offered a candid explanation for the policy change during the press conference.",
+        "Her candid response to the interviewer revealed a genuine and relatable personality.",
+        "He made a candid admission about his past mistakes, showing a willingness to learn.",
+        "The review was candid, pointing out both the strengths and flaws of the new restaurant."
+      ],
+      "notes": [
+        "Often used to describe interviews, speeches, or assessments; it implies a degree of openness and honesty that might not be present in more formal settings."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "When someone is candid, they express their thoughts and feelings honestly and openly, even if those opinions might be uncomfortable or critical. People often describe a candid statement as straightforward and sincere, suggesting a willingness to be truthful rather than trying to protect someone's feelings or avoid conflict.",
+      "wordFormation": "candy — Candy is a sweet treat, often made of sugar and other ingredients."
+    },
+    "seconds": 9.891803511000006,
+    "wallSeconds": 9.892003353,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "main",
+        "elapsedMs": 4393.999766000001,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0048352,
+        "evalCount": 239,
+        "promptEvalCount": 850,
+        "tokensPerSecond": 60.09619917942286,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "pronunciation",
+        "elapsedMs": 470.27235400000063,
+        "timeoutMs": 295600.230451,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0044069,
+        "evalCount": 13,
+        "promptEvalCount": 146,
+        "tokensPerSecond": 52.29262955498972,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "generalMeaning",
+        "elapsedMs": 1152.9326359999977,
+        "timeoutMs": 295126.0086,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052517,
+        "evalCount": 70,
+        "promptEvalCount": 170,
+        "tokensPerSecond": 70.99449082751178,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "wordFormation",
+        "elapsedMs": 605.9069009999948,
+        "timeoutMs": 293969.225585,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0044086,
+        "evalCount": 30,
+        "promptEvalCount": 201,
+        "tokensPerSecond": 71.70052126278958,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "examples",
+        "elapsedMs": 3247.078395000004,
+        "timeoutMs": 293359.331616,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041564,
+        "evalCount": 213,
+        "promptEvalCount": 223,
+        "tokensPerSecond": 69.66671834432628,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-bat",
+    "target": "bat",
+    "sourceCharacters": 56,
+    "gold": "Ambiguous: animal or sporting implement, no decisive cue. Ask for clarification rather than selecting either.",
+    "content": {
+      "status": "ready",
+      "expression": "bat",
+      "partOfSpeech": "countable noun",
+      "americanIpa": "/bæt/",
+      "meaning": "It refers to a nocturnal flying mammal, often associated with caves and darkness. In this context, 'bat' is clearly referring to the animal, not another possible meaning.",
+      "explanation": "The sentence uses 'bat' to identify a specific creature that the speaker is indicating. The use of 'it' later in the sentence confirms that 'bat' is being used as a noun referring to an animal.",
+      "exampleGroups": [
+        {
+          "meaning": "A nocturnal flying mammal",
+          "examples": [
+            "We saw a bat flitting across the moonlit sky as we walked through the forest.",
+            "The biologist is studying the bat population in the cave to understand their migration patterns."
+          ]
+        },
+        {
+          "meaning": "A piece of sporting equipment (baseball/cricket)",
+          "examples": [
+            "The batter swung the bat with all his might, hoping to hit a home run.",
+            "She practiced hitting the ball with her bat for hours each day to improve her skills."
+          ]
+        },
+        {
+          "meaning": "To strike something with a bat (action)",
+          "examples": [
+            "The police had to bat away the protesters trying to break through the barricade.",
+            "He used a bat to gently bat the ball back to his teammate."
+          ]
+        }
+      ],
+      "examples": [
+        "We saw a bat flitting across the moonlit sky as we walked through the forest.",
+        "The biologist is studying the bat population in the cave to understand their migration patterns.",
+        "The batter swung the bat with all his might, hoping to hit a home run.",
+        "She practiced hitting the ball with her bat for hours each day to improve her skills.",
+        "The police had to bat away the protesters trying to break through the barricade.",
+        "He used a bat to gently bat the ball back to his teammate."
+      ],
+      "notes": [],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "A bat is an animal that flies at night, often eating insects, and is commonly associated with caves and darkness. The word 'bat' can also refer to a piece of equipment used to hit a ball in sports like baseball or cricket.",
+      "wordFormation": ""
+    },
+    "seconds": 7.821272613000001,
+    "wallSeconds": 7.821400106000001,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "main",
+        "elapsedMs": 2626.163354999997,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042997,
+        "evalCount": 137,
+        "promptEvalCount": 844,
+        "tokensPerSecond": 61.44602684159798,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "generalMeaning",
+        "elapsedMs": 1348.5120370000004,
+        "timeoutMs": 297369.07717299997,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047285,
+        "evalCount": 69,
+        "promptEvalCount": 169,
+        "tokensPerSecond": 63.04236995455467,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "wordFormation",
+        "elapsedMs": 429.60302400000364,
+        "timeoutMs": 296015.376774,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0074888,
+        "evalCount": 13,
+        "promptEvalCount": 200,
+        "tokensPerSecond": 63.129167132041935,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "examples",
+        "elapsedMs": 3398.4917709999936,
+        "timeoutMs": 295581.394174,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047756,
+        "evalCount": 214,
+        "promptEvalCount": 222,
+        "tokensPerSecond": 67.07822606302533,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-pitch",
+    "target": "pitch",
+    "sourceCharacters": 45,
+    "gold": "Ambiguous: multiple ordinary noun meanings fit, such as presentation/proposal or sports field. Ask for context.",
+    "content": {
+      "status": "ready",
+      "expression": "pitch",
+      "partOfSpeech": "noun",
+      "americanIpa": "/pɪtʃ/",
+      "meaning": "A pitch is a presentation or proposal intended to persuade someone to do something. In this context, it refers to a plan or idea being presented for discussion and potential approval. The word 'pitch' here implies a formal and persuasive element, suggesting a deliberate attempt to convince someone of the value of an idea.",
+      "explanation": "The word 'pitch' in this context isn't referring to the angle of a slope or a baseball throw. It's a business or sales term, signifying a carefully prepared presentation.",
+      "exampleGroups": [
+        {
+          "meaning": "Highness or Lowness of Sound",
+          "examples": [
+            "The violinist adjusted her instrument to match the singer's high pitch.",
+            "The dog began to howl at the unusual, low pitch of the foghorn."
+          ]
+        },
+        {
+          "meaning": "Sales Presentation/Proposal",
+          "examples": [
+            "The marketing team spent all week preparing a compelling pitch for the new product.",
+            "After a lengthy pitch, the investors decided to decline the funding opportunity."
+          ]
+        },
+        {
+          "meaning": "Throwing a Ball",
+          "examples": [
+            "He practiced his baseball pitch, aiming for the catcher's mitt.",
+            "The pitcher threw a wild pitch that sailed over the batter's head."
+          ]
+        },
+        {
+          "meaning": "Slope or Angle",
+          "examples": [
+            "The tent was secured to the ground to prevent it from sliding down the steep pitch.",
+            "The road had a gradual pitch upwards, making the climb challenging."
+          ]
+        }
+      ],
+      "examples": [
+        "The violinist adjusted her instrument to match the singer's high pitch.",
+        "The dog began to howl at the unusual, low pitch of the foghorn.",
+        "The marketing team spent all week preparing a compelling pitch for the new product.",
+        "After a lengthy pitch, the investors decided to decline the funding opportunity.",
+        "He practiced his baseball pitch, aiming for the catcher's mitt.",
+        "The pitcher threw a wild pitch that sailed over the batter's head.",
+        "The tent was secured to the ground to prevent it from sliding down the steep pitch.",
+        "The road had a gradual pitch upwards, making the climb challenging."
+      ],
+      "notes": [
+        "Often used in business and marketing contexts, 'pitch' frequently refers to a sales presentation or proposal."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "A 'pitch' describes the way something is presented or offered, often involving a persuasive argument to get someone to agree or take action. It can also refer to a specific highness or lowness of a musical note, or the angle at which something slopes.",
+      "wordFormation": ""
+    },
+    "seconds": 9.504997585999998,
+    "wallSeconds": 9.505106995000002,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "main",
+        "elapsedMs": 3509.9243710000083,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042125,
+        "evalCount": 183,
+        "promptEvalCount": 838,
+        "tokensPerSecond": 58.98659102630222,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "generalMeaning",
+        "elapsedMs": 1335.2847840000031,
+        "timeoutMs": 296485.515707,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042119,
+        "evalCount": 73,
+        "promptEvalCount": 168,
+        "tokensPerSecond": 66.81812107443538,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "wordFormation",
+        "elapsedMs": 682.8229019999999,
+        "timeoutMs": 295146.034704,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047063,
+        "evalCount": 35,
+        "promptEvalCount": 199,
+        "tokensPerSecond": 69.94935666577398,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "examples",
+        "elapsedMs": 3960.0692550000094,
+        "timeoutMs": 294459.278969,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046021,
+        "evalCount": 243,
+        "promptEvalCount": 221,
+        "tokensPerSecond": 64.65589494135472,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "holdout-unknown",
+    "target": "flanterize",
+    "sourceCharacters": 75,
+    "gold": "Unknown/coined word; do not invent a teaching definition or base. Ask for clarification.",
+    "content": {
+      "status": "unknown",
+      "expression": "flanterize",
+      "partOfSpeech": "",
+      "americanIpa": "",
+      "meaning": "",
+      "explanation": "",
+      "examples": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "notes": [],
+      "question": "Can you provide a definition or example of how 'flanterize' is used?",
+      "ipaVariant": "american"
+    },
+    "seconds": 3.2007128740000046,
+    "wallSeconds": 3.2010723410000064,
+    "stages": [
+      {
+        "model": "gemma3:12b-it-q4_K_M",
+        "id": "holdout-unknown",
+        "stage": "main",
+        "elapsedMs": 3196.702661999996,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0050263,
+        "evalCount": 146,
+        "promptEvalCount": 847,
+        "tokensPerSecond": 52.624370129542456,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma3:12b-it-q4_K_M",
+            "size": 8064556072,
+            "sizeVram": 8064556072,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-oversight",
+    "target": "oversight",
+    "sourceCharacters": 116,
+    "gold": "Ready. Noun: accidental omission/failure to notice, NOT supervision in this source. Other noun sense supervision may have a separate example group. Do not imply intentional exclusion.",
+    "content": {
+      "status": "ready",
+      "expression": "oversight",
+      "partOfSpeech": "noun",
+      "americanIpa": "/ˈoʊvɚˌsaɪt/",
+      "meaning": "A mistake made because someone failed to notice something or forgot to do something. A failure to notice or do something, especially something that is important.",
+      "explanation": "This term specifically refers to an unintentional error caused by inattention rather than a deliberate choice. It is commonly used in professional or formal contexts to describe administrative errors or small lapses in memory.",
+      "exampleGroups": [
+        {
+          "meaning": "A mistake made because of a failure to notice something",
+          "examples": [
+            "Please forgive the oversight in the invoice; the discount was not applied to the final total.",
+            "Due to a minor oversight, the manager forgot to include the guest list in the meeting folder."
+          ]
+        },
+        {
+          "meaning": "The action of supervising or managing people and tasks",
+          "examples": [
+            "The committee was established to provide closer oversight of the company's environmental policies.",
+            "The government has increased its oversight of the banking sector to prevent another financial crisis."
+          ]
+        }
+      ],
+      "examples": [
+        "Please forgive the oversight in the invoice; the discount was not applied to the final total.",
+        "Due to a minor oversight, the manager forgot to include the guest list in the meeting folder.",
+        "The committee was established to provide closer oversight of the company's environmental policies.",
+        "The government has increased its oversight of the banking sector to prevent another financial crisis."
+      ],
+      "notes": [
+        "often used with 'accidental' or 'unintentional'",
+        "common collocations: 'a minor oversight', 'an administrative oversight'"
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "An oversight refers to a mistake made because someone failed to notice or consider something important. It can also describe the act of supervising or managing a project, organization, or group of people.",
+      "wordFormation": "sight — The faculty or power of seeing. It can also refer to the act of looking at something."
+    },
+    "seconds": 17.955103645999987,
+    "wallSeconds": 17.95525317099999,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-oversight",
+        "stage": "main",
+        "elapsedMs": 13647.703746999992,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 9.9527739,
+        "evalCount": 175,
+        "promptEvalCount": 853,
+        "tokensPerSecond": 55.596785425636284,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-oversight",
+        "stage": "generalMeaning",
+        "elapsedMs": 1122.4353089999931,
+        "timeoutMs": 286347.131887,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004789,
+        "evalCount": 58,
+        "promptEvalCount": 175,
+        "tokensPerSecond": 68.21731684826587,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-oversight",
+        "stage": "wordFormation",
+        "elapsedMs": 681.4105759999948,
+        "timeoutMs": 285220.664324,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.005321,
+        "evalCount": 35,
+        "promptEvalCount": 202,
+        "tokensPerSecond": 71.14095869555938,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-oversight",
+        "stage": "examples",
+        "elapsedMs": 2486.507550999988,
+        "timeoutMs": 284535.250049,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046974,
+        "evalCount": 157,
+        "promptEvalCount": 228,
+        "tokensPerSecond": 69.08088976186013,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-run",
+    "target": "ran",
+    "sourceCharacters": 87,
+    "gold": "Ready. Lemma run, verb: manage/operate a business. Not jogging, a past participle, or a noun run. Other established verb meanings may be illustrated, all with matching headings.",
+    "content": {
+      "status": "ready",
+      "expression": "run",
+      "partOfSpeech": "verb",
+      "americanIpa": "/ɹʌn/",
+      "meaning": "To be in charge of the day-to-day operations and management of a business or organization. To direct the activities and administration of a specific establishment.",
+      "explanation": "This usage focuses on the leadership and administrative responsibility of a proprietor. It implies overseeing everything from staff management to financial oversight.",
+      "exampleGroups": [
+        {
+          "meaning": "To move rapidly on foot using speed",
+          "examples": [
+            "I had to run to the station because I didn't want to miss the last train.",
+            "She runs five miles every morning to stay in shape."
+          ]
+        },
+        {
+          "meaning": "To manage, operate, or be in charge of an organization or process",
+          "examples": [
+            "He has been running the family business since his father retired.",
+            "Who is going to run the meeting while the manager is away?"
+          ]
+        },
+        {
+          "meaning": "To function or operate (for machinery, software, or systems)",
+          "examples": [
+            "The old computer takes a long time to run this specific software.",
+            "We need to make sure the irrigation system is running correctly."
+          ]
+        },
+        {
+          "meaning": "To flow or move along a path (for liquids, electricity, or roads)",
+          "examples": [
+            "A small stream runs through the middle of the forest.",
+            "The main highway runs straight through the center of the city."
+          ]
+        },
+        {
+          "meaning": "To be continuous or ongoing",
+          "examples": [
+            "The store will run a special promotion on all winter clothing.",
+            "They have a continuous operation that runs twenty-four hours a day."
+          ]
+        }
+      ],
+      "examples": [
+        "I had to run to the station because I didn't want to miss the last train.",
+        "She runs five miles every morning to stay in shape.",
+        "He has been running the family business since his father retired.",
+        "Who is going to run the meeting while the manager is away?",
+        "The old computer takes a long time to run this specific software.",
+        "We need to make sure the irrigation system is running correctly.",
+        "A small stream runs through the middle of the forest.",
+        "The main highway runs straight through the center of the city.",
+        "The store will run a special promotion on all winter clothing.",
+        "They have a continuous operation that runs twenty-four hours a day."
+      ],
+      "notes": [
+        "Commonly used with 'business', 'company', 'shop', or 'organization'.",
+        "Can be used in both formal and informal contexts to describe management."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "To move rapidly on foot using a steady, rhythmic motion of the legs. To be in operation or to be managed by a specific person or organization.",
+      "wordFormation": ""
+    },
+    "seconds": 9.61205224199999,
+    "wallSeconds": 9.612186868000004,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-run",
+        "stage": "main",
+        "elapsedMs": 3257.3541889999906,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0043486,
+        "evalCount": 171,
+        "promptEvalCount": 847,
+        "tokensPerSecond": 62.42493492839385,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-run",
+        "stage": "generalMeaning",
+        "elapsedMs": 903.799125000005,
+        "timeoutMs": 296738.519307,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047953,
+        "evalCount": 51,
+        "promptEvalCount": 174,
+        "tokensPerSecond": 73.70773006205901,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-run",
+        "stage": "wordFormation",
+        "elapsedMs": 574.1357709999866,
+        "timeoutMs": 295830.705167,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046435,
+        "evalCount": 32,
+        "promptEvalCount": 201,
+        "tokensPerSecond": 74.5510628185893,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-run",
+        "stage": "examples",
+        "elapsedMs": 4859.511742000002,
+        "timeoutMs": 295252.758679,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0043105,
+        "evalCount": 335,
+        "promptEvalCount": 227,
+        "tokensPerSecond": 71.61078958697888,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-look-forward",
+    "target": "looked forward to",
+    "sourceCharacters": 90,
+    "gold": "Ready. Lemma look forward to: anticipate with pleasure; to takes a noun/gerund, not an infinitive. Preserve the whole expression; do not teach look forward/look at/forecasting as its senses.",
+    "content": {
+      "status": "ready",
+      "expression": "look forward to",
+      "partOfSpeech": "phrasal verb",
+      "americanIpa": "/lʊk ˈfɔɹwɚd tuː/",
+      "meaning": "To feel excited or happy about something that is going to happen in the future. This expression conveys a sense of eager anticipation for an upcoming event.",
+      "explanation": "It is commonly used to express positive feelings about a planned meeting, trip, or occasion. Because 'to' is a preposition in this phrase, it must be followed by a noun or a gerund (the -ing form of a verb).",
+      "exampleGroups": [
+        {
+          "meaning": "Anticipating a future event with pleasure",
+          "examples": [
+            "I really look forward to meeting your family during the holiday.",
+            "We look forward to seeing the results of your hard work next week."
+          ]
+        },
+        {
+          "meaning": "Expressing professional expectation in formal correspondence",
+          "examples": [
+            "I look forward to hearing from you regarding the job offer.",
+            "We look forward to a productive partnership with your company."
+          ]
+        }
+      ],
+      "examples": [
+        "I really look forward to meeting your family during the holiday.",
+        "We look forward to seeing the results of your hard work next week.",
+        "I look forward to hearing from you regarding the job offer.",
+        "We look forward to a productive partnership with your company."
+      ],
+      "notes": [
+        "Commonly used in formal correspondence (e.g., 'I look forward to hearing from you').",
+        "Followed by a gerund: 'look forward to meeting' (not 'look forward to meet')."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "This phrase expresses a feeling of pleasure or excitement about something that is expected to happen in the future. It is commonly used in both social and professional contexts to show anticipation for upcoming events, meetings, or opportunities.",
+      "wordFormation": ""
+    },
+    "seconds": 8.358432044,
+    "wallSeconds": 8.358534828999996,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-look-forward",
+        "stage": "main",
+        "elapsedMs": 4388.79105,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0043438,
+        "evalCount": 257,
+        "promptEvalCount": 849,
+        "tokensPerSecond": 65.78506151799158,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-look-forward",
+        "stage": "pronunciation",
+        "elapsedMs": 567.8213830000022,
+        "timeoutMs": 295606.418759,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047054,
+        "evalCount": 22,
+        "promptEvalCount": 147,
+        "tokensPerSecond": 61.545175557613284,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-look-forward",
+        "stage": "generalMeaning",
+        "elapsedMs": 1020.0520949999918,
+        "timeoutMs": 295034.850175,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047073,
+        "evalCount": 63,
+        "promptEvalCount": 179,
+        "tokensPerSecond": 73.92778311700656,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-look-forward",
+        "stage": "wordFormation",
+        "elapsedMs": 318.04646699999284,
+        "timeoutMs": 294010.71603,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004706,
+        "evalCount": 13,
+        "promptEvalCount": 206,
+        "tokensPerSecond": 76.51244504346495,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-look-forward",
+        "stage": "examples",
+        "elapsedMs": 2043.3338030000014,
+        "timeoutMs": 293688.84240900003,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004756,
+        "evalCount": 133,
+        "promptEvalCount": 232,
+        "tokensPerSecond": 71.89857651630314,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-reluctantly",
+    "target": "reluctantly",
+    "sourceCharacters": 89,
+    "gold": "Ready. Adverb: unwillingly/with hesitation, not slowly or enthusiastically. One common usage sufficient. Transparent base reluctant with correct general adjective meaning.",
+    "content": {
+      "status": "ready",
+      "expression": "reluctantly",
+      "partOfSpeech": "adverb",
+      "americanIpa": "/ɹɪˈlʌktəntli/",
+      "meaning": "Done with a lack of enthusiasm or a feeling of hesitation. Showing a willingness to do something only because it is necessary or expected.",
+      "explanation": "This word describes an action taken despite a person's internal desire to avoid it. It often implies that the person is yielding to pressure or circumstances rather than choosing the action freely.",
+      "exampleGroups": [
+        {
+          "meaning": "Doing something with hesitation or a lack of desire",
+          "examples": [
+            "She reluctantly agreed to lend her car to her brother for the weekend.",
+            "He reluctantly admitted that his initial plan was flawed from the start."
+          ]
+        },
+        {
+          "meaning": "Yielding to pressure or necessity despite personal opposition",
+          "examples": [
+            "The company reluctantly decided to sell the historic building to make room for a parking lot.",
+            "They reluctantly signed the contract after months of intense negotiations."
+          ]
+        }
+      ],
+      "examples": [
+        "She reluctantly agreed to lend her car to her brother for the weekend.",
+        "He reluctantly admitted that his initial plan was flawed from the start.",
+        "The company reluctantly decided to sell the historic building to make room for a parking lot.",
+        "They reluctantly signed the contract after months of intense negotiations."
+      ],
+      "notes": [
+        "Commonly paired with verbs of agreement or submission, such as 'reluctantly agreed' or 'reluctantly accepted'.",
+        "Used to convey a sense of internal conflict or mild protest."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "This word describes doing something with hesitation or a lack of enthusiasm because of a lack of desire to do it. It is commonly used to show that a person is performing an action only because they feel they have to, rather than because they want to.",
+      "wordFormation": "reluctant — Not wanting to do something or feeling hesitant about it."
+    },
+    "seconds": 7.405204194000006,
+    "wallSeconds": 7.405319413999997,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-reluctantly",
+        "stage": "main",
+        "elapsedMs": 3447.707347000003,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046658,
+        "evalCount": 187,
+        "promptEvalCount": 848,
+        "tokensPerSecond": 62.737930245486474,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-reluctantly",
+        "stage": "generalMeaning",
+        "elapsedMs": 1202.2283870000101,
+        "timeoutMs": 296548.397862,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0048038,
+        "evalCount": 71,
+        "promptEvalCount": 177,
+        "tokensPerSecond": 72.77736890335781,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-reluctantly",
+        "stage": "wordFormation",
+        "elapsedMs": 560.0897459999978,
+        "timeoutMs": 295340.438882,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042515,
+        "evalCount": 29,
+        "promptEvalCount": 204,
+        "tokensPerSecond": 74.70472314172001,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-reluctantly",
+        "stage": "examples",
+        "elapsedMs": 2177.397582999998,
+        "timeoutMs": 294776.73988899996,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004195,
+        "evalCount": 142,
+        "promptEvalCount": 230,
+        "tokensPerSecond": 71.39244426613092,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-candid",
+    "target": "candid",
+    "sourceCharacters": 111,
+    "gold": "Ready. Adjective: honest/frank/open in expressing the truth. Common adjective photographic sense unposed may be separated. Do not invent a direct derivational base such as candidate or candor.",
+    "content": {
+      "status": "ready",
+      "expression": "candid",
+      "partOfSpeech": "adjective",
+      "americanIpa": "/ˈkændɪd/",
+      "meaning": "Truthful and straightforward; not hiding one's true feelings or opinions. Characterized by a willingness to speak openly and honestly, even if the information is unpleasant.",
+      "explanation": "This word describes a style of communication where a person is being completely honest rather than being guarded or diplomatic. It is frequently used to describe interviews, conversations, or pieces of writing where the subject reveals personal truths.",
+      "exampleGroups": [
+        {
+          "meaning": "Truthful and straightforward; honest in expression",
+          "examples": [
+            "I appreciate your candid opinion about my presentation, even though it was quite harsh.",
+            "She gave a candid interview about her struggles with addiction and recovery."
+          ]
+        },
+        {
+          "meaning": "Unposed or natural; not staged for the camera",
+          "examples": [
+            "The photographer captured some beautiful candid shots of the children playing in the garden.",
+            "I prefer candid photos because they show people's real personalities rather than forced smiles."
+          ]
+        }
+      ],
+      "examples": [
+        "I appreciate your candid opinion about my presentation, even though it was quite harsh.",
+        "She gave a candid interview about her struggles with addiction and recovery.",
+        "The photographer captured some beautiful candid shots of the children playing in the garden.",
+        "I prefer candid photos because they show people's real personalities rather than forced smiles."
+      ],
+      "notes": [
+        "candid conversation",
+        "candid opinion"
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "The word describes a style of communication that is honest, straightforward, and sincere. It is commonly used to characterize people who speak their true thoughts openly or to describe photographs taken in a natural, unposed way.",
+      "wordFormation": "candle — A wax cylinder with a wick that is lit to provide light."
+    },
+    "seconds": 7.965188210999986,
+    "wallSeconds": 7.965306205999994,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-candid",
+        "stage": "main",
+        "elapsedMs": 3677.5879829999903,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052657,
+        "evalCount": 209,
+        "promptEvalCount": 851,
+        "tokensPerSecond": 65.27824931856067,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-candid",
+        "stage": "pronunciation",
+        "elapsedMs": 463.760380000007,
+        "timeoutMs": 296318.61158100003,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0057565,
+        "evalCount": 14,
+        "promptEvalCount": 117,
+        "tokensPerSecond": 54.31240516399399,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-candid",
+        "stage": "generalMeaning",
+        "elapsedMs": 1008.0906449999893,
+        "timeoutMs": 295850.85825,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046801,
+        "evalCount": 63,
+        "promptEvalCount": 176,
+        "tokensPerSecond": 74.0223759067741,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-candid",
+        "stage": "wordFormation",
+        "elapsedMs": 537.3168029999943,
+        "timeoutMs": 294838.935285,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042608,
+        "evalCount": 29,
+        "promptEvalCount": 203,
+        "tokensPerSecond": 74.14907543773523,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-candid",
+        "stage": "examples",
+        "elapsedMs": 2259.2956170000107,
+        "timeoutMs": 294297.94781000004,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047241,
+        "evalCount": 148,
+        "promptEvalCount": 229,
+        "tokensPerSecond": 71.43657011788964,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-bat",
+    "target": "bat",
+    "sourceCharacters": 56,
+    "gold": "Ambiguous: animal or sporting implement, no decisive cue. Ask for clarification rather than selecting either.",
+    "content": {
+      "status": "ready",
+      "expression": "bat",
+      "partOfSpeech": "countable noun",
+      "americanIpa": "/bæt/",
+      "meaning": "A nocturnal flying mammal with leathery wings. A piece of equipment used in sports like baseball or cricket to hit the ball.",
+      "explanation": "In this context, it refers to a specific animal known for its flight and nocturnal habits. The word can also describe various tools used for striking objects in games.",
+      "exampleGroups": [
+        {
+          "meaning": "A nocturnal flying mammal",
+          "examples": [
+            "We saw a small bat fluttering around the cave entrance at dusk.",
+            "The attic was full of bats, so we had to call in a specialist to remove them."
+          ]
+        },
+        {
+          "meaning": "Equipment used in sports like baseball or cricket",
+          "examples": [
+            "He gripped the wooden bat tightly before stepping up to the plate.",
+            "The team needs to buy a new set of bats for the upcoming tournament."
+          ]
+        },
+        {
+          "meaning": "A quick, sudden movement or action",
+          "examples": [
+            "She gave her head a quick bat to clear away a fly.",
+            "He took a bat at the door to signal that he was entering the room."
+          ]
+        }
+      ],
+      "examples": [
+        "We saw a small bat fluttering around the cave entrance at dusk.",
+        "The attic was full of bats, so we had to call in a specialist to remove them.",
+        "He gripped the wooden bat tightly before stepping up to the plate.",
+        "The team needs to buy a new set of bats for the upcoming tournament.",
+        "She gave her head a quick bat to clear away a fly.",
+        "He took a bat at the door to signal that he was entering the room."
+      ],
+      "notes": [
+        "Often used in the phrase 'a bat in the belfry' to describe someone acting strangely.",
+        "Can also refer to a heavy club used as a weapon."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "This term refers to a nocturnal flying mammal with wings made of skin stretched over thin bones. It also describes a piece of equipment held in the hand to hit a ball in sports like baseball or cricket.",
+      "wordFormation": ""
+    },
+    "seconds": 7.5151906069999965,
+    "wallSeconds": 7.515363464000009,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-bat",
+        "stage": "main",
+        "elapsedMs": 3093.0042780000076,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0053166,
+        "evalCount": 165,
+        "promptEvalCount": 845,
+        "tokensPerSecond": 62.68072943654202,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-bat",
+        "stage": "generalMeaning",
+        "elapsedMs": 1046.9663089999813,
+        "timeoutMs": 296902.883589,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0053435,
+        "evalCount": 61,
+        "promptEvalCount": 175,
+        "tokensPerSecond": 73.48016517377457,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-bat",
+        "stage": "wordFormation",
+        "elapsedMs": 338.481706999999,
+        "timeoutMs": 295851.783388,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052342,
+        "evalCount": 15,
+        "promptEvalCount": 202,
+        "tokensPerSecond": 76.27377199227092,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-bat",
+        "stage": "examples",
+        "elapsedMs": 3020.792848000012,
+        "timeoutMs": 295509.86328000005,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052802,
+        "evalCount": 205,
+        "promptEvalCount": 228,
+        "tokensPerSecond": 72.16104373733661,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-pitch",
+    "target": "pitch",
+    "sourceCharacters": 45,
+    "gold": "Ambiguous: multiple ordinary noun meanings fit, such as presentation/proposal or sports field. Ask for context.",
+    "content": {
+      "status": "ready",
+      "expression": "pitch",
+      "partOfSpeech": "noun",
+      "americanIpa": "/pɪtʃ/",
+      "meaning": "A spoken or written message intended to persuade someone to buy a product, join a cause, or take a specific action. A presentation or proposal designed to convince an audience of a particular idea or business opportunity.",
+      "explanation": "This term is commonly used in business and marketing to describe the core argument of a sales strategy. It refers to the specific way a message is framed to appeal to a target audience's needs or desires.",
+      "exampleGroups": [
+        {
+          "meaning": "A field or area of ground used for sports",
+          "examples": [
+            "The local community center is looking for a new soccer pitch for the youth league.",
+            "The grass on the cricket pitch was perfectly manicured for the championship match."
+          ]
+        },
+        {
+          "meaning": "The quality of a sound governed by the frequency of vibration",
+          "examples": [
+            "The singer hit a high pitch that made the audience gasp in amazement.",
+            "I can hear a strange, low pitch coming from the basement."
+          ]
+        },
+        {
+          "meaning": "A persuasive sales talk or presentation to convince someone",
+          "examples": [
+            "The startup founder gave a brilliant pitch to the investors last night.",
+            "We need to refine our sales pitch before we meet with the potential clients."
+          ]
+        },
+        {
+          "meaning": "The angle of inclination or slope of a surface",
+          "examples": [
+            "The roof has a very steep pitch, which helps the snow slide off easily.",
+            "The steep pitch of the hill made it difficult for the hikers to reach the summit."
+          ]
+        },
+        {
+          "meaning": "The level of intensity or degree of something",
+          "examples": [
+            "The pitch of the argument became quite heated as the debate continued.",
+            "They decided to change the pitch of the marketing campaign to be more friendly."
+          ]
+        }
+      ],
+      "examples": [
+        "The local community center is looking for a new soccer pitch for the youth league.",
+        "The grass on the cricket pitch was perfectly manicured for the championship match.",
+        "The singer hit a high pitch that made the audience gasp in amazement.",
+        "I can hear a strange, low pitch coming from the basement.",
+        "The startup founder gave a brilliant pitch to the investors last night.",
+        "We need to refine our sales pitch before we meet with the potential clients.",
+        "The roof has a very steep pitch, which helps the snow slide off easily.",
+        "The steep pitch of the hill made it difficult for the hikers to reach the summit.",
+        "The pitch of the argument became quite heated as the debate continued.",
+        "They decided to change the pitch of the marketing campaign to be more friendly."
+      ],
+      "notes": [
+        "Commonly used in 'sales pitch' or 'elevator pitch'.",
+        "Can also refer to the specific 'angle' or 'hook' of a marketing campaign."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "This term refers to the specific high or low frequency of a sound produced by a musical note or a human voice. It can also describe the surface of a sports field or the persuasive presentation used to sell an idea or product.",
+      "wordFormation": ""
+    },
+    "seconds": 10.296321370000019,
+    "wallSeconds": 10.296444164000015,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-pitch",
+        "stage": "main",
+        "elapsedMs": 3664.483559000015,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041947,
+        "evalCount": 202,
+        "promptEvalCount": 839,
+        "tokensPerSecond": 63.26632114485733,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-pitch",
+        "stage": "generalMeaning",
+        "elapsedMs": 1125.1668139999965,
+        "timeoutMs": 296331.341841,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042631,
+        "evalCount": 66,
+        "promptEvalCount": 174,
+        "tokensPerSecond": 73.35501381519427,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-pitch",
+        "stage": "wordFormation",
+        "elapsedMs": 517.5732380000118,
+        "timeoutMs": 295202.804125,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042116,
+        "evalCount": 28,
+        "promptEvalCount": 201,
+        "tokensPerSecond": 74.76495766434273,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-pitch",
+        "stage": "examples",
+        "elapsedMs": 4973.591729000007,
+        "timeoutMs": 294681.975466,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047007,
+        "evalCount": 346,
+        "promptEvalCount": 227,
+        "tokensPerSecond": 72.17103617792205,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "holdout-unknown",
+    "target": "flanterize",
+    "sourceCharacters": 75,
+    "gold": "Unknown/coined word; do not invent a teaching definition or base. Ask for clarification.",
+    "content": {
+      "status": "unknown",
+      "expression": "flanterize",
+      "partOfSpeech": "",
+      "americanIpa": "",
+      "meaning": "",
+      "explanation": "",
+      "examples": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "notes": [],
+      "question": "Could you provide more context about the field (e.g., data science, engineering, a specific company's internal process) or the intended meaning of 'flanterize'?",
+      "ipaVariant": "american"
+    },
+    "seconds": 3.503176440999989,
+    "wallSeconds": 3.503283255000017,
+    "stages": [
+      {
+        "model": "gemma4:12b-it-qat",
+        "id": "holdout-unknown",
+        "stage": "main",
+        "elapsedMs": 3498.4776860000275,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0053123,
+        "evalCount": 195,
+        "promptEvalCount": 848,
+        "tokensPerSecond": 64.85910440552972,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "gemma4:12b-it-qat",
+            "size": 7973717932,
+            "sizeVram": 7973717932,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-oversight",
+    "target": "oversight",
+    "sourceCharacters": 116,
+    "gold": "Ready. Noun: accidental omission/failure to notice, NOT supervision in this source. Other noun sense supervision may have a separate example group. Do not imply intentional exclusion.",
+    "content": {
+      "status": "ready",
+      "expression": "oversight",
+      "partOfSpeech": "noun",
+      "americanIpa": "/ˈoʊvɚˌsaɪt/",
+      "meaning": "An oversight is a mistake that happens because someone forgets to do something. It often refers to a small error that is not intentional.",
+      "explanation": "The word 'oversight' is commonly used to describe a minor mistake or failure to notice something important. It is often used in formal or professional contexts, such as in business or official reports.",
+      "exampleGroups": [
+        {
+          "meaning": "A failure to notice or pay attention to something",
+          "examples": [
+            "The oversight of the safety regulations led to a serious accident.",
+            "It was a simple oversight, but it caused a lot of problems later."
+          ]
+        },
+        {
+          "meaning": "The act of supervising or managing something",
+          "examples": [
+            "The project was handled with careful oversight from the management team.",
+            "The government has strict oversight of all financial institutions."
+          ]
+        },
+        {
+          "meaning": "A mistake or error in judgment",
+          "examples": [
+            "His oversight in not checking the contract details was costly.",
+            "The oversight in the planning stage caused delays in the construction."
+          ]
+        }
+      ],
+      "examples": [
+        "The oversight of the safety regulations led to a serious accident.",
+        "It was a simple oversight, but it caused a lot of problems later.",
+        "The project was handled with careful oversight from the management team.",
+        "The government has strict oversight of all financial institutions.",
+        "His oversight in not checking the contract details was costly.",
+        "The oversight in the planning stage caused delays in the construction."
+      ],
+      "notes": [
+        "Common collocation: 'an accidental oversight'",
+        "Can be used in both formal and informal contexts, though more common in formal writing."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "Oversight refers to the act of watching over or supervising something to ensure it is done correctly. It is commonly used to describe the responsibility of monitoring activities to prevent mistakes or ensure proper management.",
+      "wordFormation": "sight — The ability to see or the act of looking at something."
+    },
+    "seconds": 27.35643869000001,
+    "wallSeconds": 27.356575371000012,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "main",
+        "elapsedMs": 18847.90518,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 10.9309012,
+        "evalCount": 202,
+        "promptEvalCount": 843,
+        "tokensPerSecond": 27.779993453823323,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "generalMeaning",
+        "elapsedMs": 1939.8340810000082,
+        "timeoutMs": 281145.792014,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0063221,
+        "evalCount": 56,
+        "promptEvalCount": 173,
+        "tokensPerSecond": 31.864457701070418,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "wordFormation",
+        "elapsedMs": 968.3994959999982,
+        "timeoutMs": 279201.576244,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0058306,
+        "evalCount": 25,
+        "promptEvalCount": 207,
+        "tokensPerSecond": 32.54720972771004,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "examples",
+        "elapsedMs": 5579.182260000001,
+        "timeoutMs": 278227.786736,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.007243,
+        "evalCount": 168,
+        "promptEvalCount": 232,
+        "tokensPerSecond": 31.024936477365923,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-run",
+    "target": "ran",
+    "sourceCharacters": 87,
+    "gold": "Ready. Lemma run, verb: manage/operate a business. Not jogging, a past participle, or a noun run. Other established verb meanings may be illustrated, all with matching headings.",
+    "content": {
+      "status": "ready",
+      "expression": "run",
+      "partOfSpeech": "verb; past tense in source",
+      "americanIpa": "/ɹʌn/",
+      "meaning": "To operate or manage a business or organization. This usage is common when describing someone who owns or oversees a company, store, or service.",
+      "explanation": "The verb 'run' in this context implies active management and responsibility. It is often used with nouns like 'business', 'bakery', 'restaurant', or 'company'.",
+      "exampleGroups": [
+        {
+          "meaning": "To move quickly on foot",
+          "examples": [
+            "She ran across the street to catch the bus.",
+            "The children were running around the park."
+          ]
+        },
+        {
+          "meaning": "To manage or operate something",
+          "examples": [
+            "He runs a successful restaurant in the city center.",
+            "She runs her own business from home."
+          ]
+        },
+        {
+          "meaning": "To cause something to happen or continue",
+          "examples": [
+            "The meeting ran over by thirty minutes.",
+            "The lights ran out during the power failure."
+          ]
+        },
+        {
+          "meaning": "To compete in a race",
+          "examples": [
+            "He is training hard to run in the marathon next month.",
+            "The runners gathered at the starting line before the race began."
+          ]
+        },
+        {
+          "meaning": "To move something along a track or path",
+          "examples": [
+            "The train ran smoothly along the tracks.",
+            "The machine runs on a conveyor belt."
+          ]
+        }
+      ],
+      "examples": [
+        "She ran across the street to catch the bus.",
+        "The children were running around the park.",
+        "He runs a successful restaurant in the city center.",
+        "She runs her own business from home.",
+        "The meeting ran over by thirty minutes.",
+        "The lights ran out during the power failure.",
+        "He is training hard to run in the marathon next month.",
+        "The runners gathered at the starting line before the race began.",
+        "The train ran smoothly along the tracks.",
+        "The machine runs on a conveyor belt."
+      ],
+      "notes": [
+        "Common collocation: 'run a business'",
+        "Can also be used with 'run a race' (different meaning, but shows the versatility of the verb)."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "To move quickly on foot, usually with the legs moving in a fast and rhythmic way. To operate or manage something, such as a business or a machine, in a continuous and active way.",
+      "wordFormation": ""
+    },
+    "seconds": 17.36176302099999,
+    "wallSeconds": 17.361879293000005,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "main",
+        "elapsedMs": 6717.808545000007,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0067987,
+        "evalCount": 197,
+        "promptEvalCount": 836,
+        "tokensPerSecond": 29.93823605128952,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "generalMeaning",
+        "elapsedMs": 2012.9670520000218,
+        "timeoutMs": 293276.233599,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.005798,
+        "evalCount": 56,
+        "promptEvalCount": 177,
+        "tokensPerSecond": 31.188354268516136,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "wordFormation",
+        "elapsedMs": 487.22255000000587,
+        "timeoutMs": 291256.911872,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0058011,
+        "evalCount": 10,
+        "promptEvalCount": 211,
+        "tokensPerSecond": 33.911524831714054,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "examples",
+        "elapsedMs": 8122.414583000005,
+        "timeoutMs": 290765.61347700004,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0064,
+        "evalCount": 238,
+        "promptEvalCount": 236,
+        "tokensPerSecond": 30.046476091211,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-look-forward",
+    "target": "looked forward to",
+    "sourceCharacters": 90,
+    "gold": "Ready. Lemma look forward to: anticipate with pleasure; to takes a noun/gerund, not an infinitive. Preserve the whole expression; do not teach look forward/look at/forecasting as its senses.",
+    "content": {
+      "status": "ready",
+      "expression": "look forward to",
+      "partOfSpeech": "phrasal verb; verb + preposition",
+      "americanIpa": "/lʊk ˈfɔɹwɚd tə/",
+      "meaning": "To feel happy or excited about an event that is going to happen in the future. This expression is often used when talking about something that is anticipated with positive feelings.",
+      "explanation": "'Look forward to' is a common phrasal verb used to express anticipation and hope for a future event. It is typically followed by a noun or a gerund, as in 'look forward to meeting someone' or 'look forward to going on a trip.'",
+      "exampleGroups": [
+        {
+          "meaning": "To anticipate a future event with pleasure or interest",
+          "examples": [
+            "I am really looking forward to my holiday next week.",
+            "She is looking forward to starting her new job."
+          ]
+        },
+        {
+          "meaning": "To expect something to happen, often with a sense of anticipation or hope",
+          "examples": [
+            "We are looking forward to hearing the results of the meeting.",
+            "They are looking forward to the success of their new project."
+          ]
+        }
+      ],
+      "examples": [
+        "I am really looking forward to my holiday next week.",
+        "She is looking forward to starting her new job.",
+        "We are looking forward to hearing the results of the meeting.",
+        "They are looking forward to the success of their new project."
+      ],
+      "notes": [
+        "Commonly used in formal and informal contexts.",
+        "Often paired with events that are expected to be pleasant or significant."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "To look forward to something means to feel happy or excited about an event that is going to happen in the future. It is commonly used to express anticipation or eagerness for a positive experience that someone is expecting.",
+      "wordFormation": ""
+    },
+    "seconds": 15.489195123000012,
+    "wallSeconds": 15.489317857999994,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "main",
+        "elapsedMs": 7918.111499999999,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0068216,
+        "evalCount": 229,
+        "promptEvalCount": 839,
+        "tokensPerSecond": 29.4232490693452,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "pronunciation",
+        "elapsedMs": 970.3817220000201,
+        "timeoutMs": 292076.618853,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0053666,
+        "evalCount": 24,
+        "promptEvalCount": 161,
+        "tokensPerSecond": 30.46501030098161,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "generalMeaning",
+        "elapsedMs": 1954.6763890000002,
+        "timeoutMs": 291102.047214,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0073109,
+        "evalCount": 58,
+        "promptEvalCount": 182,
+        "tokensPerSecond": 32.9402276851255,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "wordFormation",
+        "elapsedMs": 472.6247129999974,
+        "timeoutMs": 289143.30567000003,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052616,
+        "evalCount": 10,
+        "promptEvalCount": 216,
+        "tokensPerSecond": 35.29528031511626,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "examples",
+        "elapsedMs": 4148.285067999997,
+        "timeoutMs": 288664.498332,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.008663,
+        "evalCount": 120,
+        "promptEvalCount": 241,
+        "tokensPerSecond": 30.551671532869015,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-reluctantly",
+    "target": "reluctantly",
+    "sourceCharacters": 89,
+    "gold": "Ready. Adverb: unwillingly/with hesitation, not slowly or enthusiastically. One common usage sufficient. Transparent base reluctant with correct general adjective meaning.",
+    "content": {
+      "status": "ready",
+      "expression": "reluctantly",
+      "partOfSpeech": "adverb",
+      "americanIpa": "/ɹɪˈlʌktəntli/",
+      "meaning": "Reluctantly means with hesitation or unwillingness. It is often used to describe actions that someone does not want to do but feels forced to do.",
+      "explanation": "The adverb 'reluctantly' modifies the verb 'agreed,' showing that the agreement was not made eagerly or with enthusiasm. It suggests that the person felt some resistance or discomfort about the action they were taking.",
+      "exampleGroups": [
+        {
+          "meaning": "With hesitation or unwillingness",
+          "examples": [
+            "She reluctantly agreed to go on the trip.",
+            "He reluctantly admitted that he had made a mistake."
+          ]
+        },
+        {
+          "meaning": "With a sense of duty or obligation despite personal feelings",
+          "examples": [
+            "Reluctantly, I took on the extra responsibility at work.",
+            "He reluctantly left his family to pursue his career abroad."
+          ]
+        }
+      ],
+      "examples": [
+        "She reluctantly agreed to go on the trip.",
+        "He reluctantly admitted that he had made a mistake.",
+        "Reluctantly, I took on the extra responsibility at work.",
+        "He reluctantly left his family to pursue his career abroad."
+      ],
+      "notes": [
+        "Commonly used with verbs like 'agree,' 'accept,' 'comply,' or 'participate.'",
+        "It often implies a conflict between desire and duty or necessity."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "Reluctantly means doing something with hesitation or unwillingness, but not necessarily because of fear or resistance. It is commonly used to describe actions taken with a lack of enthusiasm or when someone feels forced to act against their own desires.",
+      "wordFormation": "reluctant — Unwilling to do something, especially because it is difficult or unpleasant."
+    },
+    "seconds": 14.959622761000006,
+    "wallSeconds": 14.959763821000001,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "main",
+        "elapsedMs": 7837.946820000012,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0063411,
+        "evalCount": 225,
+        "promptEvalCount": 837,
+        "tokensPerSecond": 29.167346157804936,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "generalMeaning",
+        "elapsedMs": 2247.255256000004,
+        "timeoutMs": 292157.34417,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0048248,
+        "evalCount": 62,
+        "promptEvalCount": 175,
+        "tokensPerSecond": 30.626373555805948,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "wordFormation",
+        "elapsedMs": 1099.6524349999963,
+        "timeoutMs": 289900.04031,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0087369,
+        "evalCount": 29,
+        "promptEvalCount": 209,
+        "tokensPerSecond": 31.637387537269387,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "examples",
+        "elapsedMs": 3750.2019659999933,
+        "timeoutMs": 288795.04217699997,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0057448,
+        "evalCount": 110,
+        "promptEvalCount": 234,
+        "tokensPerSecond": 30.80041026146468,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-candid",
+    "target": "candid",
+    "sourceCharacters": 111,
+    "gold": "Ready. Adjective: honest/frank/open in expressing the truth. Common adjective photographic sense unposed may be separated. Do not invent a direct derivational base such as candidate or candor.",
+    "content": {
+      "status": "ready",
+      "expression": "candid",
+      "partOfSpeech": "adjective",
+      "americanIpa": "/ˈkændɪd/",
+      "meaning": "Honest and open, especially about something that might be embarrassing or difficult to discuss. Used to describe a situation or interview where people speak freely and without hiding the truth.",
+      "explanation": "The word 'candid' is often used to describe people or situations where honesty and openness are valued, even if the truth is uncomfortable. It implies a level of trust and transparency, and is commonly used in contexts like interviews, reviews, or personal conversations.",
+      "exampleGroups": [
+        {
+          "meaning": "Honest and open, without hiding or avoiding the truth",
+          "examples": [
+            "She gave a candid opinion about the company's weaknesses during the meeting.",
+            "The journalist is known for his candid interviews with political figures."
+          ]
+        },
+        {
+          "meaning": "Naked or bare, often used in a literal or artistic context",
+          "examples": [
+            "The sculpture was displayed in the candid, unadorned form of a human figure.",
+            "The photographer is famous for his candid portraits that show subjects without makeup."
+          ]
+        }
+      ],
+      "examples": [
+        "She gave a candid opinion about the company's weaknesses during the meeting.",
+        "The journalist is known for his candid interviews with political figures.",
+        "The sculpture was displayed in the candid, unadorned form of a human figure.",
+        "The photographer is famous for his candid portraits that show subjects without makeup."
+      ],
+      "notes": [
+        "Commonly used in formal or professional contexts, such as interviews or evaluations.",
+        "Can be paired with 'admit', 'discuss', or 'reveal' to emphasize honesty."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "Candid means being honest and open, without trying to hide or disguise the truth. It is commonly used to describe someone who speaks directly and sincerely, even if the truth might be uncomfortable.",
+      "wordFormation": ""
+    },
+    "seconds": 15.953361439999979,
+    "wallSeconds": 15.953468934999982,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "main",
+        "elapsedMs": 8102.007857999997,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0053134,
+        "evalCount": 236,
+        "promptEvalCount": 840,
+        "tokensPerSecond": 29.558896100480204,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "pronunciation",
+        "elapsedMs": 548.7356330000039,
+        "timeoutMs": 291892.998835,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0063712,
+        "evalCount": 13,
+        "promptEvalCount": 122,
+        "tokensPerSecond": 30.627943522072144,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "generalMeaning",
+        "elapsedMs": 1980.894392999995,
+        "timeoutMs": 291339.71864800004,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0058039,
+        "evalCount": 54,
+        "promptEvalCount": 174,
+        "tokensPerSecond": 30.230609163569426,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "wordFormation",
+        "elapsedMs": 891.9847519999894,
+        "timeoutMs": 289354.654134,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052274,
+        "evalCount": 24,
+        "promptEvalCount": 208,
+        "tokensPerSecond": 33.44504908757725,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "examples",
+        "elapsedMs": 4407.3343199999945,
+        "timeoutMs": 288458.451273,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047141,
+        "evalCount": 134,
+        "promptEvalCount": 233,
+        "tokensPerSecond": 31.561790448554284,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-bat",
+    "target": "bat",
+    "sourceCharacters": 56,
+    "gold": "Ambiguous: animal or sporting implement, no decisive cue. Ask for clarification rather than selecting either.",
+    "content": {
+      "status": "ready",
+      "expression": "bat",
+      "partOfSpeech": "countable noun",
+      "americanIpa": "/bæt/",
+      "meaning": "A bat is a flying mammal that uses echolocation to navigate and find prey. In this context, the word refers to the animal, not any other object or tool that might be called a 'bat' in other contexts.",
+      "explanation": "The word 'bat' is commonly used to refer to the flying mammal, which is different from other meanings such as a baseball bat or a piece of equipment used in cricket. In this sentence, the speaker is pointing at the animal, which is a common way to introduce or refer to a bat in a conversation.",
+      "exampleGroups": [
+        {
+          "meaning": "A flying mammal that is nocturnal and uses echolocation to navigate",
+          "examples": [
+            "We saw a bat hanging from the ceiling of the cave.",
+            "Bats are important for controlling insect populations."
+          ]
+        },
+        {
+          "meaning": "A piece of sports equipment used in games like cricket and baseball",
+          "examples": [
+            "He swung the bat with great force and hit the ball out of the park.",
+            "The cricket coach showed the players how to hold the bat correctly."
+          ]
+        },
+        {
+          "meaning": "To hit a ball with a bat in a sport",
+          "examples": [
+            "She batted confidently and scored a run in the first over.",
+            "The batter missed the ball and was out."
+          ]
+        }
+      ],
+      "examples": [
+        "We saw a bat hanging from the ceiling of the cave.",
+        "Bats are important for controlling insect populations.",
+        "He swung the bat with great force and hit the ball out of the park.",
+        "The cricket coach showed the players how to hold the bat correctly.",
+        "She batted confidently and scored a run in the first over.",
+        "The batter missed the ball and was out."
+      ],
+      "notes": [
+        "Often used in contexts involving wildlife or biology.",
+        "Can also refer to a piece of sports equipment, but the context here makes it clear that it refers to the animal."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "A bat is a flying mammal that uses echolocation to navigate and find food. The word 'bat' can also refer to a piece of equipment used in sports like baseball or cricket, which is hit with a bat.",
+      "wordFormation": ""
+    },
+    "seconds": 16.826475017999996,
+    "wallSeconds": 16.82660229000001,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "main",
+        "elapsedMs": 8458.320848000003,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0063295,
+        "evalCount": 250,
+        "promptEvalCount": 834,
+        "tokensPerSecond": 29.931373347189567,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "generalMeaning",
+        "elapsedMs": 2078.1545040000055,
+        "timeoutMs": 291537.321671,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046865,
+        "evalCount": 61,
+        "promptEvalCount": 174,
+        "tokensPerSecond": 32.13531813701552,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "wordFormation",
+        "elapsedMs": 448.13564699998824,
+        "timeoutMs": 289454.89109199995,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0051655,
+        "evalCount": 10,
+        "promptEvalCount": 208,
+        "tokensPerSecond": 35.40073633531577,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "examples",
+        "elapsedMs": 5823.7810499999905,
+        "timeoutMs": 289002.10007,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047067,
+        "evalCount": 181,
+        "promptEvalCount": 233,
+        "tokensPerSecond": 31.97729576666538,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-pitch",
+    "target": "pitch",
+    "sourceCharacters": 45,
+    "gold": "Ambiguous: multiple ordinary noun meanings fit, such as presentation/proposal or sports field. Ask for context.",
+    "content": {
+      "status": "ready",
+      "expression": "pitch",
+      "partOfSpeech": "noun",
+      "americanIpa": "/pɪtʃ/",
+      "meaning": "A pitch refers to a plan or idea that is presented for consideration, especially in a business or creative context. It can also refer to the specific proposal or concept that is being discussed or developed.",
+      "explanation": "In this context, 'pitch' is used to describe a proposal or idea that is being discussed, often in a professional or collaborative setting. It is commonly used in fields such as business, marketing, and entertainment to describe a plan or concept that is being presented to others.",
+      "exampleGroups": [
+        {
+          "meaning": "A steep slope or incline",
+          "examples": [
+            "The mountain had a very steep pitch that made climbing difficult.",
+            "The roof of the house had a high pitch to allow for better drainage."
+          ]
+        },
+        {
+          "meaning": "A throw or a hurl, typically of a ball",
+          "examples": [
+            "He made a powerful pitch toward the target.",
+            "The children were playing a game where they had to pitch the ball as far as they could."
+          ]
+        },
+        {
+          "meaning": "A business proposal or presentation, especially for securing funding",
+          "examples": [
+            "The entrepreneur gave a compelling pitch to the investors.",
+            "She spent weeks preparing her pitch for the startup competition."
+          ]
+        },
+        {
+          "meaning": "The sound made by a musical instrument, especially a horn or trumpet",
+          "examples": [
+            "The brass section produced a loud and clear pitch during the performance.",
+            "The musician adjusted the slide to get the correct pitch on the trumpet."
+          ]
+        },
+        {
+          "meaning": "A coating or layer applied to a surface, such as a roof or a road",
+          "examples": [
+            "The old roof needed a new pitch to protect it from the weather.",
+            "They applied a thick pitch to the road to make it more durable."
+          ]
+        }
+      ],
+      "examples": [
+        "The mountain had a very steep pitch that made climbing difficult.",
+        "The roof of the house had a high pitch to allow for better drainage.",
+        "He made a powerful pitch toward the target.",
+        "The children were playing a game where they had to pitch the ball as far as they could.",
+        "The entrepreneur gave a compelling pitch to the investors.",
+        "She spent weeks preparing her pitch for the startup competition.",
+        "The brass section produced a loud and clear pitch during the performance.",
+        "The musician adjusted the slide to get the correct pitch on the trumpet.",
+        "The old roof needed a new pitch to protect it from the weather.",
+        "They applied a thick pitch to the road to make it more durable."
+      ],
+      "notes": [
+        "Common collocations: 'pitch a proposal', 'pitch a product', 'pitch an idea'.",
+        "Often used in contexts involving presentations or planning sessions."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "A pitch is a specific way of presenting an idea, product, or plan to others, often with the goal of gaining support or interest. It is commonly used in situations like business meetings, sales, or proposals, where clear communication is important to persuade or inform others.",
+      "wordFormation": ""
+    },
+    "seconds": 21.201356795,
+    "wallSeconds": 21.201460802999996,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "main",
+        "elapsedMs": 7944.67614299999,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0053573,
+        "evalCount": 224,
+        "promptEvalCount": 828,
+        "tokensPerSecond": 28.99027143435839,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "generalMeaning",
+        "elapsedMs": 2416.084664999973,
+        "timeoutMs": 292050.452375,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0057339,
+        "evalCount": 70,
+        "promptEvalCount": 172,
+        "tokensPerSecond": 31.73119507386796,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "wordFormation",
+        "elapsedMs": 1106.1559579999885,
+        "timeoutMs": 289630.403807,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041397,
+        "evalCount": 32,
+        "promptEvalCount": 206,
+        "tokensPerSecond": 33.88674625816194,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "examples",
+        "elapsedMs": 9713.942281999975,
+        "timeoutMs": 288517.495705,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0135148,
+        "evalCount": 301,
+        "promptEvalCount": 231,
+        "tokensPerSecond": 31.55565610499206,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "holdout-unknown",
+    "target": "flanterize",
+    "sourceCharacters": 75,
+    "gold": "Unknown/coined word; do not invent a teaching definition or base. Ask for clarification.",
+    "content": {
+      "status": "unknown",
+      "expression": "flanterize",
+      "partOfSpeech": "",
+      "americanIpa": "",
+      "meaning": "",
+      "explanation": "",
+      "examples": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "notes": [],
+      "question": "Do you have more context or a definition for the word 'flanterize'?",
+      "ipaVariant": "american"
+    },
+    "seconds": 7.486489824999997,
+    "wallSeconds": 7.486645892,
+    "stages": [
+      {
+        "model": "qwen3:14b-q4_K_M",
+        "id": "holdout-unknown",
+        "stage": "main",
+        "elapsedMs": 7481.866604999988,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0058072,
+        "evalCount": 218,
+        "promptEvalCount": 837,
+        "tokensPerSecond": 29.619126564565825,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3:14b-q4_K_M",
+            "size": 11527100824,
+            "sizeVram": 10234321960,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-oversight",
+    "target": "oversight",
+    "sourceCharacters": 116,
+    "gold": "Ready. Noun: accidental omission/failure to notice, NOT supervision in this source. Other noun sense supervision may have a separate example group. Do not imply intentional exclusion.",
+    "content": {
+      "status": "ready",
+      "expression": "oversight",
+      "partOfSpeech": "uncountable noun",
+      "americanIpa": "/ˈoʊvɚˌsaɪt/",
+      "meaning": "An oversight is an unintentional mistake or failure to notice something important that should have been done. It often refers to a lapse in attention or memory rather than a deliberate act of ignoring something.",
+      "explanation": "In this context, the word describes a slip-up caused by carelessness, such as forgetting to include a name on a list. The nuance is that the error was not intentional; the person genuinely missed the detail until it was pointed out.",
+      "exampleGroups": [
+        {
+          "meaning": "Failure to notice or deal with something (negligence)",
+          "examples": [
+            "The data breach was caused by an oversight in the company's security protocols.",
+            "It was a terrible oversight that we forgot to submit the final report before the deadline."
+          ]
+        },
+        {
+          "meaning": "Supervision or management (careful attention)",
+          "examples": [
+            "The project will be under the direct oversight of the senior engineering team.",
+            "She took on the role of overseeing the construction of the new wing."
+          ]
+        }
+      ],
+      "examples": [
+        "The data breach was caused by an oversight in the company's security protocols.",
+        "It was a terrible oversight that we forgot to submit the final report before the deadline.",
+        "The project will be under the direct oversight of the senior engineering team.",
+        "She took on the role of overseeing the construction of the new wing."
+      ],
+      "notes": [
+        "Common collocations include 'human oversight' or 'administrative oversight' to emphasize the mistake was not malicious.",
+        "It is frequently used with adjectives like 'accidental', 'unintentional', or 'glaring' to describe the nature of the error."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "Oversight refers to the act of supervising or managing something carefully to ensure it is done correctly. It can also describe an unintentional failure to notice or remember a detail, such as making a mistake because of inattention.",
+      "wordFormation": "sight — The ability to see or the act of seeing something."
+    },
+    "seconds": 15.16525583400001,
+    "wallSeconds": 15.165369911999965,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "main",
+        "elapsedMs": 11966.593867999967,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 8.6489201,
+        "evalCount": 278,
+        "promptEvalCount": 850,
+        "tokensPerSecond": 93.67056533892571,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "generalMeaning",
+        "elapsedMs": 894.3864799999865,
+        "timeoutMs": 288029.007065,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046887,
+        "evalCount": 67,
+        "promptEvalCount": 177,
+        "tokensPerSecond": 86.96239071293584,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "wordFormation",
+        "elapsedMs": 452.9138159999857,
+        "timeoutMs": 287130.980133,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0058713,
+        "evalCount": 27,
+        "promptEvalCount": 206,
+        "tokensPerSecond": 92.29065403310159,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-oversight",
+        "stage": "examples",
+        "elapsedMs": 1835.709235999966,
+        "timeoutMs": 286674.138338,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0043698,
+        "evalCount": 149,
+        "promptEvalCount": 236,
+        "tokensPerSecond": 87.0061815264271,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-run",
+    "target": "ran",
+    "sourceCharacters": 87,
+    "gold": "Ready. Lemma run, verb: manage/operate a business. Not jogging, a past participle, or a noun run. Other established verb meanings may be illustrated, all with matching headings.",
+    "content": {
+      "status": "ready",
+      "expression": "run",
+      "partOfSpeech": "past tense verb",
+      "americanIpa": "/ɹʌn/",
+      "meaning": "To manage or operate a business or organization. To conduct or carry out an activity over a period of time. (Note: In this context, 'run' implies being the person in charge, not physically jogging.)",
+      "explanation": "Here, 'ran' indicates that Elena was the owner and manager of the bakery, handling its daily operations. It describes the action of overseeing a business rather than moving one's feet quickly. The phrase 'run a [place]' is a standard collocation for business ownership.],",
+      "exampleGroups": [
+        {
+          "meaning": "To move at a speed faster than walking",
+          "examples": [
+            "After the rain stopped, we decided to run home before it started again.",
+            "She ran down the street to catch the last bus."
+          ]
+        },
+        {
+          "meaning": "To operate or function (of a machine/system)",
+          "examples": [
+            "The engine won't run if you don't add enough oil.",
+            "Please check that the computer is running before the meeting starts."
+          ]
+        },
+        {
+          "meaning": "To manage or be in charge of an organization",
+          "examples": [
+            "He has run his own business for over twenty years.",
+            "Who runs this department? I need to speak with the manager."
+          ]
+        },
+        {
+          "meaning": "To flow or move continuously (of liquids)",
+          "examples": [
+            "Water ran down the window after the storm.",
+            "Tears ran down her cheeks when she heard the news."
+          ]
+        },
+        {
+          "meaning": "To extend or stretch over a distance",
+          "examples": [
+            "The road runs along the coast for miles.",
+            "A fence runs between our two properties."
+          ]
+        }
+      ],
+      "examples": [
+        "After the rain stopped, we decided to run home before it started again.",
+        "She ran down the street to catch the last bus.",
+        "The engine won't run if you don't add enough oil.",
+        "Please check that the computer is running before the meeting starts.",
+        "He has run his own business for over twenty years.",
+        "Who runs this department? I need to speak with the manager.",
+        "Water ran down the window after the storm.",
+        "Tears ran down her cheeks when she heard the news.",
+        "The road runs along the coast for miles.",
+        "A fence runs between our two properties."
+      ],
+      "notes": [
+        "Common collocation: 'run a business' or 'run a shop'.",
+        "The verb 'run' has many meanings; here it specifically refers to management, distinct from the meaning of moving quickly. (e.g., 'run a marathon' vs. 'run a company')"
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "The past tense form run, written as ran, describes the action of moving quickly on foot from one place to another. This verb is commonly used in everyday situations to indicate physical exercise or to describe something that has happened in the recent past.",
+      "wordFormation": ""
+    },
+    "seconds": 8.116611602000019,
+    "wallSeconds": 8.11674506799999,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "main",
+        "elapsedMs": 3300.1338969999924,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0042902,
+        "evalCount": 240,
+        "promptEvalCount": 843,
+        "tokensPerSecond": 80.05096578154759,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "generalMeaning",
+        "elapsedMs": 821.0162910000072,
+        "timeoutMs": 296695.285161,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0050606,
+        "evalCount": 63,
+        "promptEvalCount": 175,
+        "tokensPerSecond": 90.82573568845908,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "wordFormation",
+        "elapsedMs": 504.73914499999955,
+        "timeoutMs": 295869.846292,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0055607,
+        "evalCount": 35,
+        "promptEvalCount": 204,
+        "tokensPerSecond": 93.81919165384471,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-run",
+        "stage": "examples",
+        "elapsedMs": 3473.242207000032,
+        "timeoutMs": 295360.49293899996,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047185,
+        "evalCount": 307,
+        "promptEvalCount": 234,
+        "tokensPerSecond": 91.96917385019809,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-look-forward",
+    "target": "looked forward to",
+    "sourceCharacters": 90,
+    "gold": "Ready. Lemma look forward to: anticipate with pleasure; to takes a noun/gerund, not an infinitive. Preserve the whole expression; do not teach look forward/look at/forecasting as its senses.",
+    "content": {
+      "status": "ready",
+      "expression": "look forward to",
+      "partOfSpeech": "phrasal verb + preposition",
+      "americanIpa": "/lʊk ˈfɔɹwɚd tə/",
+      "meaning": "To feel happy and excited about an event or situation that will happen in the future. It is followed by a noun or a gerund (verb ending in -ing), never an infinitive.",
+      "explanation": "This expression describes a positive anticipation of something upcoming, emphasizing excitement rather than just simple expectation. A common mistake is adding 'to' before the verb (e.g., 'looked forward to meet'), but the correct structure requires the -ing form or a noun after 'to'.",
+      "exampleGroups": [
+        {
+          "meaning": "Anticipation of a future event",
+          "examples": [
+            "I am really looking forward to the summer holidays.",
+            "She looks forward to receiving her promotion letter next week."
+          ]
+        },
+        {
+          "meaning": "Expectation with pleasure or interest (often used in formal contexts)",
+          "examples": [
+            "We look forward to hearing from you soon regarding the proposal.",
+            "The company looks forward to collaborating with new partners this year."
+          ]
+        }
+      ],
+      "examples": [
+        "I am really looking forward to the summer holidays.",
+        "She looks forward to receiving her promotion letter next week.",
+        "We look forward to hearing from you soon regarding the proposal.",
+        "The company looks forward to collaborating with new partners this year."
+      ],
+      "notes": [
+        "Always followed by a gerund (e.g., 'looking forward to seeing you') or a noun (e.g., 'looking forward to the holidays').",
+        "Register: neutral to positive; often used in personal correspondence or casual conversation."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "To look forward to means to feel happy and excited about something that will happen in the future. People commonly use this expression when anticipating pleasant events such as holidays, meetings, or receiving gifts.",
+      "wordFormation": ""
+    },
+    "seconds": 6.939549964999955,
+    "wallSeconds": 6.939643352999992,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "main",
+        "elapsedMs": 3502.49407299998,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0048777,
+        "evalCount": 280,
+        "promptEvalCount": 846,
+        "tokensPerSecond": 87.69091957395993,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "pronunciation",
+        "elapsedMs": 540.2136880000471,
+        "timeoutMs": 296492.61412100005,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0050909,
+        "evalCount": 30,
+        "promptEvalCount": 177,
+        "tokensPerSecond": 74.95727435361844,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "generalMeaning",
+        "elapsedMs": 802.3719080000301,
+        "timeoutMs": 295948.35114800005,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0045198,
+        "evalCount": 59,
+        "promptEvalCount": 181,
+        "tokensPerSecond": 88.62278687121007,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "wordFormation",
+        "elapsedMs": 317.50128600001335,
+        "timeoutMs": 295141.937388,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0050555,
+        "evalCount": 13,
+        "promptEvalCount": 210,
+        "tokensPerSecond": 88.08721989958057,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-look-forward",
+        "stage": "examples",
+        "elapsedMs": 1755.8238710000296,
+        "timeoutMs": 294820.368946,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0043357,
+        "evalCount": 132,
+        "promptEvalCount": 240,
+        "tokensPerSecond": 81.8015679873282,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-reluctantly",
+    "target": "reluctantly",
+    "sourceCharacters": 89,
+    "gold": "Ready. Adverb: unwillingly/with hesitation, not slowly or enthusiastically. One common usage sufficient. Transparent base reluctant with correct general adjective meaning.",
+    "content": {
+      "status": "ready",
+      "expression": "reluctantly",
+      "partOfSpeech": "adverb",
+      "americanIpa": "/ɹɪˈlʌktəntli/",
+      "meaning": "Doing something reluctantly means you do not want to do it or you are unhappy about doing it. It shows that the action was taken only after some hesitation or because there was no other choice, not because of willingness.",
+      "explanation": "The word describes an action performed with a sense of unwillingness or hesitation. It implies that the speaker or subject preferred not to perform the action but did so due to external pressure or necessity.",
+      "exampleGroups": [
+        {
+          "meaning": "With hesitation or unwillingness",
+          "examples": [
+            "He reluctantly agreed to the proposal after realizing there was no other option.",
+            "She reluctantly admitted that she had made a mistake in the calculation."
+          ]
+        },
+        {
+          "meaning": "Against one's own wishes or desires",
+          "examples": [
+            "The team reluctantly accepted the new coach, knowing they needed to improve their performance.",
+            "They reluctantly parted ways after ten years of living together."
+          ]
+        }
+      ],
+      "examples": [
+        "He reluctantly agreed to the proposal after realizing there was no other option.",
+        "She reluctantly admitted that she had made a mistake in the calculation.",
+        "The team reluctantly accepted the new coach, knowing they needed to improve their performance.",
+        "They reluctantly parted ways after ten years of living together."
+      ],
+      "notes": [
+        "Often paired with verbs like 'agree', 'accept', or 'admit' to show unwillingness.",
+        "Can be replaced by 'unwillingly' or 'hesitantly' depending on the specific nuance needed."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "Reluctantly means doing something with hesitation or unwillingness because you do not want to. It is commonly used to describe actions taken despite a lack of desire, such as agreeing to a request or facing a difficult task.",
+      "wordFormation": "reluctant — To feel unwilling or hesitant to do something."
+    },
+    "seconds": 5.827401008999964,
+    "wallSeconds": 5.827547797999985,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "main",
+        "elapsedMs": 2700.228570999985,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0045165,
+        "evalCount": 202,
+        "promptEvalCount": 844,
+        "tokensPerSecond": 85.27387689660499,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "generalMeaning",
+        "elapsedMs": 826.3264579999959,
+        "timeoutMs": 297295.911487,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004683,
+        "evalCount": 65,
+        "promptEvalCount": 176,
+        "tokensPerSecond": 91.51539640949902,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "wordFormation",
+        "elapsedMs": 490.6777179999626,
+        "timeoutMs": 296465.921229,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0058074,
+        "evalCount": 32,
+        "promptEvalCount": 205,
+        "tokensPerSecond": 89.40045817734817,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-reluctantly",
+        "stage": "examples",
+        "elapsedMs": 1793.9162389999838,
+        "timeoutMs": 295970.714832,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052957,
+        "evalCount": 135,
+        "promptEvalCount": 235,
+        "tokensPerSecond": 81.40263370684077,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-candid",
+    "target": "candid",
+    "sourceCharacters": 111,
+    "gold": "Ready. Adjective: honest/frank/open in expressing the truth. Common adjective photographic sense unposed may be separated. Do not invent a direct derivational base such as candidate or candor.",
+    "content": {
+      "status": "ready",
+      "expression": "candid",
+      "partOfSpeech": "adjective",
+      "americanIpa": "/ˈkændɪd/",
+      "meaning": "Openly truthful and honest, especially when discussing something difficult or embarrassing. Characterized by frankness and a lack of concealment or evasion.",
+      "explanation": "This adjective describes a situation or person where nothing is hidden, often implying a willingness to speak bluntly about faults or uncomfortable truths. It suggests a tone of straightforwardness that goes beyond simple politeness to reveal the raw reality of a situation.",
+      "exampleGroups": [
+        {
+          "meaning": "Truthful and straightforward; not hiding the truth or being polite at the expense of honesty.",
+          "examples": [
+            "The interviewer asked a candid question about my biggest weakness during the job assessment.",
+            "I appreciate your candid feedback, even though it was harsh."
+          ]
+        },
+        {
+          "meaning": "Photographic; taken without using a flash or with natural lighting to show true colors and details.",
+          "examples": [
+            "The museum displayed several candid shots of the famous actor captured by paparazzi in 1985.",
+            "She prefers candid portraits that look like a snapshot rather than a formal studio pose."
+          ]
+        },
+        {
+          "meaning": "Open and frank; characterized by a lack of pretense or reserve in expression.",
+          "examples": [
+            "Their candid conversation revealed deep misunderstandings between the two neighbors.",
+            "The documentary features candid interviews with refugees who rarely speak to journalists."
+          ]
+        }
+      ],
+      "examples": [
+        "The interviewer asked a candid question about my biggest weakness during the job assessment.",
+        "I appreciate your candid feedback, even though it was harsh.",
+        "The museum displayed several candid shots of the famous actor captured by paparazzi in 1985.",
+        "She prefers candid portraits that look like a snapshot rather than a formal studio pose.",
+        "Their candid conversation revealed deep misunderstandings between the two neighbors.",
+        "The documentary features candid interviews with refugees who rarely speak to journalists."
+      ],
+      "notes": [
+        "Often collocates with 'interview', 'comment', or 'response' to describe a setting of total honesty.",
+        "Can be used to describe a person's nature as being straightforward and unreserved."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "The word candid describes a person who is honest and straightforward when sharing their true opinions, even if the truth might be uncomfortable. It can also refer to something that is clear and unobstructed, such as a view that has no barriers blocking it.",
+      "wordFormation": "candor — The quality of being open, honest, and straightforward in speech or writing."
+    },
+    "seconds": 7.474583076999989,
+    "wallSeconds": 7.47467942999996,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "main",
+        "elapsedMs": 2794.443054000032,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.005173,
+        "evalCount": 209,
+        "promptEvalCount": 847,
+        "tokensPerSecond": 84.67222127241688,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "pronunciation",
+        "elapsedMs": 458.1164700000081,
+        "timeoutMs": 297201.56294,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 150,
+          "temperature": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0064581,
+        "evalCount": 20,
+        "promptEvalCount": 114,
+        "tokensPerSecond": 57.03579281177903,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "generalMeaning",
+        "elapsedMs": 881.9935609999811,
+        "timeoutMs": 296739.504855,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041881,
+        "evalCount": 63,
+        "promptEvalCount": 175,
+        "tokensPerSecond": 82.45889816587851,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "wordFormation",
+        "elapsedMs": 524.316462000017,
+        "timeoutMs": 295853.467574,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0055639,
+        "evalCount": 32,
+        "promptEvalCount": 204,
+        "tokensPerSecond": 89.2787393841999,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-candid",
+        "stage": "examples",
+        "elapsedMs": 2795.3656689999625,
+        "timeoutMs": 295324.972684,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047052,
+        "evalCount": 236,
+        "promptEvalCount": 234,
+        "tokensPerSecond": 88.49255556376319,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-bat",
+    "target": "bat",
+    "sourceCharacters": 56,
+    "gold": "Ambiguous: animal or sporting implement, no decisive cue. Ask for clarification rather than selecting either.",
+    "content": {
+      "status": "ready",
+      "expression": "bat",
+      "partOfSpeech": "countable noun",
+      "americanIpa": "/bæt/",
+      "meaning": "A bat is a piece of equipment made of wood or metal, used by a batter to hit the ball in sports like baseball or cricket. In this context, the speaker is referring to the sporting equipment, not the flying mammal or the insect-eating creature.",
+      "explanation": "The word 'bat' here functions as a common noun referring to the tool used in bat-and-ball games. It is important to distinguish this from the nocturnal flying mammal or the insect, which are also called 'bats' but have different contexts.",
+      "exampleGroups": [
+        {
+          "meaning": "A wooden implement used in the sport of baseball or cricket to hit a ball.",
+          "examples": [
+            "The batter swung his bat with all his might, sending the ball soaring over the fence.",
+            "She adjusted her grip on the bat before stepping into the batter's box."
+          ]
+        },
+        {
+          "meaning": "A nocturnal flying mammal belonging to the order Chiroptera.",
+          "examples": [
+            "We heard a strange fluttering sound in the attic and realized it was just a bat resting during the day.",
+            "The cave is home to a colony of little brown bats that migrate south for the winter."
+          ]
+        },
+        {
+          "meaning": "To strike or hit something with one's hand, an object, or a weapon.",
+          "examples": [
+            "He accidentally bat his elbow against the doorframe and winced in pain.",
+            "The referee warned the player for repeatedly batting at the opposing team's legs."
+          ]
+        },
+        {
+          "meaning": "To move one's hand or arm back and forth, often while talking or thinking.",
+          "examples": [
+            "She sat by the window, gently bat her fingers against the glass as she watched the rain.",
+            "He stood up to pace the room, constantly bating his hands in frustration."
+          ]
+        },
+        {
+          "meaning": "To engage in a game of catch or practice hitting with a bat (often used as 'to bat' for oneself).",
+          "examples": [
+            "The coach asked the new recruit to bat first to get a feel for the field conditions.",
+            "After warming up, they took turns batting at the practice net until sunset."
+          ]
+        }
+      ],
+      "examples": [
+        "The batter swung his bat with all his might, sending the ball soaring over the fence.",
+        "She adjusted her grip on the bat before stepping into the batter's box.",
+        "We heard a strange fluttering sound in the attic and realized it was just a bat resting during the day.",
+        "The cave is home to a colony of little brown bats that migrate south for the winter.",
+        "He accidentally bat his elbow against the doorframe and winced in pain.",
+        "The referee warned the player for repeatedly batting at the opposing team's legs.",
+        "She sat by the window, gently bat her fingers against the glass as she watched the rain.",
+        "He stood up to pace the room, constantly bating his hands in frustration.",
+        "The coach asked the new recruit to bat first to get a feel for the field conditions.",
+        "After warming up, they took turns batting at the practice net until sunset."
+      ],
+      "notes": [
+        "Often used with verbs like 'swing', 'hold', or 'hit'.",
+        "Can be made of wood, metal, or composite materials. (e.g., 'a wooden bat', 'a metal bat')"
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "A bat is a long, thin piece of wood used to hit a ball in sports like baseball or cricket. The term can also refer to a small flying mammal that lives at night and eats insects.",
+      "wordFormation": ""
+    },
+    "seconds": 9.009331690000021,
+    "wallSeconds": 9.009464643999992,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "main",
+        "elapsedMs": 2999.939289999951,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0047057,
+        "evalCount": 230,
+        "promptEvalCount": 841,
+        "tokensPerSecond": 85.43135404981763,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "generalMeaning",
+        "elapsedMs": 690.1361940000206,
+        "timeoutMs": 296995.876274,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0041834,
+        "evalCount": 53,
+        "promptEvalCount": 175,
+        "tokensPerSecond": 92.30635259285062,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "wordFormation",
+        "elapsedMs": 555.6780640000361,
+        "timeoutMs": 296301.898858,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0052867,
+        "evalCount": 38,
+        "promptEvalCount": 204,
+        "tokensPerSecond": 92.83780746415972,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-bat",
+        "stage": "examples",
+        "elapsedMs": 4746.729854999983,
+        "timeoutMs": 295742.310131,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0054151,
+        "evalCount": 409,
+        "promptEvalCount": 234,
+        "tokensPerSecond": 88.59596621915955,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-pitch",
+    "target": "pitch",
+    "sourceCharacters": 45,
+    "gold": "Ambiguous: multiple ordinary noun meanings fit, such as presentation/proposal or sports field. Ask for context.",
+    "content": {
+      "status": "ready",
+      "expression": "pitch",
+      "partOfSpeech": "uncountable noun",
+      "americanIpa": "/pɪtʃ/",
+      "meaning": "The pitch refers to the surface or ground where a sport, such as baseball or cricket, is played. It specifically denotes the prepared area marked for the game, distinct from the surrounding field or outfield.",
+      "explanation": "In this context, 'pitch' is used to describe the specific playing surface for sports like baseball or cricket. The word highlights the designated area where the match takes place, often involving a distinct layout or markings.",
+      "exampleGroups": [
+        {
+          "meaning": "The specific sound or tone of a voice or musical note.",
+          "examples": [
+            "He sang the song in a very high pitch that only children could hear.",
+            "The singer's pitch dropped slightly during the final chorus."
+          ]
+        },
+        {
+          "meaning": "A specific area designated for a particular sport or activity.",
+          "examples": [
+            "We walked across the muddy pitch to watch the football match begin.",
+            "The cricket team is currently practicing on the home pitch."
+          ]
+        },
+        {
+          "meaning": "Tar or bitumen used for road surfacing or waterproofing.",
+          "examples": [
+            "Workers spread hot pitch over the asphalt to seal the cracks in the road.",
+            "The old wooden boat was coated with pitch to protect it from water."
+          ]
+        },
+        {
+          "meaning": "To offer something for sale or consideration, often aggressively.",
+          "examples": [
+            "He tried to pitch his new business idea to potential investors at the conference.",
+            "The salesman spent twenty minutes pitching his insurance policy before she agreed."
+          ]
+        },
+        {
+          "meaning": "To throw something with a spinning motion, typically for distance or accuracy.",
+          "examples": [
+            "The baseball player wound up and pitched the ball toward home plate.",
+            "She learned how to pitch a tent quickly before it started raining."
+          ]
+        }
+      ],
+      "examples": [
+        "He sang the song in a very high pitch that only children could hear.",
+        "The singer's pitch dropped slightly during the final chorus.",
+        "We walked across the muddy pitch to watch the football match begin.",
+        "The cricket team is currently practicing on the home pitch.",
+        "Workers spread hot pitch over the asphalt to seal the cracks in the road.",
+        "The old wooden boat was coated with pitch to protect it from water.",
+        "He tried to pitch his new business idea to potential investors at the conference.",
+        "The salesman spent twenty minutes pitching his insurance policy before she agreed.",
+        "The baseball player wound up and pitched the ball toward home plate.",
+        "She learned how to pitch a tent quickly before it started raining."
+      ],
+      "notes": [
+        "Common collocations include 'baseball pitch', 'cricket pitch', or 'football pitch'.",
+        "Often preceded by adjectives describing the surface, such as 'wet pitch', 'dry pitch', or 'good pitch'."
+      ],
+      "question": "",
+      "ipaVariant": "american",
+      "generalMeaning": "Pitch refers to the specific level of sound height, ranging from low tones to high notes in music and speech. It also describes a particular degree or intensity of a quality, such as the pitch of an argument or the sharpness of a color.",
+      "wordFormation": ""
+    },
+    "seconds": 7.865976213999966,
+    "wallSeconds": 7.866088478999969,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "main",
+        "elapsedMs": 2493.786013999954,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0046739,
+        "evalCount": 189,
+        "promptEvalCount": 835,
+        "tokensPerSecond": 86.70750942083971,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "generalMeaning",
+        "elapsedMs": 777.9177170000039,
+        "timeoutMs": 297502.381787,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 330,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.005225,
+        "evalCount": 61,
+        "promptEvalCount": 176,
+        "tokensPerSecond": 92.30606269246192,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "wordFormation",
+        "elapsedMs": 487.9894889999996,
+        "timeoutMs": 296720.314283,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 350,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.004711,
+        "evalCount": 30,
+        "promptEvalCount": 205,
+        "tokensPerSecond": 89.16285000133745,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      },
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-pitch",
+        "stage": "examples",
+        "elapsedMs": 4088.858988999971,
+        "timeoutMs": 296228.63564600004,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 700,
+          "temperature": 0.2
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0048857,
+        "evalCount": 342,
+        "promptEvalCount": 235,
+        "tokensPerSecond": 86.47557419022705,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "holdout-unknown",
+    "target": "flanterize",
+    "sourceCharacters": 75,
+    "gold": "Unknown/coined word; do not invent a teaching definition or base. Ask for clarification.",
+    "content": {
+      "status": "unknown",
+      "expression": "",
+      "partOfSpeech": "",
+      "americanIpa": "",
+      "meaning": "",
+      "explanation": "",
+      "examples": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "notes": [],
+      "question": "The word 'flanterize' appears to be a non-standard or coined term in this context. Could you clarify if this is a specific jargon from a particular field, a typo for a word like 'flatterize', or a creative neologism intended for this text?",
+      "ipaVariant": "american"
+    },
+    "seconds": 1.8277796459999518,
+    "wallSeconds": 1.8279225580000202,
+    "stages": [
+      {
+        "model": "qwen3.5:9b-q4_K_M",
+        "id": "holdout-unknown",
+        "stage": "main",
+        "elapsedMs": 1823.1332980000298,
+        "timeoutMs": 300000,
+        "options": {
+          "num_ctx": 12288,
+          "num_predict": 2200,
+          "temperature": 0.2,
+          "top_p": 0.8,
+          "top_k": 20,
+          "presence_penalty": 0
+        },
+        "think": false,
+        "doneReason": "stop",
+        "loadSeconds": 0.0069521,
+        "evalCount": 120,
+        "promptEvalCount": 844,
+        "tokensPerSecond": 82.07653637016517,
+        "thinkingCharacters": 0,
+        "loaded": [
+          {
+            "name": "qwen3.5:9b-q4_K_M",
+            "size": 6004817264,
+            "sizeVram": 6004817264,
+            "context": 12288
+          }
+        ]
+      }
+    ]
+  }
+]

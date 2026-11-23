@@ -1,0 +1,366 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "power",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct electricity sense. Notes loosely extend power collocations to gas/water; useful noun examples."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "charge",
+    "examplesScore": 0,
+    "falseBase": true,
+    "note": "False base charge -> earn. Groups switch to nouns; emotional examples are awkward/unreliable."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "strain",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct effort sense; general explanation invents a testing purpose. Noun examples and an old photograph being strained/faded are unsuitable."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "hitherto",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Overstates surprise/discovery as an implication; until-now/previously groups duplicate one meaning."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "conceivably",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Reasonable chance and not-most-probable claims overstate what the adverb encodes. Groups paraphrase the same possibility sense."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "vagaries",
+    "examplesScore": 1,
+    "falseBase": true,
+    "note": "Displayed singular vagary conflicts with plural noun label. Vague is not the derivational base; example groups overlap."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "resort-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Core meaning/pattern correct. Redundant groups and unlabeled dated visiting sense are poor B2 prioritization."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "put-up-with",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Core tolerance sense correct. Overstates temporariness/no-choice; groups are the same sense in different situations."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "sanction",
+    "examplesScore": 1,
+    "falseBase": true,
+    "note": "Correct approval in source. Sanctify is not the derivational base. Examples mix noun sanctions with verb and repeat approval groups."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "tabled-uk",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Wrong source sense: postponement despite British/immediate-discussion cues. General meaning omits relevant British sense."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "inflammable",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Core flammability correct. Figurative impressionability is less precise than emotional excitability; explanation spends space on prefix."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "seek-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Preserves seek to. Three groups divide the same attempt-to sense by topic."
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "long-12000",
+    "examplesScore": 0,
+    "falseBase": true,
+    "note": "Correct low-weight source sense. False base light -> bright (also defines bright as a verb). Invented promising-future sense; noun/derivative examples."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "power",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Accurate electricity sense and useful, broadly distinct noun usages."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "charge",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Expands entry to charge (someone) with (something); IPA /tshahrdzhd/ corresponds to charged, not displayed entry. Legal explanation is imprecise; general meaning narrower than its entrusting examples."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "strain",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "To the limit of ability is too strong; strain a muscle is not simply physical effort. A filtering-pasta example has a confused purpose; one noun example."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "hitherto",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Unnatural/redundant until hitherto in an example; overfits explanation to unknown information."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "conceivably",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct possibility sense. Two example groups are paraphrases."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "vagaries",
+    "examplesScore": 2,
+    "falseBase": true,
+    "note": "Correct plural entry and examples, but invents vary as derivational base."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "resort-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct prepositional-verb pattern. Overstates necessity/extremity; two example groups duplicate the same usage."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "put-up-with",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Without complaining is an unwarranted restriction. Four examples teach put up (accommodate/build), dropping essential with."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "sanction",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct core definition and general contronym explanation. Third example-group heading says authorization but examples use punitive sanctions."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "tabled-uk",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Meaning mixes opposite senses; explanation explicitly chooses postponement despite British/immediate-discussion context. Notes know British distinction but do not apply it."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "inflammable",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct flammability meaning, useful warning examples and legitimate base flame."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "seek-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct pattern, but topic-based groups duplicate one sense; aims to seek to is needlessly awkward."
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "long-12000",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct low-weight source sense. Invents light = intelligent, substitutes lighthearted, and misuses a light touch."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "power",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Contextual meaning includes unrelated authority before electricity. Several example groups duplicate ability/authority."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "charge",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Good accusation sense and distinct verb examples. Used in legal/formal contexts only is overbroad; general meaning omits important senses."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "strain",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Keeps inflected strained as the entry; grammar/general-definition mismatch. Near-failure claim is too strong; example labels partly circular."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "hitherto",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Accurate core meaning and plausible hither base. Overstates discovery/revelation; two groups paraphrase one sense."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "conceivably",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct teaching, but two groups repeat the same possibility sense."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "vagaries",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct plural and singular base. Some whim examples are awkward, though the sense is established."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "resort-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct entry and source tense. Unsupported past-perfect frequency note; dated visiting sense is unlabeled."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "put-up-with",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Tolerate sense correct but no-action/no-complaining restrictions are too strong. Examples drop with and falsely teach accommodation/display as this expression."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "sanction",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Correct approval sense and examples, but notes wrongly label punitive meaning as noun-only despite its verb examples."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "tabled-uk",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct British source sense. Invented moving-a-bill-between-places heading and unnatural tabling-the-dinner-party example."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "inflammable",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct flammability definition. Unreliable medical examples of skin/eyes becoming inflammable teach the wrong collocation."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "seek-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Keeps sought to instead of dictionary seek to; phrasal-verb label and infinitive explanation are imprecise. Groups duplicate one sense."
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "long-12000",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Source low-weight sense is identified but hint adds unrelated brightness sense. Invents light instructions = easy to understand, and includes noun examples."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "power",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct electricity definition. Invents a specific office/position sense with appointed to a high-ranking power; groups overlap and examples do not always match headings."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "charge",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct legal meaning. Payment group contains charging a phone, falsely mapping that example to payment. Charged him to pay is an unhelpful pattern example."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "strain",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct source effort. One label says strain causes breaking/failure; another says maintain/avoid conflict, the opposite of strain relations."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "hitherto",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Contextual definition wrongly makes nonexistence/newness part of hitherto itself; this overfits hitherto unknown. General meaning and examples are accurate."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "conceivably",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct possibility sense and one group. Conceivably possible is redundant despite explicit prompt guidance."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "vagaries",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Singular vagary contradicts plural-noun label; overstates irrationality/defiance of natural law. Examples prioritize uncommon singular usage."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "resort-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct main pattern. Necessity is overstated; five topic-based/dated place usages are not useful distinct common senses."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "put-up-with",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Overstates a temporary endpoint. Notes explicitly call the traffic a gerund, which is false; example groups duplicate tolerance."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "sanction",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Contextual hint unnecessarily includes punitive opposite sense. One noun sanctions example in verb groups; general contronym explanation correct."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "tabled-uk",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct British source meaning. General meaning includes only postponement, and physical-surface heading is mismatched to abstract discussion examples."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "inflammable",
+    "examplesScore": 2,
+    "falseBase": false,
+    "note": "Core meaning and examples correct. Explanation prioritizes Latin morphemes over useful usage; label on the paint can clearly stated is grammatical (can = container)."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "seek-to",
+    "examplesScore": 1,
+    "falseBase": false,
+    "note": "Correct dictionary pattern and source meaning. General explanation overstates trying hard/determination; three topic groups repeat one sense."
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "long-12000",
+    "examplesScore": 0,
+    "falseBase": false,
+    "note": "Correct low-weight source meaning. General definition equates light with dim lighting; example heading reverses illumination, also mixes derivatives and categories."
+  }
+]

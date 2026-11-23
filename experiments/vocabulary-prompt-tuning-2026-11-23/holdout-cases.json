@@ -1,0 +1,50 @@
+[
+  {
+    "id": "holdout-oversight",
+    "target": "oversight",
+    "source": "Leaving her name off the invitation was an accidental oversight, and the organizer apologized as soon as he noticed.",
+    "gold": "Ready. Noun: accidental omission/failure to notice, NOT supervision in this source. Other noun sense supervision may have a separate example group. Do not imply intentional exclusion."
+  },
+  {
+    "id": "holdout-run",
+    "target": "ran",
+    "source": "Before retiring, Elena ran a small bakery with three employees for nearly twenty years.",
+    "gold": "Ready. Lemma run, verb: manage/operate a business. Not jogging, a past participle, or a noun run. Other established verb meanings may be illustrated, all with matching headings."
+  },
+  {
+    "id": "holdout-look-forward",
+    "target": "looked forward to",
+    "source": "They looked forward to meeting their new neighbours and hoped the visit would be friendly.",
+    "gold": "Ready. Lemma look forward to: anticipate with pleasure; to takes a noun/gerund, not an infinitive. Preserve the whole expression; do not teach look forward/look at/forecasting as its senses."
+  },
+  {
+    "id": "holdout-reluctantly",
+    "target": "reluctantly",
+    "source": "She reluctantly agreed to sell the house because maintaining it had become too expensive.",
+    "gold": "Ready. Adverb: unwillingly/with hesitation, not slowly or enthusiastically. One common usage sufficient. Transparent base reluctant with correct general adjective meaning."
+  },
+  {
+    "id": "holdout-candid",
+    "target": "candid",
+    "source": "In a candid interview, the scientist openly admitted that the experiment had failed and explained the mistakes.",
+    "gold": "Ready. Adjective: honest/frank/open in expressing the truth. Common adjective photographic sense unposed may be separated. Do not invent a direct derivational base such as candidate or candor."
+  },
+  {
+    "id": "holdout-bat",
+    "target": "bat",
+    "source": "He pointed at the bat and asked me what I thought of it.",
+    "gold": "Ambiguous: animal or sporting implement, no decisive cue. Ask for clarification rather than selecting either."
+  },
+  {
+    "id": "holdout-pitch",
+    "target": "pitch",
+    "source": "They discussed the pitch for several minutes.",
+    "gold": "Ambiguous: multiple ordinary noun meanings fit, such as presentation/proposal or sports field. Ask for context."
+  },
+  {
+    "id": "holdout-unknown",
+    "target": "flanterize",
+    "source": "The instructions told us to flanterize the results before the next meeting.",
+    "gold": "Unknown/coined word; do not invent a teaching definition or base. Ask for clarification."
+  }
+]

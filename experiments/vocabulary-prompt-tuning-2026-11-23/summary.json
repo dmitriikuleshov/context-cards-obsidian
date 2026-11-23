@@ -1,0 +1,232 @@
+{
+  "baselineCommit": "8e31fd1",
+  "candidateCommit": "b40cddd",
+  "models": [
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "before": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 4,
+        "exampleMeanScore": 0.8461538461538461,
+        "falseBases": 0,
+        "warmMedianSeconds": 6.4396866409999785,
+        "meanGroups": 3
+      },
+      "after": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 3,
+        "exampleMeanScore": 0.9230769230769231,
+        "falseBases": 0,
+        "warmMedianSeconds": 6.794137733999989,
+        "meanGroups": 2.8461538461538463
+      },
+      "holdoutBefore": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 1,
+        "exampleMeanScore": 1.2,
+        "falseBases": 1,
+        "warmMedianSeconds": 7.670383954499965,
+        "meanGroups": 2.8
+      },
+      "holdoutAfter": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 1,
+        "exampleMeanScore": 1.2,
+        "falseBases": 0,
+        "warmMedianSeconds": 6.497537362000003,
+        "meanGroups": 3.2
+      }
+    },
+    {
+      "model": "gemma4:12b-it-qat",
+      "before": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 4,
+        "exampleMeanScore": 1.0769230769230769,
+        "falseBases": 1,
+        "warmMedianSeconds": 8.036687596999982,
+        "meanGroups": 2.5384615384615383
+      },
+      "after": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 1,
+        "exampleMeanScore": 1.6153846153846154,
+        "falseBases": 0,
+        "warmMedianSeconds": 7.083923572,
+        "meanGroups": 1.9230769230769231
+      },
+      "holdoutBefore": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 0,
+        "exampleMeanScore": 1.6,
+        "falseBases": 1,
+        "warmMedianSeconds": 8.161920517499995,
+        "meanGroups": 2.6
+      },
+      "holdoutAfter": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 0,
+        "exampleMeanScore": 1.8,
+        "falseBases": 0,
+        "warmMedianSeconds": 7.6561916465000035,
+        "meanGroups": 2.2
+      }
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "before": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 4,
+        "exampleMeanScore": 0.8461538461538461,
+        "falseBases": 0,
+        "warmMedianSeconds": 15.42346531150001,
+        "meanGroups": 3
+      },
+      "after": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 5,
+        "exampleMeanScore": 0.6923076923076923,
+        "falseBases": 0,
+        "warmMedianSeconds": 14.706135722999985,
+        "meanGroups": 2.3846153846153846
+      },
+      "holdoutBefore": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 2,
+        "exampleMeanScore": 0.6,
+        "falseBases": 0,
+        "warmMedianSeconds": 16.390035612499997,
+        "meanGroups": 2.8
+      },
+      "holdoutAfter": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 2,
+        "exampleMeanScore": 1,
+        "falseBases": 0,
+        "warmMedianSeconds": 16.0665000305,
+        "meanGroups": 2.6
+      }
+    },
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "before": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 3,
+        "exampleMeanScore": 0.8461538461538461,
+        "falseBases": 4,
+        "warmMedianSeconds": 8.33211963849999,
+        "meanGroups": 3.230769230769231
+      },
+      "after": {
+        "runs": 20,
+        "errors": 0,
+        "cases": 13,
+        "exampleMaterialErrors": 1,
+        "exampleMeanScore": 1.3846153846153846,
+        "falseBases": 2,
+        "warmMedianSeconds": 7.0561929055,
+        "meanGroups": 1.6153846153846154
+      },
+      "holdoutBefore": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 1,
+        "exampleMeanScore": 0.8,
+        "falseBases": 1,
+        "warmMedianSeconds": 8.918802685500001,
+        "meanGroups": 3.4
+      },
+      "holdoutAfter": {
+        "runs": 8,
+        "errors": 0,
+        "cases": 5,
+        "exampleMaterialErrors": 0,
+        "exampleMeanScore": 1.6,
+        "falseBases": 1,
+        "warmMedianSeconds": 7.5185451935,
+        "meanGroups": 1.4
+      }
+    }
+  ],
+  "acceptance": {
+    "noNewTechnicalFailures": true,
+    "fewerMaterialExampleErrors": true,
+    "primaryModelExamplesNotWorse": true,
+    "noFalseBaseIncreaseQwen": true,
+    "fewerFalseBasesGemma": true,
+    "holdoutExamplesNotWorse": true,
+    "holdoutFalseBasesNotWorse": true,
+    "noMajorSlowdown": true,
+    "retainedClearBases": true
+  },
+  "accepted": true,
+  "positiveControl": [
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "variant": "control",
+      "base": "reluctant \u2014 To be reluctant is to be unwilling or hesitant to do something. It suggests a lack of enthusiasm or a feeling of resistance."
+    },
+    {
+      "model": "gemma4:12b-it-qat",
+      "variant": "control",
+      "base": "reluctant \u2014 Not wanting to do something or feeling hesitant about it."
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "variant": "control",
+      "base": "reluctant \u2014 Unwilling to do something, especially because it is difficult or unpleasant."
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "variant": "control",
+      "base": "reluctant \u2014 To feel unwilling or hesitant to do something."
+    },
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "variant": "candidate",
+      "base": "reluctant \u2014 Unwilling or hesitant to do something."
+    },
+    {
+      "model": "gemma4:12b-it-qat",
+      "variant": "candidate",
+      "base": "reluctant \u2014 Unwilling and hesitant."
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "variant": "candidate",
+      "base": "reluctant \u2014 Unwilling to do something because of hesitation or unwillingness."
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "variant": "candidate",
+      "base": "reluctant \u2014 Not willing to do something; showing hesitation or unwillingness."
+    }
+  ]
+}

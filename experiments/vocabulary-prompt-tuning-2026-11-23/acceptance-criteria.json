@@ -1,0 +1,15 @@
+{
+  "candidate": "b40cddd",
+  "baseline": "8e31fd1",
+  "scope": "Only usageExamples and wordFormation prompts differ; core meaning, generalMeaning, schema, parsing, request settings and number of requests are unchanged.",
+  "acceptance": [
+    "No new transport/format failures in the main paired suite.",
+    "Fewer material example errors overall; no increase for the recommended Qwen3.5 9B.",
+    "No increase in false word-formation bases for Qwen3.5 9B or Qwen3 14B; reduction across Gemma models.",
+    "Retain useful clear bases for conceivably and held-out reluctantly; do not win by always returning empty strings.",
+    "On held-out tasks, no material regression in the two changed fields overall.",
+    "No major slowdown in warm generation; compare output volume as well as time."
+  ],
+  "review": "Targeted field assessment, using baseline examples rubric (0 wrong sense/category/expression/heading; 1 mostly usable but redundant/awkward or undercoverage; 2 correct and useful). False base relations are tracked separately from valid empty abstentions and clear-base recall.",
+  "limitations": "Temperature 0.2 without a fixed seed as in production; one main suite per variant plus four repeat cases. Main corpus used for development, holdout written before candidate outputs and never included in prompts. Small sample; no general accuracy guarantee."
+}
