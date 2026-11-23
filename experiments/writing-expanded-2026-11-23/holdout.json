@@ -1,0 +1,114 @@
+[
+  {
+    "id": "hold-none-mass",
+    "text": "None of the equipment are working.",
+    "expected": [
+      "None of the equipment is working."
+    ],
+    "cards": false
+  },
+  {
+    "id": "hold-none-plural",
+    "text": "None of the players were ready.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-factual-if",
+    "text": "If I was too loud last night, I am sorry.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-hypothetical-if",
+    "text": "If I were you, I would wait.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-conditional-error",
+    "text": "If I were you, I will call the office.",
+    "expected": [
+      "If I were you, I would call the office."
+    ],
+    "cards": false
+  },
+  {
+    "id": "hold-literal",
+    "text": "The variable `she have` is a sample string.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-agreement",
+    "text": "She have an appointment today.",
+    "expected": [
+      "She has an appointment today."
+    ],
+    "cards": false
+  },
+  {
+    "id": "hold-dialect-mention",
+    "text": "The British spelling 'favour' is used in this quote.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-american",
+    "text": "The favour was appreciated.",
+    "expected": [
+      "The favor was appreciated."
+    ],
+    "cards": false
+  },
+  {
+    "id": "hold-serial-comma",
+    "text": "I bought bread, milk and eggs.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-embedded",
+    "text": "Could you tell me what does it mean?",
+    "expected": [
+      "Could you tell me what it means?"
+    ],
+    "cards": true
+  },
+  {
+    "id": "hold-reorder",
+    "text": "She told me where was the key.",
+    "expected": [
+      "She told me where the key was."
+    ],
+    "cards": false
+  },
+  {
+    "id": "hold-irregular-inversion",
+    "text": "Only after lunch I understood the problem.",
+    "expected": [
+      "Only after lunch did I understand the problem."
+    ],
+    "cards": true
+  },
+  {
+    "id": "hold-clean-inversion",
+    "text": "Only after lunch did I understand the problem.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-clean-relative",
+    "text": "The volunteers who work here are very helpful.",
+    "expected": [],
+    "cards": false
+  },
+  {
+    "id": "hold-relative-error",
+    "text": "The volunteers who works here are very helpful.",
+    "expected": [
+      "The volunteers who work here are very helpful."
+    ],
+    "cards": false
+  }
+]

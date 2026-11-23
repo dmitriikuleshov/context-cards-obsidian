@@ -272,7 +272,9 @@
       "She recommended me a very interesting book."
     ],
     "group": "grammar",
-    "cards": false
+    "cards": false,
+    "diagnosticOnly": true,
+    "note": "Double-object recommend requires manual adjudication; excluded from automatic grammar precision totals. Recipient deletion is recorded for manual review."
   },
   {
     "id": "article-university",
@@ -384,7 +386,7 @@
       "I wonder where she is."
     ],
     "group": "structure",
-    "cards": false
+    "cards": true
   },
   {
     "id": "embedded-perfect",
@@ -465,7 +467,7 @@
       "What does this word mean?"
     ],
     "group": "structure",
-    "cards": false
+    "cards": true
   },
   {
     "id": "clean-subjunctive",
@@ -799,7 +801,7 @@
     "text": "The children has gone home. Their teacher is a honest person. She stayed behind to finish the report.",
     "expected": [
       "The children have gone home.",
-      "Their teancher is a honest person."
+      "Their teacher is an honest person."
     ],
     "group": "paragraph",
     "cards": false

@@ -1,0 +1,8 @@
+[
+  {
+    "id": "paragraph-12",
+    "old": "Their teancher is a honest person.",
+    "corrected": "Their teacher is an honest person.",
+    "reason": "Corpus construction used substring replacement for article a and accidentally edited the a inside teacher. Source text and model requests are unchanged. Both baseline and candidate are scored against the corrected gold."
+  }
+]

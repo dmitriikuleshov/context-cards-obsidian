@@ -170,7 +170,7 @@ if (!frozen)
                 'export function jsonRequest<T>(',
                 'function baseJsonRequest<T>(',
               ) +
-              `\nexport async function jsonRequest<T>(...args: Parameters<typeof baseJsonRequest<T>>): Promise<T> { const start=performance.now(); try { const response=await baseJsonRequest<T>(...args); await (globalThis as any).__auditTransport?.({request:args[1],timeoutMs:args[3],elapsedMs:performance.now()-start,response}); return response; } catch(error) { await (globalThis as any).__auditTransport?.({request:args[1],elapsedMs:performance.now()-start,error:String(error)}); throw error; } }`,
+              `\nexport async function jsonRequest<T>(...args: Parameters<typeof baseJsonRequest<T>>): Promise<T> { const start=performance.now(); try { const hit=(globalThis as any).__auditCached?.(args[1]); const response=hit ? structuredClone(hit.response) : await baseJsonRequest<T>(...args); await (globalThis as any).__auditTransport?.({request:args[1],timeoutMs:args[3],elapsedMs:performance.now()-start,response,cacheSource:hit?.source}); return response; } catch(error) { await (globalThis as any).__auditTransport?.({request:args[1],elapsedMs:performance.now()-start,error:String(error)}); throw error; } }`,
           }));
         },
       },
@@ -188,11 +188,26 @@ await writeFile(
       temperature: 0,
       timeoutSeconds: 300,
       cards: !!process.env.AUDIT_CARDS,
+      responseCache: process.env.AUDIT_CACHE_DIR || null,
     },
     null,
     2,
   ),
 );
+const cacheDirectories = (process.env.AUDIT_CACHE_DIR || '').split(',').filter(Boolean);
+const cachedRequests = new Map();
+for (const directory of cacheDirectories) {
+  const lines = (await readFile(resolve(directory, 'transport.jsonl'), 'utf8')).trim().split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const entry = JSON.parse(lines[i]);
+    if (!entry.response || entry.error) continue;
+    const key = createHash('sha256').update(JSON.stringify(entry.request)).digest('hex');
+    if (!cachedRequests.has(key))
+      cachedRequests.set(key, { response: entry.response, source: `${directory}:${i + 1}` });
+  }
+}
+globalThis.__auditCached = (body) =>
+  cachedRequests.get(createHash('sha256').update(JSON.stringify(body)).digest('hex'));
 const { WritingModel, DEFAULTS, correctedSentence } = await import(
   pathToFileURL(resolve(out, 'client.mjs'))
 );
@@ -212,9 +227,11 @@ for (const model of models) {
     if (loaded.name !== model) await api('/api/generate', { model: loaded.name, keep_alive: 0 });
   for (const c of chosen) {
     if (results.some((r) => r.model === model && r.id === c.id)) continue;
-    let calls = 0;
+    let calls = 0,
+      cachedCalls = 0;
     globalThis.__auditTransport = async (trace) => {
       calls++;
+      if (trace.cacheSource) cachedCalls++;
       await appendFile(
         resolve(out, 'transport.jsonl'),
         JSON.stringify({ model, id: c.id, ...trace }) + '\n',
@@ -253,6 +270,8 @@ for (const model of models) {
     }
     row.elapsedMs = Math.round(performance.now() - started);
     row.calls = calls;
+    row.cachedCalls = cachedCalls;
+    row.liveCalls = calls - cachedCalls;
     results.push(row);
     await writeFile(resultsFile, JSON.stringify(results, null, 2));
     console.log(
