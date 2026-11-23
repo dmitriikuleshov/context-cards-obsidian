@@ -1,5 +1,6 @@
 import { createServer } from 'node:http';
 import { createHash, createPublicKey, randomBytes, timingSafeEqual, verify } from 'node:crypto';
+import { callbackPage } from './chatgpt-callback-page';
 
 export const AUTH_ORIGIN = 'https://auth.openai.com';
 export const API_ORIGIN = 'https://api.openai.com/v1';
@@ -34,11 +35,16 @@ export async function loginCallback(state: string, signal: AbortSignal): Promise
   let finished = false;
   const server = createServer((req, res) => {
     const url = new URL(req.url ?? '/', 'http://127.0.0.1');
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('Referrer-Policy', 'no-referrer');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader(
+      'Content-Security-Policy',
+      "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
+    );
     if (req.method !== 'GET' || url.pathname !== '/auth/callback') {
-      res.writeHead(404).end('Not found.');
+      res.writeHead(404).end(callbackPage('not-found'));
       return;
     }
     const received = url.searchParams.getAll('state');
@@ -49,20 +55,18 @@ export async function loginCallback(state: string, signal: AbortSignal): Promise
       receivedState.length !== expectedState.length ||
       !timingSafeEqual(receivedState, expectedState)
     ) {
-      res
-        .writeHead(400)
-        .end('This sign-in response does not match the pending request. Return to Obsidian.');
+      res.writeHead(400).end(callbackPage('invalid'));
       return;
     }
     if (finished) {
-      res.writeHead(409).end('This sign-in response was already received.');
+      res.writeHead(409).end(callbackPage('already-received'));
       return;
     }
     const code = url.searchParams.getAll('code'),
       clients = url.searchParams.getAll('client_id');
     if (url.searchParams.has('error')) {
       finished = true;
-      res.end('Sign-in was not completed. Return to Obsidian.');
+      res.end(callbackPage('declined'));
       reject(new Error('ChatGPT sign-in was cancelled or permission was declined.'));
       return;
     }
@@ -73,13 +77,11 @@ export async function loginCallback(state: string, signal: AbortSignal): Promise
       clients.length > 1 ||
       (clients[0]?.length ?? 0) > 1000
     ) {
-      res.writeHead(400).end('Invalid sign-in response. Return to Obsidian.');
+      res.writeHead(400).end(callbackPage('invalid'));
       return;
     }
     finished = true;
-    res.end(
-      'Completing ChatGPT sign-in. Return to Obsidian to check the connection. You can close this tab.',
-    );
+    res.end(callbackPage('received'));
     resolve({ code: code[0], clientId: clients[0] });
   });
   const close = () => {

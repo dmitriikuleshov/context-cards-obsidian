@@ -153,7 +153,7 @@ This connection uses the official [ChatGPT plan-sharing flow for open-source and
 
 1. Choose **Settings → Context Cards → AI connection → Provider → ChatGPT · subscription**.
 2. Click **Continue with ChatGPT**. Complete sign-in in your browser and explicitly grant permission to use your ChatGPT plan.
-3. Return to Obsidian. The settings should show your account as **Connected**. You can close the browser after connecting.
+3. The browser shows **Authorization received → Return to Obsidian**. This means the browser step is complete; Context Cards still needs to finish checking the connection. Return to the plugin settings in Obsidian and check for **Connected** or an error explaining what to do next. You can close the callback tab; it does not need to stay open.
 4. Choose **ChatGPT model** from the models available to your account. **Refresh models** reloads that list and keeps your saved choice if loading fails. An unavailable saved model remains marked until you choose another one.
 5. Generate a vocabulary draft or check a short writing paragraph. Review the output before adding cards to Anki.
 

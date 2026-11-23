@@ -104,7 +104,16 @@ describe('loopback browser callback', () => {
       ])
         expect((await fetch(callback.uri + '?' + q)).status).toBe(400);
       const accepted = await fetch(callback.uri + '?state=expected&code=code&client_id=client');
-      expect(await accepted.text()).not.toContain('code&');
+      expect(accepted.headers.get('content-type')).toBe('text/html; charset=utf-8');
+      expect(accepted.headers.get('cache-control')).toBe('no-store');
+      expect(accepted.headers.get('referrer-policy')).toBe('no-referrer');
+      expect(accepted.headers.get('content-security-policy')).toContain("default-src 'none'");
+      const html = await accepted.text();
+      expect(html).toContain('<!doctype html>');
+      expect(html).toContain('Authorization received');
+      expect(html).toContain('Return to Obsidian');
+      expect(html).not.toContain('code&');
+      expect(html).not.toContain('Connected successfully');
       expect(await callback.result).toEqual({ code: 'code', clientId: 'client' });
       expect((await fetch(callback.uri + '?state=expected&code=again')).status).toBe(409);
     } finally {
@@ -114,7 +123,12 @@ describe('loopback browser callback', () => {
   it('handles browser denial and cancellation and closes the listener', async () => {
     const abort = new AbortController();
     const cb = await loginCallback('expected', abort.signal);
-    await fetch(cb.uri + '?state=expected&error=access_denied&error_description=private');
+    const denied = await fetch(
+      cb.uri + '?state=expected&error=access_denied&error_description=private',
+    );
+    const html = await denied.text();
+    expect(html).toContain('Sign-in not completed');
+    expect(html).not.toContain('private');
     await expect(cb.result).rejects.toThrow(/declined/);
     cb.close();
     const cb2 = await loginCallback('expected', abort.signal);
