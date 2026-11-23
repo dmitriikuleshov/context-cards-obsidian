@@ -255,6 +255,8 @@ Use **Find mistakes** for your own writing and **Explain word / phrase** for voc
 3. Click a highlighted expression in the selected paragraph to read its correction and explanation. The original note is not automatically corrected or marked.
 4. Use **Create an Anki card** to include or exclude that correction. Grammar and vocabulary corrections are selected by default. Selecting the checkbox does not export anything yet.
 
+Every selected sentence is checked. Independent mistakes are separated so each card has one target, even when two errors sit next to each other. Hyphenation-only changes are treated as editorial style; the checker also ignores a full stop added at the cut-off end of your selection.
+
 ![Current writing review: shared header, highlighted corrections, a card checkbox and Review 1 card](images/writing-panel.png)
 
 ### Edit feedback or the exercise type

@@ -231,7 +231,7 @@ for (const model of models) {
       row.missing = c.expected.filter((s) => !row.actual.includes(s));
       row.extra = row.actual.filter((s) => !c.expected.includes(s));
       row.pass = !row.missing.length && !row.extra.length;
-      if (process.env.AUDIT_CARDS) {
+      if (process.env.AUDIT_CARDS && c.cards !== false) {
         row.cards = [];
         for (const f of analysis.findings.filter((f) => f.selected)) {
           for (const format of f.after.trim() ? ['correction', 'gap'] : ['correction']) {
