@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { ChatGPTAccount } from './chatgpt-account';
 import { WritingController } from './writing-controller';
 import { WritingView, WRITING_VIEW } from './writing-view';
-import { MarkdownView, Notice, Plugin, type WorkspaceLeaf } from 'obsidian';
+import { MarkdownView, Notice, Plugin, requireApiVersion, type WorkspaceLeaf } from 'obsidian';
 import { sourceMarkRange } from './source-mark';
 import { activeCapture, readCapture } from './capture';
 import { Anki, DuplicateError } from './anki';
@@ -33,9 +33,13 @@ export default class ContextCardsPlugin extends Plugin {
       const vault = adapter?.getBasePath?.() ?? this.app.vault.getName();
       const key =
         'context-cards-chatgpt-' + createHash('sha256').update(vault).digest('hex').slice(0, 24);
-      this.chatgptAccount = new ChatGPTAccount(this.app.secretStorage, key, (url) => {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      });
+      this.chatgptAccount = new ChatGPTAccount(
+        requireApiVersion('1.11.5') ? this.app.secretStorage : undefined,
+        key,
+        (url) => {
+          window.open(url, '_blank', 'noopener,noreferrer');
+        },
+      );
     }
     return this.chatgptAccount;
   }

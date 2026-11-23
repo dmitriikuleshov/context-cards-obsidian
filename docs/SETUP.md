@@ -149,7 +149,7 @@ With the default address, generation stays on your computer. Changing the Ollama
 
 ### Use a ChatGPT subscription (preview)
 
-This connection uses the official [ChatGPT plan-sharing flow for open-source and locally hosted apps](https://developers.openai.com/siwc/token-sharing-open-source). It requires **Obsidian 1.11.4 or newer** for Secret storage and a ChatGPT account eligible to share its plan. A Plus subscription can provide this usage, subject to account, workspace and serving-region restrictions. Account access is confirmed during sign-in and the first request.
+This connection uses the official [ChatGPT plan-sharing flow for open-source and locally hosted apps](https://developers.openai.com/siwc/token-sharing-open-source). It requires **Obsidian 1.11.5 or newer** for Secret storage and a ChatGPT account eligible to share its plan. A Plus subscription can provide this usage, subject to account, workspace and serving-region restrictions. Account access is confirmed during sign-in and the first request.
 
 1. Choose **Settings → Context Cards → AI connection → Provider → ChatGPT · subscription**.
 2. Click **Continue with ChatGPT**. Complete sign-in in your browser and explicitly grant permission to use your ChatGPT plan.
@@ -165,7 +165,7 @@ The plugin sends the selected text and required context to OpenAI. It uses the s
 
 **Manage usage** opens ChatGPT's usage settings. Your plugin requests share plan limits with other apps; a Plus subscription does not provide a separate pool for Context Cards. Additional paid-credit use is governed by the permissions in your ChatGPT account. [Plan usage and credit controls](https://help.openai.com/en/articles/20001542-using-your-chatgpt-plan-in-other-apps-and-sites)
 
-Sign-in credentials are saved through **Obsidian Secret storage**, separately from plugin settings and drafts. Access refreshes automatically while the renewable session remains valid. You do not need to keep a browser tab open or sign in on every Obsidian launch. **Sign out** clears local credentials and attempts remote session revocation; a network failure is explicitly reported. If needed, disconnect Context Cards from ChatGPT's settings. [Session lifecycle](https://developers.openai.com/siwc/token-sharing-open-source/profiles-and-sessions)
+Sign-in credentials are saved through **Obsidian Secret storage**, separately from plugin settings and drafts. Obsidian 1.11.5 introduced operating-system-backed encryption for this storage. [Obsidian release notes](https://obsidian.md/changelog/2026-01-20-desktop-v1.11.5/) Access refreshes automatically while the renewable session remains valid. You do not need to keep a browser tab open or sign in on every Obsidian launch. **Sign out** clears local credentials and attempts remote session revocation; a network failure is explicitly reported. If needed, disconnect Context Cards from ChatGPT's settings. [Session lifecycle](https://developers.openai.com/siwc/token-sharing-open-source/profiles-and-sessions)
 
 Use **Add another account** to authorize a different account or workspace. When multiple registrations are saved, select the intended **ChatGPT account** before choosing a model. If sign-in succeeds without plan permission, **Enable plan usage** requests that permission again. **Cancel sign-in** stops a pending browser login.
 
@@ -311,7 +311,7 @@ Disabling **Context from your book** hides ordinary context display, but preserv
 | No selection buttons | Select text in a Markdown note in Reading Mode or Live Preview. Enable **Reading workflow → Selection button**, or use the command palette. |
 | Plugin missing | Enable it under Community plugins; for ZIP installation, check folder nesting. |
 | Ollama unavailable | Running app, server URL and exact tag from `ollama list`. |
-| ChatGPT sign-in unavailable | Obsidian 1.11.4+, internet access and account/workspace eligibility. Choose Ollama if subscription sharing is unavailable. |
+| ChatGPT sign-in unavailable | Obsidian 1.11.5+, internet access and account/workspace eligibility. Choose Ollama if subscription sharing is unavailable. |
 | ChatGPT plan permission missing | Click **Enable plan usage** and grant permission in the browser. |
 | ChatGPT limit reached | Open **Manage usage**. Check the account's displayed limits; increasing Request timeout does not replenish usage. |
 | ChatGPT session expired | Click **Continue with ChatGPT** to renew the connection. Drafts are kept. |

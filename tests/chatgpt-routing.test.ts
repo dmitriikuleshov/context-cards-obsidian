@@ -8,6 +8,7 @@ import { DEFAULTS } from '../src/types';
 import { Anki } from '../src/anki';
 import { pluginFixture, rawContent } from './vocabulary/fixtures';
 import * as http from '../src/http';
+import * as obsidian from 'obsidian';
 afterEach(() => vi.restoreAllMocks());
 const settings = {
   ...DEFAULTS,
@@ -16,6 +17,13 @@ const settings = {
   chatgptAccountId: 'account',
 };
 describe('provider routing without changing learning mechanics', () => {
+  it('requires the encrypted Secret storage version only for ChatGPT', () => {
+    const f = pluginFixture();
+    vi.spyOn(obsidian, 'requireApiVersion').mockReturnValue(false);
+    expect(f.plugin.modelConnection).toBeUndefined();
+    f.plugin.settings = { ...settings };
+    expect(() => f.plugin.chatgpt.state()).toThrow(/1.11.5/);
+  });
   it('runs the complete vocabulary draft pipeline through the selected account', async () => {
     const f = pluginFixture();
     f.plugin.settings = { ...structuredClone(settings) };

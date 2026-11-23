@@ -199,10 +199,10 @@ describe('full provider settings integration', () => {
   it('shows an actionable Secret storage error while retaining the provider selector', () => {
     const f = setup();
     f.account.state.mockImplementation(() => {
-      throw new Error('ChatGPT sign-in requires Obsidian 1.11.4 or newer.');
+      throw new Error('ChatGPT sign-in requires Obsidian 1.11.5 or newer.');
     });
     f.provider('chatgpt');
-    expect(f.tab.containerEl.textContent).toContain('1.11.4');
+    expect(f.tab.containerEl.textContent).toContain('1.11.5');
     expect(f.row('Provider')).toBeDefined();
     expect(
       Array.from(f.tab.containerEl.querySelectorAll('button')).some(

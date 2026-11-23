@@ -246,7 +246,7 @@ describe('ChatGPT subscription session lifecycle', () => {
     expect(f.secret()).not.toContain('test-access');
   });
   it('rejects unavailable Secret storage and corrupted credential records', () => {
-    expect(() => new ChatGPTAccount(undefined, 'key', () => {}).state()).toThrow(/1.11.4/);
+    expect(() => new ChatGPTAccount(undefined, 'key', () => {}).state()).toThrow(/1.11.5/);
     for (const raw of [
       'broken',
       '{}',

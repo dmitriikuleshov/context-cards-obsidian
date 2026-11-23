@@ -79,7 +79,7 @@ export class ChatGPTAccount implements SubscriptionConnection {
   private read() {
     if (!this.store)
       throw new Error(
-        'ChatGPT sign-in requires Obsidian 1.11.4 or newer with Secret storage. Update Obsidian or choose Ollama.',
+        'ChatGPT sign-in requires Obsidian 1.11.5 or newer with Secret storage. Update Obsidian or choose Ollama.',
       );
     if (this.data) return this.data;
     const raw = this.store.getSecret(this.key);

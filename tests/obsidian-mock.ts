@@ -236,5 +236,6 @@ export function setIcon(element: HTMLElement, name: string) {
 }
 
 export class TFile {}
+export const requireApiVersion = (_version: string) => true;
 export const normalizePath = (path: string) =>
   path.replaceAll('\\', '/').replace(/\/+/g, '/').replace(/\/$/, '');

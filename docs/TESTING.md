@@ -91,7 +91,7 @@ Run `npm run test:chatgpt` for the provider-specific suite and coverage gates. I
 
 Coverage includes signed identity verification (issuer, audience, expiry, nonce and signature), PKCE, loopback callback validation/cancellation, persistent registrations, rotating refresh tokens, concurrent refreshes, multiple accounts, revoked permissions, terminal/transient failures, logout and streamed terminal events. It also checks migration from local-only settings, complete vocabulary generation, writing analysis/exercises, provider switching, model discovery, narrow layouts and the existing-draft replacement review.
 
-Credentials are kept through Obsidian Secret storage, outside `data.json`. The plugin requires Obsidian 1.11.4+ only for this optional connection; older versions can continue using Ollama. All direct inference uses the public Responses endpoint, `store: false` and `stream: true`. Unsupported subscription fields are omitted. It never borrows credentials from Codex or other apps, calls ChatGPT backend endpoints or switches to API-key billing.
+Credentials are kept through Obsidian Secret storage, outside `data.json`. The plugin requires Obsidian 1.11.5+ only for this optional connection; older versions can continue using Ollama. All direct inference uses the public Responses endpoint, `store: false` and `stream: true`. Unsupported subscription fields are omitted. It never borrows credentials from Codex or other apps, calls ChatGPT backend endpoints or switches to API-key billing.
 
 The suite gates the new modules at 95% statements, 98% lines, 92% branches and 90% functions. Existing per-file vocabulary and analysis coverage thresholds remain unchanged. Both GitHub workflows run the subscription suite.
 

@@ -98,7 +98,7 @@ These recommendations come from tests on Windows with an RTX 5070 (12 GB VRAM), 
 
 ## Start with your next chapter
 
-You will need **Obsidian Desktop**, **Anki Desktop with AnkiConnect**, and either **Ollama with a downloaded model** or an eligible **ChatGPT subscription**. The ChatGPT connection requires Obsidian **1.11.4 or newer** for Secret storage and internet access. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.
+You will need **Obsidian Desktop**, **Anki Desktop with AnkiConnect**, and either **Ollama with a downloaded model** or an eligible **ChatGPT subscription**. The ChatGPT connection requires Obsidian **1.11.5 or newer** for Secret storage and internet access. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.
 
 Install through **BRAT** for convenient plugin updates, or download a ready-to-use ZIP. You do not need to build the plugin yourself.
 
