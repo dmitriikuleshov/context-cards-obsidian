@@ -1,8 +1,10 @@
 import type { Capture } from './types';
 import { htmlText } from './text';
 import { writingHighlights } from './writing-workflow';
+import { linkedWritingEdit } from './writing-edit-relation';
 
 export const WRITING_LIMIT = 6000;
+export const MAX_WRITING_FINDINGS = 30;
 export type FindingKind = 'grammar' | 'vocabulary' | 'style' | 'unclear' | 'typo';
 export type PracticeKind = 'correction' | 'gap';
 export interface WritingCard {
@@ -104,7 +106,7 @@ export function validateWritingTarget(f: WritingFinding) {
       else j++;
     }
   }
-  if (runs > 1)
+  if (runs > 1 && !linkedWritingEdit(f.before, f.after))
     throw new Error(
       'A correction changes multiple separate targets. Keep only one issue per finding and recheck the selection.',
     );
@@ -210,7 +212,7 @@ export function parseWritingAnalysis(
   strict = false,
 ): { summary: string; findings: WritingFinding[] } {
   const data = JSON.parse(raw);
-  if (!data || !Array.isArray(data.findings) || data.findings.length > 10)
+  if (!data || !Array.isArray(data.findings) || data.findings.length > MAX_WRITING_FINDINGS)
     throw new Error('Invalid writing analysis. Try a shorter selection.');
   const seen = new Set<string>();
   const findings: WritingFinding[] = [];
@@ -346,7 +348,7 @@ export function restoreWritingSessions(value: unknown): WritingSession[] {
         !Array.isArray(s.findings)
       )
         continue;
-      const mapped = s.findings.slice(0, 10).flatMap((f: WritingFinding) => {
+      const mapped = s.findings.slice(0, MAX_WRITING_FINDINGS).flatMap((f: WritingFinding) => {
         try {
           const item = {
             kind: f.kind,

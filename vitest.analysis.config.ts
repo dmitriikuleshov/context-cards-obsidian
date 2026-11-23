@@ -13,6 +13,7 @@ export default defineConfig({
         'src/writing.ts',
         'src/writing-model.ts',
         'src/writing-diff.ts',
+        'src/writing-edit-relation.ts',
         'src/writing-american.ts',
         'src/writing-controller.ts',
         'src/writing-workflow.ts',

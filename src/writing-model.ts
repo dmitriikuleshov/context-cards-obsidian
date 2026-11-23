@@ -28,6 +28,7 @@ Return one decision per id. Explain the actual before -> after edit, then choose
 - incorrect: the original target is already acceptable, the edit is only a preference, or the replacement is wrong. Accepted spelling/hyphenation variants and valid gerund/infinitive alternatives are not errors.
 An incorrect fixed collocation is a REQUIRED vocabulary correction even when its meaning is understandable: for example, "do a decision" -> "make a decision". Distinguish this from replacing a valid expression with a preferred synonym. Lexical verb choice in a collocation is vocabulary; wrong inflection or auxiliary structure is grammar.
 Check capitalization, subject-verb agreement, auxiliary/participle forms, articles, prepositions and question structure as rules, not stylistic preferences. Preserve meaning and time expressions. Do not infer an ongoing action from a finished past event.
+Check the actual grammatical context, not a mechanical preference: none of a plural count-noun group may take singular or plural agreement; an if-clause about a real past event can use indicative was. Optional serial commas are house style, not missing grammar. Preserve code, literal labels and exact quotations even if their contents are ungrammatical. American spelling does not require rewriting correct statements about British spellings or changing cited examples.
 Other errors may remain outside this target: assess ONLY this local edit. Never reject a valid local correction because a separate error remains, and never claim the edit fixes a different word. Explain the required correct form directly in at most two short sentences; avoid labeling the erroneous form. No deliberation or discussion of input/JSON fields. Give a useful tip for required, otherwise an empty tip. Do not invent or rewrite sentences. Return JSON only.`;
 export class WritingModel {
   constructor(private settings: Settings) {}
@@ -187,96 +188,109 @@ export class WritingModel {
     }
     const reviewIds = new Map(candidates.map((f, i) => [String(i + 1), f.id]));
     const categories = ['grammar', 'vocabulary', 'typo', 'style', 'unclear'];
-    const readDecisions = (raw: string) => {
-      const data = JSON.parse(raw);
-      if (!Array.isArray(data?.decisions) || data.decisions.length !== candidates.length)
-        throw new Error('The correction check did not cover every proposed edit.');
-      const seen = new Set<string>();
-      for (const d of data.decisions) {
-        if (
-          !d ||
-          !reviewIds.has(d.id) ||
-          seen.has(d.id) ||
-          !['required', 'optional', 'incorrect'].includes(d.verdict) ||
-          !categories.includes(d.category) ||
-          !['correction', 'gap'].includes(d.recommended_format) ||
-          typeof d.pattern !== 'string' ||
-          d.pattern.length > 300 ||
-          typeof d.explanation !== 'string' ||
-          !d.explanation.trim() ||
-          d.explanation.length > 1000 ||
-          typeof d.tip !== 'string' ||
-          d.tip.length > 500
-        )
-          throw new Error('The correction check returned invalid feedback.');
-        seen.add(d.id);
-      }
-      return data.decisions as Array<{
-        id: string;
-        verdict: 'required' | 'optional' | 'incorrect';
-        category: WritingFinding['kind'];
-        recommended_format: 'correction' | 'gap';
-        pattern: string;
-        explanation: string;
-        tip: string;
-      }>;
-    };
-    const reviewed = await this.request(
-      variantRule +
-        REVIEW_PROMPT +
-        ' Classify the ACTUAL edit: grammar includes capitalization and verb forms, vocabulary includes collocations, typo means accidental misspellings. Return its short rule name as pattern. Choose correction or gap as recommended_format for a useful practice exercise; deletions require correction.',
-      {
-        text,
-        candidates: candidates.map((f, i) => {
-          const original = isolatedQuestion(f, candidates);
-          return {
-            id: String(i + 1),
-            original,
-            target_before: f.before,
-            target_after: f.after,
-            proposed: original.replace(f.before, () => f.after),
-          };
-        }),
-      },
-      {
-        type: 'object',
-        properties: {
-          decisions: {
-            type: 'array',
-            minItems: candidates.length,
-            maxItems: candidates.length,
-            items: {
-              type: 'object',
-              properties: {
-                id: { type: 'string', enum: [...reviewIds.keys()] },
-                explanation: { type: 'string', maxLength: 1000 },
-                tip: { type: 'string', maxLength: 500 },
-                verdict: { type: 'string', enum: ['required', 'optional', 'incorrect'] },
-                category: { type: 'string', enum: categories },
-                pattern: { type: 'string', maxLength: 300 },
-                recommended_format: { type: 'string', enum: ['correction', 'gap'] },
+    const decisions: Array<{
+      id: string;
+      verdict: 'required' | 'optional' | 'incorrect';
+      category: WritingFinding['kind'];
+      recommended_format: 'correction' | 'gap';
+      pattern: string;
+      explanation: string;
+      tip: string;
+    }> = [];
+    for (let offset = 0; offset < candidates.length; offset += 6) {
+      const batch = candidates.slice(offset, offset + 6);
+      const batchIds = new Set(batch.map((f) => String(candidates.indexOf(f) + 1)));
+      const readDecisions = (raw: string) => {
+        const data = JSON.parse(raw);
+        if (!Array.isArray(data?.decisions) || data.decisions.length !== batch.length)
+          throw new Error('The correction check did not cover every proposed edit.');
+        const seen = new Set<string>();
+        for (const d of data.decisions) {
+          if (
+            !d ||
+            !batchIds.has(d.id) ||
+            seen.has(d.id) ||
+            !['required', 'optional', 'incorrect'].includes(d.verdict) ||
+            !categories.includes(d.category) ||
+            !['correction', 'gap'].includes(d.recommended_format) ||
+            typeof d.pattern !== 'string' ||
+            d.pattern.length > 300 ||
+            typeof d.explanation !== 'string' ||
+            !d.explanation.trim() ||
+            d.explanation.length > 1000 ||
+            typeof d.tip !== 'string' ||
+            d.tip.length > 500
+          )
+            throw new Error('The correction check returned invalid feedback.');
+          seen.add(d.id);
+        }
+        return data.decisions as Array<{
+          id: string;
+          verdict: 'required' | 'optional' | 'incorrect';
+          category: WritingFinding['kind'];
+          recommended_format: 'correction' | 'gap';
+          pattern: string;
+          explanation: string;
+          tip: string;
+        }>;
+      };
+      const reviewed = await this.request(
+        variantRule +
+          REVIEW_PROMPT +
+          ' Classify the ACTUAL edit: grammar includes capitalization and verb forms, vocabulary includes collocations, typo means accidental misspellings. Return its short rule name as pattern. Choose correction or gap as recommended_format for a useful practice exercise; deletions require correction.',
+        {
+          text,
+          candidates: batch.map((f) => {
+            const original = isolatedQuestion(f, candidates);
+            return {
+              id: String(candidates.indexOf(f) + 1),
+              original,
+              target_before: f.before,
+              target_after: f.after,
+              proposed: original.replace(f.before, () => f.after),
+            };
+          }),
+        },
+        {
+          type: 'object',
+          properties: {
+            decisions: {
+              type: 'array',
+              minItems: batch.length,
+              maxItems: batch.length,
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', enum: [...batchIds] },
+                  explanation: { type: 'string', maxLength: 1000 },
+                  tip: { type: 'string', maxLength: 500 },
+                  verdict: { type: 'string', enum: ['required', 'optional', 'incorrect'] },
+                  category: { type: 'string', enum: categories },
+                  pattern: { type: 'string', maxLength: 300 },
+                  recommended_format: { type: 'string', enum: ['correction', 'gap'] },
+                },
+                required: [
+                  'id',
+                  'explanation',
+                  'tip',
+                  'verdict',
+                  'category',
+                  'pattern',
+                  'recommended_format',
+                ],
+                additionalProperties: false,
               },
-              required: [
-                'id',
-                'explanation',
-                'tip',
-                'verdict',
-                'category',
-                'pattern',
-                'recommended_format',
-              ],
-              additionalProperties: false,
             },
           },
+          required: ['decisions'],
+          additionalProperties: false,
         },
-        required: ['decisions'],
-        additionalProperties: false,
-      },
-      signal,
-      readDecisions,
-      Math.max(0, deadline - Date.now()),
-    );
-    const decisions = readDecisions(reviewed);
+        signal,
+        readDecisions,
+        Math.max(0, deadline - Date.now()),
+      );
+      decisions.push(...readDecisions(reviewed));
+    }
     analysis.findings = candidates.flatMap((f) => {
       const d = decisions.find((d) => reviewIds.get(d.id) === f.id)!;
       const spelling = americanSpellingPolicy(f.original, f.before, f.after);

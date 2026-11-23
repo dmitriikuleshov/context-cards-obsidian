@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  MAX_WRITING_FINDINGS,
   correctedSentence,
   isolatedQuestion,
   minimalCorrection,
@@ -19,7 +20,7 @@ describe('untrusted analysis contracts', () => {
     '[]',
     '{"summary":"x","findings":{}}',
     '{"summary":"x","findings":null}',
-    analysisJSON(Array(11).fill(rawFinding())),
+    analysisJSON(Array(MAX_WRITING_FINDINGS + 1).fill(rawFinding())),
   ])('rejects invalid analysis envelopes: %s', (raw) => {
     expect(() => parseWritingAnalysis(raw, SOURCE, true)).toThrow();
   });
