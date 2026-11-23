@@ -5,6 +5,7 @@ import { build } from 'esbuild';
 import { mkdir, readFile, writeFile, appendFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const out = resolve(process.env.AUDIT_DIR || '.test-artifacts/writing-basics-baseline');
 await mkdir(out, { recursive: true });
@@ -113,6 +114,11 @@ const cases = [
     expected: [],
   },
 ];
+if (process.env.AUDIT_CASES_FILE) {
+  const supplied = JSON.parse(await readFile(process.env.AUDIT_CASES_FILE, 'utf8'));
+  if (!Array.isArray(supplied) || !supplied.length) throw new Error('Expected nonempty cases');
+  cases.splice(0, cases.length, ...supplied);
+}
 const chosen = cases.filter((c) =>
   process.env.AUDIT_SET === 'held'
     ? c.heldOut
@@ -120,34 +126,68 @@ const chosen = cases.filter((c) =>
       ? !c.heldOut
       : true,
 );
-await writeFile(resolve(out, 'cases.json'), JSON.stringify(cases, null, 2));
-await build({
-  stdin: {
-    contents: `export {WritingModel} from './src/writing-model.ts'; export {DEFAULTS} from './src/types.ts'; export {correctedSentence} from './src/writing.ts';`,
-    resolveDir: process.cwd(),
-    loader: 'ts',
-  },
-  bundle: true,
-  platform: 'node',
-  format: 'esm',
-  outfile: resolve(out, 'client.mjs'),
-  plugins: [
-    {
-      name: 'observe-transport',
-      setup(b) {
-        b.onLoad({ filter: /[\\/]src[\\/]http\.ts$/ }, async (args) => ({
-          loader: 'ts',
-          contents:
-            (await readFile(args.path, 'utf8')).replace(
-              'export function jsonRequest<T>(',
-              'function baseJsonRequest<T>(',
-            ) +
-            `\nexport async function jsonRequest<T>(...args: Parameters<typeof baseJsonRequest<T>>): Promise<T> { const start=performance.now(); try { const response=await baseJsonRequest<T>(...args); await (globalThis as any).__auditTransport?.({request:args[1],timeoutMs:args[3],elapsedMs:performance.now()-start,response}); return response; } catch(error) { await (globalThis as any).__auditTransport?.({request:args[1],elapsedMs:performance.now()-start,error:String(error)}); throw error; } }`,
-        }));
-      },
+const caseFile = resolve(out, 'cases.json');
+const caseSnapshot = JSON.stringify(cases, null, 2);
+try {
+  if ((await readFile(caseFile, 'utf8')) !== caseSnapshot)
+    throw new Error('Cases changed: use a new AUDIT_DIR');
+} catch (e) {
+  if (e.code !== 'ENOENT') throw e;
+  await writeFile(caseFile, caseSnapshot);
+}
+// A resumable run always uses its frozen client, even if the working tree changed.
+let frozen = false;
+try {
+  await readFile(resolve(out, 'client.mjs'));
+  frozen = true;
+} catch (e) {
+  if (e.code !== 'ENOENT') throw e;
+}
+if (!frozen)
+  await build({
+    stdin: {
+      contents: `export {WritingModel} from './src/writing-model.ts'; export {DEFAULTS} from './src/types.ts'; export {correctedSentence} from './src/writing.ts';`,
+      resolveDir: process.cwd(),
+      loader: 'ts',
     },
-  ],
-});
+    bundle: true,
+    platform: 'node',
+    format: 'esm',
+    outfile: resolve(out, 'client.mjs'),
+    plugins: [
+      {
+        name: 'observe-transport',
+        setup(b) {
+          b.onLoad({ filter: /[\\/]src[\\/]http\.ts$/ }, async (args) => ({
+            loader: 'ts',
+            contents:
+              (await readFile(args.path, 'utf8')).replace(
+                'export function jsonRequest<T>(',
+                'function baseJsonRequest<T>(',
+              ) +
+              `\nexport async function jsonRequest<T>(...args: Parameters<typeof baseJsonRequest<T>>): Promise<T> { const start=performance.now(); try { const response=await baseJsonRequest<T>(...args); await (globalThis as any).__auditTransport?.({request:args[1],timeoutMs:args[3],elapsedMs:performance.now()-start,response}); return response; } catch(error) { await (globalThis as any).__auditTransport?.({request:args[1],elapsedMs:performance.now()-start,error:String(error)}); throw error; } }`,
+          }));
+        },
+      },
+    ],
+  });
+const hash = createHash('sha256')
+  .update(await readFile(resolve(out, 'client.mjs')))
+  .digest('hex');
+await writeFile(
+  resolve(out, 'run.json'),
+  JSON.stringify(
+    {
+      clientSHA256: hash,
+      thinking: false,
+      temperature: 0,
+      timeoutSeconds: 300,
+      cards: !!process.env.AUDIT_CARDS,
+    },
+    null,
+    2,
+  ),
+);
 const { WritingModel, DEFAULTS, correctedSentence } = await import(
   pathToFileURL(resolve(out, 'client.mjs'))
 );
@@ -165,7 +205,6 @@ for (const model of models) {
   if (chosen.every((c) => results.some((r) => r.model === model && r.id === c.id))) continue;
   for (const loaded of (await api('/api/ps')).models)
     if (loaded.name !== model) await api('/api/generate', { model: loaded.name, keep_alive: 0 });
-  const client = new WritingModel({ ...DEFAULTS, model, ollamaUrl: url, timeoutSeconds: 300 });
   for (const c of chosen) {
     if (results.some((r) => r.model === model && r.id === c.id)) continue;
     let calls = 0;
@@ -178,6 +217,13 @@ for (const model of models) {
     };
     const started = performance.now();
     const row = { model, id: c.id, heldOut: !!c.heldOut, expected: c.expected };
+    const client = new WritingModel({
+      ...DEFAULTS,
+      model,
+      ollamaUrl: url,
+      timeoutSeconds: 300,
+      writing: { ...DEFAULTS.writing, ...c.writing },
+    });
     try {
       const analysis = await client.analyse(c.text, new AbortController().signal);
       row.findings = analysis.findings;
@@ -185,6 +231,19 @@ for (const model of models) {
       row.missing = c.expected.filter((s) => !row.actual.includes(s));
       row.extra = row.actual.filter((s) => !c.expected.includes(s));
       row.pass = !row.missing.length && !row.extra.length;
+      if (process.env.AUDIT_CARDS) {
+        row.cards = [];
+        for (const f of analysis.findings.filter((f) => f.selected)) {
+          for (const format of f.after.trim() ? ['correction', 'gap'] : ['correction']) {
+            const card = await client.exercise(
+              { ...f, format },
+              new AbortController().signal,
+              analysis.findings,
+            );
+            row.cards.push({ finding: f.id, ...card });
+          }
+        }
+      }
     } catch (error) {
       row.error = error.message;
       row.pass = false;
