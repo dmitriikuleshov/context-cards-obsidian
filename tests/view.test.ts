@@ -230,12 +230,27 @@ describe('editable review panel', () => {
     const { view, click } = setup();
     click('Preview cards');
     click('Recall');
+    expect(
+      view.contentEl.querySelector('[data-cc-direction="recall"]')!.getAttribute('aria-pressed'),
+    ).toBe('true');
+    expect(
+      view.contentEl
+        .querySelector('[data-cc-direction="recognition"]')!
+        .getAttribute('aria-pressed'),
+    ).toBe('false');
+    expect(view.contentEl.querySelector('.cc-preview-toolbar')!.textContent).not.toContain(
+      'Flip card',
+    );
+    expect(view.contentEl.querySelector('.cc-preview-card-header')!.textContent).toContain(
+      'Flip card',
+    );
     const frame = () => view.contentEl.querySelector('iframe')!;
     expect(frame().srcdoc).toContain('Show definition');
     expect(frame().srcdoc).toContain('cc-gap');
     expect(frame().srcdoc).not.toContain('brush off');
     expect(frame().srcdoc).not.toContain('brushed off');
     click('Flip card');
+    expect(view.contentEl.querySelector('.cc-preview-side')!.textContent).toBe('Answer');
     expect(frame().srcdoc).toContain('brushed off');
     expect(frame().getAttribute('sandbox')).toBe('allow-same-origin');
   });

@@ -543,21 +543,30 @@ export class ReviewView extends ItemView {
   }
   private renderPreview(body: HTMLElement, draft: Draft) {
     const toolbar = body.createDiv({ cls: 'cc-preview-toolbar' });
-    this.button(toolbar, 'Recognition', () => {
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', 'Card type');
+    const recognition = this.button(toolbar, 'Recognition', () => {
       this.direction = 'recognition';
       this.back = false;
       this.updatePreview(draft);
     });
-    this.button(toolbar, 'Recall', () => {
+    recognition.dataset.ccDirection = 'recognition';
+    recognition.setAttribute('aria-label', 'Recognition');
+    const recall = this.button(toolbar, 'Recall', () => {
       this.direction = 'recall';
       this.back = false;
       this.updatePreview(draft);
     });
-    this.button(toolbar, 'Flip card', () => {
+    recall.dataset.ccDirection = 'recall';
+    recall.setAttribute('aria-label', 'Recall');
+    const card = body.createDiv({ cls: 'cc-preview-card' });
+    const header = card.createDiv({ cls: 'cc-preview-card-header' });
+    header.createSpan({ cls: 'cc-preview-side' });
+    this.button(header, 'Flip card', () => {
       this.back = !this.back;
       this.updatePreview(draft);
     });
-    const frame = body.createEl('iframe', {
+    const frame = card.createEl('iframe', {
       cls: 'cc-preview-frame',
       attr: { title: 'Anki card preview', sandbox: 'allow-same-origin' },
     });
@@ -578,6 +587,17 @@ export class ReviewView extends ItemView {
   }
   private updatePreview(draft: Draft) {
     if (!this.previewFrame) return;
+    for (const button of Array.from(
+      this.contentEl.querySelectorAll<HTMLButtonElement>('[data-cc-direction]'),
+    )) {
+      const selected = button.dataset.ccDirection === this.direction;
+      button.setAttribute('aria-pressed', String(selected));
+    }
+    const header = this.previewFrame.parentElement?.querySelector('.cc-preview-card-header');
+    const side = header?.querySelector('.cc-preview-side');
+    if (side) side.textContent = this.back ? 'Answer' : 'Question';
+    const flip = header?.querySelector('button');
+    if (flip) flip.title = this.back ? 'Show question' : 'Show answer';
     const original = draft;
     draft = visibleDraft(draft, this.plugin.settings);
     const list = (values: string[]) =>
