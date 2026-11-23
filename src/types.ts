@@ -39,6 +39,9 @@ export function writingOptions(settings?: Partial<Settings>): WritingOptions {
   return options;
 }
 export interface Settings {
+  provider: 'ollama' | 'chatgpt';
+  chatgptModel: string;
+  chatgptAccountId: string;
   fields: CardFields;
   writing: WritingOptions;
   writingDeck: string;
@@ -61,6 +64,9 @@ export interface Settings {
   bookDecks: Record<string, string>;
 }
 export const DEFAULTS: Settings = {
+  provider: 'ollama',
+  chatgptModel: '',
+  chatgptAccountId: '',
   fields: { ...DEFAULT_FIELDS },
   writing: { ...DEFAULT_WRITING },
   writingDeck: 'English::Writing mistakes',

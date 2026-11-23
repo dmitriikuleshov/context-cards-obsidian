@@ -1,4 +1,4 @@
-import { endpoint, jsonRequest } from './http';
+import { modelChat, type SubscriptionConnection } from './model-chat';
 import { writingEdits } from './writing-diff';
 import { americanSpellingPolicy } from './writing-american';
 import { protectedWritingLiteral } from './writing-literals';
@@ -32,7 +32,10 @@ Check capitalization, subject-verb agreement, auxiliary/participle forms, articl
 Check the actual grammatical context, not a mechanical preference: none of a plural count-noun group may take singular or plural agreement; an if-clause about a real past event can use indicative was. Optional serial commas are house style, not missing grammar. Preserve code, literal labels and exact quotations even if their contents are ungrammatical. American spelling does not require rewriting correct statements about British spellings or changing cited examples.
 Other errors may remain outside this target: assess ONLY this local edit. Never reject a valid local correction because a separate error remains, and never claim the edit fixes a different word. Explain the required correct form directly in at most two short sentences; avoid labeling the erroneous form. No deliberation or discussion of input/JSON fields. Give a useful tip for required, otherwise an empty tip. Do not invent or rewrite sentences. Return JSON only.`;
 export class WritingModel {
-  constructor(private settings: Settings) {}
+  constructor(
+    private settings: Settings,
+    private connection?: SubscriptionConnection,
+  ) {}
   private async request(
     prompt: string,
     input: unknown,
@@ -49,8 +52,8 @@ export class WritingModel {
         throw new Error(
           'Writing generation timed out. Increase Request timeout or select a shorter paragraph.',
         );
-      const result = await jsonRequest<{ message?: { content?: string }; done_reason?: string }>(
-        `${endpoint(this.settings.ollamaUrl)}/api/chat`,
+      const result = await modelChat<{ message?: { content?: string }; done_reason?: string }>(
+        this.settings,
         {
           model: this.settings.model.trim(),
           messages: [
@@ -77,6 +80,7 @@ export class WritingModel {
         },
         signal,
         remaining,
+        this.connection,
       );
       try {
         if (result.done_reason === 'length')

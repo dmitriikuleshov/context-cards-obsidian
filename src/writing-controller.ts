@@ -191,10 +191,10 @@ export class WritingController {
       return;
     }
     await this.run(s, 'analysing', async (signal) => {
-      const result = await new WritingModel(structuredClone(this.host.settings)).analyse(
-        s.capture.selected,
-        signal,
-      );
+      const result = await new WritingModel(
+        structuredClone(this.host.settings),
+        this.host.modelConnection,
+      ).analyse(s.capture.selected, signal);
       if (signal.aborted || this.stopped) return;
       s.findings = result.findings;
       s.summary = result.summary;
@@ -209,7 +209,7 @@ export class WritingController {
       this.refresh();
       return;
     }
-    const model = new WritingModel(structuredClone(this.host.settings));
+    const model = new WritingModel(structuredClone(this.host.settings), this.host.modelConnection);
     await this.run(s, 'generating', async (signal) => {
       const failures: string[] = [];
       for (const f of selected) {

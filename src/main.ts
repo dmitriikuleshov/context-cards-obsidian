@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { ChatGPTAccount } from './chatgpt-account';
 import { WritingController } from './writing-controller';
 import { WritingView, WRITING_VIEW } from './writing-view';
 import { MarkdownView, Notice, Plugin, type WorkspaceLeaf } from 'obsidian';
@@ -24,6 +26,22 @@ export default class ContextCardsPlugin extends Plugin {
   drafts: Draft[] = [];
   deckNames: string[] = [];
   writing = new WritingController(this);
+  private chatgptAccount?: ChatGPTAccount;
+  get chatgpt(): ChatGPTAccount {
+    if (!this.chatgptAccount) {
+      const adapter = this.app.vault.adapter as { getBasePath?: () => string };
+      const vault = adapter?.getBasePath?.() ?? this.app.vault.getName();
+      const key =
+        'context-cards-chatgpt-' + createHash('sha256').update(vault).digest('hex').slice(0, 24);
+      this.chatgptAccount = new ChatGPTAccount(this.app.secretStorage, key, (url) => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      });
+    }
+    return this.chatgptAccount;
+  }
+  get modelConnection() {
+    return this.settings.provider === 'chatgpt' ? this.chatgpt : undefined;
+  }
   private jobs = new Map<string, AbortController>();
   private lastCapture: Capture | null = null;
   private floating = new Map<Document, HTMLElement>();
@@ -362,11 +380,10 @@ export default class ContextCardsPlugin extends Plugin {
     draft.error = '';
     this.refresh();
     try {
-      const result = await new Ollama(structuredClone(this.settings)).generate(
-        target,
-        source,
-        controller.signal,
-      );
+      const result = await new Ollama(
+        structuredClone(this.settings),
+        this.modelConnection,
+      ).generate(target, source, controller.signal);
       if (controller.signal.aborted || this.unloaded) return;
       if (draft.answer !== target || draft.context !== source) {
         draft.error =
@@ -408,11 +425,10 @@ export default class ContextCardsPlugin extends Plugin {
     draft.error = '';
     this.refresh();
     try {
-      const result = await new Ollama(structuredClone(this.settings)).generalMeaning(
-        word,
-        grammar,
-        controller.signal,
-      );
+      const result = await new Ollama(
+        structuredClone(this.settings),
+        this.modelConnection,
+      ).generalMeaning(word, grammar, controller.signal);
       if (controller.signal.aborted || this.unloaded) return;
       if (
         draft.expression !== word ||
@@ -451,11 +467,10 @@ export default class ContextCardsPlugin extends Plugin {
     draft.error = '';
     this.refresh();
     try {
-      const result = await new Ollama(structuredClone(this.settings)).wordFormation(
-        word,
-        grammar,
-        controller.signal,
-      );
+      const result = await new Ollama(
+        structuredClone(this.settings),
+        this.modelConnection,
+      ).wordFormation(word, grammar, controller.signal);
       if (controller.signal.aborted || this.unloaded) return;
       if (
         draft.expression !== word ||
@@ -620,19 +635,22 @@ export default class ContextCardsPlugin extends Plugin {
   }
   async checkConnections() {
     const results = await Promise.allSettled([
-      new Ollama(this.settings).models(),
+      new Ollama(this.settings, this.modelConnection).models(),
       new Anki(this.settings).decks(),
     ]);
+    const provider = this.settings.provider === 'chatgpt' ? 'ChatGPT' : 'Ollama';
+    const selected =
+      this.settings.provider === 'chatgpt' ? this.settings.chatgptModel : this.settings.model;
     const model = results[0],
       anki = results[1];
     if (anki.status === 'fulfilled') this.deckNames = anki.value;
     new Notice(
       [
         model.status === 'fulfilled'
-          ? model.value.includes(this.settings.model)
-            ? 'Ollama: selected model is installed.'
-            : 'Ollama: connected; selected model is not installed.'
-          : `Ollama: ${String(model.reason)}`,
+          ? model.value.includes(selected)
+            ? `${provider}: selected model is available.`
+            : `${provider}: connected; select an available model in settings.`
+          : `${provider}: ${String(model.reason)}`,
         anki.status === 'fulfilled' ? 'Anki: connected.' : `Anki: ${String(anki.reason)}`,
       ].join('\n'),
       10000,
@@ -665,6 +683,7 @@ export default class ContextCardsPlugin extends Plugin {
   }
   onunload() {
     this.unloaded = true;
+    this.chatgptAccount?.dispose();
     this.writing.stop();
     for (const controller of this.jobs.values()) controller.abort();
     clearTimeout(this.saveTimer);

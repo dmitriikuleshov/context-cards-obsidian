@@ -69,6 +69,7 @@ function content(value: Record<string, unknown>): Content {
 function settings(value: unknown): Settings {
   const result = structuredClone(DEFAULTS);
   if (!record(value)) return result;
+  if (value.provider === 'chatgpt') result.provider = 'chatgpt';
   result.writing = writingOptions({ writing: value.writing as Settings['writing'] });
   for (const key of [
     'writingDeck',
@@ -76,6 +77,8 @@ function settings(value: unknown): Settings {
     'writingNoteType',
     'ollamaUrl',
     'model',
+    'chatgptModel',
+    'chatgptAccountId',
     'ankiUrl',
     'ankiKey',
     'rootDeck',

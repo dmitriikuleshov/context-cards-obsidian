@@ -13,10 +13,12 @@ import { Anki } from './anki';
 import { endpoint } from './http';
 import { enhanceSelects } from './select-menu';
 import { ModelControl } from './model-control';
+import { ChatGPTControl } from './chatgpt-control';
 
 export class ContextSettings extends PluginSettingTab {
   private dropdownCleanup?: () => void;
   private modelControl?: ModelControl;
+  private chatgptControl?: ChatGPTControl;
   constructor(
     app: App,
     private plugin: ContextCardsPlugin,
@@ -26,11 +28,12 @@ export class ContextSettings extends PluginSettingTab {
   display() {
     this.dropdownCleanup?.();
     this.modelControl?.destroy();
+    this.chatgptControl?.destroy();
     const root = this.containerEl;
     root.empty();
     root.createEl('h2', { text: 'Context Cards' });
     root.createEl('p', {
-      text: 'Select a word to create vocabulary cards, or select your own writing to review mistakes and create practice. Both modes use your configured Ollama server.',
+      text: 'Select a word to create vocabulary cards, or select your own writing to review mistakes and create practice. Both modes use the AI connection selected below.',
     });
     const settings = this.plugin.settings;
     const text = (
@@ -53,22 +56,57 @@ export class ContextSettings extends PluginSettingTab {
           });
         });
     };
-    new Setting(root).setName('Local model').setHeading();
-    text(
-      'Ollama server',
-      'Where the model runs. Keep http://127.0.0.1:11434 when Ollama is on this computer, and leave Ollama running while generating. Change this only to use another server; selected text and context will be sent there.',
-      'ollamaUrl',
-      DEFAULTS.ollamaUrl,
-    );
-    const model = new Setting(root).setName('Model');
-    this.modelControl = new ModelControl(
-      model.controlEl,
-      settings,
-      () => this.plugin.persist(),
-      (text) => model.setDesc(text),
-      (snapshot, signal) => new Ollama({ ...settings, ...snapshot }).models(signal),
-    );
-    void this.modelControl.load();
+    new Setting(root).setName('AI connection').setHeading();
+    new Setting(root)
+      .setName('Provider')
+      .setDesc(
+        'Choose where vocabulary and writing are processed. Switching keeps the model choice for each provider.',
+      )
+      .addDropdown((d) =>
+        d
+          .addOptions({ ollama: 'Ollama · local model', chatgpt: 'ChatGPT · subscription' })
+          .setValue(settings.provider)
+          .onChange((value) => {
+            this.chatgptControl?.cancel();
+            settings.provider = value === 'chatgpt' ? 'chatgpt' : 'ollama';
+            this.plugin.persist();
+            this.display();
+          }),
+      );
+    if (settings.provider === 'chatgpt') {
+      new Setting(root).setName('ChatGPT subscription').setHeading();
+      root.createEl('p', {
+        cls: 'cc-muted',
+        text: 'Sends selected text and context to OpenAI. Uses the shared allowance included in your ChatGPT plan after you grant permission. No API key or automatic switch to API billing. Internet access is required.',
+      });
+      const account = root.createDiv();
+      this.chatgptControl = new ChatGPTControl(
+        account,
+        settings,
+        this.plugin.chatgpt,
+        () => this.plugin.persist(),
+        (url) => {
+          window.open(url, '_blank', 'noopener,noreferrer');
+        },
+      );
+    } else {
+      new Setting(root).setName('Local model').setHeading();
+      text(
+        'Ollama server',
+        'Where the model runs. Keep http://127.0.0.1:11434 when Ollama is on this computer, and leave Ollama running while generating. Change this only to use another server; selected text and context will be sent there.',
+        'ollamaUrl',
+        DEFAULTS.ollamaUrl,
+      );
+      const model = new Setting(root).setName('Model');
+      this.modelControl = new ModelControl(
+        model.controlEl,
+        settings,
+        () => this.plugin.persist(),
+        (text) => model.setDesc(text),
+        (snapshot, signal) => new Ollama({ ...settings, ...snapshot }).models(signal),
+      );
+      void this.modelControl.load();
+    }
     new Setting(root)
       .setName('Context length')
       .setDesc(
@@ -89,24 +127,27 @@ export class ContextSettings extends PluginSettingTab {
             this.plugin.persist();
           }),
       );
-    new Setting(root)
-      .setName('Generation temperature')
-      .setDesc(
-        'Controls variation in generated wording. Start with 0.2 for consistent drafts. Higher values may produce more varied wording but less reliable definitions and examples; they do not make the model more knowledgeable.',
-      )
-      .addDropdown((dropdown) =>
-        dropdown
-          .addOptions({ '0.1': '0.1', '0.2': '0.2 · recommended', '0.4': '0.4', '0.7': '0.7' })
-          .setValue(String(settings.temperature))
-          .onChange((value) => {
-            settings.temperature = Number(value);
-            this.plugin.persist();
-          }),
-      );
+    if (settings.provider !== 'chatgpt')
+      new Setting(root)
+        .setName('Generation temperature')
+        .setDesc(
+          'Controls variation in generated wording. Start with 0.2 for consistent drafts. Higher values may produce more varied wording but less reliable definitions and examples; they do not make the model more knowledgeable.',
+        )
+        .addDropdown((dropdown) =>
+          dropdown
+            .addOptions({ '0.1': '0.1', '0.2': '0.2 · recommended', '0.4': '0.4', '0.7': '0.7' })
+            .setValue(String(settings.temperature))
+            .onChange((value) => {
+              settings.temperature = Number(value);
+              this.plugin.persist();
+            }),
+        );
     new Setting(root)
       .setName('Request timeout')
       .setDesc(
-        'Maximum generation time in seconds, including the initial model load. Default: 60. Enter a longer duration for slower hardware, for example 300 or 600. A higher limit does not make generation faster.',
+        settings.provider === 'chatgpt'
+          ? 'Maximum generation time in seconds. Default: 60. Try 300 for longer writing or slower responses. Increasing the timeout does not increase your ChatGPT allowance.'
+          : 'Maximum generation time in seconds, including the initial model load. Default: 60. Enter a longer duration for slower hardware, for example 300 or 600. A higher limit does not make generation faster.',
       )
       .addText((input) => {
         input.inputEl.type = 'number';
@@ -347,10 +388,11 @@ export class ContextSettings extends PluginSettingTab {
     new Setting(root)
       .setName('Restore default settings')
       .setDesc(
-        'Reset all plugin settings, including connections, card fields and remembered book decks. Drafts and existing Anki notes are kept.',
+        'Reset all plugin settings, including connections, card fields and remembered book decks. Drafts, existing Anki notes and ChatGPT sign-in are kept. Use Sign out to disconnect ChatGPT.',
       )
       .addButton((button) =>
         button.setButtonText('Reset to defaults').onClick(() => {
+          this.chatgptControl?.cancel();
           this.plugin.settings = structuredClone(DEFAULTS);
           this.plugin.persist();
           this.plugin.refresh();
@@ -367,6 +409,7 @@ export class ContextSettings extends PluginSettingTab {
   hide() {
     this.dropdownCleanup?.();
     this.modelControl?.destroy();
+    this.chatgptControl?.destroy();
     super.hide();
   }
 }

@@ -1208,3 +1208,10 @@ button.cc-select-button:disabled {
     transition: none;
   }
 }
+.cc-chatgpt-settings { min-width: 0; padding: 8px 0 16px; }
+.cc-chatgpt-settings p { overflow-wrap: anywhere; }
+.cc-chatgpt-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.cc-chatgpt-actions button { white-space: normal; min-height: 34px; height: auto; }
+.cc-chatgpt-model { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.cc-chatgpt-model label { display: flex; flex: 1 1 200px; flex-direction: column; gap: 8px; min-width: 0; }
+.cc-chatgpt-model .cc-select-button { width: 100%; }
