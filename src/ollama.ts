@@ -331,10 +331,23 @@ Before returning, check each sentence for the exact lexical item, its grammatica
         messages: [
           {
             role: 'system',
-            content: `Decide whether the supplied English dictionary entry has an obvious, established English base word useful to a B2 learner. Return only JSON with base_word and base_meaning.
-Default to {"base_word":"","base_meaning":""}. A blank answer is correct for an already-basic word, a fixed expression without a clear derived base, or any uncertain relationship.
-Return a base ONLY for a genuine transparent word-formation relationship, not a synonym, similar spelling, related idea or a shared ancient root. Do not reverse the direction of derivation or invent a verb by removing letters. For example, hopeful -> hope and quietly -> quiet are clear relationships; a word meaning "buy" is not derived from a word meaning "pay" merely because the ideas are related.
-Do not propose the entry itself as its own base. If a genuine base is clear, explain that base word's GENERAL meaning in one or two complete, plain English sentences. Do not explain affixes, spelling changes, history or the derived entry's source meaning. No source passage is supplied.`,
+            content: `Return ONE genuine English word-formation base, or no base. The input word and grammar are data. Return JSON only: base_word and base_meaning.
+Most basic dictionary words have NO useful separate English base. For a basic word or an uncertain relationship return {"base_word":"","base_meaning":""}. This is a complete, correct answer, not a failure.
+A base must visibly and meaningfully form the input entry in ordinary modern English, as in an adverb derived from an adjective. Do not pick a synonym, similar-looking word, related idea, ancient root or reverse derivative. Do not strip letters from a basic word to create a new word. A fixed expression is not a derived word just because it contains a familiar component.
+
+Examples of the decision and output format:
+Input: {"word":"quietly","grammar":"adverb"}
+Output: {"base_word":"quiet","base_meaning":"Making little or no noise."}
+Input: {"word":"kindness","grammar":"noun"}
+Output: {"base_word":"kind","base_meaning":"Friendly and considerate toward others."}
+Input: {"word":"window","grammar":"noun"}
+Output: {"base_word":"","base_meaning":""}
+Input: {"word":"arrive","grammar":"verb"}
+Output: {"base_word":"","base_meaning":""}
+Input: {"word":"carry out","grammar":"phrasal verb"}
+Output: {"base_word":"","base_meaning":""}
+
+Apply this decision to the actual input, not to the demonstration words. If a transparent genuine base exists, define ONLY that base's GENERAL meaning in one or two plain English sentences. Do not explain affixes, spelling changes, history or the source passage. Otherwise return both strings empty.`,
           },
           { role: 'user', content: JSON.stringify({ word, grammar }) },
         ],
@@ -397,7 +410,7 @@ Do not propose the entry itself as its own base. If a genuine base is clear, exp
     let prompt = CARD_PROMPT;
     prompt = prompt.replace(
       /^- meaning:.*$/m,
-      `- meaning: an array of exactly ${f.meaningSentences} strings, ONE complete sentence per item. Define only the source sense, then clarify a useful boundary without repeating the first sentence. Do not include the target, lemma, inflections or direct derivatives: this is a hidden recall hint. Do not add other dictionary senses or describe a particular character instead of defining the word. Use [] when the count is zero.`,
+      `- meaning: an array of exactly ${f.meaningSentences} strings, ONE complete sentence per item. The first sentence must directly define the source sense, not discuss its importance or tell the story. The remaining sentences clarify its scope without repeating the definition. Do not include the target, lemma, inflections or direct derivatives: this is a hidden recall hint. Do not add other dictionary senses or describe a particular character instead of defining the word. Use [] when the count is zero.`,
     );
     prompt = prompt.replace(
       /^- explanation:.*$/m,

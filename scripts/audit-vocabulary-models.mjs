@@ -144,7 +144,8 @@ for (const id of ['strain', 'resort-to', 'ambiguous-bank', 'inflammable']) {
 }
 if (process.env.AUDIT_CASES_FILE) {
   const supplied = JSON.parse(await readFile(process.env.AUDIT_CASES_FILE, 'utf8'));
-  if (!Array.isArray(supplied) || supplied.length === 0) throw new Error('Expected a nonempty case array');
+  if (!Array.isArray(supplied) || supplied.length === 0)
+    throw new Error('Expected a nonempty case array');
   cases.splice(0, cases.length, ...supplied);
 }
 await writeFile(resolve(out, 'cases.json'), JSON.stringify(cases, null, 2));
