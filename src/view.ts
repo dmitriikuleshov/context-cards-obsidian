@@ -572,7 +572,7 @@ export class ReviewView extends ItemView {
     });
     this.previewFrame = frame;
     frame.addEventListener('load', () => {
-      if (this.previewFrame !== frame || !frame.contentDocument?.body) return;
+      if (this.previewFrame !== frame || !frame.contentDocument?.querySelector('.cc-card')) return;
       this.previewObserver?.disconnect();
       const content = frame.contentDocument.body;
       const resize = () => {
@@ -581,6 +581,7 @@ export class ReviewView extends ItemView {
       this.previewObserver = new ResizeObserver(resize);
       this.previewObserver.observe(content);
       resize();
+      frame.classList.add('is-ready');
     });
     frame.title = 'Anki card preview. Typed answers are compared during review in Anki.';
     this.updatePreview(draft);
@@ -629,7 +630,21 @@ export class ReviewView extends ItemView {
     const bodyClass = this.contentEl.ownerDocument.body.classList.contains('theme-dark')
       ? 'card nightMode'
       : 'card';
-    this.previewFrame.srcdoc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';"><style>${CARD_CSS}body{margin:0;padding:20px}input{box-sizing:border-box;width:100%;padding:10px;border:1px solid #cdd5c5;border-radius:6px;font:inherit}</style></head><body class="${bodyClass}"><div class="cc-card">${html}</div></body></html>`;
+    const dark = bodyClass.includes('nightMode');
+    const background = dark ? '#202420' : '#faf9f6';
+    const document = this.previewFrame.contentDocument;
+    const card = document?.querySelector<HTMLElement>('.cc-card');
+    // Keep the loaded document and stylesheet while flipping. Navigating srcdoc
+    // for every side briefly exposes the iframe's blank canvas in dark themes.
+    if (this.previewFrame.classList.contains('is-ready') && card && document) {
+      document.body.className = bodyClass;
+      document.documentElement.style.backgroundColor = background;
+      document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      card.innerHTML = html;
+      return;
+    }
+    this.previewFrame.classList.remove('is-ready');
+    this.previewFrame.srcdoc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';"><style>${CARD_CSS}html{background:${background};color-scheme:${dark ? 'dark' : 'light'}}body{margin:0;padding:20px}input{box-sizing:border-box;width:100%;padding:10px;border:1px solid #cdd5c5;border-radius:6px;font:inherit}</style></head><body class="${bodyClass}"><div class="cc-card">${html}</div></body></html>`;
   }
   private refreshFooter(draft: Draft) {
     if (this.warning) {

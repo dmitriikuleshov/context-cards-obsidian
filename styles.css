@@ -744,7 +744,15 @@
   width: 100%;
   min-height: 300px;
   border: 0;
-  background: #faf9f6;
+  background: transparent;
+  color-scheme: light;
+  visibility: hidden;
+}
+.theme-dark .cc-preview-frame {
+  color-scheme: dark;
+}
+.cc-preview-frame.is-ready {
+  visibility: visible;
 }
 .cc-empty {
   padding: 45px 27px;
