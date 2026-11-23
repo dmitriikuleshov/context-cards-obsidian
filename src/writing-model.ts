@@ -25,8 +25,9 @@ Return one decision per id. Explain the actual before -> after edit, then choose
 - required: the original target contains a genuine error AND the proposed replacement fixes it without removing information or introducing another error.
 - optional: the original is acceptable, including optional punctuation and hyphenation/word-spacing preferences. A standard or more common alternative does not make the original wrong.
 - incorrect: the original target is already acceptable, the edit is only a preference, or the replacement is wrong. Accepted spelling/hyphenation variants and valid gerund/infinitive alternatives are not errors.
+An incorrect fixed collocation is a REQUIRED vocabulary correction even when its meaning is understandable: for example, "do a decision" -> "make a decision". Distinguish this from replacing a valid expression with a preferred synonym. Lexical verb choice in a collocation is vocabulary; wrong inflection or auxiliary structure is grammar.
 Check capitalization, subject-verb agreement, auxiliary/participle forms, articles, prepositions and question structure as rules, not stylistic preferences. Preserve meaning and time expressions. Do not infer an ongoing action from a finished past event.
-Other errors may remain outside this target: assess ONLY this local edit. Never reject a valid local correction because a separate error remains, and never claim the edit fixes a different word. Give a concise rule explaining ONLY this decision and a useful tip for required, otherwise an empty tip. Do not invent or rewrite sentences. Return JSON only.`;
+Other errors may remain outside this target: assess ONLY this local edit. Never reject a valid local correction because a separate error remains, and never claim the edit fixes a different word. Explain the required correct form directly in at most two short sentences; avoid labeling the erroneous form. No deliberation or discussion of input/JSON fields. Give a useful tip for required, otherwise an empty tip. Do not invent or rewrite sentences. Return JSON only.`;
 export class WritingModel {
   constructor(private settings: Settings) {}
   private async request(
