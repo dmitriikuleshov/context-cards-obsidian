@@ -5,6 +5,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { deepStrictEqual } from 'node:assert';
+import { scoreWritingEdits } from './writing-audit-score.mjs';
 
 const folders = process.argv.slice(2);
 if (!folders.length) throw new Error('Pass one or more completed live audit folders');
@@ -79,8 +80,7 @@ for (const folder of folders) {
       expected: c.expected,
       actual,
       findings: analysis.findings,
-      missing: c.expected.filter((s) => !actual.includes(s)),
-      extra: actual.filter((s) => !c.expected.includes(s)),
+      ...scoreWritingEdits(actual, c),
     };
     if (meta.cards && c.cards !== false) {
       row.cards = [];

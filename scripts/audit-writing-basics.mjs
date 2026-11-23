@@ -6,6 +6,7 @@ import { mkdir, readFile, writeFile, appendFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { scoreWritingEdits } from './writing-audit-score.mjs';
 
 const out = resolve(process.env.AUDIT_DIR || '.test-artifacts/writing-basics-baseline');
 await mkdir(out, { recursive: true });
@@ -232,9 +233,7 @@ for (const model of models) {
       const analysis = await client.analyse(c.text, new AbortController().signal);
       row.findings = analysis.findings;
       row.actual = analysis.findings.map((f) => correctedSentence(f));
-      row.missing = c.expected.filter((s) => !row.actual.includes(s));
-      row.extra = row.actual.filter((s) => !c.expected.includes(s));
-      row.pass = !row.missing.length && !row.extra.length;
+      Object.assign(row, scoreWritingEdits(row.actual, c));
       if (process.env.AUDIT_CARDS && c.cards !== false) {
         row.cards = [];
         for (const f of analysis.findings.filter((f) => f.selected)) {
