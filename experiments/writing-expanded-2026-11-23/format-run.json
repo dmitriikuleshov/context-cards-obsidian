@@ -1,0 +1,8 @@
+{
+  "clientSHA256": "cb581ace6c8f6cfa3e5d956197020673349aa0a6c8e2d357104b155dc342c39e",
+  "thinking": false,
+  "temperature": 0,
+  "timeoutSeconds": 300,
+  "cards": false,
+  "responseCache": ".test-artifacts/writing-expanded-format-final"
+}

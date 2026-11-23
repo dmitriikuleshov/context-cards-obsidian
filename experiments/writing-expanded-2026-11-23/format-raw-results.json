@@ -1,0 +1,434 @@
+[
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "marked-verb",
+    "heldOut": false,
+    "expected": [
+      "I have `written` a letter."
+    ],
+    "findings": [
+      {
+        "id": "1450ec15-b22e-4ad2-8e52-6d148bac3341",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have `wrote` a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'. The sentence requires the past participle after the auxiliary verb 'have'.",
+        "tip": "Remember that after auxiliary verbs like 'have', 'has', and 'had', you need to use the past participle form of the verb.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have `written` a letter."
+    ],
+    "matchedExpected": [
+      "I have `written` a letter."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 21,
+    "calls": 2,
+    "cachedCalls": 2,
+    "liveCalls": 0
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "marked-language",
+    "heldOut": false,
+    "expected": [
+      "I study `English` every evening."
+    ],
+    "findings": [
+      {
+        "id": "dabecfdb-8628-4f60-bc01-eea4e494a23d",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I study `english` every evening.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The word 'english' should be capitalized because it is a proper noun referring to the English language. The edit changes the lowercase 'english' to the capitalized 'English'.",
+        "tip": "Proper nouns, like languages, are always capitalized.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I study `English` every evening."
+    ],
+    "matchedExpected": [
+      "I study `English` every evening."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 12131,
+    "calls": 2,
+    "cachedCalls": 1,
+    "liveCalls": 1
+  },
+  {
+    "model": "gemma3:12b-it-q4_K_M",
+    "id": "marked-spelling",
+    "heldOut": false,
+    "expected": [
+      "The `color` is bright."
+    ],
+    "findings": [
+      {
+        "id": "b0b52e6b-5581-4b51-9882-f5b04675e730",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The `colour` is bright.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The `color` is bright."
+    ],
+    "matchedExpected": [
+      "The `color` is bright."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 2325,
+    "calls": 2,
+    "cachedCalls": 0,
+    "liveCalls": 2
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "marked-verb",
+    "heldOut": false,
+    "expected": [
+      "I have `written` a letter."
+    ],
+    "findings": [
+      {
+        "id": "d5e86d5c-c84c-464e-a759-bd0cc7e6a410",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have `wrote` a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The present perfect tense requires the past participle 'written' rather than the simple past 'wrote'.",
+        "tip": "Use the past participle (written) after the auxiliary verb 'have' to form the present perfect tense.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have `written` a letter."
+    ],
+    "matchedExpected": [
+      "I have `written` a letter."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 6,
+    "calls": 2,
+    "cachedCalls": 2,
+    "liveCalls": 0
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "marked-language",
+    "heldOut": false,
+    "expected": [
+      "I study `English` every evening."
+    ],
+    "findings": [
+      {
+        "id": "4908113b-d41b-4d15-b759-67ae79044618",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I study `english` every evening.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The name of a language must be capitalized.",
+        "tip": "Always capitalize the names of languages, such as English, Spanish, and French.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I study `English` every evening."
+    ],
+    "matchedExpected": [
+      "I study `English` every evening."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 5,
+    "calls": 2,
+    "cachedCalls": 2,
+    "liveCalls": 0
+  },
+  {
+    "model": "gemma4:12b-it-qat",
+    "id": "marked-spelling",
+    "heldOut": false,
+    "expected": [
+      "The `color` is bright."
+    ],
+    "findings": [
+      {
+        "id": "8f7e21b7-06e6-4c8a-96c7-290c56312173",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The `colour` is bright.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The `color` is bright."
+    ],
+    "matchedExpected": [
+      "The `color` is bright."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 11695,
+    "calls": 2,
+    "cachedCalls": 0,
+    "liveCalls": 2
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "marked-verb",
+    "heldOut": false,
+    "expected": [
+      "I have `written` a letter."
+    ],
+    "findings": [
+      {
+        "id": "8562989d-2979-48aa-8c90-a6a29452bccc",
+        "kind": "vocabulary",
+        "title": "wrote → written",
+        "original": "I have `wrote` a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The past participle of 'write' is 'written', not 'wrote'. 'Wrote' is the simple past tense.",
+        "tip": "Use 'written' after 'have' to form the present perfect tense.",
+        "pattern": "incorrect past participle",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have `written` a letter."
+    ],
+    "matchedExpected": [
+      "I have `written` a letter."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 6,
+    "calls": 2,
+    "cachedCalls": 2,
+    "liveCalls": 0
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "marked-language",
+    "heldOut": false,
+    "expected": [
+      "I study `English` every evening."
+    ],
+    "findings": [
+      {
+        "id": "b234fed9-7dd8-4b5b-a0a8-acd9c75a08d2",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I study `english` every evening.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The word 'english' should be capitalized as 'English' when referring to the language.",
+        "tip": "Capitalize the first letter of the language name.",
+        "pattern": "language name capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I study `English` every evening."
+    ],
+    "matchedExpected": [
+      "I study `English` every evening."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 5,
+    "calls": 2,
+    "cachedCalls": 2,
+    "liveCalls": 0
+  },
+  {
+    "model": "qwen3:14b-q4_K_M",
+    "id": "marked-spelling",
+    "heldOut": false,
+    "expected": [
+      "The `color` is bright."
+    ],
+    "findings": [
+      {
+        "id": "5533c1fc-6e3e-4d42-b50a-35e8f0d2604c",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The `colour` is bright.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The `color` is bright."
+    ],
+    "matchedExpected": [
+      "The `color` is bright."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 12231,
+    "calls": 2,
+    "cachedCalls": 0,
+    "liveCalls": 2
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "marked-verb",
+    "heldOut": false,
+    "expected": [
+      "I have `written` a letter."
+    ],
+    "findings": [
+      {
+        "id": "7cbc19d5-1377-4e47-99ff-0fe479b0c299",
+        "kind": "grammar",
+        "title": "wrote → written",
+        "original": "I have `wrote` a letter.",
+        "before": "wrote",
+        "after": "written",
+        "explanation": "The original sentence uses the present perfect tense ('have'), which requires the past participle 'written' instead of the simple past 'wrote'. The proposed correction fixes this grammatical error.",
+        "tip": "Use the past participle form after auxiliary verbs like 'have' or 'has'.",
+        "pattern": "verb_form",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I have `written` a letter."
+    ],
+    "matchedExpected": [
+      "I have `written` a letter."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 5,
+    "calls": 2,
+    "cachedCalls": 2,
+    "liveCalls": 0
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "marked-language",
+    "heldOut": false,
+    "expected": [
+      "I study `English` every evening."
+    ],
+    "findings": [
+      {
+        "id": "ad225fe1-412d-432f-812b-81678008c6a4",
+        "kind": "grammar",
+        "title": "english → English",
+        "original": "I study `english` every evening.",
+        "before": "english",
+        "after": "English",
+        "explanation": "The original target 'english' is a genuine error because common nouns used as proper names (like the language) must be capitalized. The proposed edit correctly changes it to 'English'.",
+        "tip": "Capitalize the name of languages, such as English, French, or Spanish.",
+        "pattern": "capitalization",
+        "selected": true,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "I study `English` every evening."
+    ],
+    "matchedExpected": [
+      "I study `English` every evening."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 6,
+    "calls": 2,
+    "cachedCalls": 2,
+    "liveCalls": 0
+  },
+  {
+    "model": "qwen3.5:9b-q4_K_M",
+    "id": "marked-spelling",
+    "heldOut": false,
+    "expected": [
+      "The `color` is bright."
+    ],
+    "findings": [
+      {
+        "id": "098347a1-da28-42ea-aeae-ff5925b7a26d",
+        "kind": "typo",
+        "title": "colour → color",
+        "original": "The `colour` is bright.",
+        "before": "colour",
+        "after": "color",
+        "explanation": "Use 'color', the American English spelling of 'colour'.",
+        "tip": "Use American English spelling consistently.",
+        "pattern": "American spelling",
+        "selected": false,
+        "format": "correction"
+      }
+    ],
+    "actual": [
+      "The `color` is bright."
+    ],
+    "matchedExpected": [
+      "The `color` is bright."
+    ],
+    "missing": [],
+    "extra": [],
+    "pass": true,
+    "elapsedMs": 10977,
+    "calls": 2,
+    "cachedCalls": 0,
+    "liveCalls": 2
+  }
+]

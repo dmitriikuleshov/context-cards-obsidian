@@ -1,0 +1,23 @@
+[
+  {
+    "id": "marked-verb",
+    "text": "I have `wrote` a letter.",
+    "expected": [
+      "I have `written` a letter."
+    ]
+  },
+  {
+    "id": "marked-language",
+    "text": "I study `english` every evening.",
+    "expected": [
+      "I study `English` every evening."
+    ]
+  },
+  {
+    "id": "marked-spelling",
+    "text": "The `colour` is bright.",
+    "expected": [
+      "The `color` is bright."
+    ]
+  }
+]

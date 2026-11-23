@@ -1,0 +1,342 @@
+[
+  {
+    "id": "hold-none-mass",
+    "text": "None of the equipment are working.",
+    "expected": [
+      "None of the equipment is working."
+    ],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-none-plural",
+    "text": "None of the players were ready.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-factual-if",
+    "text": "If I was too loud last night, I am sorry.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-hypothetical-if",
+    "text": "If I were you, I would wait.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-conditional-error",
+    "text": "If I were you, I will call the office.",
+    "expected": [
+      "If I were you, I would call the office."
+    ],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-literal",
+    "text": "The variable `she have` is a sample string.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-agreement",
+    "text": "She have an appointment today.",
+    "expected": [
+      "She has an appointment today."
+    ],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-dialect-mention",
+    "text": "The British spelling 'favour' is used in this quote.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-american",
+    "text": "The favour was appreciated.",
+    "expected": [
+      "The favor was appreciated."
+    ],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-serial-comma",
+    "text": "I bought bread, milk and eggs.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-embedded",
+    "text": "Could you tell me what does it mean?",
+    "expected": [
+      "Could you tell me what it means?"
+    ],
+    "cards": true,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-reorder",
+    "text": "She told me where was the key.",
+    "expected": [
+      "She told me where the key was."
+    ],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-irregular-inversion",
+    "text": "Only after lunch I understood the problem.",
+    "expected": [
+      "Only after lunch did I understand the problem."
+    ],
+    "cards": true,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-clean-inversion",
+    "text": "Only after lunch did I understand the problem.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-clean-relative",
+    "text": "The volunteers who work here are very helpful.",
+    "expected": [],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "hold-relative-error",
+    "text": "The volunteers who works here are very helpful.",
+    "expected": [
+      "The volunteers who work here are very helpful."
+    ],
+    "cards": false,
+    "cohort": "new-holdout"
+  },
+  {
+    "id": "regression-user-english",
+    "text": "This is my hand-written text and I want AI to check it for mistakes. I started to learn english a few years ago. This is good",
+    "expected": [
+      "I started to learn English a few years ago."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-agreement",
+    "text": "She work in a hospital.",
+    "expected": [
+      "She works in a hospital."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-past-participle",
+    "text": "I have wrote three letters today.",
+    "expected": [
+      "I have written three letters today."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-past-perfect",
+    "text": "I had never saw him before that day.",
+    "expected": [
+      "I had never seen him before that day."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-conditional",
+    "text": "If I were you, I will take the train.",
+    "expected": [
+      "If I were you, I would take the train."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-article-missing",
+    "text": "She bought new car yesterday.",
+    "expected": [
+      "She bought a new car yesterday."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-article-sound",
+    "text": "It took a hour to finish.",
+    "expected": [
+      "It took an hour to finish."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-preposition",
+    "text": "We discussed about the problem yesterday.",
+    "expected": [
+      "We discussed the problem yesterday."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-question-order",
+    "text": "Where you live?",
+    "expected": [
+      "Where do you live?"
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-collocation",
+    "text": "I did a mistake in my report.",
+    "expected": [
+      "I made a mistake in my report."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-spelling",
+    "text": "I received a mesage from my sister.",
+    "expected": [
+      "I received a message from my sister."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-adjacent",
+    "text": "She have wrote a letter.",
+    "expected": [
+      "She has wrote a letter.",
+      "She have written a letter."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-clean-user",
+    "text": "This is my hand-written text and I want AI to check it for mistakes. I started to learn English a few years ago. This is good.",
+    "expected": [],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-clean-past",
+    "text": "I started learning English three years ago.",
+    "expected": [],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-clean-conditional",
+    "text": "If I were you, I would take the train.",
+    "expected": [],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-clean-complements",
+    "text": "I like reading. I like to read before bed.",
+    "expected": [],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-american-spelling",
+    "text": "The colour of the centre is unusual.",
+    "expected": [
+      "The color of the centre is unusual.",
+      "The colour of the center is unusual."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-clean-good",
+    "text": "This is good. She is a good teacher. He works hard.",
+    "expected": [],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-held-agreement",
+    "heldOut": true,
+    "text": "My brother play tennis on Sundays.",
+    "expected": [
+      "My brother plays tennis on Sundays."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-held-participle",
+    "heldOut": true,
+    "text": "They have went home.",
+    "expected": [
+      "They have gone home."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-held-article",
+    "heldOut": true,
+    "text": "He is engineer.",
+    "expected": [
+      "He is an engineer."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-held-question",
+    "heldOut": true,
+    "text": "What she want?",
+    "expected": [
+      "What does she want?"
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-held-negative",
+    "heldOut": true,
+    "text": "He does not likes coffee.",
+    "expected": [
+      "He does not like coffee."
+    ],
+    "cohort": "previous-basic",
+    "cards": false
+  },
+  {
+    "id": "regression-held-clean",
+    "heldOut": true,
+    "text": "She has lived here since 2020. Yesterday, she visited her parents.",
+    "expected": [],
+    "cohort": "previous-basic",
+    "cards": false
+  }
+]

@@ -1,0 +1,268 @@
+{
+  "total": {
+    "lines": {
+      "total": 692,
+      "covered": 690,
+      "skipped": 0,
+      "pct": 99.71
+    },
+    "statements": {
+      "total": 788,
+      "covered": 783,
+      "skipped": 0,
+      "pct": 99.36
+    },
+    "functions": {
+      "total": 121,
+      "covered": 121,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 698,
+      "covered": 689,
+      "skipped": 0,
+      "pct": 98.71
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": "Unknown"
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/http.ts": {
+    "lines": {
+      "total": 43,
+      "covered": 43,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 9,
+      "covered": 9,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 45,
+      "covered": 45,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 32,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing-american.ts": {
+    "lines": {
+      "total": 12,
+      "covered": 12,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 16,
+      "covered": 16,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 17,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing-controller.ts": {
+    "lines": {
+      "total": 185,
+      "covered": 185,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 38,
+      "covered": 38,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 210,
+      "covered": 208,
+      "skipped": 0,
+      "pct": 99.04
+    },
+    "branches": {
+      "total": 146,
+      "covered": 143,
+      "skipped": 0,
+      "pct": 97.94
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing-diff.ts": {
+    "lines": {
+      "total": 74,
+      "covered": 74,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 5,
+      "covered": 5,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 85,
+      "covered": 85,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 73,
+      "covered": 72,
+      "skipped": 0,
+      "pct": 98.63
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing-edit-relation.ts": {
+    "lines": {
+      "total": 29,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 13,
+      "covered": 13,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 40,
+      "covered": 40,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 32,
+      "covered": 32,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing-literals.ts": {
+    "lines": {
+      "total": 22,
+      "covered": 22,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 1,
+      "covered": 1,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 26,
+      "covered": 26,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 20,
+      "covered": 20,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing-model.ts": {
+    "lines": {
+      "total": 107,
+      "covered": 106,
+      "skipped": 0,
+      "pct": 99.06
+    },
+    "functions": {
+      "total": 19,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 118,
+      "covered": 117,
+      "skipped": 0,
+      "pct": 99.15
+    },
+    "branches": {
+      "total": 107,
+      "covered": 106,
+      "skipped": 0,
+      "pct": 99.06
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing-workflow.ts": {
+    "lines": {
+      "total": 19,
+      "covered": 19,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 6,
+      "covered": 6,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 24,
+      "covered": 24,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 17,
+      "covered": 17,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "/mnt/c/Users/admin/Documents/ChatGPT/anki/src/writing.ts": {
+    "lines": {
+      "total": 201,
+      "covered": 200,
+      "skipped": 0,
+      "pct": 99.5
+    },
+    "functions": {
+      "total": 29,
+      "covered": 29,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 224,
+      "covered": 222,
+      "skipped": 0,
+      "pct": 99.1
+    },
+    "branches": {
+      "total": 254,
+      "covered": 250,
+      "skipped": 0,
+      "pct": 98.42
+    }
+  }
+}

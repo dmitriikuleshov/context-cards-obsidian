@@ -1,0 +1,1380 @@
+{
+  "version": "0.3.37",
+  "date": "2026-11-23",
+  "baseline_commit": "5ab8498",
+  "code_commit": "19ec138",
+  "models": [
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "before": {
+        "cases": 95,
+        "passed": 82,
+        "errors": 2,
+        "missing": 22,
+        "extra": 17,
+        "exercises": 0
+      },
+      "after": {
+        "cases": 95,
+        "passed": 93,
+        "errors": 0,
+        "missing": 1,
+        "extra": 1,
+        "exercises": 12
+      },
+      "improved": 11,
+      "regressed": 0,
+      "new_holdout": {
+        "cases": 16,
+        "passed": 16,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 4
+      },
+      "previous_basic": {
+        "cases": 24,
+        "passed": 24,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "marked_text": {
+        "cases": 3,
+        "passed": 3,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "groups": [
+        {
+          "group": "alignment",
+          "before": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "capacity",
+          "before": {
+            "cases": 1,
+            "passed": 0,
+            "errors": 1,
+            "missing": 12,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "clean",
+          "before": {
+            "cases": 30,
+            "passed": 28,
+            "errors": 0,
+            "missing": 0,
+            "extra": 2,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 30,
+            "passed": 29,
+            "errors": 0,
+            "missing": 0,
+            "extra": 1,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "grammar",
+          "before": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "long",
+          "before": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "paragraph",
+          "before": {
+            "cases": 12,
+            "passed": 11,
+            "errors": 0,
+            "missing": 1,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 12,
+            "passed": 11,
+            "errors": 0,
+            "missing": 1,
+            "extra": 0,
+            "exercises": 8
+          }
+        },
+        {
+          "group": "structure",
+          "before": {
+            "cases": 10,
+            "passed": 1,
+            "errors": 1,
+            "missing": 9,
+            "extra": 15,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 10,
+            "passed": 10,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 4
+          }
+        }
+      ]
+    },
+    {
+      "model": "gemma4:12b-it-qat",
+      "before": {
+        "cases": 95,
+        "passed": 84,
+        "errors": 2,
+        "missing": 21,
+        "extra": 16,
+        "exercises": 0
+      },
+      "after": {
+        "cases": 95,
+        "passed": 94,
+        "errors": 0,
+        "missing": 0,
+        "extra": 1,
+        "exercises": 12
+      },
+      "improved": 10,
+      "regressed": 0,
+      "new_holdout": {
+        "cases": 16,
+        "passed": 16,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 4
+      },
+      "previous_basic": {
+        "cases": 24,
+        "passed": 24,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "marked_text": {
+        "cases": 3,
+        "passed": 3,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "groups": [
+        {
+          "group": "alignment",
+          "before": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "capacity",
+          "before": {
+            "cases": 1,
+            "passed": 0,
+            "errors": 1,
+            "missing": 12,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "clean",
+          "before": {
+            "cases": 30,
+            "passed": 29,
+            "errors": 0,
+            "missing": 0,
+            "extra": 1,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 30,
+            "passed": 29,
+            "errors": 0,
+            "missing": 0,
+            "extra": 1,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "grammar",
+          "before": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "long",
+          "before": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "paragraph",
+          "before": {
+            "cases": 12,
+            "passed": 12,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 12,
+            "passed": 12,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 8
+          }
+        },
+        {
+          "group": "structure",
+          "before": {
+            "cases": 10,
+            "passed": 1,
+            "errors": 1,
+            "missing": 9,
+            "extra": 15,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 10,
+            "passed": 10,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 4
+          }
+        }
+      ]
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "before": {
+        "cases": 95,
+        "passed": 80,
+        "errors": 2,
+        "missing": 21,
+        "extra": 21,
+        "exercises": 0
+      },
+      "after": {
+        "cases": 95,
+        "passed": 93,
+        "errors": 0,
+        "missing": 0,
+        "extra": 2,
+        "exercises": 12
+      },
+      "improved": 13,
+      "regressed": 0,
+      "new_holdout": {
+        "cases": 16,
+        "passed": 13,
+        "errors": 0,
+        "missing": 0,
+        "extra": 3,
+        "exercises": 4
+      },
+      "previous_basic": {
+        "cases": 24,
+        "passed": 24,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "marked_text": {
+        "cases": 3,
+        "passed": 3,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "groups": [
+        {
+          "group": "alignment",
+          "before": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "capacity",
+          "before": {
+            "cases": 1,
+            "passed": 0,
+            "errors": 1,
+            "missing": 12,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "clean",
+          "before": {
+            "cases": 30,
+            "passed": 25,
+            "errors": 0,
+            "missing": 0,
+            "extra": 5,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 30,
+            "passed": 28,
+            "errors": 0,
+            "missing": 0,
+            "extra": 2,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "grammar",
+          "before": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "long",
+          "before": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "paragraph",
+          "before": {
+            "cases": 12,
+            "passed": 12,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 12,
+            "passed": 12,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 8
+          }
+        },
+        {
+          "group": "structure",
+          "before": {
+            "cases": 10,
+            "passed": 1,
+            "errors": 1,
+            "missing": 9,
+            "extra": 16,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 10,
+            "passed": 10,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 4
+          }
+        }
+      ]
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "before": {
+        "cases": 95,
+        "passed": 83,
+        "errors": 1,
+        "missing": 21,
+        "extra": 19,
+        "exercises": 0
+      },
+      "after": {
+        "cases": 95,
+        "passed": 93,
+        "errors": 0,
+        "missing": 0,
+        "extra": 3,
+        "exercises": 12
+      },
+      "improved": 10,
+      "regressed": 0,
+      "new_holdout": {
+        "cases": 16,
+        "passed": 14,
+        "errors": 0,
+        "missing": 0,
+        "extra": 3,
+        "exercises": 4
+      },
+      "previous_basic": {
+        "cases": 24,
+        "passed": 24,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "marked_text": {
+        "cases": 3,
+        "passed": 3,
+        "errors": 0,
+        "missing": 0,
+        "extra": 0,
+        "exercises": 0
+      },
+      "groups": [
+        {
+          "group": "alignment",
+          "before": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "capacity",
+          "before": {
+            "cases": 1,
+            "passed": 0,
+            "errors": 1,
+            "missing": 12,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 1,
+            "passed": 1,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "clean",
+          "before": {
+            "cases": 30,
+            "passed": 28,
+            "errors": 0,
+            "missing": 0,
+            "extra": 3,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 30,
+            "passed": 28,
+            "errors": 0,
+            "missing": 0,
+            "extra": 3,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "grammar",
+          "before": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 39,
+            "passed": 39,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "long",
+          "before": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 2,
+            "passed": 2,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          }
+        },
+        {
+          "group": "paragraph",
+          "before": {
+            "cases": 12,
+            "passed": 12,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 12,
+            "passed": 12,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 8
+          }
+        },
+        {
+          "group": "structure",
+          "before": {
+            "cases": 10,
+            "passed": 1,
+            "errors": 0,
+            "missing": 9,
+            "extra": 16,
+            "exercises": 0
+          },
+          "after": {
+            "cases": 10,
+            "passed": 10,
+            "errors": 0,
+            "missing": 0,
+            "extra": 0,
+            "exercises": 4
+          }
+        }
+      ]
+    }
+  ],
+  "main_before": {
+    "cases": 380,
+    "passed": 329,
+    "errors": 7,
+    "missing": 85,
+    "extra": 73,
+    "exercises": 0
+  },
+  "main_after": {
+    "cases": 380,
+    "passed": 373,
+    "errors": 0,
+    "missing": 1,
+    "extra": 7,
+    "exercises": 48
+  },
+  "holdout": {
+    "cases": 160,
+    "passed": 155,
+    "errors": 0,
+    "missing": 0,
+    "extra": 6,
+    "exercises": 16
+  },
+  "formatting": {
+    "cases": 12,
+    "passed": 12,
+    "errors": 0,
+    "missing": 0,
+    "extra": 0,
+    "exercises": 0
+  },
+  "all_final_scored": {
+    "cases": 552,
+    "passed": 540,
+    "errors": 0,
+    "missing": 1,
+    "extra": 13,
+    "exercises": 64
+  },
+  "diagnostics": [
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "id": "recommendation",
+      "expected": [
+        "She recommended me a very interesting book."
+      ],
+      "actual": [
+        "She recommended me a very interesting book."
+      ],
+      "findings": [
+        {
+          "id": "7e084a0f-4e42-4211-bca2-7305f8057462",
+          "kind": "typo",
+          "title": "intresting → interesting",
+          "original": "She recommended me a very intresting book.",
+          "before": "intresting",
+          "after": "interesting",
+          "explanation": "The original contains a misspelling of 'interesting'. The proposed replacement corrects the spelling to the standard American English form.",
+          "tip": "Remember to double-check your spelling, especially for commonly misspelled words like 'interesting'.",
+          "pattern": "spelling",
+          "selected": false,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [
+        "She recommended me a very interesting book."
+      ],
+      "missing": [],
+      "extra": [],
+      "pass": true,
+      "group": "grammar",
+      "diagnosticOnly": true
+    },
+    {
+      "model": "gemma4:12b-it-qat",
+      "id": "recommendation",
+      "expected": [
+        "She recommended me a very interesting book."
+      ],
+      "actual": [
+        "She recommended a very intresting book.",
+        "She recommended me a very interesting book."
+      ],
+      "findings": [
+        {
+          "id": "47021be7-63db-4940-afe3-6add6d496dd7",
+          "kind": "vocabulary",
+          "title": "me → (remove)",
+          "original": "She recommended me a very intresting book.",
+          "before": "me ",
+          "after": "",
+          "explanation": "The verb 'recommend' is typically used with the pattern 'recommend [something] to [someone]' rather than 'recommend [someone] [something].'",
+          "tip": "Use the structure 'recommend something to someone' instead of 'recommend someone something'.",
+          "pattern": "collocation",
+          "selected": true,
+          "format": "correction"
+        },
+        {
+          "id": "abcc4424-9532-4c1f-ae94-4273bc8aa8c7",
+          "kind": "typo",
+          "title": "intresting → interesting",
+          "original": "She recommended me a very intresting book.",
+          "before": "intresting",
+          "after": "interesting",
+          "explanation": "The word 'interesting' is missing the letter 'e' in the original.",
+          "tip": "Check for common spelling errors in adjectives ending in -ing.",
+          "pattern": "spelling",
+          "selected": false,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [
+        "She recommended me a very interesting book."
+      ],
+      "missing": [],
+      "extra": [
+        "She recommended a very intresting book."
+      ],
+      "pass": false,
+      "group": "grammar",
+      "diagnosticOnly": true
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "id": "recommendation",
+      "expected": [
+        "She recommended me a very interesting book."
+      ],
+      "actual": [
+        "She recommended me a very interesting book."
+      ],
+      "findings": [
+        {
+          "id": "341a6e91-64bd-48f2-9874-34c9e91db03a",
+          "kind": "typo",
+          "title": "intresting → interesting",
+          "original": "She recommended me a very intresting book.",
+          "before": "intresting",
+          "after": "interesting",
+          "explanation": "The word 'intresting' is a typo; the correct spelling is 'interesting'.",
+          "tip": "Check for common spelling errors, especially with similar-looking letters like 'i' and 'e'.",
+          "pattern": "typo",
+          "selected": false,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [
+        "She recommended me a very interesting book."
+      ],
+      "missing": [],
+      "extra": [],
+      "pass": true,
+      "group": "grammar",
+      "diagnosticOnly": true
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "id": "recommendation",
+      "expected": [
+        "She recommended me a very interesting book."
+      ],
+      "actual": [
+        "She recommended me a very interesting book."
+      ],
+      "findings": [
+        {
+          "id": "13839639-2f8e-405d-bf88-19297ed1f08c",
+          "kind": "typo",
+          "title": "intresting → interesting",
+          "original": "She recommended me a very intresting book.",
+          "before": "intresting",
+          "after": "interesting",
+          "explanation": "The original text contains a spelling error in the word 'intresting', which is corrected to 'interesting'. This is a required fix for an accidental misspelling.",
+          "tip": "Remember that the correct spelling of the adjective is 'interesting' with two t's and one s.",
+          "pattern": "spelling_correction",
+          "selected": false,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [
+        "She recommended me a very interesting book."
+      ],
+      "missing": [],
+      "extra": [],
+      "pass": true,
+      "group": "grammar",
+      "diagnosticOnly": true
+    }
+  ],
+  "failures": [
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "id": "clean-none-plural",
+      "expected": [],
+      "actual": [
+        "None of my friends is available today."
+      ],
+      "findings": [
+        {
+          "id": "78cc6e16-df0b-4408-b091-e68bfa7fc887",
+          "kind": "grammar",
+          "title": "are → is",
+          "original": "None of my friends are available today.",
+          "before": "are",
+          "after": "is",
+          "explanation": "The subject is 'None,' which is singular, so the verb must agree. The correct verb form is 'is' instead of 'are'.",
+          "tip": "Remember that 'none' is singular and requires a singular verb.",
+          "pattern": "subject-verb agreement",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "None of my friends is available today."
+      ],
+      "pass": false,
+      "group": "clean",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "gemma3:12b-it-q4_K_M",
+      "id": "paragraph-11",
+      "expected": [
+        "I should have asked for help.",
+        "I made a mistake in the calculation."
+      ],
+      "actual": [
+        "I should have asked for help."
+      ],
+      "findings": [
+        {
+          "id": "b7d4feab-e05a-404b-8bd5-ab049fb83bf6",
+          "kind": "grammar",
+          "title": "of → have",
+          "original": "I should of asked for help.",
+          "before": "of",
+          "after": "have",
+          "explanation": "The original uses a common misspelling of the auxiliary verb construction. 'Should have' expresses a past obligation that was not fulfilled.",
+          "tip": "'Should have' is a common construction; remember to use 'have,' not 'of.'",
+          "pattern": "auxiliary verb",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [
+        "I should have asked for help.",
+        "I made a mistake in the calculation."
+      ],
+      "missing": [
+        "I made a mistake in the calculation."
+      ],
+      "extra": [],
+      "pass": false,
+      "group": "paragraph",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "gemma4:12b-it-qat",
+      "id": "clean-none-plural",
+      "expected": [],
+      "actual": [
+        "None of my friends is available today."
+      ],
+      "findings": [
+        {
+          "id": "9be0ead2-6804-44b6-9fd8-0489c48e95fa",
+          "kind": "grammar",
+          "title": "are → is",
+          "original": "None of my friends are available today.",
+          "before": "are",
+          "after": "is",
+          "explanation": "The pronoun 'none' is traditionally treated as singular in formal grammar, requiring the singular verb 'is'.",
+          "tip": "While 'none' can be used with a plural verb in informal speech, 'is' is the standard choice for formal writing.",
+          "pattern": "subject-verb agreement",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "None of my friends is available today."
+      ],
+      "pass": false,
+      "group": "clean",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "id": "clean-if-factual",
+      "expected": [],
+      "actual": [
+        "If I were rude yesterday, I apologize."
+      ],
+      "findings": [
+        {
+          "id": "df24ed44-7154-4c08-bdc8-5935b27355cf",
+          "kind": "grammar",
+          "title": "was → were",
+          "original": "If I was rude yesterday, I apologize.",
+          "before": "was",
+          "after": "were",
+          "explanation": "The original uses 'was' in a conditional clause, but the correct form for a hypothetical or unreal past situation is 'were'.",
+          "tip": "Use 'were' in conditional clauses to express hypothetical or unreal past situations.",
+          "pattern": "conditional clause with 'was' instead of 'were'",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "If I were rude yesterday, I apologize."
+      ],
+      "pass": false,
+      "group": "clean",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "id": "clean-literal-spelling",
+      "expected": [],
+      "actual": [
+        "The American spelling 'colour' appears in the quotation."
+      ],
+      "findings": [
+        {
+          "id": "d9da96ce-65ec-48a5-b46c-7a494c2188d7",
+          "kind": "vocabulary",
+          "title": "British → American",
+          "original": "The British spelling 'colour' appears in the quotation.",
+          "before": "British",
+          "after": "American",
+          "explanation": "The original target 'British' is incorrect because the spelling 'color' is American, not British. The proposed replacement 'American' fixes this error.",
+          "tip": "Use 'American' when referring to the spelling 'color'.",
+          "pattern": "incorrect vocabulary",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "The American spelling 'colour' appears in the quotation."
+      ],
+      "pass": false,
+      "group": "clean",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "id": "clean-if-factual",
+      "expected": [],
+      "actual": [
+        "If I were rude yesterday, I apologize."
+      ],
+      "findings": [
+        {
+          "id": "894621d0-df7a-45e1-902f-7d462cecbc76",
+          "kind": "grammar",
+          "title": "was → were",
+          "original": "If I was rude yesterday, I apologize.",
+          "before": "was",
+          "after": "were",
+          "explanation": "The original sentence uses 'was' in a conditional clause referring to a hypothetical situation ('If I was rude'), which requires the subjunctive mood 'were'. The proposed correction changes 'was' to 'were', fixing this grammatical error.",
+          "tip": "Use 'were' instead of 'was' in hypothetical or contrary-to-fact conditions, regardless of the subject pronoun.",
+          "pattern": "subjunctive_mood",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "If I were rude yesterday, I apologize."
+      ],
+      "pass": false,
+      "group": "clean",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "id": "clean-literal-spelling",
+      "expected": [],
+      "actual": [
+        "The American spelling 'colour' appears in the quotation.",
+        "The British spelling \"color\" appears in the quotation."
+      ],
+      "findings": [
+        {
+          "id": "7bdc8153-7cfb-4b71-bc8d-8264850ffdc1",
+          "kind": "vocabulary",
+          "title": "British → American",
+          "original": "The British spelling 'colour' appears in the quotation.",
+          "before": "British",
+          "after": "American",
+          "explanation": "The original text incorrectly claims that the British spelling 'colour' is written as 'color', which is actually the American spelling. The proposed edit corrects this factual error by stating that 'color' is the American spelling.",
+          "tip": "Ensure that 'color' is identified as the American spelling and 'colour' as the British spelling to avoid factual inaccuracies.",
+          "pattern": "factual_error_correction",
+          "selected": true,
+          "format": "correction"
+        },
+        {
+          "id": "1c1ebc35-848d-4fa9-b59e-2e3df49de35b",
+          "kind": "vocabulary",
+          "title": "'colour' → \"color\"",
+          "original": "The British spelling 'colour' appears in the quotation.",
+          "before": "'colour'",
+          "after": "\"color\"",
+          "explanation": "The original text contains a factual error by calling 'colour' the American spelling. The proposed edit correctly identifies 'color' as the American spelling, fixing the mistake.",
+          "tip": "Always verify which spelling variant corresponds to which English dialect before making claims about them.",
+          "pattern": "factual_error_correction",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "The American spelling 'colour' appears in the quotation.",
+        "The British spelling \"color\" appears in the quotation."
+      ],
+      "pass": false,
+      "group": "clean",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "id": "hold-none-plural",
+      "expected": [],
+      "actual": [
+        "None of the players was ready."
+      ],
+      "findings": [
+        {
+          "id": "c28001d5-f8de-4c67-b35e-fbc581fcc9ff",
+          "kind": "grammar",
+          "title": "were → was",
+          "original": "None of the players were ready.",
+          "before": "were",
+          "after": "was",
+          "explanation": "The subject 'None of the players' is singular, so the verb should be 'was' instead of 'were'.",
+          "tip": "Use 'was' when the subject is singular, even if it refers to a group.",
+          "pattern": "subject-verb agreement",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "None of the players was ready."
+      ],
+      "pass": false,
+      "group": "holdout",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "id": "hold-factual-if",
+      "expected": [],
+      "actual": [
+        "If I were too loud last night, I am sorry."
+      ],
+      "findings": [
+        {
+          "id": "5107ab2a-8d49-40aa-b3f9-c8737060aeff",
+          "kind": "grammar",
+          "title": "was → were",
+          "original": "If I was too loud last night, I am sorry.",
+          "before": "was",
+          "after": "were",
+          "explanation": "The original uses 'was' in a conditional clause, but the correct form for a hypothetical or unreal past situation is 'were'.",
+          "tip": "Use 'were' in conditional clauses to express hypothetical or unreal past situations.",
+          "pattern": "conditional clause with 'was' instead of 'were'",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "If I were too loud last night, I am sorry."
+      ],
+      "pass": false,
+      "group": "holdout",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3:14b-q4_K_M",
+      "id": "hold-dialect-mention",
+      "expected": [],
+      "actual": [
+        "The American spelling 'favour' is used in this quote."
+      ],
+      "findings": [
+        {
+          "id": "ad649226-f56a-464d-8534-8cea7612218e",
+          "kind": "vocabulary",
+          "title": "British → American",
+          "original": "The British spelling 'favour' is used in this quote.",
+          "before": "British",
+          "after": "American",
+          "explanation": "The original target 'British' is incorrect because the spelling 'favor' is American, not British. The proposed replacement 'American' correctly identifies the spelling variant.",
+          "tip": "Use 'British' for 'favour' and 'American' for 'favor'.",
+          "pattern": "spelling variant",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "The American spelling 'favour' is used in this quote."
+      ],
+      "pass": false,
+      "group": "holdout",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "id": "hold-factual-if",
+      "expected": [],
+      "actual": [
+        "If I were too loud last night, I am sorry."
+      ],
+      "findings": [
+        {
+          "id": "da9b2fef-848c-4130-a4e1-67315d46438c",
+          "kind": "grammar",
+          "title": "was → were",
+          "original": "If I was too loud last night, I am sorry.",
+          "before": "was",
+          "after": "were",
+          "explanation": "The original sentence uses 'was' in a hypothetical context ('If I was...'), which is grammatically incorrect for standard English subjunctive mood; it should be 'were'. The proposed correction changes 'was' to 'were', fixing this grammar error.",
+          "tip": "Use 'were' instead of 'was' in unreal or hypothetical conditional sentences (e.g., 'If I were you').",
+          "pattern": "subjunctive_mood",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "If I were too loud last night, I am sorry."
+      ],
+      "pass": false,
+      "group": "holdout",
+      "diagnosticOnly": false
+    },
+    {
+      "model": "qwen3.5:9b-q4_K_M",
+      "id": "hold-dialect-mention",
+      "expected": [],
+      "actual": [
+        "The American spelling 'favour' is used in this quote.",
+        "The British spelling \"favor\" is used in this quote."
+      ],
+      "findings": [
+        {
+          "id": "2bd6b7af-afa2-41a9-ad61-95601ea42bdb",
+          "kind": "vocabulary",
+          "title": "British → American",
+          "original": "The British spelling 'favour' is used in this quote.",
+          "before": "British",
+          "after": "American",
+          "explanation": "The original text incorrectly identifies 'favor' as a British spelling, whereas it is the American standard; the proposed edit corrects this factual error by stating 'American spelling'.",
+          "tip": "Remember that 'favor' is the American English spelling and 'favour' is the British English spelling.",
+          "pattern": "collocation",
+          "selected": true,
+          "format": "correction"
+        },
+        {
+          "id": "9c000675-e5ed-4081-9f85-0f32545850cb",
+          "kind": "vocabulary",
+          "title": "'favour' → \"favor\"",
+          "original": "The British spelling 'favour' is used in this quote.",
+          "before": "'favour'",
+          "after": "\"favor\"",
+          "explanation": "The original text contains a factual error by calling 'favour' an American spelling; the proposed edit corrects this to identify it as British while using the correct American form in the quote.",
+          "tip": "Ensure you match the spelling variant ('favor' for American, 'favour' for British) with the correct regional label.",
+          "pattern": "collocation",
+          "selected": true,
+          "format": "correction"
+        }
+      ],
+      "matchedExpected": [],
+      "missing": [],
+      "extra": [
+        "The American spelling 'favour' is used in this quote.",
+        "The British spelling \"favor\" is used in this quote."
+      ],
+      "pass": false,
+      "group": "holdout",
+      "diagnosticOnly": false
+    }
+  ],
+  "protocol": {
+    "baseline": {
+      "records": 384,
+      "model_calls": 658,
+      "live_calls": 658,
+      "cached_calls": 0
+    },
+    "final": {
+      "records": 384,
+      "model_calls": 710,
+      "live_calls": 4,
+      "cached_calls": 706,
+      "exact_payload_replay": 710
+    },
+    "holdout": {
+      "records": 160,
+      "model_calls": 288,
+      "live_calls": 4,
+      "cached_calls": 284,
+      "exact_payload_replay": 288
+    },
+    "formatting": {
+      "records": 12,
+      "model_calls": 24,
+      "live_calls": 9,
+      "cached_calls": 15
+    },
+    "comparison": "Same 95 automatically scored expanded passages per model. One ambiguous recommend construction is diagnostic only. All adjudicated gold alternatives and errata are applied equally to both versions.",
+    "cache": "Final verification mixes live inference and exact full-request response reuse. Changed prompts, input, schema or model tags require live inference. Cached results are not independent stochastic replications and timings are not speed comparisons.",
+    "original_holdout": "All 40 holdout passages per model were inferred live in writing-expanded-holdout before exact-payload final verification. This includes 16 new contrastive passages and the 24 previous basic regressions.",
+    "score": "A case passes only if all expected local one-target corrections occur with no extras or request failure. Equivalent anchors are scored by the resulting original source sentence. This does not grade every explanation, hint or taxonomy label.",
+    "runtime": {
+      "think": false,
+      "temperature": 0,
+      "num_ctx": 6144,
+      "num_predict": 3200,
+      "timeout_seconds": 300,
+      "sequence": "One model at a time; other models unloaded."
+    },
+    "no_external_writes": "Synthetic passages only. No Anki notes or vault content/settings changed by the audits."
+  },
+  "manual_feedback_limit": {
+    "model": "gemma3:12b-it-q4_K_M",
+    "case": "hold-none-mass",
+    "observation": "The correction equipment are -> equipment is is right, but the explanation incorrectly calls equipment plural and gives an overgeneralized rule about none. Thus exact-edit success is not proof of pedagogically correct explanations."
+  },
+  "validation": {
+    "unit_tests": 765,
+    "analysis_tests": 355,
+    "ui_tests": 57,
+    "generated_exercises": 64
+  }
+}
