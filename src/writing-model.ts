@@ -156,7 +156,11 @@ export class WritingModel {
       return parseWritingAnalysis(JSON.stringify({ summary: '', findings }), text, true);
     };
     const raw = await this.request(
-      scope + PROOFREAD_PROMPT,
+      scope +
+        PROOFREAD_PROMPT +
+        (/[`*_]/.test(text)
+          ? ' Preserve Markdown formatting markers exactly. Inline backticks in ordinary prose may just highlight vocabulary: correct the English inside while retaining the markers. Keep explicit code/literal examples and identifiers unchanged.'
+          : ''),
       { text, sentences },
       {
         type: 'object',

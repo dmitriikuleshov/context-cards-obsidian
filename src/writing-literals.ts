@@ -2,10 +2,13 @@
 export function protectedWritingLiteral(original: string, before: string, after: string) {
   const at = original.indexOf(before);
   if (at < 0) return false;
+  const pattern =
+    /`[^`]*`|(?<![\p{L}\p{N}])(['"])[\s\S]*?\1(?![\p{L}\p{N}])|“[\s\S]*?”(?![\p{L}\p{N}])|‘[\s\S]*?’(?![\p{L}\p{N}])/gu;
+  const context = original.replace(pattern, ' ');
   const literalContext =
-    /\b(?:literals?|labels?|variables?|identifiers?|strings?|printed|code|test data)\b/i.test(
-      original,
-    );
+    /\b(?:literals?|labels?|variables?|functions?|identifiers?|strings?|printed|code|test data)\b/i.test(
+      context,
+    ) || original.includes('```');
   let prefix = 0,
     tail = 0;
   while (prefix < before.length && prefix < after.length && before[prefix] === after[prefix])
@@ -18,11 +21,10 @@ export function protectedWritingLiteral(original: string, before: string, after:
     tail++;
   const start = at + prefix,
     end = at + before.length - tail;
-  const pattern =
-    /`[^`]*`|(?<![\p{L}\p{N}])(['"])[\s\S]*?\1(?![\p{L}\p{N}])|“[\s\S]*?”(?![\p{L}\p{N}])|‘[\s\S]*?’(?![\p{L}\p{N}])/gu;
   for (const match of original.matchAll(pattern)) {
     const value = match[0];
-    if (!value.startsWith('`') && !literalContext) continue;
+    // Inline backticks can merely mark vocabulary in ordinary Obsidian prose.
+    if (!literalContext) continue;
     const left = match.index,
       right = left + value.length;
     if (start >= right || end <= left) continue;

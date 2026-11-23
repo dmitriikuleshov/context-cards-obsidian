@@ -257,6 +257,8 @@ Use **Find mistakes** for your own writing and **Explain word / phrase** for voc
 
 Every selected sentence is checked. Independent mistakes are separated so each card has one target, even when two errors sit next to each other. Hyphenation-only changes are treated as editorial style; the checker also ignores a full stop added at the cut-off end of your selection.
 
+Related changes within one grammatical structure, such as moving a verb in an indirect question, stay in one correction. Up to 30 proposed corrections can be checked in batches of six within the same request timeout. Explicit code/literal labels are preserved; inline formatting used to highlight vocabulary does not make the surrounding prose exempt from checking.
+
 ![Current writing review: shared header, highlighted corrections, a card checkbox and Review 1 card](images/writing-panel.png)
 
 ### Edit feedback or the exercise type

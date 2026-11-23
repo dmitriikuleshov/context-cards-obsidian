@@ -11,6 +11,7 @@ describe('American spelling policy on grounded model proposals', () => {
     ['She practises daily.', 'practises', 'practices', 'normalize'],
     ['We analysed it.', 'analysed', 'analyzed', 'normalize'],
     ['The colour is red.', 'colour', 'color', 'normalize'],
+    ['The `colour` is red.', 'colour', 'color', 'normalize'],
     ['The color is red.', 'color', 'colour', 'preserve'],
     ["The label is 'colour'.", 'colour', 'color', 'preserve'],
     ['The label is “colour”.', 'colour', 'color', 'preserve'],

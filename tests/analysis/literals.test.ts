@@ -24,6 +24,9 @@ describe('literal data and surrounding prose', () => {
     ['The literal `abc` is set.', 'literal `abc`', 'literal', true],
     ['The literal `abc` is set.', 'literal `abc`', 'new literal `abc`', false],
     ['She said "I has a car".', 'has', 'have', false],
+    ['I have `wrote` a letter.', 'wrote', 'written', false],
+    ['I use three `variable`.', 'variable', 'variables', false],
+    ['```\nI has\n```', 'has', 'have', true],
     ['No matching target.', 'missing', 'replacement', false],
     ['The label reads "word".', 'label', 'labels', false],
     ['The label reads "word".', 'reads', 'read', false],
@@ -34,15 +37,13 @@ describe('literal data and surrounding prose', () => {
     },
   );
   it('ignores a mistaken model rewrite inside a quoted label before review/export', async () => {
-    const request = vi
-      .spyOn(http, 'jsonRequest')
-      .mockResolvedValue({
-        message: {
-          content: JSON.stringify({
-            sentences: [{ id: '1', corrected: 'The label reads "I have" exactly as printed.' }],
-          }),
-        },
-      });
+    const request = vi.spyOn(http, 'jsonRequest').mockResolvedValue({
+      message: {
+        content: JSON.stringify({
+          sentences: [{ id: '1', corrected: 'The label reads "I have" exactly as printed.' }],
+        }),
+      },
+    });
     expect(
       (
         await new WritingModel(DEFAULTS).analyse(

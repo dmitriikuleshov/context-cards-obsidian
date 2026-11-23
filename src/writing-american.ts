@@ -1,3 +1,4 @@
+import { protectedWritingLiteral } from './writing-literals';
 // Unambiguous regional spelling pairs. This is a policy check on an existing,
 // grounded proposal, not a rule that searches/replaces arbitrary source text.
 const spellings = new Map([
@@ -47,6 +48,11 @@ export function americanSpellingPolicy(original: string, before: string, after: 
   const closing = quotePairs[original[index - 1]!];
   if (closing && original[index + before.length] === closing) return 'preserve';
   for (const code of original.matchAll(/`[^`]*`/g))
-    if (index > code.index && index < code.index + code[0].length) return 'preserve';
+    if (
+      index > code.index &&
+      index < code.index + code[0].length &&
+      protectedWritingLiteral(original, before, after)
+    )
+      return 'preserve';
   return 'normalize';
 }

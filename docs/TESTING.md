@@ -36,7 +36,7 @@ The browser suite uses simulated services. The Anki rendering/search check uses 
 
 ## Writing analysis
 
-The focused analysis suite measures seven modules: `writing.ts` (validation, alignment and recovery), `writing-model.ts` (generation and independent verification), `writing-diff.ts` (grounded local edits), `writing-american.ts` (regional spelling policy), `writing-controller.ts` (session lifecycle, preparation and saving), `writing-workflow.ts` (source highlights), and `http.ts` (model transport). UI and Anki scheduling are outside this coverage percentage.
+The focused analysis suite measures nine modules: `writing.ts` (validation, alignment and recovery), `writing-model.ts` (generation and independent verification), `writing-diff.ts` and `writing-edit-relation.ts` (grounded local edits and linked grammatical changes), `writing-literals.ts` (explicit literal data), `writing-american.ts` (regional spelling policy), `writing-controller.ts` (session lifecycle, preparation and saving), `writing-workflow.ts` (source highlights), and `http.ts` (model transport). UI and Anki scheduling are outside this coverage percentage.
 
 ```sh
 npm ci
@@ -80,5 +80,7 @@ The regression tests cover failure modes found during the writing audit: conflic
 For a comparison of all four installed models, run `node scripts/audit-writing-basics.mjs`. It records synthetic cases, actual requests/responses and exact-edit scores. Set a fresh `AUDIT_DIR` for each code version; resuming an existing directory uses its frozen client. Gold corrections are used only by the scorer. The audit runs models sequentially and unloads other loaded models to isolate GPU memory. Set `AUDIT_CASES_FILE` to use a separate held-out case array and `AUDIT_CARDS=1` to validate both exercise formats for cases with `cards` not set to `false`.
 
 For changes that only affect local postprocessing, `node scripts/replay-writing-audit.mjs <audit-folder> ...` runs the current production pipeline on recorded responses. It asserts that every outgoing JSON payload is identical to the original live request, including exercise generation. If a prompt, schema or input changes, replay fails and a fresh live audit is required. A small explicit American-spelling table can enforce the requested standard when a reviewer calls a regional spelling optional; it does not override a rejected replacement or rename quoted/code literals.
+
+For a mixed cached/live comparison, set `AUDIT_CACHE_DIR` to one or more comma-separated prior audit directories. Only byte-identical serialized request payloads (model, messages, options and JSON schema) reuse a response; changed requests go to Ollama. Traces record `cacheSource`, and results count cached and live calls separately. Do not use cached runs for speed comparisons or reuse responses after changing model weights. Gold plans may contain predeclared `alternativeExpected` arrays; corpus errata and manually adjudicated alternatives must be recorded and applied equally to baseline and candidate results.
 
 Passing these passages is a regression check, not a measure of overall linguistic accuracy. A local model can still miss errors or make a poor suggestion. Prepared cards remain editable and require the user's review before export. Existing drafts keep their saved results; use **Recheck selection** to analyse them with the updated checks.

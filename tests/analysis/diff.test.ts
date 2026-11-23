@@ -4,6 +4,19 @@ import { parseWritingAnalysis } from '../../src/writing';
 
 describe('edits derived from corrected prose', () => {
   it.each([
+    ['I study `english`.', 'I study English.', 'I study `English`.'],
+    ['I have `wrote` a letter.', 'I have written a letter.', 'I have `written` a letter.'],
+    ['I study `English`.', 'I study English.', 'I study `English`.'],
+  ])(
+    'retains inline vocabulary marking during a word replacement: %s',
+    (source, corrected, expected) => {
+      const edits = writingEdits(source, corrected);
+      let actual = source;
+      for (const e of [...edits].reverse()) actual = actual.replace(e.before, () => e.after);
+      expect(actual).toBe(expected);
+    },
+  );
+  it.each([
     ['I learn english.', 'I learn English.', [{ before: 'english', after: 'English' }]],
     [
       'She have wrote a letter.',

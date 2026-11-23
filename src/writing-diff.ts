@@ -107,11 +107,15 @@ export function writingEdits(original: string, corrected: string) {
       }
     }
     index = last;
-    const removed = original.slice(startA, finishA),
-      added = corrected.slice(startB, finishB);
+    const removed = original.slice(startA, finishA);
+    let added = corrected.slice(startB, finishB);
+    const inline = removed.match(/^(`+)([^`\n]+)\1$/);
+    if (inline && added.trim() && !added.includes('`') && !added.includes('\n'))
+      added = inline[1] + added + inline[1];
     if (!removed.trim() && !added.trim()) continue; // Formatting alone is not a learning target.
     const local = original.slice(0, startA) + added + original.slice(finishA);
     const edit = minimalCorrection(original, local);
+    if (edit.before.replaceAll('`', '') === edit.after.replaceAll('`', '')) continue;
     // At this stage hyphenation alone is treated as editorial style, not a practice error.
     // Apostrophes are deliberately excluded: its/it's is a real grammar distinction.
     if (edit.before.replaceAll('-', '') === edit.after.replaceAll('-', '')) continue;

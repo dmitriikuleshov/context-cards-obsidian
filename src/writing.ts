@@ -215,7 +215,9 @@ export function parseWritingAnalysis(
   if (!data || !Array.isArray(data.findings))
     throw new Error('Invalid writing analysis. Try a shorter selection.');
   if (data.findings.length > MAX_WRITING_FINDINGS)
-    throw new Error(`This passage needs more than ${MAX_WRITING_FINDINGS} corrections. Check a shorter selection.`);
+    throw new Error(
+      `This passage needs more than ${MAX_WRITING_FINDINGS} corrections. Check a shorter selection.`,
+    );
   const seen = new Set<string>();
   const findings: WritingFinding[] = [];
   for (const item of data.findings) {
