@@ -60,14 +60,42 @@ To update manually, disable the plugin, replace the release files in its existin
 
 ## 2. Set up Ollama
 
+### Choose a model
+
+**Recommended starting point: `gemma4:12b-it-qat`.** It gave the strongest combined results for vocabulary examples and Find mistakes in our current plugin tests. For a smaller download and quick everyday vocabulary drafts, try **`qwen3.5:9b-q4_K_M`**, which remains the plugin's built-in default. Both modes use the model selected in **Local model → Model**.
+
+| Tested model | Approximate download | Recommendation |
+| --- | --- | --- |
+| [Gemma 4 12B QAT](https://ollama.com/library/gemma4:12b-it-qat) · `gemma4:12b-it-qat` | 7.2 GB | First choice for both modes based on our current tests. Strong example groups and the highest expanded writing score. |
+| [Qwen 3.5 9B Q4_K_M](https://ollama.com/library/qwen3.5:9b-q4_K_M) · `qwen3.5:9b-q4_K_M` | 6.6 GB | The most compact of these four. A practical vocabulary option; inspect usage groups and writing suggestions carefully. |
+| [Gemma 3 12B Q4_K_M](https://ollama.com/library/gemma3:12b-it-q4_K_M) · `gemma3:12b-it-q4_K_M` | 8.2 GB | A useful alternative for both modes. Check proposed base words and the explanations behind corrections. |
+| [Qwen 3 14B Q4_K_M](https://ollama.com/library/qwen3:14b-q4_K_M) · `qwen3:14b-q4_K_M` | 9.3 GB | An alternative for comparison. Slower vocabulary generation without a clear quality advantage in our tests; allow more memory and time. |
+
+Download sizes come from the linked Ollama model pages. They are disk sizes; runtime memory also includes the context and other overhead. The recommendations were tested on **Windows, RTX 5070 with 12 GB VRAM and 32 GB RAM**, with thinking disabled. Vocabulary drafts in the prompt comparison typically took about **7–8 seconds** for the Gemma models and Qwen 3.5, and **15–16 seconds** for Qwen 3 14B once loaded. These are observations from that hardware and test configuration, rather than promised response times; initial loading and longer writing passages take longer.
+
+#### What the writing results measure
+
+With plugin **0.3.37**, the expanded Find mistakes comparison returned:
+
+| Model | Expanded cases | New contrastive cases | Previous basic cases |
+| --- | --- | --- | --- |
+| `gemma4:12b-it-qat` | **94/95** | **16/16** | 24/24 |
+| `gemma3:12b-it-q4_K_M` | 93/95 | **16/16** | 24/24 |
+| `qwen3.5:9b-q4_K_M` | 93/95 | 14/16 | 24/24 |
+| `qwen3:14b-q4_K_M` | 93/95 | 13/16 | 24/24 |
+
+A case passes when every expected local correction is found with no extra correction or request failure. One ambiguous construction is excluded from the 95-case score. These are finite regression sets, not overall accuracy percentages, and they do not grade every explanation or hint. Final verification includes recorded responses reused only for identical requests; changed requests were sent to Ollama. See the [writing results and method](../experiments/writing-expanded-2026-11-23/summary.json), [test passages](../experiments/writing-expanded-2026-11-23/cases.json) and [vocabulary prompt comparison](../experiments/vocabulary-prompt-tuning-2026-11-23/summary.json).
+
+All four can make false corrections or give a poor explanation for a correct edit. In these tests, some models overcorrected agreement after *none*, factual past conditionals or quoted British spellings. Review suggestions before creating study cards.
+
 ### Install the application and model
 
 1. Download [Ollama for Windows](https://ollama.com/download/windows), install it and start it.
 2. Open **PowerShell** or **Windows Terminal** from the Start menu. Open a new terminal if it was already running before installation.
-3. Download the default model:
+3. Download your chosen model. For the recommended starting point, run:
 
    ```powershell
-   ollama pull qwen3.5:9b-q4_K_M
+   ollama pull gemma4:12b-it-qat
    ```
 
 4. Wait for the download to finish. The model requires several gigabytes of disk space and enough memory to run. Speed depends on the chosen model and your hardware.
@@ -77,7 +105,17 @@ To update manually, disable the plugin, replace the release files in its existin
    ollama list
    ```
 
-   The list should include `qwen3.5:9b-q4_K_M`.
+   The list should include the exact tag you downloaded, such as `gemma4:12b-it-qat`.
+
+To choose a different tested model, run the corresponding command instead:
+
+| Model | PowerShell command |
+| --- | --- |
+| Qwen 3.5 9B | `ollama pull qwen3.5:9b-q4_K_M` |
+| Gemma 3 12B | `ollama pull gemma3:12b-it-q4_K_M` |
+| Qwen 3 14B | `ollama pull qwen3:14b-q4_K_M` |
+
+One downloaded model is enough to get started. Use the exact tags above to reproduce the tested variants; a different size or quantization may behave differently.
 
 Keep Ollama running while generating drafts. Its Windows app runs the server in the background; an additional `ollama serve` process is unnecessary when it is already active. [Official Windows instructions](https://docs.ollama.com/windows)
 
@@ -88,7 +126,7 @@ Under **Settings → Context Cards → Local model**, start with:
 | Setting | Value |
 | --- | --- |
 | Ollama server | `http://127.0.0.1:11434` |
-| Model | `qwen3.5:9b-q4_K_M` |
+| Model | Select `gemma4:12b-it-qat` after downloading it; the built-in default is `qwen3.5:9b-q4_K_M` |
 | Context length | `Balanced · 1,800 characters` |
 | Generation temperature | `0.2` |
 | Request timeout | `60 seconds` |
@@ -96,6 +134,10 @@ Under **Settings → Context Cards → Local model**, start with:
 The **Model** list loads automatically from the configured Ollama server. Choose an installed model from the dropdown. After downloading or removing a model, click **Refresh** next to the list. Refreshing does not download or load models, generate a draft, or confirm that a model fits in memory. If your saved model is missing, it stays selected and is marked **not installed** until you explicitly choose another model. A connection failure also keeps your saved choice.
 
 The first request may take longer while the model loads. Request timeout accepts a whole number of seconds; the default is `60`. For slower hardware, try `300` or `600`. You can use another installed model, but output quality and adherence to the requested format may differ.
+
+If generation is slow, begin with **Balanced · 1,800 characters** and a short writing paragraph. After generating, run `ollama ps` in PowerShell to inspect the loaded model: **100% GPU** means it is fully on the GPU, while a CPU/GPU split means it is partly in system memory. Qwen 3 14B used some CPU offloading in our vocabulary test on the 12 GB card. Increasing the timeout lets a slow request finish; it does not speed it up. See [Ollama's GPU loading explanation](https://docs.ollama.com/faq#how-can-i-tell-if-my-model-was-loaded-onto-the-gpu).
+
+To switch models, download the new tag, click **Refresh** beside **Model**, select it, and generate a new draft or use **Recheck selection** for an unexported writing session. Existing draft content is kept until you regenerate or recheck it. The plugin sends text only and disables thinking in its model requests; no thinking setup is required in Ollama's chat.
 
 With the default address, generation stays on your computer. Changing the Ollama URL sends the selected text and context to that server instead.
 
@@ -202,7 +244,7 @@ Review the result before approval: a local model can still produce incorrect def
 
 ![Recognition front: the word and a collapsed Show context hint](images/recognition.png)
 
-Choose **Recognition** to see the word-first exercise. **Show context** reveals the source passage when context is enabled. **Flip card** shows the answer fields.
+Choose **Recognition** to see the word-first exercise. The selected exercise button is highlighted. **Show context** reveals the source passage when context is enabled. **Flip card**, on the card itself, shows the answer fields.
 
 ### Preview: Recall
 
@@ -306,7 +348,7 @@ Under **Settings → Context Cards → Writing practice**:
 
 A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created automatically when exporting cards; there is no separate Save review step. Open it from your configured writing review folder or the source link in Anki. Personal notes appended after its managed review block are retained when the plugin updates the review.
 
-Writing preferences apply to the next analysis or **Recheck selection**. Existing drafts and prepared cards keep their saved settings. You can override the exercise type for a specific correction under **Edit → More details → Exercise type** before preparing cards. Enable at least one check category to run an analysis.
+Writing preferences apply to the next analysis or **Recheck selection**. Existing drafts and prepared cards keep their saved settings. You can override the exercise type for a specific correction under **Edit → More details → Exercise type** before preparing cards.
 
 The latest four writing sessions are stored with plugin data when **Restore unfinished drafts** is enabled. They are independent of the four vocabulary drafts. Rechecking replaces the session's suggestions and unexported exercise drafts; it is disabled after a finding has been exported. Use a fresh selection for new writing.
 

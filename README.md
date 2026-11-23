@@ -79,6 +79,21 @@ Context Cards uses **Ollama** to generate content and **AnkiConnect** to add app
 
 You choose the model and stay in control of the result. AI can still get meanings, pronunciation or examples wrong, so review is part of the workflow. If you configure a remote server, the relevant text is sent to that server instead.
 
+## Choose a model for your study
+
+**Start with Gemma 4 12B QAT** for the strongest overall results in our current plugin tests. **Qwen 3.5 9B** is a smaller option for everyday vocabulary capture and remains the plugin's default model.
+
+| Tested Ollama model | When to choose it |
+| --- | --- |
+| [`gemma4:12b-it-qat`](https://ollama.com/library/gemma4:12b-it-qat) | Recommended starting point for both modes. Strong vocabulary examples and the best result in our expanded Find mistakes comparison. |
+| [`qwen3.5:9b-q4_K_M`](https://ollama.com/library/qwen3.5:9b-q4_K_M) | The smallest download of these four; a good choice when compactness and quick vocabulary drafts matter. |
+| [`gemma3:12b-it-q4_K_M`](https://ollama.com/library/gemma3:12b-it-q4_K_M) | An alternative for both modes. Improved usage examples, but word-formation suggestions need particular care. |
+| [`qwen3:14b-q4_K_M`](https://ollama.com/library/qwen3:14b-q4_K_M) | An option to compare with the others. It was slower and showed no clear quality advantage for this workflow in our tests. |
+
+These recommendations come from tests on Windows with an RTX 5070 (12 GB VRAM), 32 GB RAM and thinking disabled. They describe this plugin's tasks, rather than a general ranking of the models. Every model still made mistakes; correct corrections can also have inaccurate explanations.
+
+**[Model downloads, comparison results and hardware advice →](docs/SETUP.md#choose-a-model)**
+
 ## Start with your next chapter
 
 You will need **Obsidian Desktop**, **Ollama with a downloaded model**, and **Anki Desktop with AnkiConnect**. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.

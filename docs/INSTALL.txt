@@ -24,14 +24,24 @@ Do not use the automatic Source code ZIP: it has no compiled plugin.
 OLLAMA
 
 Install and open Ollama: https://ollama.com/download/windows
-In a new PowerShell window, download the default model:
-  ollama pull qwen3.5:9b-q4_K_M
+In a new PowerShell window, download the recommended starting model:
+  ollama pull gemma4:12b-it-qat
 Check its installed name:
   ollama list
 
+FOUR TESTED MODELS (choose one)
+  gemma4:12b-it-qat       Recommended for vocabulary and Find mistakes.
+  qwen3.5:9b-q4_K_M      Smaller option; the plugin's built-in default.
+  gemma3:12b-it-q4_K_M   Alternative; check base words and explanations.
+  qwen3:14b-q4_K_M       Slower in our tests, with no clear quality advantage.
+To download an alternative, use: ollama pull EXACT_MODEL_TAG
+The full guide includes commands, download sizes and comparison results.
+Tests used Windows, RTX 5070 12 GB and 32 GB RAM, with thinking disabled.
+Review model output; a correct edit can still have an inaccurate explanation.
+
 In Settings > Context Cards > Local model:
   Ollama server: http://127.0.0.1:11434
-  Model: select qwen3.5:9b-q4_K_M from the installed-model list
+  Model: select gemma4:12b-it-qat after downloading it, or your chosen model
   Request timeout: 60 seconds; try 300 or 600 on slower hardware.
 The model list loads automatically. Use Refresh beside Model after installing
 or removing a model. If Ollama is unavailable, your saved choice is kept.
