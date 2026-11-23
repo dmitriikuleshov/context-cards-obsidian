@@ -209,12 +209,12 @@ describe('independent reviewer contracts', () => {
       );
     const result = await new WritingModel({
       ...DEFAULTS,
-      writing: { ...DEFAULTS.writing, vocabulary: false },
+      writing: { ...DEFAULTS.writing },
     }).analyse(SOURCE, signal());
     expect(result.findings[0]!.kind).toBe('grammar');
     expect(result.findings[0]!.selected).toBe(true);
   });
-  it('does not accept a missing or invalid category in a restricted review', async () => {
+  it('does not accept a missing or invalid category in the review', async () => {
     const request = vi
       .spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce(envelope(proofreadingJSON()))
@@ -228,12 +228,12 @@ describe('independent reviewer contracts', () => {
     await expect(
       new WritingModel({
         ...DEFAULTS,
-        writing: { ...DEFAULTS.writing, vocabulary: false },
+        writing: { ...DEFAULTS.writing },
       }).analyse(SOURCE, signal()),
     ).rejects.toThrow('invalid feedback');
     expect(request).toHaveBeenCalledTimes(3);
   });
-  it('does not request regional spelling normalization when spelling is disabled', async () => {
+  it('requests American spelling even with a legacy disabled-spelling setting', async () => {
     const request = vi
       .spyOn(http, 'jsonRequest')
       .mockResolvedValueOnce(envelope(proofreadingJSON()))
@@ -242,10 +242,11 @@ describe('independent reviewer contracts', () => {
       );
     await new WritingModel({
       ...DEFAULTS,
-      writing: { ...DEFAULTS.writing, variant: 'american', spelling: false },
+      writing: { ...DEFAULTS.writing, variant: 'british', spelling: false } as any,
     }).analyse(SOURCE, signal());
     const prompt = (request.mock.calls[0]![1] as any).messages[0].content;
-    expect(prompt).not.toContain('Use American spellings such as');
+    expect(prompt).toContain('Use American English');
+    expect(prompt).toContain('colour, centre and analyse');
   });
 });
 describe('exercise generation contracts', () => {

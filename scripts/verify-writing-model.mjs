@@ -77,7 +77,7 @@ const cases = [
     text: 'I finished the report yesterday. I finished the report yesterday.',
     expected: [],
   },
-  { name: 'regional-accept-both', text: 'The colour of the centre is beautiful.', expected: [] },
+  { name: 'american-clean', text: 'The color of the center is beautiful.', expected: [] },
   {
     name: 'regional-american',
     writing: { variant: 'american' },
@@ -88,19 +88,19 @@ const cases = [
     ],
   },
   {
-    name: 'regional-british',
+    name: 'legacy-british-ignored',
     writing: { variant: 'british' },
     text: 'The color of the center is beautiful.',
-    expected: [
-      ['color', 'colour'],
-      ['center', 'centre'],
-    ],
+    expected: [],
   },
   {
-    name: 'spelling-only',
+    name: 'legacy-filters-ignored',
     writing: { grammar: false, vocabulary: false },
     text: 'I have wrote a stroy.',
-    expected: [['stroy', 'story']],
+    expected: [
+      ['wrote', 'written'],
+      ['stroy', 'story'],
+    ],
   },
   {
     name: 'default-correction',

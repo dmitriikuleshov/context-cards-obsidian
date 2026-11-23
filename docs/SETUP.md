@@ -291,14 +291,12 @@ Saving only prepared card feedback returns to preview. Changing the underlying c
 
 ### Writing settings and saved reviews
 
+Find mistakes always checks grammar, vocabulary and spelling using **American English**. Older saved category filters and dialect choices are ignored.
+
 Under **Settings → Context Cards → Writing practice**:
 
 | Setting | Default | Purpose |
 | --- | --- | --- |
-| English variant | `Accept both` | Accept standard American and British forms, or select one variant to check regional spelling too. |
-| Check grammar | On | Check grammar, tense, agreement, punctuation and capitalization. |
-| Check vocabulary and collocations | On | Check word choice and word combinations. |
-| Check spelling | On | Include spelling feedback; spelling-only findings do not become practice cards. |
 | Default exercise type | `Let AI choose` | Let the model choose a format per correction, or prefer Correct the mistake / Fill in the gap. Deletions always use correction cards. |
 | Writing deck | `English::Writing mistakes` | Destination for writing exercises, separate from reading vocabulary. |
 | Writing review folder | `English/Writing reviews` | Vault-relative folder for saved Markdown feedback. |

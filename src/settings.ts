@@ -269,50 +269,10 @@ export class ContextSettings extends PluginSettingTab {
     });
     new Setting(root).setName('Writing practice').setHeading();
     const writing = settings.writing;
-    new Setting(root)
-      .setName('English variant')
-      .setDesc(
-        'Choose the English used to check your writing. Accept both keeps valid American and British forms. A specific variant also checks regional spelling. Applies on the next analysis or recheck.',
-      )
-      .addDropdown((dropdown) =>
-        dropdown
-          .addOptions({
-            both: 'Accept both',
-            american: 'American English',
-            british: 'British English',
-          })
-          .setValue(writing.variant)
-          .onChange((value) => {
-            writing.variant = value as typeof writing.variant;
-            this.plugin.persist();
-          }),
-      );
-    for (const [key, name, description] of [
-      [
-        'grammar',
-        'Check grammar',
-        'Find grammar, tense, agreement, punctuation and capitalization errors.',
-      ],
-      [
-        'vocabulary',
-        'Check vocabulary and collocations',
-        'Find incorrect word choices and word combinations.',
-      ],
-      [
-        'spelling',
-        'Check spelling',
-        'Include spelling corrections in the feedback. Spelling-only findings do not become practice cards.',
-      ],
-    ] as const)
-      new Setting(root)
-        .setName(name)
-        .setDesc(description)
-        .addToggle((toggle) =>
-          toggle.setValue(writing[key]).onChange((value) => {
-            writing[key] = value;
-            this.plugin.persist();
-          }),
-        );
+    root.createEl('p', {
+      cls: 'setting-item-description',
+      text: 'Always checks grammar, vocabulary and spelling in American English.',
+    });
     new Setting(root)
       .setName('Default exercise type')
       .setDesc(

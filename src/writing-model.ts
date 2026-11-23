@@ -94,22 +94,12 @@ export class WritingModel {
     if (!text.trim() || text.length > WRITING_LIMIT)
       throw new Error(`Select up to ${WRITING_LIMIT.toLocaleString()} characters of your writing.`);
     const options = writingOptions(this.settings);
-    const allowedKinds = [
-      ...(options.grammar ? ['grammar'] : []),
-      ...(options.vocabulary ? ['vocabulary'] : []),
-      ...(options.spelling ? ['typo'] : []),
-    ];
-    if (!allowedKinds.length)
-      throw new Error(
-        'Enable at least one correction category under Settings → Context Cards → Writing practice.',
-      );
+    const allowedKinds = ['grammar', 'vocabulary', 'typo'];
     const variantRule =
-      options.variant === 'both'
-        ? ''
-        : `The user requires ${options.variant === 'american' ? 'American' : 'British'} English. ${options.spelling ? (options.variant === 'american' ? 'Use American spellings such as color, center and analyze instead of colour, centre and analyse. ' : 'Use British spellings such as colour, centre and analyse instead of color, center and analyze. ') : ''}Regional spelling mismatches are typo corrections when spelling is enabled. This overrides acceptance of regional spelling variants. Preserve proper names, quotations and meaning. `;
+      'Use American English. British spellings such as colour, centre and analyse must be corrected to color, center and analyze. These are required spelling corrections, not optional style preferences. Preserve proper names, quotations and meaning. ';
     const scope =
       variantRule +
-      `Enabled correction categories: ${allowedKinds.join(', ')}. Grammar includes capitalization, agreement, verb forms, articles and punctuation. Vocabulary includes collocations; typo means accidental spelling. Omit disabled categories. `;
+      'Check all error categories. Grammar includes capitalization, agreement, verb forms, articles and punctuation. Vocabulary includes collocations; typo means accidental spelling. ';
     const sentences = Array.from(
       new Intl.Segmenter('en', { granularity: 'sentence' }).segment(text),
       (part, i) => ({ id: String(i + 1), text: part.segment.trim() }),
@@ -190,7 +180,7 @@ export class WritingModel {
     const analysis = parseProofreading(raw);
     const candidates = analysis.findings;
     if (!candidates.length) {
-      analysis.summary = 'No clear corrections found in the enabled categories.';
+      analysis.summary = 'No clear corrections found.';
       return analysis;
     }
     const reviewIds = new Map(candidates.map((f, i) => [String(i + 1), f.id]));
@@ -232,7 +222,7 @@ export class WritingModel {
     const reviewed = await this.request(
       variantRule +
         REVIEW_PROMPT +
-        ' Assess every candidate even when its category is disabled. Classify the ACTUAL edit: grammar includes capitalization and verb forms, vocabulary includes collocations, typo means accidental misspellings. Return its short rule name as pattern. Choose correction or gap as recommended_format for a useful practice exercise; deletions require correction.',
+        ' Classify the ACTUAL edit: grammar includes capitalization and verb forms, vocabulary includes collocations, typo means accidental misspellings. Return its short rule name as pattern. Choose correction or gap as recommended_format for a useful practice exercise; deletions require correction.',
       {
         text,
         candidates: candidates.map((f, i) => {

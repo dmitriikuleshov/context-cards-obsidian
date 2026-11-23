@@ -19,15 +19,9 @@ function draft() {
   );
 }
 describe('persisted drafts and settings', () => {
-  it('migrates writing preferences with independent defaults and preserves explicit disabled checks', () => {
+  it('migrates writing preferences and removes old category/dialect restrictions', () => {
     const old = restoreData({ settings: { writingDeck: 'My writing' } }).settings;
-    expect(old.writing).toEqual({
-      variant: 'both',
-      grammar: true,
-      vocabulary: true,
-      spelling: true,
-      exercise: 'ai',
-    });
+    expect(old.writing).toEqual({ exercise: 'ai' });
     const restored = restoreData({
       settings: {
         writing: {
@@ -35,25 +29,19 @@ describe('persisted drafts and settings', () => {
           exercise: 'gap',
           grammar: false,
           vocabulary: false,
-          spelling: true,
+          spelling: false,
         },
       },
     }).settings;
-    expect(restored.writing).toEqual({
-      variant: 'british',
-      exercise: 'gap',
-      grammar: false,
-      vocabulary: false,
-      spelling: true,
-    });
+    expect(restored.writing).toEqual({ exercise: 'gap' });
     const invalid = restoreData({
-      settings: { writing: { variant: 'invalid', exercise: 'auto', grammar: 'no' } },
+      settings: { writing: { exercise: 'auto', grammar: 'no' } },
     }).settings;
     expect(invalid.writing).toEqual(DEFAULTS.writing);
-    restored.writing.grammar = true;
-    expect(DEFAULTS.writing.grammar).toBe(true);
-    old.writing.grammar = false;
-    expect(DEFAULTS.writing.grammar).toBe(true);
+    restored.writing.exercise = 'correction';
+    expect(DEFAULTS.writing.exercise).toBe('ai');
+    old.writing.exercise = 'gap';
+    expect(DEFAULTS.writing.exercise).toBe('ai');
     expect(restoreData({ settings: { writing: null } }).settings.writing).toEqual(DEFAULTS.writing);
   });
   it('keeps the source snapshot of a pending replacement across restart', () => {

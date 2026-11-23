@@ -28,27 +28,14 @@ export function cardFields(settings?: Partial<Settings>): CardFields {
   return { ...DEFAULT_FIELDS, ...settings?.fields };
 }
 export interface WritingOptions {
-  variant: 'both' | 'american' | 'british';
-  grammar: boolean;
-  vocabulary: boolean;
-  spelling: boolean;
   exercise: 'ai' | 'correction' | 'gap';
 }
-export const DEFAULT_WRITING: WritingOptions = {
-  variant: 'both',
-  grammar: true,
-  vocabulary: true,
-  spelling: true,
-  exercise: 'ai',
-};
+export const DEFAULT_WRITING: WritingOptions = { exercise: 'ai' };
 export function writingOptions(settings?: Partial<Settings>): WritingOptions {
   const value = settings?.writing;
   const options = { ...DEFAULT_WRITING };
   if (!value || typeof value !== 'object') return options;
-  if (['both', 'american', 'british'].includes(value.variant)) options.variant = value.variant;
   if (['ai', 'correction', 'gap'].includes(value.exercise)) options.exercise = value.exercise;
-  for (const key of ['grammar', 'vocabulary', 'spelling'] as const)
-    if (typeof value[key] === 'boolean') options[key] = value[key];
   return options;
 }
 export interface Settings {

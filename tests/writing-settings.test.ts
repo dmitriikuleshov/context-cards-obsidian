@@ -91,51 +91,21 @@ describe('writing preferences', () => {
     expect(card.kind).toBe('correction');
     expect(card.question).toBe('I have wrote stories.');
   });
-  it.each([
-    [{ grammar: false }, ['vocabulary', 'typo']],
-    [{ vocabulary: false }, ['grammar', 'typo']],
-    [{ spelling: false }, ['grammar', 'vocabulary']],
-    [{ grammar: false, vocabulary: false }, ['typo']],
-  ] as const)(
-    'filters disabled categories after independent classification: %j',
-    async (options, expected) => {
-      const { model, signal, request } = setup(options);
-      const analysis = await model.analyse(text, signal);
-      expect(analysis.findings.map((f) => f.kind)).toEqual(expected);
-      const proposal = request.mock.calls[0]![1] as any;
-      expect(proposal.messages[0].content).toContain(
-        `Enabled correction categories: ${expected.join(', ')}`,
-      );
-      const review = JSON.parse((request.mock.calls[1]![1] as any).messages[1].content);
-      expect(review.candidates).toHaveLength(fixtures.length);
-    },
-  );
-  it('does not contact the model if every category is disabled', async () => {
+  it('ignores legacy restrictions and always checks all categories in American English', async () => {
     const { model, signal, request } = setup({
+      variant: 'british',
       grammar: false,
       vocabulary: false,
       spelling: false,
-    });
-    await expect(model.analyse(text, signal)).rejects.toThrow(
-      'Enable at least one correction category',
-    );
-    expect(request).not.toHaveBeenCalled();
+    } as any);
+    const result = await model.analyse(text, signal);
+    expect(result.findings.map((f) => f.kind)).toEqual(['grammar', 'vocabulary', 'typo']);
+    for (const call of request.mock.calls.slice(0, 2)) {
+      const prompt = (call[1] as any).messages[0].content;
+      expect(prompt).toContain('Use American English');
+      expect(prompt).not.toContain('Omit disabled categories');
+    }
   });
-  it.each(['both', 'american', 'british'] as const)(
-    'uses the %s variant in both analysis and verification',
-    async (variant) => {
-      const { model, signal, request } = setup({ variant });
-      await model.analyse(text, signal);
-      for (const call of request.mock.calls.slice(0, 2)) {
-        const prompt = (call[1] as any).messages[0].content;
-        if (variant === 'both') expect(prompt).not.toContain('The user requires');
-        else
-          expect(prompt).toContain(
-            `The user requires ${variant === 'american' ? 'American' : 'British'} English`,
-          );
-      }
-    },
-  );
   it('uses correction for deletions even under a gap default', async () => {
     const { model, signal } = setup({ exercise: 'gap' }, [
       {
@@ -148,13 +118,5 @@ describe('writing preferences', () => {
     const analysis = await model.analyse('We discussed about the plan.', signal);
     expect(analysis.findings[0]!.format).toBe('correction');
     expect(analysis.findings[0]!.after).toBe('');
-  });
-  it('rejects a disabled grammar rule mislabelled as a spelling error by the first pass', async () => {
-    const { model, signal } = setup({ grammar: false, vocabulary: false }, [
-      { ...fixtures[0]!, kind: 'typo' },
-      fixtures[2]!,
-    ]);
-    const analysis = await model.analyse(text, signal);
-    expect(analysis.findings.map((f) => f.before)).toEqual(['stroy']);
   });
 });

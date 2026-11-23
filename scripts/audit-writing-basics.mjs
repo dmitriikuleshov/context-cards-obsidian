@@ -84,7 +84,11 @@ const cases = [
   { id: 'clean-past', text: 'I started learning English three years ago.', expected: [] },
   { id: 'clean-conditional', text: 'If I were you, I would take the train.', expected: [] },
   { id: 'clean-complements', text: 'I like reading. I like to read before bed.', expected: [] },
-  { id: 'clean-regional', text: 'The colour of the theatre curtains was grey.', expected: [] },
+  {
+    id: 'american-spelling',
+    text: 'The colour of the centre is unusual.',
+    expected: ['The color of the centre is unusual.', 'The colour of the center is unusual.'],
+  },
   { id: 'clean-good', text: 'This is good. She is a good teacher. He works hard.', expected: [] },
   // Held-out lexical substitutions: do not use these as prompt examples.
   {
