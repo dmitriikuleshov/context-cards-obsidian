@@ -422,7 +422,12 @@
       "Never have I seen such a beautiful view."
     ],
     "group": "structure",
-    "cards": false
+    "cards": false,
+    "alternativeExpected": [
+      [
+        "I have never seen such a beautiful view."
+      ]
+    ]
   },
   {
     "id": "only-then",
@@ -814,7 +819,13 @@
       "The guide have taken the tickets."
     ],
     "group": "long",
-    "cards": false
+    "cards": false,
+    "alternativeExpected": [
+      [
+        "The guide had took the tickets.",
+        "The guide have taken the tickets."
+      ]
+    ]
   },
   {
     "id": "long-4200",
@@ -824,7 +835,13 @@
       "The guide have taken the tickets."
     ],
     "group": "long",
-    "cards": false
+    "cards": false,
+    "alternativeExpected": [
+      [
+        "The guide had took the tickets.",
+        "The guide have taken the tickets."
+      ]
+    ]
   },
   {
     "id": "repeated-targets",

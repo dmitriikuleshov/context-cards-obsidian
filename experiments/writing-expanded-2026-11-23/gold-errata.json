@@ -4,5 +4,17 @@
     "old": "Their teancher is a honest person.",
     "corrected": "Their teacher is an honest person.",
     "reason": "Corpus construction used substring replacement for article a and accidentally edited the a inside teacher. Source text and model requests are unchanged. Both baseline and candidate are scored against the corrected gold."
+  },
+  {
+    "id": "long-1800",
+    "reason": "Human adjudication: the surrounding narrative is past-tense and the source auxiliary is malformed. Both present-perfect agreement repair and past-perfect reconstruction are grammatical readings. Accept both local correction plans, consistently for baseline and candidate. No source/model input was changed."
+  },
+  {
+    "id": "long-4200",
+    "reason": "Human adjudication: the surrounding narrative is past-tense and the source auxiliary is malformed. Both present-perfect agreement repair and past-perfect reconstruction are grammatical readings. Accept both local correction plans, consistently for baseline and candidate. No source/model input was changed."
+  },
+  {
+    "id": "inversion",
+    "reason": "Human adjudication: restoring subject/verb order by relocating never is also a grammatical, meaning-preserving repair of the malformed source. Both fronted-inversion and ordinary-order repairs are accepted for both versions. Inputs unchanged."
   }
 ]
