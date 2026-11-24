@@ -14,7 +14,7 @@ import { writingHighlights } from './writing-workflow';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
 import { renderPanelHeader, renderSourceHeading } from './panel-header';
-import { renderErrorFeedback } from './error-feedback';
+import { renderErrorFeedback, scrollPanelToTop } from './error-feedback';
 
 export const WRITING_VIEW = 'context-cards-writing';
 type Screen = 'review' | 'preview' | 'done';
@@ -29,6 +29,7 @@ export class WritingView extends ItemView {
   private editorValues = new Map<string, string>();
   private dropdownCleanup?: () => void;
   private deckSuggest?: DeckSuggest;
+  private errorState?: { id: string; error: string; phase: WritingSession['phase'] };
   async onClose() {
     this.deckSuggest?.close();
     this.dropdownCleanup?.();
@@ -181,6 +182,7 @@ export class WritingView extends ItemView {
     const sessions = this.host.writing.sessions,
       s = sessions.find((s) => s.id === this.current) ?? sessions.at(-1);
     if (!s) {
+      this.errorState = undefined;
       const empty = root.createDiv({ cls: 'cc-empty' });
       empty.createEl('h2', { text: 'No writing drafts' });
       empty.createEl('p', { text: 'Select your English writing and choose Find mistakes.' });
@@ -291,6 +293,15 @@ export class WritingView extends ItemView {
       if (replacement && caret) replacement.setSelectionRange(caret[0]!, caret[1]!);
     }
     this.renderKey = key;
+    const previous = this.errorState;
+    if (
+      s.error &&
+      (previous?.id !== s.id ||
+        previous.error !== s.error ||
+        (previous.phase !== 'idle' && s.phase === 'idle'))
+    )
+      scrollPanelToTop(root, this.scrollOwner());
+    this.errorState = { id: s.id, error: s.error, phase: s.phase };
   }
   private renderReview(body: HTMLElement, s: WritingSession) {
     const busy = s.phase !== 'idle',
@@ -569,7 +580,8 @@ export class WritingView extends ItemView {
             this.host.settings,
             'validation',
           );
-          error.scrollIntoView({ block: 'nearest' });
+          body.prepend(error);
+          scrollPanelToTop(this.contentEl, body);
         }
       },
       true,

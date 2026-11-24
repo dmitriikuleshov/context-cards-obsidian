@@ -3,6 +3,14 @@ import type { Settings } from './types';
 type ErrorContext = 'model' | 'anki' | 'validation';
 type ErrorSettings = Pick<Settings, 'provider' | 'ankiUrl' | 'ollamaUrl'>;
 
+/** Scroll only this panel's containers, leaving the source document untouched. */
+export function scrollPanelToTop(root: HTMLElement, content: HTMLElement = root) {
+  content.scrollTop = 0;
+  root.scrollTop = 0;
+  // The standalone panel and some host layouts put scrolling on the wrapper.
+  if (root.parentElement) root.parentElement.scrollTop = 0;
+}
+
 /** Presentation only: retain the original failure for troubleshooting and retries. */
 export function describeError(
   raw: string,

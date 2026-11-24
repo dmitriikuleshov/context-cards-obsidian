@@ -7,7 +7,7 @@ import { CARD_CSS, examplesHtml } from './templates';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
 import { renderPanelHeader, renderSourceHeading } from './panel-header';
-import { renderErrorFeedback } from './error-feedback';
+import { renderErrorFeedback, scrollPanelToTop } from './error-feedback';
 
 export const VIEW_TYPE = 'context-cards-review';
 export class ReviewView extends ItemView {
@@ -24,6 +24,7 @@ export class ReviewView extends ItemView {
   private sections = new Map<string, boolean>();
   private dropdownCleanup?: () => void;
   private deckSuggest?: DeckSuggest;
+  private errorState?: { id: string; error: string; phase: Draft['phase'] };
   constructor(
     leaf: WorkspaceLeaf,
     private plugin: ContextCardsPlugin,
@@ -149,6 +150,7 @@ export class ReviewView extends ItemView {
     renderPanelHeader(root, () => this.plugin.openSettings());
     const draft = this.active();
     if (!draft) {
+      this.errorState = undefined;
       const empty = root.createDiv({ cls: 'cc-empty' });
       empty.createDiv({ cls: 'cc-empty-icon', text: 'Aa' });
       empty.createEl('h2', { text: 'Keep the words worth keeping.' });
@@ -305,6 +307,15 @@ export class ReviewView extends ItemView {
       }
     }
     root.scrollTop = draft.phase === 'saved' ? 0 : scrollTop;
+    const previous = this.errorState;
+    if (
+      draft.error &&
+      (previous?.id !== draft.id ||
+        previous.error !== draft.error ||
+        (['sending', 'generating'].includes(previous.phase) && previous.phase !== draft.phase))
+    )
+      scrollPanelToTop(root);
+    this.errorState = { id: draft.id, error: draft.error, phase: draft.phase };
   }
   private renderEditor(body: HTMLElement, draft: Draft) {
     const disabled = draft.phase === 'saved' || draft.phase === 'sending';

@@ -97,6 +97,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ### Improved
 
+- New errors in Vocabulary and Find mistakes automatically scroll the panel to the top. A failed retry also reveals the error again; ordinary redraws keep the user's reading position.
 - Vocabulary uses larger, rounded **Edit draft** and **Preview cards** controls with icons, a clear selected state and keyboard focus retained when switching views.
 - Both modes show consistent error panels with recovery steps and expandable technical details. Connection errors identify AnkiConnect, Ollama or ChatGPT.
 - The source-note button has a compact icon and subtle hover styling.
