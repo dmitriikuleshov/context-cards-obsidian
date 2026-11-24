@@ -18,9 +18,10 @@ export function renderSourceHeading(root: HTMLElement, book: string, openSource:
   const source = root.createDiv({ cls: 'cc-source-heading' });
   source.createSpan({ text: book });
   const button = source.createEl('button', {
-    text: 'Open source',
-    cls: 'cc-link-button',
-    attr: { type: 'button' },
+    cls: 'cc-source-button',
+    attr: { type: 'button', 'aria-label': 'Open source', title: 'Open the original note' },
   });
+  setIcon(button.createSpan({ attr: { 'aria-hidden': 'true' } }), 'file-text');
+  button.createSpan({ text: 'Open source' });
   button.addEventListener('click', openSource);
 }

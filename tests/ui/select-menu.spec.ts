@@ -1,4 +1,49 @@
 import { test, expect } from '@playwright/test';
+
+for (const mode of ['vocabulary', 'writing']) {
+  test(`the ${mode} draft menu toggles closed on its trigger without changing the draft`, async ({
+    page,
+  }) => {
+    await page.goto(mode === 'writing' ? '/?writing=1' : '/');
+    const picker = page.locator('.cc-draft-switcher > .cc-select-button');
+    const label = await picker.textContent();
+    for (let i = 0; i < 3; i++) {
+      await picker.click();
+      await expect(page.getByRole('menu')).toBeVisible();
+      await expect(picker).toHaveAttribute('aria-expanded', 'true');
+      await picker.click();
+      await expect(page.getByRole('menu')).toHaveCount(0);
+      await expect(picker).toHaveAttribute('aria-expanded', 'false');
+      await expect(picker).toBeFocused();
+      await expect(picker).toHaveText(label!);
+    }
+    await picker.press('Enter');
+    await expect(page.getByRole('menu')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(picker).toBeFocused();
+    await expect(page.getByRole('menu')).toHaveCount(0);
+  });
+}
+
+test('clicking another dropdown switches the menu and redraw removes the old gesture listeners', async ({
+  page,
+}) => {
+  await page.goto('/?writing=1');
+  await page.getByRole('button', { name: 'Edit', exact: true }).click();
+  await page.locator('[data-writing-section=edit-details]>summary').click();
+  const category = page.getByLabel('Finding category', { exact: true });
+  const format = page.getByLabel('Exercise type', { exact: true });
+  await category.click();
+  await format.click();
+  await expect(page.getByRole('menu')).toHaveCount(1);
+  await expect(category).toHaveAttribute('aria-expanded', 'false');
+  await expect(format).toHaveAttribute('aria-expanded', 'true');
+  await page.evaluate(() => (window as any).writingPreview.view.render());
+  await expect(page.getByRole('menu')).toHaveCount(0);
+  await format.click();
+  await format.click();
+  await expect(page.getByRole('menu')).toHaveCount(0);
+});
 for (const width of [390, 1000]) {
   test(`settings show one control per DropdownComponent, excluding measurement selects (${width}px)`, async ({
     page,

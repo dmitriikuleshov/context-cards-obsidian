@@ -11,6 +11,8 @@ npm run test:ui
 
 The browser suite runs the production panels against simulated services; it does not sign into ChatGPT, contact Ollama or export to real Anki. Screenshots/layout checks cover narrow panels, controls and callback pages in both themes. For template/backend checks, install [uv](https://docs.astral.sh/uv/) and run `npm run test:anki` and `npm run test:writing-anki`. These scripts fetch the Python Anki package into an isolated environment and use temporary collections, not your installed collection.
 
+Panel regressions cover closing dropdowns with a second click, switching menus and cleaning up listeners after redraw, stable writing-footer geometry during analysis/preparation/export, shared error styling in light/dark themes, expandable troubleshooting details and safe rendering of server/model text. Error-description unit tests distinguish AnkiConnect, Ollama and ChatGPT, including custom Anki addresses. These are simulated UI checks, not live service availability checks.
+
 For docs-only edits, check Markdown links/anchors, documented paths/npm commands, English text and `git diff --check`; application tests are not required when no runtime/build configuration changed.
 
 ## Vocabulary mode

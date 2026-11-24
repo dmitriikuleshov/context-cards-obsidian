@@ -1,6 +1,7 @@
 import { WritingView } from '../../src/writing-view';
 import { parseWritingAnalysis, correctedSentence } from '../../src/writing';
 import type ContextCardsPlugin from '../../src/main';
+import { DEFAULTS } from '../../src/types';
 export function mountWritingPanel(root: HTMLElement) {
   const first = 'I have wrote three stories this week.';
   const text = first + ' I did a mistake yesterday.';
@@ -73,6 +74,7 @@ export function mountWritingPanel(root: HTMLElement) {
     exports: [],
   };
   const host: any = {
+    settings: structuredClone(DEFAULTS),
     persist: () => {},
     openPanel: () => {},
     openAnki: () => {},

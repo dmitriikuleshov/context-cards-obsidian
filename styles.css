@@ -817,6 +817,81 @@
 .cc-panel button.cc-link-button {
   font-size: 12px;
 }
+.cc-panel button.cc-source-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  height: auto;
+  padding: 5px 8px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  box-shadow: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.cc-panel button.cc-source-button:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+.cc-panel button.cc-source-button:focus-visible {
+  outline: 2px solid var(--cc-accent);
+  outline-offset: 2px;
+}
+.cc-source-button > span:first-child {
+  display: inline-flex;
+}
+.cc-source-button svg {
+  width: 14px;
+  height: 14px;
+}
+.cc-panel .cc-error-feedback {
+  scroll-margin-block: 12px;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--text-warning) 35%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--text-warning) 7%, transparent);
+  color: var(--text-normal);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.cc-error-title {
+  display: block;
+  font-size: 13px;
+}
+.cc-error-feedback .cc-error-message {
+  margin: 5px 0 0;
+}
+.cc-error-details {
+  margin-top: 8px;
+  color: var(--text-muted);
+}
+.cc-error-details > summary {
+  cursor: pointer;
+}
+.cc-error-details > p {
+  margin: 6px 0 0;
+  white-space: pre-wrap;
+}
+.cc-error-feedback > button {
+  margin-top: 12px;
+}
+.cc-warning:has(.cc-error-feedback) {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.cc-warning .cc-error-feedback {
+  margin-bottom: 0;
+}
+.cc-writing-error:empty {
+  display: none;
+}
 .cc-tabs {
   margin-bottom: 16px;
 }

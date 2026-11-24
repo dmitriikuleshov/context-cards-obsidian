@@ -195,6 +195,8 @@ test('generation failure keeps choices and retry opens previews', async ({ page 
   await choice(page).check();
   await page.evaluate(() => ((window as any).writingPreview.controls.failGenerate = true));
   await button(page, 'Review 1 card').click();
+  await expect(page.getByRole('alert')).toContainText('The model response could not be used');
+  await page.getByText('Technical details', { exact: true }).click();
   await expect(page.getByRole('alert')).toContainText('after retry');
   await expect(word(page, 'wrote')).toHaveClass(/is-kept/);
   await button(page, 'Retry preparing cards').click();

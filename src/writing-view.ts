@@ -14,6 +14,7 @@ import { writingHighlights } from './writing-workflow';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
 import { renderPanelHeader, renderSourceHeading } from './panel-header';
+import { renderErrorFeedback } from './error-feedback';
 
 export const WRITING_VIEW = 'context-cards-writing';
 type Screen = 'review' | 'preview' | 'done';
@@ -242,8 +243,12 @@ export class WritingView extends ItemView {
         });
     }
     if (s.error) {
-      const error = body.createDiv({ cls: 'cc-writing-error', attr: { role: 'alert' } });
-      error.createEl('p', { text: s.error });
+      const error = renderErrorFeedback(
+        body.createDiv(),
+        s.error,
+        this.host.settings,
+        this.screen === 'preview' && this.pending(s).every((f) => this.valid(f)) ? 'anki' : 'model',
+      );
       if (!busy) {
         if (!s.analysed)
           this.button(error, 'Try analysis again', () => void this.host.writing.analyse(s), true);
@@ -558,7 +563,12 @@ export class WritingView extends ItemView {
           if (this.screen === 'preview' && underlyingChanged) this.screen = 'review';
           this.changed(s);
         } catch (e) {
-          error.textContent = e instanceof Error ? e.message : String(e);
+          renderErrorFeedback(
+            error,
+            e instanceof Error ? e.message : String(e),
+            this.host.settings,
+            'validation',
+          );
           error.scrollIntoView({ block: 'nearest' });
         }
       },
@@ -597,10 +607,12 @@ export class WritingView extends ItemView {
         card.createEl('p', { text: f.card!.explanation });
         if (f.card!.tip) card.createEl('p', { cls: 'cc-muted', text: f.card!.tip });
       } catch (e) {
-        card.createEl('p', {
-          cls: 'cc-writing-error',
-          text: e instanceof Error ? e.message : String(e),
-        });
+        renderErrorFeedback(
+          card.createDiv(),
+          e instanceof Error ? e.message : String(e),
+          this.host.settings,
+          'validation',
+        );
       }
       const edit = this.button(card, 'Edit card', () => {
         this.openEditor(f);
@@ -643,6 +655,7 @@ export class WritingView extends ItemView {
       pending = this.pending(s);
     if (this.screen === 'done') return;
     if (!s.analysed) {
+      actions.createSpan({ text: '0 cards selected' });
       this.button(
         actions,
         'Find mistakes',
@@ -653,7 +666,6 @@ export class WritingView extends ItemView {
     }
     if (this.screen === 'preview') {
       actions.createSpan({
-        cls: 'cc-muted',
         text: `${pending.length} ${pending.length === 1 ? 'card' : 'cards'} selected`,
       });
       const valid = pending.length > 0 && pending.every((f) => this.valid(f));

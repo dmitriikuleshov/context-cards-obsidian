@@ -86,11 +86,27 @@ export function enhanceSelects(root: HTMLElement): () => void {
         const current = button.getBoundingClientRect();
         if (Math.abs(current.x - rect.x) > 0.5 || Math.abs(current.y - rect.y) > 0.5) close();
       };
+      // Menus dismiss on pointerdown outside their surface. Consume the entire
+      // trigger gesture before that dismissal can turn its click into a reopen.
+      const trigger = (event: Event) => {
+        if (!(event.target instanceof doc.defaultView!.Node) || !button.contains(event.target))
+          return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        if (event.type === 'click') {
+          close();
+          if (button.isConnected) button.focus({ preventScroll: true });
+        }
+      };
+      for (const type of ['pointerdown', 'mousedown', 'click'])
+        doc.addEventListener(type, trigger, true);
       doc.addEventListener('scroll', scroll, true);
       doc.addEventListener('keydown', escape, true);
       doc.defaultView?.addEventListener('resize', close);
       menu.onHide(() => {
         disconnected.disconnect();
+        for (const type of ['pointerdown', 'mousedown', 'click'])
+          doc.removeEventListener(type, trigger, true);
         doc.removeEventListener('scroll', scroll, true);
         doc.removeEventListener('keydown', escape, true);
         doc.defaultView?.removeEventListener('resize', close);

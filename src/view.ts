@@ -7,6 +7,7 @@ import { CARD_CSS, examplesHtml } from './templates';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
 import { renderPanelHeader, renderSourceHeading } from './panel-header';
+import { renderErrorFeedback } from './error-feedback';
 
 export const VIEW_TYPE = 'context-cards-review';
 export class ReviewView extends ItemView {
@@ -649,7 +650,8 @@ export class ReviewView extends ItemView {
   private refreshFooter(draft: Draft) {
     if (this.warning) {
       this.warning.empty();
-      if (draft.error) this.warning.createDiv({ text: draft.error });
+      if (draft.error)
+        renderErrorFeedback(this.warning.createDiv(), draft.error, this.plugin.settings);
       if (draft.status !== 'ready' && draft.question)
         this.warning.createDiv({ text: draft.question });
       this.warning.toggleClass('is-visible', !!draft.error || draft.status !== 'ready');

@@ -35,6 +35,7 @@ function setup() {
     ],
   });
   const plugin = {
+    settings: structuredClone(DEFAULTS),
     drafts: [draft],
     deckNames: [],
     persist: vi.fn(),
