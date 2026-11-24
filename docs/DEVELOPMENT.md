@@ -95,15 +95,13 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
-### Fixed
-
-- After vocabulary export, **Open in Anki** shows progress and confirms that the cards are selected in Anki's Browse window, including guidance if it stays in the background. **Continue reading** and **Open source** focus the source note, including one already visible beside the panel. Failed source navigation is reported instead of failing silently.
+No unreleased user-visible changes. Published changes are recorded in [GitHub Releases](https://github.com/dmitriikuleshov/context-cards-obsidian/releases).
 
 ## Current maintenance state
 
-- Supported release: [**0.3.42**](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/tag/0.3.42), runtime tag commit **441e9c0**.
-- The release includes ChatGPT session/transport/callback hardening, clearer review controls, stable export retries, actionable errors and error scrolling. English setup instructions and interface screenshots are current.
-- Release verification: 952 full-suite tests, all three coverage gates (355 analysis, 450 vocabulary and 175 ChatGPT tests), 79 browser checks, both temporary-Anki checks and package verification passed. Both GitHub workflows passed for the release commit. Published assets and the public ZIP/manifest were verified.
+- Supported release: [**0.3.43**](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/tag/0.3.43), runtime tag commit **2394ae0**.
+- The hotfix adds progress and confirmation for opening cards in Anki, explicit source-note focus and source-navigation error reporting. The ChatGPT hardening and panel improvements from 0.3.42 remain included. English setup instructions and interface screenshots are current.
+- Release verification: 955 full-suite tests, all three coverage gates (355 analysis, 453 vocabulary and 175 ChatGPT tests), 80 browser checks, both temporary-Anki checks and package verification passed. Both GitHub workflows passed for the release commit. Published assets and the public ZIP/manifest were verified.
 - Provider checks use generated credentials, simulated responses and real loopback sockets. Real-account sign-in/refresh/revocation was not repeated, and no cloud inference requests were made for release verification. See [Testing](TESTING.md) for boundaries.
 - No active implementation handoff. Start the next task from the current branch, Git status and the relevant source files.
 - Platform, account and live-test limitations are recorded in [Setup](SETUP.md) and [Testing](TESTING.md).
