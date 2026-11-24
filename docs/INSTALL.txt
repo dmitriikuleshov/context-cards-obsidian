@@ -83,7 +83,7 @@ THE TWO ACTIONS
 
 Explain word / phrase:
 Select one word or expression in a Markdown book. Review the English draft,
-preview it, then use Add to Anki in Edit. One note creates Recognition and
+preview it, then use Add to Anki in Edit draft. One note creates Recognition and
 Recall cards. Recall asks for the original source form.
 
 Find mistakes:
@@ -93,6 +93,10 @@ Click Review N cards, check the exercises, then Add N cards to Anki.
 One chosen correction creates one card. Exporting also saves a Markdown review.
 
 Both modes have a draft selector, Clear all and Open source.
+Edit draft / Preview cards switches between vocabulary editing and card previews.
+New errors scroll the panel to the top and explain which service needs attention.
+Expand Technical details for the original message. A failed export can be retried
+without losing the draft. Keep Anki Desktop open even when using ChatGPT.
 Sync Anki Desktop through AnkiWeb to review the cards on your phone.
 
 UPDATES

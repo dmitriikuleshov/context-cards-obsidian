@@ -6,7 +6,7 @@
 
 Turn your reading and writing into useful Anki practice, right inside Obsidian. Select a word to understand it, or select your own writing to find mistakes. Your chosen model prepares the material; you review it before adding anything to Anki.
 
-**[Get started — setup guide](docs/SETUP.md)** · **[Download](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest)** · **[Interface walkthrough](docs/SETUP.md#4-explore-the-interface)**
+**[Get started — setup guide](docs/SETUP.md)** · **[Download & release notes](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/latest)** · **[Interface walkthrough](docs/SETUP.md#4-explore-the-interface)**
 
 ## Two buttons, two ways to learn
 
@@ -69,6 +69,8 @@ The recall exercise uses the **original source form**. If the book says “brush
 - **Keep the source close.** Review the surrounding passage and jump back to the book.
 - **Organise by book.** Use a separate subdeck for each Markdown file, or choose your own destination.
 - **Check before exporting.** Preview both exercises and edit the draft before it reaches Anki.
+- **See what is selected.** Rounded **Edit draft / Preview cards** controls separate editing from card previews; dropdowns open and close with a click.
+- **Recover without losing your place.** Errors identify the service and explain what to check. New failures scroll into view, while retries keep the error panel and action-bar layout stable.
 - **Pick up where you left off.** The last four drafts in each mode can survive an Obsidian restart.
 - **Mark words as you go.** Optionally format captured words as inline code in the source Markdown.
 - **Review on your phone.** Sync the finished cards through Anki and study in AnkiDroid or AnkiMobile.
