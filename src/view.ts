@@ -666,9 +666,18 @@ export class ReviewView extends ItemView {
   }
   private refreshFooter(draft: Draft) {
     if (this.warning) {
+      const detailsOpen =
+        this.warning.querySelector<HTMLDetailsElement>('.cc-error-details')?.open ??
+        this.sections.get('error-details') ??
+        false;
       this.warning.empty();
       if (draft.error)
         renderErrorFeedback(this.warning.createDiv(), draft.error, this.plugin.settings);
+      const details = this.warning.querySelector<HTMLDetailsElement>('.cc-error-details');
+      if (details) {
+        details.dataset.ccSection = 'error-details';
+        details.open = detailsOpen;
+      }
       if (draft.status !== 'ready' && draft.question)
         this.warning.createDiv({ text: draft.question });
       this.warning.toggleClass('is-visible', !!draft.error || draft.status !== 'ready');
@@ -725,16 +734,15 @@ export class ReviewView extends ItemView {
       draft.seconds === undefined
         ? 'Generate an editable draft'
         : `Last generation: ${draft.seconds.toFixed(1)}s`;
-    if (draft.phase !== 'sending') {
-      const discard = this.button(
-        actions,
-        '',
-        () => this.plugin.discard(draft),
-        'cc-discard clickable-icon',
-      );
-      setIcon(discard, 'trash-2');
-      discard.setAttribute('aria-label', 'Discard draft');
-      discard.title = 'Discard draft';
-    }
+    const discard = this.button(
+      actions,
+      '',
+      () => this.plugin.discard(draft),
+      'cc-discard clickable-icon',
+    );
+    setIcon(discard, 'trash-2');
+    discard.setAttribute('aria-label', 'Discard draft');
+    discard.title = 'Discard draft';
+    discard.disabled = draft.phase === 'sending';
   }
 }

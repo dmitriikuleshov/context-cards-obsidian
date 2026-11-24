@@ -1,5 +1,66 @@
 import { test, expect } from '@playwright/test';
 
+for (const width of [340, 740]) {
+  test(`retrying a failed vocabulary export keeps the editor and footer still (${width}px)`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 850 });
+    await page.goto('/');
+    await page.evaluate(() => {
+      const p = (window as any).contextCardsPreview;
+      p.draft.error = 'Cannot connect to 127.0.0.1:8765. Start the local server and try again.';
+      p.host.approve = async (d: any) => {
+        if (d.phase === 'sending') return;
+        d.phase = 'sending';
+        p.view.render();
+        await new Promise<void>((resolve) => {
+          p.finishRetry = resolve;
+        });
+        d.phase = 'editing';
+        p.view.render();
+      };
+      p.view.render();
+    });
+    await page.getByText('Technical details', { exact: true }).click();
+    const approve = page.locator('.cc-footer-actions > .mod-cta');
+    await approve.scrollIntoViewIfNeeded();
+    const geometry = () =>
+      page.evaluate(() => {
+        const bounds = (selector: string) => {
+          const r = document.querySelector(selector)!.getBoundingClientRect();
+          return [r.x, r.y, r.width, r.height];
+        };
+        return [
+          '.cc-warning',
+          '.cc-word',
+          '.cc-footer',
+          '.cc-footer-actions > .mod-cta',
+          '.cc-discard',
+        ].map(bounds);
+      });
+    const initial = await geometry();
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await approve.click();
+      await expect(approve).toBeDisabled();
+      await expect(page.getByRole('button', { name: 'Discard draft', exact: true })).toBeDisabled();
+      await expect(page.locator('.cc-error-details')).toHaveAttribute('open', '');
+      expect(await geometry()).toEqual(initial);
+      await page.evaluate(
+        () =>
+          new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+          ),
+      );
+      expect(await geometry()).toEqual(initial);
+      await page.evaluate(() => (window as any).contextCardsPreview.finishRetry());
+      await expect(approve).toBeEnabled();
+      await expect(page.getByRole('button', { name: 'Discard draft', exact: true })).toBeEnabled();
+      expect(await geometry()).toEqual(initial);
+    }
+    await page.screenshot({ path: `.test-artifacts/anki-retry-stable-${width}.png` });
+  });
+}
+
 for (const dark of [true, false]) {
   test(`preview changes do not reload the visible frame or expose a blank ${dark ? 'dark' : 'light'} canvas`, async ({
     page,

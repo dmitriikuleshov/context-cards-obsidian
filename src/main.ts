@@ -576,7 +576,7 @@ export default class ContextCardsPlugin extends Plugin {
     }
     draft.deck = cleanDeck(draft.deck);
     draft.phase = 'sending';
-    draft.error = '';
+    // Keep the last failure visible during a retry so the editor does not jump.
     this.refresh();
     const snapshot = structuredClone(draft),
       settings = structuredClone(this.settings);
@@ -587,6 +587,7 @@ export default class ContextCardsPlugin extends Plugin {
       this.exports = operation;
       const noteId = await operation;
       draft.noteId = noteId;
+      draft.error = '';
       draft.phase = 'saved';
       draft.duplicates = undefined;
       if (this.unloaded) return; // A retry after reload can recover the note by its immutable key.

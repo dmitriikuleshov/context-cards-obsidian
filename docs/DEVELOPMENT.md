@@ -103,6 +103,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ### Fixed
 
+- Retrying a failed vocabulary export keeps the last error, expanded troubleshooting details and footer layout in place while waiting for Anki, avoiding a brief editor jump. A successful export clears the error.
 - The writing action bar keeps its layout during analysis and card preparation, with unavailable actions disabled.
 - Dropdowns close when clicked again without changing the selected value.
 - ChatGPT requests and refreshes stay bound to their original account session; cancelled or outdated responses cannot overwrite a newer session.

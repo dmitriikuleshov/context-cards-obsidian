@@ -8,6 +8,29 @@ afterEach(() => {
   vi.useRealTimers();
 });
 describe('vocabulary controller guards and failures', () => {
+  it('retains the previous export error through retries and clears it only after success', async () => {
+    const { plugin, d } = pluginFixture();
+    const previous = 'Cannot connect to 127.0.0.1:8765. Start the local server and try again.';
+    d.error = previous;
+    const failed = deferred<number>();
+    const add = vi
+      .spyOn(Anki.prototype, 'add')
+      .mockReturnValueOnce(failed.promise)
+      .mockResolvedValueOnce(42);
+    const first = plugin.approve(d);
+    expect(d.phase).toBe('sending');
+    expect(d.error).toBe(previous);
+    await plugin.approve(d);
+    await vi.waitFor(() => expect(add).toHaveBeenCalledTimes(1));
+    failed.reject(new Error(previous));
+    await first;
+    expect(d.phase).toBe('editing');
+    expect(d.error).toBe(previous);
+    await plugin.approve(d);
+    expect(add).toHaveBeenCalledTimes(2);
+    expect(d.phase).toBe('saved');
+    expect(d.error).toBe('');
+  });
   it.each([6001, 12000])(
     'generates a vocabulary draft with %i context characters',
     async (length) => {
