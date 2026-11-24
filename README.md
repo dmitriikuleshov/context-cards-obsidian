@@ -108,6 +108,6 @@ The guide covers downloading the plugin, choosing Ollama or ChatGPT, setting up 
 
 ---
 
-For contributors: [testing](docs/TESTING.md) · [release instructions](docs/RELEASING.md) · [development history](docs/DEVELOPMENT-HISTORY.ru.md).
+For contributors: [working agreements](AGENTS.md) · [development workflow (Russian)](docs/DEVELOPMENT.ru.md) · [current work](docs/WORK.md) · [testing](docs/TESTING.md) · [release instructions](docs/RELEASING.md) · [development history](docs/DEVELOPMENT-HISTORY.ru.md).
 
 American pronunciation data is derived from CMUdict. See [data/README.md](data/README.md) and [its license](data/CMUDICT-LICENSE.txt); the notice is included in the downloadable ZIP.
