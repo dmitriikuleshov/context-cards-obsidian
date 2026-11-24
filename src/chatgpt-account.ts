@@ -321,6 +321,7 @@ export class ChatGPTAccount implements SubscriptionConnection {
     const existing = this.refreshing.get(account.id);
     if (existing) return existing;
     const controller = new AbortController();
+    const previous = account.tokens;
     this.refreshJobs.add(controller);
     const work = (async () => {
       try {
@@ -334,6 +335,8 @@ export class ChatGPTAccount implements SubscriptionConnection {
             resource: API_ORIGIN,
           }),
         });
+        if (controller.signal.aborted || this.stopped)
+          throw new Error('Cancelled or ChatGPT request timed out.');
         if (response.id_token) {
           const keys = await this.http.json(discovery.jwks_uri!, { signal: controller.signal });
           const identity = verifyIdentity(
@@ -346,9 +349,17 @@ export class ChatGPTAccount implements SubscriptionConnection {
           if (identity.subject !== account.subject)
             throw new Error('ChatGPT changed the session identity. Reconnect in settings.');
         }
-        account.tokens = this.tokens(response, account.tokens);
+        if (
+          controller.signal.aborted ||
+          this.stopped ||
+          account.tokens !== previous ||
+          !this.read().accounts.includes(account)
+        )
+          throw new Error('Cancelled or ChatGPT session changed.');
+        account.tokens = this.tokens(response, previous);
         this.save();
       } catch (error) {
+        if (controller.signal.aborted || this.stopped) throw error;
         if (error instanceof ChatGPTError && expiredCodes.has(error.code)) {
           account.tokens = undefined;
           this.save();
@@ -385,20 +396,34 @@ export class ChatGPTAccount implements SubscriptionConnection {
     signal?.addEventListener('abort', abort, { once: true });
     this.jobs.add(controller);
     const timer = setTimeout(abort, timeout);
+    let accountId = id;
+    let initialSession: Tokens | undefined;
+    let usedToken: string | undefined;
     try {
+      accountId ??= this.read().active;
+      initialSession = this.account(accountId).tokens;
       const token = await new Promise<string>((resolve, reject) => {
         const stop = () => reject(new Error('Cancelled or ChatGPT request timed out.'));
         controller.signal.addEventListener('abort', stop, { once: true });
-        this.access(id)
+        this.access(accountId)
           .then(resolve, reject)
           .finally(() => controller.signal.removeEventListener('abort', stop));
       });
+      usedToken = token;
       if (controller.signal.aborted) throw new Error('Cancelled or ChatGPT request timed out.');
       const remaining = Math.max(1, timeout - (this.now() - started));
-      return await operation(token, controller.signal, remaining);
+      const value = await operation(token, controller.signal, remaining);
+      if (controller.signal.aborted || this.stopped)
+        throw new Error('Cancelled or ChatGPT request timed out.');
+      return value;
     } catch (error) {
-      if (error instanceof ChatGPTError) {
-        const account = this.read().accounts.find((a) => a.id === (id ?? this.read().active));
+      if (controller.signal.aborted || this.stopped)
+        throw new Error('Cancelled or ChatGPT request timed out.');
+      const account = this.read().accounts.find((a) => a.id === accountId);
+      const sameSession =
+        !!account?.tokens &&
+        (usedToken ? account.tokens.access === usedToken : account.tokens === initialSession);
+      if (sameSession && error instanceof ChatGPTError) {
         if (account && ['http_401', 'subscription_sharing_invalid_user'].includes(error.code)) {
           account.tokens = undefined;
           this.save();
@@ -415,8 +440,10 @@ export class ChatGPTAccount implements SubscriptionConnection {
           this.save();
         }
       }
-      this.lastError = error instanceof Error ? error.message : 'ChatGPT request failed.';
-      this.notify();
+      if (sameSession && this.read().active === accountId) {
+        this.lastError = error instanceof Error ? error.message : 'ChatGPT request failed.';
+        this.notify();
+      }
       throw error;
     } finally {
       clearTimeout(timer);

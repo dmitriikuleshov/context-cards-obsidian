@@ -5,6 +5,92 @@ import { DEFAULTS } from '../../src/types';
 import { accountFixture, jwt } from './fixtures';
 
 describe('ChatGPT subscription session lifecycle', () => {
+  it('keeps a late credential rejection bound to the account that made the request', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    const first = f.config.id;
+    f.config.id = 'oaiapp-second';
+    f.config.subject = 'second';
+    await f.account.signIn(true);
+    f.account.select(first);
+    let fail!: (reason: Error) => void;
+    f.json.mockImplementationOnce(
+      () =>
+        new Promise((_resolve, reject) => {
+          fail = reject;
+        }),
+    );
+    const pending = f.account.models();
+    const assertion = expect(pending).rejects.toThrow(/rejected/);
+    await vi.waitFor(() => expect(fail).toBeDefined());
+    f.account.select(f.config.id);
+    fail(new ChatGPTError('http_401', 'Session rejected.'));
+    await assertion;
+    const accounts = f.account.state().accounts;
+    expect(accounts.find((a) => a.id === first)?.connected).toBe(false);
+    expect(accounts.find((a) => a.id === f.config.id)?.connected).toBe(true);
+  });
+  it('does not let a stale 401 clear credentials obtained by a newer sign-in', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    let fail!: (reason: Error) => void;
+    f.json.mockImplementationOnce(
+      () =>
+        new Promise((_resolve, reject) => {
+          fail = reject;
+        }),
+    );
+    const pending = f.account.models();
+    const assertion = expect(pending).rejects.toThrow();
+    await vi.waitFor(() => expect(fail).toBeDefined());
+    await f.account.signIn();
+    const fresh = f.secret();
+    fail(new ChatGPTError('http_401', 'Old session rejected.'));
+    await assertion;
+    expect(f.account.state().accounts[0]?.connected).toBe(true);
+    expect(f.secret()).toBe(fresh);
+  });
+  it('rejects late transport success after cancellation', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    let complete!: (value: unknown) => void;
+    f.json.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          complete = resolve;
+        }),
+    );
+    const controller = new AbortController();
+    const pending = f.account.models(controller.signal);
+    const assertion = expect(pending).rejects.toThrow(/Cancelled/);
+    await vi.waitFor(() => expect(complete).toBeDefined());
+    controller.abort();
+    complete({ models: [] });
+    await assertion;
+  });
+  it('does not persist a late refresh response after plugin unload', async () => {
+    const f = accountFixture();
+    await f.account.signIn();
+    f.config.now += 3590000;
+    const original = f.json.getMockImplementation()!;
+    let complete!: (value: unknown) => void;
+    f.json.mockImplementation((url, options) =>
+      options?.form?.get('grant_type') === 'refresh_token'
+        ? new Promise((resolve) => {
+            complete = resolve;
+          })
+        : original(url, options),
+    );
+    const pending = f.account.models();
+    const assertion = expect(pending).rejects.toThrow(/Cancelled/);
+    await vi.waitFor(() => expect(complete).toBeDefined());
+    const saved = f.secret();
+    f.account.dispose();
+    await assertion;
+    complete(f.tokens());
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(f.secret()).toBe(saved);
+  });
   it('cancels browser authorization without replacing a saved account', async () => {
     const f = accountFixture();
     await f.account.signIn();
