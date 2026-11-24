@@ -25,7 +25,7 @@ Start the steps below only when the user requests a release/publication, includi
 
 ## Supported release and cleanup
 
-The supported installation is the latest published release, currently **0.3.41**. Use `/releases/latest` in user-facing links. Retain Git commits and tags for source history and rollback; they are not additional supported plugin downloads.
+The supported installation is the latest published release, currently **0.3.42**. Use `/releases/latest` in user-facing links. Retain Git commits and tags for source history and rollback; they are not additional supported plugin downloads.
 
 When cleanup is requested, first verify that the latest release has its complete, tested assets. Remove obsolete release records and drafts without deleting or moving tags. Verify `/releases` contains only the retained release and `/releases/latest` still resolves correctly. Release descriptions may be updated to link current English instructions, but do not silently replace published runtime files or their checksums.
 

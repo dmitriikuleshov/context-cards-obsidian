@@ -95,28 +95,13 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
-### Improved
-
-- Updated English setup instructions, troubleshooting advice and interface screenshots.
-- New errors in Vocabulary and Find mistakes automatically scroll the panel to the top. A failed retry also reveals the error again; ordinary redraws keep the user's reading position.
-- Vocabulary uses larger, rounded **Edit draft** and **Preview cards** controls with icons, a clear selected state and keyboard focus retained when switching views.
-- Both modes show consistent error panels with recovery steps and expandable technical details. Connection errors identify AnkiConnect, Ollama or ChatGPT.
-- The source-note button has a compact icon and subtle hover styling.
-
-### Fixed
-
-- Retrying a failed vocabulary export keeps the last error, expanded troubleshooting details and footer layout in place while waiting for Anki, avoiding a brief editor jump. A successful export clears the error.
-- The writing action bar keeps its layout during analysis and card preparation, with unavailable actions disabled.
-- Dropdowns close when clicked again without changing the selected value.
-- ChatGPT requests and refreshes stay bound to their original account session; cancelled or outdated responses cannot overwrite a newer session.
-- ChatGPT handles malformed credentials, interrupted or invalid response streams, and connection cleanup more safely. Local sign-in callbacks reject malformed requests and recover safely from cancellation during startup.
+No unreleased user-visible changes. Published changes are recorded in [GitHub Releases](https://github.com/dmitriikuleshov/context-cards-obsidian/releases).
 
 ## Current maintenance state
 
-- Supported release: **0.3.41**, runtime tag commit **789bed2**.
-- Latest maintenance: English documentation and release cleanup, followed by removal of obsolete design snapshots, early model probes and coverage snapshots. The vocabulary audit retains eight literary cases from the retired canvas benchmark; fresh smoke reports use ignored test artifacts. No runtime/version change.
-- Unreleased runtime changes: ChatGPT session-bound request/error handling, cancellation/refresh guards, protected loopback callback startup and request parsing, strict stream/credential validation, and connection cleanup. These fixes require installing a development build or a future authorized release; the published 0.3.41 assets remain unchanged.
-- Hardening verification: 940 full-suite tests, 175 ChatGPT tests (51 added), all coverage gates and 64 browser checks passed. Tests use generated credentials, simulated responses and real loopback sockets; real-account sign-in/refresh/revocation was not repeated, and no inference requests were made through the plugin's ChatGPT connection. See [Testing](TESTING.md) for boundaries.
-- Unreleased panel maintenance: stable writing-footer layout while busy, a quiet source-note button, shared actionable errors with expandable technical details, and dropdown trigger toggling. Verification: 951 full-suite tests, 72 browser checks, build and package verification passed. Service failures are simulated; model prompts, export mechanics and stored data are unchanged.
+- Supported release: [**0.3.42**](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/tag/0.3.42), runtime tag commit **441e9c0**.
+- The release includes ChatGPT session/transport/callback hardening, clearer review controls, stable export retries, actionable errors and error scrolling. English setup instructions and interface screenshots are current.
+- Release verification: 952 full-suite tests, all three coverage gates (355 analysis, 450 vocabulary and 175 ChatGPT tests), 79 browser checks, both temporary-Anki checks and package verification passed. Both GitHub workflows passed for the release commit. Published assets and the public ZIP/manifest were verified.
+- Provider checks use generated credentials, simulated responses and real loopback sockets. Real-account sign-in/refresh/revocation was not repeated, and no cloud inference requests were made for release verification. See [Testing](TESTING.md) for boundaries.
 - No active implementation handoff. Start the next task from the current branch, Git status and the relevant source files.
 - Platform, account and live-test limitations are recorded in [Setup](SETUP.md) and [Testing](TESTING.md).
