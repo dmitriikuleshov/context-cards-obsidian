@@ -25,6 +25,7 @@ export interface LoginCallback {
   close(): void;
 }
 export async function loginCallback(state: string, signal: AbortSignal): Promise<LoginCallback> {
+  if (signal.aborted) throw new Error('ChatGPT sign-in cancelled.');
   let resolve!: (value: CallbackResult) => void, reject!: (error: Error) => void;
   const result = new Promise<CallbackResult>((a, b) => {
     resolve = a;
@@ -34,7 +35,6 @@ export async function loginCallback(state: string, signal: AbortSignal): Promise
   void result.catch(() => {});
   let finished = false;
   const server = createServer((req, res) => {
-    const url = new URL(req.url ?? '/', 'http://127.0.0.1');
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('Referrer-Policy', 'no-referrer');
@@ -43,6 +43,17 @@ export async function loginCallback(state: string, signal: AbortSignal): Promise
       'Content-Security-Policy',
       "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
     );
+    const address = server.address();
+    const host = address && typeof address !== 'string' ? `127.0.0.1:${address.port}` : '';
+    let url: URL;
+    try {
+      if (!host || req.headers.host !== host || !req.url?.startsWith('/')) throw new Error();
+      url = new URL(req.url, `http://${host}`);
+      if (url.origin !== `http://${host}`) throw new Error();
+    } catch {
+      res.writeHead(400).end(callbackPage('invalid'));
+      return;
+    }
     if (req.method !== 'GET' || url.pathname !== '/auth/callback') {
       res.writeHead(404).end(callbackPage('not-found'));
       return;
@@ -84,6 +95,10 @@ export async function loginCallback(state: string, signal: AbortSignal): Promise
     res.end(callbackPage('received'));
     resolve({ code: code[0], clientId: clients[0] });
   });
+  server.maxConnections = 16;
+  server.headersTimeout = 10000;
+  server.requestTimeout = 15000;
+  server.keepAliveTimeout = 1000;
   const close = () => {
     clearTimeout(timer);
     signal.removeEventListener('abort', abort);
@@ -103,9 +118,22 @@ export async function loginCallback(state: string, signal: AbortSignal): Promise
   signal.addEventListener('abort', abort, { once: true });
   try {
     await new Promise<void>((done, fail) => {
-      server.once('error', fail);
+      const cleanup = () => {
+        server.removeListener('error', failed);
+        signal.removeEventListener('abort', cancelled);
+      };
+      const failed = () => {
+        cleanup();
+        fail(new Error('Could not open the local sign-in callback.'));
+      };
+      const cancelled = () => {
+        cleanup();
+        fail(new Error('ChatGPT sign-in cancelled.'));
+      };
+      server.once('error', failed);
+      signal.addEventListener('abort', cancelled, { once: true });
       server.listen(0, '127.0.0.1', () => {
-        server.removeListener('error', fail);
+        cleanup();
         done();
       });
     });

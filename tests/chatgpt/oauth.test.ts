@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { request } from 'node:http';
 import {
   AUTH_ORIGIN,
   loginCallback,
@@ -77,6 +78,43 @@ describe('ChatGPT identity verification', () => {
   });
 });
 describe('loopback browser callback', () => {
+  it('settles cancellation during listener startup and accepts another attempt', async () => {
+    const controller = new AbortController();
+    const pending = loginCallback('state', controller.signal);
+    controller.abort();
+    await expect(pending).rejects.toThrow(/cancelled/);
+    const retry = await loginCallback('state', new AbortController().signal);
+    retry.close();
+  });
+  it('rejects malformed request targets and foreign hosts without consuming the pending login', async () => {
+    const cb = await loginCallback('expected', new AbortController().signal);
+    const url = new URL(cb.uri);
+    const get = (path: string, host = url.host) =>
+      new Promise<number>((resolve, reject) => {
+        const req = request(
+          { hostname: url.hostname, port: url.port, path, headers: { host } },
+          (res) => {
+            res.resume();
+            res.on('end', () => resolve(res.statusCode!));
+          },
+        );
+        req.on('error', reject);
+        req.end();
+      });
+    try {
+      for (const path of [
+        'http://[',
+        'http://evil.test/auth/callback?state=expected&code=x',
+        '//evil.test/auth/callback?state=expected&code=x',
+      ])
+        expect(await get(path)).toBe(400);
+      expect(await get('/auth/callback?state=expected&code=x', 'evil.test')).toBe(400);
+      expect((await fetch(cb.uri + '?state=expected&code=real-test-code')).status).toBe(200);
+      expect(await cb.result).toEqual({ code: 'real-test-code', clientId: undefined });
+    } finally {
+      cb.close();
+    }
+  });
   it('expires a forgotten browser login and releases its listener', async () => {
     vi.useFakeTimers();
     try {
