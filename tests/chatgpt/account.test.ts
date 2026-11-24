@@ -5,6 +5,38 @@ import { DEFAULTS } from '../../src/types';
 import { accountFixture, jwt } from './fixtures';
 
 describe('ChatGPT subscription session lifecycle', () => {
+  it.each([
+    { token_type: {} },
+    { scope: [] },
+    { scope: null },
+    { expires_in: Number.NaN },
+    { access_token: 'bad\r\nheader' },
+    { access_token: 'bad token' },
+  ])('rejects malformed refresh credentials without persisting them %#', async (change) => {
+    const f = accountFixture();
+    await f.account.signIn();
+    f.config.now += 3590000;
+    const original = f.json.getMockImplementation()!;
+    f.json.mockImplementation(async (url, options) => {
+      const response = await original(url, options);
+      return options?.form?.get('grant_type') === 'refresh_token'
+        ? { ...response, ...change }
+        : response;
+    });
+    f.store.setSecret.mockClear();
+    await expect(f.account.models()).rejects.toThrow(/incomplete sign-in credentials/);
+    expect(f.store.setSecret).not.toHaveBeenCalled();
+    expect(f.account.state().accounts[0]?.connected).toBe(true);
+  });
+  it('does not expose Secret storage read errors', () => {
+    const f = accountFixture();
+    f.store.getSecret.mockImplementation(() => {
+      throw new Error('PRIVATE storage data');
+    });
+    expect(() => f.account.state()).toThrow(
+      'Could not read ChatGPT sign-in from Obsidian Secret storage. Check storage access and reconnect.',
+    );
+  });
   it('keeps a late credential rejection bound to the account that made the request', async () => {
     const f = accountFixture();
     await f.account.signIn();

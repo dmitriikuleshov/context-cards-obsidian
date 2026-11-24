@@ -82,7 +82,14 @@ export class ChatGPTAccount implements SubscriptionConnection {
         'ChatGPT sign-in requires Obsidian 1.11.5 or newer with Secret storage. Update Obsidian or choose Ollama.',
       );
     if (this.data) return this.data;
-    const raw = this.store.getSecret(this.key);
+    let raw: string | null;
+    try {
+      raw = this.store.getSecret(this.key);
+    } catch {
+      throw new Error(
+        'Could not read ChatGPT sign-in from Obsidian Secret storage. Check storage access and reconnect.',
+      );
+    }
     if (!raw)
       return (this.data = {
         version: 1,
@@ -282,14 +289,21 @@ export class ChatGPTAccount implements SubscriptionConnection {
   }
   private tokens(response: any, old?: Tokens): Tokens {
     if (
+      !response ||
+      typeof response !== 'object' ||
+      Array.isArray(response) ||
       typeof response.access_token !== 'string' ||
       !response.access_token ||
+      /[\s\u0000-\u001f\u007f]/.test(response.access_token) ||
       typeof response.refresh_token !== 'string' ||
       !response.refresh_token ||
       typeof response.expires_in !== 'number' ||
+      !Number.isFinite(response.expires_in) ||
       response.expires_in <= 0 ||
       response.expires_in > 86400 ||
-      response.token_type?.toLowerCase() !== 'bearer'
+      typeof response.token_type !== 'string' ||
+      response.token_type.toLowerCase() !== 'bearer' ||
+      (response.scope !== undefined && typeof response.scope !== 'string')
     )
       throw new Error('ChatGPT returned incomplete sign-in credentials. Reconnect in settings.');
     const scopes =

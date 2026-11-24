@@ -162,6 +162,7 @@ export function verifyIdentity(
   nonce?: string,
   now = Date.now(),
 ) {
+  if (typeof token !== 'string') throw new Error('ChatGPT returned an invalid identity token.');
   const parts = token.split('.');
   if (parts.length !== 3 || token.length > 30000)
     throw new Error('ChatGPT returned an invalid identity token.');

@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { request } from 'node:http';
+import { Server } from 'node:net';
+import { generateKeyPairSync, sign } from 'node:crypto';
 import {
   AUTH_ORIGIN,
   loginCallback,
@@ -10,6 +12,14 @@ import {
 import { jwk, jwt } from './fixtures';
 
 describe('ChatGPT identity verification', () => {
+  it.each([null, {}, 12, true])(
+    'rejects a non-string identity token without a raw type error %#',
+    (token) => {
+      expect(() => verifyIdentity(token as any, { keys: [] }, 'client')).toThrow(
+        'ChatGPT returned an invalid identity token.',
+      );
+    },
+  );
   const now = 1795500000000;
   const claims = {
     iss: AUTH_ORIGIN,
@@ -24,6 +34,29 @@ describe('ChatGPT identity verification', () => {
       subject: 'user',
       email: claims.email,
     });
+  });
+  it('verifies ES256 signatures and rejects tampering using generated test keys', () => {
+    const pair = generateKeyPairSync('ec', { namedCurve: 'P-256' });
+    const key = {
+      ...pair.publicKey.export({ format: 'jwk' }),
+      kid: 'ec-test',
+      use: 'sig',
+      alg: 'ES256',
+    };
+    const encode = (value: unknown) => Buffer.from(JSON.stringify(value)).toString('base64url');
+    const header = encode({ alg: 'ES256', kid: 'ec-test' });
+    const unsigned = header + '.' + encode(claims);
+    const signature = sign('sha256', Buffer.from(unsigned), {
+      key: pair.privateKey,
+      dsaEncoding: 'ieee-p1363',
+    }).toString('base64url');
+    expect(
+      verifyIdentity(unsigned + '.' + signature, { keys: [key] }, 'client', 'nonce', now).subject,
+    ).toBe('user');
+    const tampered = header + '.' + encode({ ...claims, sub: 'different-user' }) + '.' + signature;
+    expect(() => verifyIdentity(tampered, { keys: [key] }, 'client', 'nonce', now)).toThrow(
+      /verify/,
+    );
   });
   it.each([
     { iss: 'https://evil.test' },
@@ -78,6 +111,21 @@ describe('ChatGPT identity verification', () => {
   });
 });
 describe('loopback browser callback', () => {
+  it('reports a listener startup failure without leaking platform error details', async () => {
+    const listen = vi.spyOn(Server.prototype, 'listen').mockImplementationOnce(function (
+      this: Server,
+    ) {
+      queueMicrotask(() => this.emit('error', new Error('PRIVATE platform details')));
+      return this;
+    });
+    try {
+      await expect(loginCallback('state', new AbortController().signal)).rejects.toThrow(
+        'Could not open the local sign-in callback.',
+      );
+    } finally {
+      listen.mockRestore();
+    }
+  });
   it('settles cancellation during listener startup and accepts another attempt', async () => {
     const controller = new AbortController();
     const pending = loginCallback('state', controller.signal);
