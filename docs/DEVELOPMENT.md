@@ -91,5 +91,7 @@ The repository distributes the latest supported release. Older source revisions 
 
 - Supported release: **0.3.41**, runtime tag commit **789bed2**.
 - Latest maintenance: English documentation and release cleanup, followed by removal of obsolete design snapshots, early model probes and coverage snapshots. The vocabulary audit retains eight literary cases from the retired canvas benchmark; fresh smoke reports use ignored test artifacts. No runtime/version change.
+- Unreleased runtime changes: ChatGPT session-bound request/error handling, cancellation/refresh guards, protected loopback callback startup and request parsing, strict stream/credential validation, and connection cleanup. These fixes require installing a development build or a future authorized release; the published 0.3.41 assets remain unchanged.
+- Hardening verification: 940 full-suite tests, 175 ChatGPT tests (51 added), all coverage gates and 64 browser checks passed. Tests use generated credentials, simulated responses and real loopback sockets; real-account sign-in/refresh/revocation was not repeated, and no subscription allowance was consumed. See [Testing](TESTING.md) for boundaries.
 - No active implementation handoff. Start the next task from the current branch, Git status and the relevant source files.
 - Platform, account and live-test limitations are recorded in [Setup](SETUP.md) and [Testing](TESTING.md).
