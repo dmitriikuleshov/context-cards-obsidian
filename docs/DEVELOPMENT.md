@@ -87,6 +87,26 @@ Release publication requires a user request. Bump the version once for the check
 
 The repository distributes the latest supported release. Older source revisions remain in Git; old release assets are not the supported installation path. Do not rewrite published tags or replace tested runtime assets as a documentation edit.
 
+## Keeping release notes
+
+Update **Unreleased changes** below in the same logical commit as each user-visible feature, improvement or fix. This is the working list for the next release; published, versioned notes live in GitHub Releases. Keep everything in English and use short bullets describing what changed for the user, grouped under **Added**, **Improved** or **Fixed** when useful. Include compatibility requirements, required actions and known limitations when relevant. Internal refactoring, test-only work and routine documentation edits do not need a release-note entry unless they affect users.
+
+Consolidate related entries, revise them as behavior changes, and remove entries for reverted work. Before releasing, compare the accumulated list with Git changes since the previous published tag so that omissions and abandoned changes do not reach the release description. Follow [Releasing](RELEASING.md) to transfer the checked list into the version's GitHub Release. After successful publication, remove only the published entries from this section; keep any later work marked unreleased. Recording changes does not authorize publication or a version bump. Do not create an additional changelog file.
+
+## Unreleased changes
+
+### Improved
+
+- Both modes show consistent error panels with recovery steps and expandable technical details. Connection errors identify AnkiConnect, Ollama or ChatGPT.
+- The source-note button has a compact icon and subtle hover styling.
+
+### Fixed
+
+- The writing action bar keeps its layout during analysis and card preparation, with unavailable actions disabled.
+- Dropdowns close when clicked again without changing the selected value.
+- ChatGPT requests and refreshes stay bound to their original account session; cancelled or outdated responses cannot overwrite a newer session.
+- ChatGPT handles malformed credentials, interrupted or invalid response streams, and connection cleanup more safely. Local sign-in callbacks reject malformed requests and recover safely from cancellation during startup.
+
 ## Current maintenance state
 
 - Supported release: **0.3.41**, runtime tag commit **789bed2**.

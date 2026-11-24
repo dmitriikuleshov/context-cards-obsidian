@@ -69,6 +69,7 @@
 ## Git, installation and releases
 
 - Commit every completed logical change with a descriptive message. Commit task-owned files only; inspect the staged diff. A substantial feature can have several coherent commits; do not commit every keystroke or unfinished breakage as a release.
+- With every user-visible change, update **Unreleased changes** in `docs/DEVELOPMENT.md` in the same logical commit. Write concise English release-note bullets about the resulting behavior; consolidate related fixes and remove reverted entries. At release time, reconcile against Git since the previous published tag and transfer the batch to the version's GitHub Release description, following `docs/RELEASING.md`. Do not create a separate changelog file or publish a release just to record changes.
 - Use an isolated feature branch/worktree for substantial work or competing experiments. Never run two writing tasks in the same checkout. Small docs/fixes can use the current branch when appropriate; do not rename remotes/branches casually.
 - Do not reset, clean, force-push or move published tags to undo work. Normally revert the relevant commits after identifying the intended baseline, preserving later unrelated changes. Tell the user if data migrations or remote side effects need a separate rollback.
 - A commit, pushed branch, local build, installed build and public release are distinct states. Report which exists. Push according to the task's authorization and repository workflow; never infer permission to publish from permission to commit or push.

@@ -20,8 +20,8 @@ Start the steps below only when the user requests a release/publication, includi
    ```
 
 4. The Release workflow validates the tag, runs checks, builds/verifies the archive and creates a draft release with installable assets.
-5. Wait for the Tests and Release workflows to pass for the intended commit. Review release notes and asset contents/hashes, then publish the draft under the authorized release request. Only published releases are available at /releases/latest; BRAT users can receive the update. Do not publish with a known failing gate.
-6. Update the supported baseline in [Development](DEVELOPMENT.md). Report the release URL, commit and any reload/manual action needed. Published tags and runtime assets remain immutable; publish a new version to correct runtime behavior.
+5. Wait for the Tests and Release workflows to pass for the intended commit. Prepare English release notes from **Unreleased changes** in [Development](DEVELOPMENT.md), checked against Git since the previous published tag. Describe user-visible additions, improvements and fixes, including any compatibility requirements, required actions and known limitations. The workflow initially uses `docs/INSTALL.txt` as placeholder text: replace that draft description with the checked release notes and a link to the setup guide before publishing. A commit list or installation instructions alone are not release notes. Review asset contents/hashes, then publish the draft under the authorized release request. Only published releases are available at /releases/latest; BRAT users can receive the update. Do not publish with a known failing gate.
+6. Verify the published version has its release notes and tested assets. Update the supported baseline in [Development](DEVELOPMENT.md) and remove only the entries included in that published version from **Unreleased changes**, preserving any later work. Commit this documentation update. Report the release URL, commit and any reload/manual action needed. Published tags and runtime assets remain immutable; publish a new version to correct runtime behavior.
 
 ## Supported release and cleanup
 
