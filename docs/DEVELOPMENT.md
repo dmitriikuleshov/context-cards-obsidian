@@ -90,6 +90,6 @@ The repository distributes the latest supported release. Older source revisions 
 ## Current maintenance state
 
 - Supported release: **0.3.41**, runtime tag commit **789bed2**.
-- Latest maintenance: documentation consolidated in English; old GitHub release records removed at the owner's request. No runtime/version change.
+- Latest maintenance: English documentation and release cleanup, followed by removal of obsolete design snapshots, early model probes and coverage snapshots. The vocabulary audit retains eight literary cases from the retired canvas benchmark; fresh smoke reports use ignored test artifacts. No runtime/version change.
 - No active implementation handoff. Start the next task from the current branch, Git status and the relevant source files.
 - Platform, account and live-test limitations are recorded in [Setup](SETUP.md) and [Testing](TESTING.md).

@@ -72,8 +72,6 @@ formatted, mp = archive('format', 'writing-expanded-format-confirmed', format_ca
 write('request-systems.json', SYSTEMS)
 write('request-formats.json', FORMATS)
 write('model-metadata.json', read(ART / 'writing-model-metadata.json'))
-write('coverage-analysis.json', read(ROOT / 'coverage/analysis/coverage-summary.json'))
-write('coverage-vocabulary.json', read(ROOT / 'coverage/vocabulary/coverage-summary.json'))
 # Immutable baseline client and final client used for the format checks. Final main
 # and holdout results are additionally verified against the production source by replay.
 shutil.copyfile(ART / 'writing-expanded-baseline-v2/client.mjs', OUT / 'baseline-client.mjs')

@@ -122,6 +122,57 @@ const cases = [
     source: 'We should zindlebrate the plan before Friday.',
     gold: 'Unknown/coined expression; do not invent a definition or pronunciation. Ask for clarification.',
   },
+  // Literary source cases retained from the retired canvas benchmark.
+  {
+    id: 'literary-stilted',
+    target: 'stilted',
+    source: 'He spoke in a dreamy, stilted manner.',
+    gold: 'Ready. Adjective: unnaturally stiff or formal in expression; not physically supported on stilts.',
+  },
+  {
+    id: 'literary-obscurity',
+    target: 'obscurity',
+    source: 'Interest was intensified by the obscurity of the cause of death.',
+    gold: 'Ready. Noun: lack of clarity or knowledge about the cause; not lack of fame. Do not invent a cause of death.',
+  },
+  {
+    id: 'literary-straining',
+    target: 'straining',
+    source: 'The sciences, each straining in its own direction, have hitherto harmed us little.',
+    gold: 'Ready. Lemma strain, verb: make a great effort or strive. Preserve the source form straining; no physical injury is asserted.',
+  },
+  {
+    id: 'literary-brisk',
+    target: 'brisk',
+    source: 'Death was induced by the brisk ascent of so steep a hill by so elderly a man.',
+    gold: 'Ready. Adjective: quick and energetic, describing the ascent. Do not select the cold-weather or busy-business sense.',
+  },
+  {
+    id: 'literary-resorted-to',
+    target: 'resorted to',
+    source: 'The method had frequently been resorted to when other approaches failed.',
+    gold: 'Ready. Lemma resort to, verb in a passive construction: turn to a method after alternatives fail. Preserve the selected source form; do not use the holiday-resort noun sense.',
+  },
+  {
+    id: 'literary-conspicuous',
+    target: 'conspicuous',
+    source:
+      'My uncle showed some sharpness in replying, for the conspicuous freshness of the tablet implied kinship with anything but archaeology.',
+    gold: 'Ready. Adjective: easily noticed or obvious, describing freshness. Do not turn the implication into an invented account of who made the tablet.',
+  },
+  {
+    id: 'literary-besieged',
+    target: 'besieged',
+    source:
+      'When the professor became convinced that the sculptor knew nothing of any cult, he besieged his visitor with demands for future reports of dreams.',
+    gold: 'Ready. Lemma besiege, figurative verb: overwhelm or persistently press someone with requests/demands. No literal military siege is described.',
+  },
+  {
+    id: 'literary-damp',
+    target: 'damp',
+    source: 'The bas-relief was exceedingly damp and fresh.',
+    gold: 'Ready. Adjective: moist or wet, describing the object. Keep the adjective entry; do not explain the verb meaning to discourage.',
+  },
 ];
 const background = Array.from(
   { length: 90 },

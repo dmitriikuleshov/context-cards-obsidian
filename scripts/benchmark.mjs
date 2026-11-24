@@ -72,11 +72,11 @@ for (const model of models) {
     }
   }
 }
-await mkdir('experiments', { recursive: true });
+await mkdir('.test-artifacts', { recursive: true });
 await writeFile(
-  'experiments/plugin-benchmark.json',
+  '.test-artifacts/plugin-benchmark.json',
   JSON.stringify({ date: new Date().toISOString(), results }, null, 2),
 );
 console.log(
-  '\nSaved experiments/plugin-benchmark.json. Structural success is not a guarantee of semantic correctness.',
+  '\nSaved .test-artifacts/plugin-benchmark.json. Structural success is not a guarantee of semantic correctness.',
 );
