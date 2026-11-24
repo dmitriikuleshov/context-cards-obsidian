@@ -3,18 +3,18 @@
 ## Start here
 
 - Work in this Git repository (the root contains `manifest.json` and `package.json`). Check the repository root, branch, status and recent commits before editing. Do not assume the chat's initial directory is the plugin repository.
-- Read [current work](docs/WORK.md) and the files relevant to the task. Use [the development guide](docs/DEVELOPMENT.ru.md), [testing](docs/TESTING.md) and [releasing](docs/RELEASING.md) as needed. Do not load all experiments or historical chat transcripts by default.
+- Read the files relevant to the task. Use [development](docs/DEVELOPMENT.md), [testing](docs/TESTING.md) and [releasing](docs/RELEASING.md) as needed. Do not load all experiments or historical chat transcripts by default.
 - The user's current instructions define scope. Distinguish discussion/design-only requests from implementation requests; do not edit production code when asked only to explain or propose variants.
-- Respond in the user's language. Product UI and the primary setup guide are in English.
+- Respond in the user's language. Product UI and all repository documentation are in English. Update existing documents instead of adding duplicates, task logs or new documentation files unless the user requests them.
 
 ## Scope and task lifecycle
 
 - Work on one user-visible outcome at a time. State the intended outcome, material assumptions and how it will be verified; a short message is enough for a small fix.
 - For ambiguous or substantial features, define acceptance examples, exclusions and a short plan before implementation. Ask only about consequential unknowns; continue independent investigation. If the user requested design approval, show a concrete prototype and wait before implementing it.
 - Small, clear fixes do not need a separate planning document or another approval. Finish the authorized work, verification, diff review and commit.
-- For multi-session tasks, create a concise `docs/tasks/<slug>.md` with goal, acceptance criteria, scope, decisions, progress, verification and next step. Link it from `docs/WORK.md`. Do not create task documents for every label/CSS fix.
+- For multi-session tasks, keep a concise handoff in the existing development guide: goal, acceptance criteria, progress, decisions, verification and next step. Do not create a separate task document or journal by default.
 - Preserve unrelated edits. Do not mix a bug fix with unrelated refactoring, UI redesign, prompt changes or dependency upgrades. Record adjacent issues for later instead of silently expanding scope.
-- Update relevant documentation when behavior changes. Keep durable architectural decisions with their reason and tradeoff in the task document; introduce a separate decision record only when it merits long-term reference.
+- Update relevant documentation when behavior changes. Keep durable decisions, their reasons and tradeoffs in the existing development guide; do not multiply documents for the same subject.
 
 ## Product invariants
 
@@ -72,7 +72,7 @@
 - Use an isolated feature branch/worktree for substantial work or competing experiments. Never run two writing tasks in the same checkout. Small docs/fixes can use the current branch when appropriate; do not rename remotes/branches casually.
 - Do not reset, clean, force-push or move published tags to undo work. Normally revert the relevant commits after identifying the intended baseline, preserving later unrelated changes. Tell the user if data migrations or remote side effects need a separate rollback.
 - A commit, pushed branch, local build, installed build and public release are distinct states. Report which exists. Push according to the task's authorization and repository workflow; never infer permission to publish from permission to commit or push.
-- **Default: no version bump, release tag or GitHub Release for routine changes.** Leave the current release version while developing; identify a local build by commit SHA. Maintain the concise unreleased summary in `docs/WORK.md`.
+- **Default: no version bump, release tag or GitHub Release for routine changes.** Leave the current release version while developing; identify a local build by commit SHA. Keep any necessary handoff in the existing development guide.
 - Release only when the user requests a release/publication (including an authorized hotfix). That request authorizes preparing, checking and publishing the concrete release without another ritual confirmation. Follow `docs/RELEASING.md`; bump versions once for the batch, not once per commit.
 - Prefer a development vault. When authorized to install in a real vault, verify the exact destination, back up runtime files, copy only the package allowlist and preserve `data.json`/credentials. Record installed SHA/version and whether reload is still needed. Do not deploy merely because a build passed.
 
@@ -80,5 +80,5 @@
 
 - Before committing, review the diff against acceptance criteria, failure paths, compatibility and unrelated changes. For substantial or sensitive work, a separate review pass must inspect the final diff; do not label self-review as an independent audit.
 - Done means the requested behavior is implemented, appropriate checks passed or blockers are explicit, relevant docs are current, and changes are committed. User acceptance, local installation and publication are separate statuses, not implied by "done".
-- Finish with outcome, verification/limits, commit and any action needed from the user. Update `docs/WORK.md` after a meaningful task or handoff with objective, state, evidence and next step; do not turn it into a transcript.
+- Finish with outcome, verification/limits, commit and any action needed from the user. For an unfinished multi-session task, update the handoff in the existing development guide; do not create a transcript or another status file.
 - Keep this file short and enforceable. Put task history and detailed procedures in linked documents. Add durable rules for recurring problems, not every one-off preference. `AGENTS.md` guides agents; CI and tests enforce mechanical checks.

@@ -2,10 +2,12 @@
 
 Set up the plugin on Windows, choose Ollama or a ChatGPT subscription, connect Anki, then create your first vocabulary or writing card. Keep **Anki Desktop** running while exporting. Keep **Ollama** running if you use a local model; the ChatGPT provider needs internet access instead. BRAT installs the Obsidian plugin; Ollama and Anki are separate applications.
 
-| Select… | Use… | Result |
-| --- | --- | --- |
-| One word or expression in your reading | **Explain word / phrase** | An editable vocabulary draft. |
-| A paragraph of your own English writing | **Find mistakes** | Highlighted corrections to review. |
+Requires **Obsidian Desktop 1.8.0+**, or **1.11.5+** for ChatGPT sign-in. Windows has been tested; macOS/Linux app integration and mobile Obsidian have not been verified. AnkiDroid and AnkiMobile can review the synced cards.
+
+| Select…                                 | Use…                      | Result                             |
+| --------------------------------------- | ------------------------- | ---------------------------------- |
+| One word or expression in your reading  | **Explain word / phrase** | An editable vocabulary draft.      |
+| A paragraph of your own English writing | **Find mistakes**         | Highlighted corrections to review. |
 
 Both actions prepare material for review. Exporting to Anki is a later step.
 
@@ -54,9 +56,10 @@ Configure update checks in BRAT, or use its update command. Keep your existing p
    ```
 
    `main.js` must be directly inside `context-cards`, without another nested folder.
+
 5. Restart Obsidian and enable **Context Cards** under Community plugins.
 
-To update manually, disable the plugin, replace the release files in its existing folder, then enable it again or restart Obsidian. **Keep your existing `data.json`**, which stores settings, API key and drafts. No Node.js, npm or Python is needed to install a release.
+To update manually, disable the plugin, replace the release files in its existing folder, then enable it again or restart Obsidian. **Keep your existing `data.json`**, which stores settings, the optional AnkiConnect API key and drafts. ChatGPT credentials are stored separately through Obsidian Secret storage. No Node.js, npm or Python is needed to install a release.
 
 <a id="2-set-up-ollama"></a>
 
@@ -68,31 +71,31 @@ For Ollama, follow the steps below. To use your ChatGPT subscription, skip to [U
 
 ### Choose a model
 
-**Recommended starting point: `gemma4:12b-it-qat`.** It gave the strongest combined results for vocabulary examples and Find mistakes in our current plugin tests. For a smaller download and quick everyday vocabulary drafts, try **`qwen3.5:9b-q4_K_M`**, which remains the plugin's built-in default. Both modes use the model selected in **Local model → Model**.
+**Recommended starting point: `gemma4:12b-it-qat`.** It gave the strongest combined results for vocabulary examples and Find mistakes in our recorded Ollama evaluations. For a smaller download and quick everyday vocabulary drafts, try **`qwen3.5:9b-q4_K_M`**, which remains the plugin's built-in default. Both modes use the model selected in **Local model → Model**.
 
-| Tested model | Approximate download | Recommendation |
-| --- | --- | --- |
-| [Gemma 4 12B QAT](https://ollama.com/library/gemma4:12b-it-qat) · `gemma4:12b-it-qat` | 7.2 GB | First choice for both modes based on our current tests. Strong example groups and the highest expanded writing score. |
-| [Qwen 3.5 9B Q4_K_M](https://ollama.com/library/qwen3.5:9b-q4_K_M) · `qwen3.5:9b-q4_K_M` | 6.6 GB | The most compact of these four. A practical vocabulary option; inspect usage groups and writing suggestions carefully. |
-| [Gemma 3 12B Q4_K_M](https://ollama.com/library/gemma3:12b-it-q4_K_M) · `gemma3:12b-it-q4_K_M` | 8.2 GB | A useful alternative for both modes. Check proposed base words and the explanations behind corrections. |
-| [Qwen 3 14B Q4_K_M](https://ollama.com/library/qwen3:14b-q4_K_M) · `qwen3:14b-q4_K_M` | 9.3 GB | An alternative for comparison. Slower vocabulary generation without a clear quality advantage in our tests; allow more memory and time. |
+| Tested model                                                                                   | Approximate download | Recommendation                                                                                                                          |
+| ---------------------------------------------------------------------------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| [Gemma 4 12B QAT](https://ollama.com/library/gemma4:12b-it-qat) · `gemma4:12b-it-qat`          | 7.2 GB               | First choice for both modes based on our current tests. Strong example groups and the highest expanded writing score.                   |
+| [Qwen 3.5 9B Q4_K_M](https://ollama.com/library/qwen3.5:9b-q4_K_M) · `qwen3.5:9b-q4_K_M`       | 6.6 GB               | The most compact of these four. A practical vocabulary option; inspect usage groups and writing suggestions carefully.                  |
+| [Gemma 3 12B Q4_K_M](https://ollama.com/library/gemma3:12b-it-q4_K_M) · `gemma3:12b-it-q4_K_M` | 8.2 GB               | A useful alternative for both modes. Check proposed base words and the explanations behind corrections.                                 |
+| [Qwen 3 14B Q4_K_M](https://ollama.com/library/qwen3:14b-q4_K_M) · `qwen3:14b-q4_K_M`          | 9.3 GB               | An alternative for comparison. Slower vocabulary generation without a clear quality advantage in our tests; allow more memory and time. |
 
 Download sizes come from the linked Ollama model pages. They are disk sizes; runtime memory also includes the context and other overhead. The recommendations were tested on **Windows, RTX 5070 with 12 GB VRAM and 32 GB RAM**, with thinking disabled. Vocabulary drafts in the prompt comparison typically took about **7–8 seconds** for the Gemma models and Qwen 3.5, and **15–16 seconds** for Qwen 3 14B once loaded. These are observations from that hardware and test configuration, rather than promised response times; initial loading and longer writing passages take longer.
 
 #### What the writing results measure
 
-With plugin **0.3.37**, the expanded Find mistakes comparison returned:
+The November 2026 evaluation of the **0.3.37 writing pipeline**, retained in the latest release, returned the results below. These are historical regression results, not a fresh benchmark of the latest release or of ChatGPT models.
 
-| Model | Expanded cases | New contrastive cases | Previous basic cases |
-| --- | --- | --- | --- |
-| `gemma4:12b-it-qat` | **94/95** | **16/16** | 24/24 |
-| `gemma3:12b-it-q4_K_M` | 93/95 | **16/16** | 24/24 |
-| `qwen3.5:9b-q4_K_M` | 93/95 | 14/16 | 24/24 |
-| `qwen3:14b-q4_K_M` | 93/95 | 13/16 | 24/24 |
+| Model                  | Expanded cases | New contrastive cases | Previous basic cases |
+| ---------------------- | -------------- | --------------------- | -------------------- |
+| `gemma4:12b-it-qat`    | **94/95**      | **16/16**             | 24/24                |
+| `gemma3:12b-it-q4_K_M` | 93/95          | **16/16**             | 24/24                |
+| `qwen3.5:9b-q4_K_M`    | 93/95          | 14/16                 | 24/24                |
+| `qwen3:14b-q4_K_M`     | 93/95          | 13/16                 | 24/24                |
 
 A case passes when every expected local correction is found with no extra correction or request failure. One ambiguous construction is excluded from the 95-case score. These are finite regression sets, not overall accuracy percentages, and they do not grade every explanation or hint. Final verification includes recorded responses reused only for identical requests; changed requests were sent to Ollama. See the [writing results and method](../experiments/writing-expanded-2026-11-23/summary.json), [test passages](../experiments/writing-expanded-2026-11-23/cases.json) and [vocabulary prompt comparison](../experiments/vocabulary-prompt-tuning-2026-11-23/summary.json).
 
-All four can make false corrections or give a poor explanation for a correct edit. In these tests, some models overcorrected agreement after *none*, factual past conditionals or quoted British spellings. Review suggestions before creating study cards.
+All four can make false corrections or give a poor explanation for a correct edit. In these tests, some models overcorrected agreement after _none_, factual past conditionals or quoted British spellings. Review suggestions before creating study cards.
 
 ### Install the application and model
 
@@ -115,11 +118,11 @@ All four can make false corrections or give a poor explanation for a correct edi
 
 To choose a different tested model, run the corresponding command instead:
 
-| Model | PowerShell command |
-| --- | --- |
-| Qwen 3.5 9B | `ollama pull qwen3.5:9b-q4_K_M` |
+| Model       | PowerShell command                 |
+| ----------- | ---------------------------------- |
+| Qwen 3.5 9B | `ollama pull qwen3.5:9b-q4_K_M`    |
 | Gemma 3 12B | `ollama pull gemma3:12b-it-q4_K_M` |
-| Qwen 3 14B | `ollama pull qwen3:14b-q4_K_M` |
+| Qwen 3 14B  | `ollama pull qwen3:14b-q4_K_M`     |
 
 One downloaded model is enough to get started. Use the exact tags above to reproduce the tested variants; a different size or quantization may behave differently.
 
@@ -129,13 +132,13 @@ Keep Ollama running while generating drafts. Its Windows app runs the server in 
 
 With **Ollama · local model** selected, under **Settings → Context Cards → Local model**, start with:
 
-| Setting | Value |
-| --- | --- |
-| Ollama server | `http://127.0.0.1:11434` |
-| Model | Select `gemma4:12b-it-qat` after downloading it; the built-in default is `qwen3.5:9b-q4_K_M` |
-| Context length | `Balanced · 1,800 characters` |
-| Generation temperature | `0.2` |
-| Request timeout | `60 seconds` |
+| Setting                | Value                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| Ollama server          | `http://127.0.0.1:11434`                                                                     |
+| Model                  | Select `gemma4:12b-it-qat` after downloading it; the built-in default is `qwen3.5:9b-q4_K_M` |
+| Context length         | `Balanced · 1,800 characters`                                                                |
+| Generation temperature | `0.2`                                                                                        |
+| Request timeout        | `60 seconds`                                                                                 |
 
 The **Model** list loads automatically from the configured Ollama server. Choose an installed model from the dropdown. After downloading or removing a model, click **Refresh** next to the list. Refreshing does not download or load models, generate a draft, or confirm that a model fits in memory. If your saved model is missing, it stays selected and is marked **not installed** until you explicitly choose another model. A connection failure also keeps your saved choice.
 
@@ -169,7 +172,9 @@ Sign-in credentials are saved through **Obsidian Secret storage**, separately fr
 
 Use **Add another account** to authorize a different account or workspace. When multiple registrations are saved, select the intended **ChatGPT account** before choosing a model. If sign-in succeeds without plan permission, **Enable plan usage** requests that permission again. **Cancel sign-in** stops a pending browser login.
 
-**Generation temperature** is shown only for Ollama. ChatGPT requests use the required subscription transport and automatic reasoning settings. **Context length** and **Request timeout** still apply; start with `60` seconds and try `300` if generation takes longer. Increasing the timeout does not increase your allowance. [Current transport restrictions](https://developers.openai.com/siwc/token-sharing-open-source/preview-limitations)
+**Generation temperature** is shown only for Ollama. ChatGPT reasoning is fixed by the plugin: `none` for GPT-6 Luna/Terra variants, `low` for other recognised GPT-5–9 and o1/o3/o4 model names, and omitted for other models. There is no reasoning selector, and the setting is shared by Vocabulary and Find mistakes. **Context length** and **Request timeout** still apply; start with `60` seconds and try `300` if generation takes longer. Increasing the timeout does not increase your allowance. [Current transport restrictions](https://developers.openai.com/siwc/token-sharing-open-source/preview-limitations)
+
+One vocabulary draft normally uses separate requests for the main fields, general meaning, word formation and usage examples; an additional pronunciation choice may be needed. Disabled fields can reduce the requests. The provider does not expose a fixed allowance percentage per draft. Requests use `store: false`, which is not a guarantee of zero retention by the service. Never include secrets in a passage submitted for analysis.
 
 If your account is ineligible, a limit is reached or sign-in expires, the plugin shows an actionable error and keeps the draft. Choose Ollama in **Provider** whenever you want to return to local generation; switching does not regenerate existing drafts.
 
@@ -192,13 +197,13 @@ If your account is ineligible, a limit is reached or sign-in expires, the plugin
 
 Under **Settings → Context Cards → Anki**, start with:
 
-| Setting | Value |
-| --- | --- |
-| AnkiConnect server | `http://127.0.0.1:8765` |
+| Setting             | Value                                             |
+| ------------------- | ------------------------------------------------- |
+| AnkiConnect server  | `http://127.0.0.1:8765`                           |
 | AnkiConnect API key | Empty, unless you configured a key in AnkiConnect |
-| Default deck | `English::Books` |
-| One deck per book | On |
-| Note type | `Context Cards` |
+| Default deck        | `English::Books`                                  |
+| One deck per book   | On                                                |
+| Note type           | `Context Cards`                                   |
 
 Click **Check connection** in the **Check Anki** row. The result should report the number of decks. Checking does not create decks or notes.
 
@@ -231,18 +236,18 @@ The latest **four** drafts in each mode can be restored across restarts. The two
 
 All teaching fields are in English and can be edited. Fields disabled in settings are hidden.
 
-| Field | Purpose |
-| --- | --- |
-| Word or expression | Dictionary form of the selected item; it may differ from its source form. |
-| Grammar | A grammatical label, such as `plural noun` or `phrasal verb`. |
-| American IPA / British IPA | Pronunciation of the displayed dictionary entry. Choose the accent in settings. |
-| Meaning in this context | The source-specific definition, also used as the hidden Recall hint. |
-| General meaning | The broader definition without reference to the source passage. |
-| Word formation | A useful base word and its general definition, without explaining affixes. It can be empty. |
-| Context from your book | The source passage surrounding the selected occurrence. |
-| Explanation | Usage and nuances of the selected source sense. |
-| Examples | Editable meaning/usage groups, with example sentences in each. One group is enough for a word with one useful sense. |
-| Usage notes | Short collocations, patterns or other useful nuances. |
+| Field                      | Purpose                                                                                                              |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Word or expression         | Dictionary form of the selected item; it may differ from its source form.                                            |
+| Grammar                    | A grammatical label, such as `plural noun` or `phrasal verb`.                                                        |
+| American IPA / British IPA | Pronunciation of the displayed dictionary entry. Choose the accent in settings.                                      |
+| Meaning in this context    | The source-specific definition, also used as the hidden Recall hint.                                                 |
+| General meaning            | The broader definition without reference to the source passage.                                                      |
+| Word formation             | A useful base word and its general definition, without explaining affixes. It can be empty.                          |
+| Context from your book     | The source passage surrounding the selected occurrence.                                                              |
+| Explanation                | Usage and nuances of the selected source sense.                                                                      |
+| Examples                   | Editable meaning/usage groups, with example sentences in each. One group is enough for a word with one useful sense. |
+| Usage notes                | Short collocations, patterns or other useful nuances.                                                                |
 
 ### Context and the expected answer
 
@@ -270,7 +275,7 @@ Choose **Deck** in the footer above the action buttons. Expand **Tags** to edit 
 - **Add to Anki:** export the approved note. Required enabled fields and a valid source answer must be present.
 - **Trash icon:** discard the current draft; it does not delete an exported Anki note.
 
-Review the result before approval: a local model can still produce incorrect definitions, pronunciation, grouping or example sentences.
+Review the result before approval: any model can still produce incorrect definitions, pronunciation, grouping or example sentences.
 
 ### Preview: Recognition
 
@@ -306,19 +311,19 @@ Disabling **Context from your book** hides ordinary context display, but preserv
 
 ### Troubleshooting
 
-| Symptom | Check |
-| --- | --- |
-| No selection buttons | Select text in a Markdown note in Reading Mode or Live Preview. Enable **Reading workflow → Selection button**, or use the command palette. |
-| Plugin missing | Enable it under Community plugins; for ZIP installation, check folder nesting. |
-| Ollama unavailable | Running app, server URL and exact tag from `ollama list`. |
-| ChatGPT sign-in unavailable | Obsidian 1.11.5+, internet access and account/workspace eligibility. Choose Ollama if subscription sharing is unavailable. |
-| ChatGPT plan permission missing | Click **Enable plan usage** and grant permission in the browser. |
-| ChatGPT limit reached | Open **Manage usage**. Check the account's displayed limits; increasing Request timeout does not replenish usage. |
-| ChatGPT session expired | Click **Continue with ChatGPT** to renew the connection. Drafts are kept. |
-| Slow or failed generation | Initial model load, available memory and timeout. Connectivity checks do not test memory capacity. |
-| Anki unavailable | Running Anki Desktop, installed AnkiConnect, URL and API key. |
-| Add to Anki disabled | The message below Edit, enabled required fields, source answer, pending replacement or duplicate warning. |
-| Old button names or duplicated controls | Update with BRAT or the latest ZIP, then restart Obsidian. |
+| Symptom                                 | Check                                                                                                                                       |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| No selection buttons                    | Select text in a Markdown note in Reading Mode or Live Preview. Enable **Reading workflow → Selection button**, or use the command palette. |
+| Plugin missing                          | Enable it under Community plugins; for ZIP installation, check folder nesting.                                                              |
+| Ollama unavailable                      | Running app, server URL and exact tag from `ollama list`.                                                                                   |
+| ChatGPT sign-in unavailable             | Obsidian 1.11.5+, internet access and account/workspace eligibility. Choose Ollama if subscription sharing is unavailable.                  |
+| ChatGPT plan permission missing         | Click **Enable plan usage** and grant permission in the browser.                                                                            |
+| ChatGPT limit reached                   | Open **Manage usage**. Check the account's displayed limits; increasing Request timeout does not replenish usage.                           |
+| ChatGPT session expired                 | Click **Continue with ChatGPT** to renew the connection. Drafts are kept.                                                                   |
+| Slow or failed generation               | Initial model load, available memory and timeout. Connectivity checks do not test memory capacity.                                          |
+| Anki unavailable                        | Running Anki Desktop, installed AnkiConnect, URL and API key.                                                                               |
+| Add to Anki disabled                    | The message below Edit, enabled required fields, source answer, pending replacement or duplicate warning.                                   |
+| Old button names or duplicated controls | Update with BRAT or the latest ZIP, then restart Obsidian.                                                                                  |
 
 Official references: [Ollama on Windows](https://docs.ollama.com/windows), [AnkiConnect](https://ankiweb.net/shared/info/2055492159), [Anki sync](https://docs.ankiweb.net/manual/syncing), [BRAT](https://tfthacker.com/BRAT).
 
@@ -359,7 +364,7 @@ Under **More details**, you can change the exercise type or inspect other feedba
 
 Optional style, unclear meaning and obvious typos cannot become practice cards. If the meaning is unclear, resolve it yourself before classifying the finding as a definite grammar/vocabulary correction.
 
-Invalid model responses get one automatic retry within your configured request timeout. Prepared cards and your choices are kept if another operation fails. Use **Retry preparing cards** after a preparation error. Cancelling a model request keeps earlier results and stays on corrections. Connection failures are shown without an automatic retry. If analysis keeps failing, try a shorter selection or increase **Request timeout** in Local model settings.
+Invalid model responses get one automatic retry within your configured request timeout. Prepared cards and your choices are kept if another operation fails. Use **Retry preparing cards** after a preparation error. Cancelling a model request keeps earlier results and stays on corrections. Connection failures are shown without an automatic retry. If analysis keeps failing, try a shorter selection or increase **Request timeout** in the plugin settings.
 
 If exporting partly fails, the preview marks successful cards **Already added** and locks their editing controls. **Retry remaining cards** sends only the remaining exercises. The entire pending batch is validated before its first card is sent.
 
@@ -375,12 +380,12 @@ Find mistakes always checks grammar, vocabulary and spelling using **American En
 
 Under **Settings → Context Cards → Writing practice**:
 
-| Setting | Default | Purpose |
-| --- | --- | --- |
-| Default exercise type | `Let AI choose` | Let the model choose a format per correction, or prefer Correct the mistake / Fill in the gap. Deletions always use correction cards. |
-| Writing deck | `English::Writing mistakes` | Destination for writing exercises, separate from reading vocabulary. |
-| Writing review folder | `English/Writing reviews` | Vault-relative folder for saved Markdown feedback. |
-| Writing note type | `Context Cards Writing` | A separate note type with one Practice template. Keep it different from the vocabulary type. |
+| Setting               | Default                     | Purpose                                                                                                                               |
+| --------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Default exercise type | `Let AI choose`             | Let the model choose a format per correction, or prefer Correct the mistake / Fill in the gap. Deletions always use correction cards. |
+| Writing deck          | `English::Writing mistakes` | Destination for writing exercises, separate from reading vocabulary.                                                                  |
+| Writing review folder | `English/Writing reviews`   | Vault-relative folder for saved Markdown feedback.                                                                                    |
+| Writing note type     | `Context Cards Writing`     | A separate note type with one Practice template. Keep it different from the vocabulary type.                                          |
 
 A saved review keeps the selected text, source link, suggestions, exercise drafts and exported Anki identifiers. It is created automatically when exporting cards; there is no separate Save review step. Open it from your configured writing review folder or the source link in Anki. Personal notes appended after its managed review block are retained when the plugin updates the review.
 

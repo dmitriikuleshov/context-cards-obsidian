@@ -1,5 +1,8 @@
 CONTEXT CARDS — QUICK SETUP
 
+Requires Obsidian Desktop 1.8.0+; ChatGPT sign-in requires 1.11.5+.
+Windows is tested. Mobile Anki can review synced cards; mobile Obsidian is not supported.
+
 Full English guide with screenshots:
 https://github.com/dmitriikuleshov/context-cards-obsidian/blob/main/docs/SETUP.md
 
@@ -36,7 +39,7 @@ FOUR TESTED MODELS (choose one)
   gemma3:12b-it-q4_K_M   Alternative; check base words and explanations.
   qwen3:14b-q4_K_M       Slower in our tests, with no clear quality advantage.
 To download an alternative, use: ollama pull EXACT_MODEL_TAG
-The full guide includes commands, download sizes and comparison results.
+The full guide includes commands, download sizes and recorded comparison results.
 Tests used Windows, RTX 5070 12 GB and 32 GB RAM, with thinking disabled.
 Review model output; a correct edit can still have an inaccurate explanation.
 
@@ -52,13 +55,17 @@ OPTIONAL: CHATGPT SUBSCRIPTION (PREVIEW)
 
 Requires Obsidian 1.11.5+ with Secret storage and an eligible ChatGPT account.
 Choose AI connection > Provider > ChatGPT > Continue with ChatGPT.
-Sign in in your browser and grant permission to use your plan, then return
-to Obsidian and choose a ChatGPT model. The browser can be closed afterward.
+Sign in in your browser and grant permission to use your plan.
+On Authorization received, return to Context Cards settings in Obsidian and
+check for Connected or an actionable error, then choose a ChatGPT model.
+You can close the callback tab; it does not need to stay open.
 Refresh models reloads account-specific choices. Manage usage opens your limits.
 This uses your shared ChatGPT allowance, with no API-key billing fallback.
+Any extra credit use follows the permissions in your ChatGPT account.
 Selected text and context are sent to OpenAI. Account eligibility still applies.
 Credentials use Obsidian Secret storage; sign-in refreshes automatically.
-Use Sign out to disconnect, or Provider > Ollama to return to local generation.
+Sign out clears local credentials and attempts remote session revocation.
+Use Provider > Ollama to return to local generation.
 
 ANKI
 
@@ -91,7 +98,8 @@ Sync Anki Desktop through AnkiWeb to review the cards on your phone.
 UPDATES
 Disable the plugin; replace main.js, manifest.json and styles.css; update the
 included documentation/CMU notice, and enable the plugin again.
-Keep your existing data.json: it stores settings, API key and drafts.
+Keep your existing data.json: it stores settings, the optional AnkiConnect
+API key and drafts. ChatGPT credentials use separate Obsidian Secret storage.
 
 Requires desktop Obsidian; currently tested on Windows. Review synced cards
 in mobile Anki normally. No build tools are needed to install a release.

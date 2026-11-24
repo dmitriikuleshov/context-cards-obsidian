@@ -1,5 +1,18 @@
 # Automated checks
 
+Run commands from the repository root with **Node.js 22+** and npm. Start with `npm ci`. See [Development](DEVELOPMENT.md) for Windows/WSL commands and the safe test-vault workflow. All three coverage suites plus `npm run check` run in both GitHub workflows; browser and temporary-Anki checks are separate local checks.
+
+## Browser and Anki prerequisites
+
+```sh
+npx playwright install --with-deps chromium
+npm run test:ui
+```
+
+The browser suite runs the production panels against simulated services; it does not sign into ChatGPT, contact Ollama or export to real Anki. Screenshots/layout checks cover narrow panels, controls and callback pages in both themes. For template/backend checks, install [uv](https://docs.astral.sh/uv/) and run `npm run test:anki` and `npm run test:writing-anki`. These scripts fetch the Python Anki package into an isolated environment and use temporary collections, not your installed collection.
+
+For docs-only edits, check Markdown links/anchors, documented paths/npm commands, English text and `git diff --check`; application tests are not required when no runtime/build configuration changed.
+
 ## Vocabulary mode
 
 ```sh
@@ -33,6 +46,8 @@ npm run test:anki
 ```
 
 The browser suite uses simulated services. The Anki rendering/search check uses a temporary Python Anki collection, never the installed collection. Mocked model responses test software behavior, not the linguistic quality of a particular local model.
+
+For a live vocabulary comparison, run `node scripts/audit-vocabulary-models.mjs` with Ollama and the required models installed; optional positional arguments choose exact model tags and `AUDIT_DIR` selects an output folder. The audit runs models sequentially, unloads other loaded models to isolate VRAM, uses synthetic passages and never contacts Anki or writes vault settings. Keep recorded baseline/candidate inputs, settings, structural results and semantic ratings together. Recorded comparisons under `experiments/` are historical evidence, not a guarantee about every later model build or release.
 
 ## Writing analysis
 
@@ -99,8 +114,8 @@ The suite gates the new modules at 95% statements, 98% lines, 92% branches and 9
 
 Manual acceptance still requires signing in to an eligible account through the installed plugin, granting plan permission, selecting an account-visible model and successfully generating a draft. Public discovery being reachable and simulated OAuth tests passing do not establish access for a particular account. Test login, restart/refresh, cancel, reconnect, sign out and a return to Ollama without changing drafts. Account availability and model quality need separate live checks; automated tests do not claim those have happened.
 
-On 24 November 2026, version 0.3.40 was checked in the running Windows Obsidian app with an already connected ChatGPT account. Regenerating the failed `consciousness` vocabulary draft from a public book passage filled the enabled fields and examples in 17.7 seconds. No Anki note was exported. This verifies the missing-header transport fix for that account/request; it is not a fresh acceptance of every sign-in lifecycle or a language-quality benchmark.
+The current runtime includes a transport fix checked by generating a vocabulary draft from a public book passage in Windows Obsidian with an already connected account. No Anki note was exported. This confirms that account/request path; it is not a complete real-account sign-in/refresh/revocation audit, a cross-platform result or a language-quality benchmark. Callback appearance is verified through real local HTTP tests and browser rendering without repeating real account authorization.
 
-Regenerate the guide image with `node scripts/capture-chatgpt-screenshot.mjs`. It uses simulated account data and never authorizes a real account.
+Regenerate existing guide images with `node scripts/capture-doc-screenshots.mjs` and `node scripts/capture-chatgpt-screenshot.mjs`. They use the production preview with simulated data and never authorize a real account. Update the existing images when UI changes; do not present them as live account screenshots.
 
 The local callback page has separate received, declined, invalid, already-received and not-found states. Tests verify real loopback HTTP response headers and static HTML without echoing authorization parameters. `tests/ui/chatgpt-callback.spec.ts` renders the production page in light/dark themes at 360/1200 px, checks text contrast and layout, and saves preview images under `.test-artifacts`. These visual checks do not sign in or change an account. The received page deliberately asks the user to check Obsidian settings rather than claiming the token exchange already succeeded.

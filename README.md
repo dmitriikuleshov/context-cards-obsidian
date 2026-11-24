@@ -10,10 +10,10 @@ Turn your reading and writing into useful Anki practice, right inside Obsidian. 
 
 ## Two buttons, two ways to learn
 
-| Select… | Click… | What happens next |
-| --- | --- | --- |
+| Select…                                       | Click…                    | What happens next                                                         |
+| --------------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
 | A word or expression in your Markdown reading | **Explain word / phrase** | Get an editable vocabulary draft with its context, meanings and examples. |
-| A paragraph of your own English writing | **Find mistakes** | Review highlighted corrections and choose which ones to practise. |
+| A paragraph of your own English writing       | **Find mistakes**         | Review highlighted corrections and choose which ones to practise.         |
 
 Both actions open a draft first. You decide what goes into Anki.
 
@@ -55,10 +55,10 @@ Every field is editable. Hide the fields you do not need, choose how much explan
 
 ## Two ways to remember
 
-| Exercise | What you practise |
-| --- | --- |
-| **Recognition** | See the word and recall its meaning. Reveal the original passage if you need a hint, then flip for the answer. |
-| **Recall** | See your passage with a gap and type the missing word or expression. An optional definition hint helps when you get stuck. |
+| Exercise        | What you practise                                                                                                          |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Recognition** | See the word and recall its meaning. Reveal the original passage if you need a hint, then flip for the answer.             |
+| **Recall**      | See your passage with a gap and type the missing word or expression. An optional definition hint helps when you get stuck. |
 
 The recall exercise uses the **original source form**. If the book says “brushed off,” that is what you restore—even when the dictionary entry is “brush off.” Both exercises belong to one Anki note and stay in the same deck.
 
@@ -83,22 +83,22 @@ With ChatGPT selected, the chosen text and context are sent to OpenAI. A remote 
 
 ## Choose a model for your study
 
-**Start with Gemma 4 12B QAT** for the strongest overall results in our current plugin tests. **Qwen 3.5 9B** is a smaller option for everyday vocabulary capture and remains the plugin's default model.
+**Start with Gemma 4 12B QAT** based on our recorded Ollama comparisons. **Qwen 3.5 9B** is a smaller option for everyday vocabulary capture and remains the plugin's default model. The setup guide lists all four tested models and explains the limits of those results.
 
-| Tested Ollama model | When to choose it |
-| --- | --- |
-| [`gemma4:12b-it-qat`](https://ollama.com/library/gemma4:12b-it-qat) | Recommended starting point for both modes. Strong vocabulary examples and the best result in our expanded Find mistakes comparison. |
-| [`qwen3.5:9b-q4_K_M`](https://ollama.com/library/qwen3.5:9b-q4_K_M) | The smallest download of these four; a good choice when compactness and quick vocabulary drafts matter. |
-| [`gemma3:12b-it-q4_K_M`](https://ollama.com/library/gemma3:12b-it-q4_K_M) | An alternative for both modes. Improved usage examples, but word-formation suggestions need particular care. |
-| [`qwen3:14b-q4_K_M`](https://ollama.com/library/qwen3:14b-q4_K_M) | An option to compare with the others. It was slower and showed no clear quality advantage for this workflow in our tests. |
+| Tested Ollama model                                                       | When to choose it                                                                                                                   |
+| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| [`gemma4:12b-it-qat`](https://ollama.com/library/gemma4:12b-it-qat)       | Recommended starting point for both modes. Strong vocabulary examples and the best result in our expanded Find mistakes comparison. |
+| [`qwen3.5:9b-q4_K_M`](https://ollama.com/library/qwen3.5:9b-q4_K_M)       | The smallest download of these four; a good choice when compactness and quick vocabulary drafts matter.                             |
+| [`gemma3:12b-it-q4_K_M`](https://ollama.com/library/gemma3:12b-it-q4_K_M) | An alternative for both modes. Improved usage examples, but word-formation suggestions need particular care.                        |
+| [`qwen3:14b-q4_K_M`](https://ollama.com/library/qwen3:14b-q4_K_M)         | An option to compare with the others. It was slower and showed no clear quality advantage for this workflow in our tests.           |
 
-These recommendations come from tests on Windows with an RTX 5070 (12 GB VRAM), 32 GB RAM and thinking disabled. They describe this plugin's tasks, rather than a general ranking of the models. Every model still made mistakes; correct corrections can also have inaccurate explanations.
+These recommendations come from the recorded November 2026 Ollama evaluations on Windows with an RTX 5070 (12 GB VRAM), 32 GB RAM and thinking disabled. They are not a fresh benchmark of each release or of ChatGPT models. Every model still made mistakes; correct corrections can also have inaccurate explanations.
 
 **[Model downloads, comparison results and hardware advice →](docs/SETUP.md#choose-a-model)**
 
 ## Start with your next chapter
 
-You will need **Obsidian Desktop**, **Anki Desktop with AnkiConnect**, and either **Ollama with a downloaded model** or an eligible **ChatGPT subscription**. The ChatGPT connection requires Obsidian **1.11.5 or newer** for Secret storage and internet access. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.
+You will need **Obsidian Desktop 1.8.0 or newer**, **Anki Desktop with AnkiConnect**, and either **Ollama with a downloaded model** or an eligible **ChatGPT subscription**. The ChatGPT connection requires Obsidian **1.11.5 or newer** for Secret storage and internet access. Windows is currently tested; actual app use on macOS and Linux has not been verified. Mobile Anki can review synced cards; mobile Obsidian is not supported.
 
 Install through **BRAT** for convenient plugin updates, or download a ready-to-use ZIP. You do not need to build the plugin yourself.
 
@@ -108,6 +108,6 @@ The guide covers downloading the plugin, choosing Ollama or ChatGPT, setting up 
 
 ---
 
-For contributors: [working agreements](AGENTS.md) · [development workflow (Russian)](docs/DEVELOPMENT.ru.md) · [current work](docs/WORK.md) · [testing](docs/TESTING.md) · [release instructions](docs/RELEASING.md) · [development history](docs/DEVELOPMENT-HISTORY.ru.md).
+For contributors: [working agreements](AGENTS.md) · [development](docs/DEVELOPMENT.md) · [testing](docs/TESTING.md) · [releasing](docs/RELEASING.md).
 
 American pronunciation data is derived from CMUdict. See [data/README.md](data/README.md) and [its license](data/CMUDICT-LICENSE.txt); the notice is included in the downloadable ZIP.
