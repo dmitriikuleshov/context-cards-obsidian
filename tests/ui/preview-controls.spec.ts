@@ -28,7 +28,31 @@ for (const width of [340, 1000]) {
         `,
         });
       }
-      await page.getByRole('button', { name: 'Preview cards', exact: true }).click();
+      const views = page.getByRole('group', { name: 'Draft view' });
+      const edit = views.getByRole('button', { name: 'Edit draft', exact: true });
+      const preview = views.getByRole('button', { name: 'Preview cards', exact: true });
+      await expect(edit).toHaveAttribute('aria-pressed', 'true');
+      await expect(preview).toHaveAttribute('aria-pressed', 'false');
+      for (const control of [edit, preview]) {
+        const bounds = (await control.boundingBox())!;
+        expect(bounds.height).toBeGreaterThanOrEqual(40);
+        expect(bounds.width).toBeGreaterThan(100);
+        expect(bounds.x).toBeGreaterThanOrEqual(0);
+        expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+        expect(await control.evaluate((el) => getComputedStyle(el).borderRadius)).toBe('8px');
+      }
+      await preview.focus();
+      await preview.press('Enter');
+      await expect(preview).toHaveAttribute('aria-pressed', 'true');
+      await expect(edit).toHaveAttribute('aria-pressed', 'false');
+      await expect(preview).toBeFocused();
+      expect(await edit.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe(
+        await preview.evaluate((el) => getComputedStyle(el).backgroundColor),
+      );
+      await edit.click();
+      await expect(edit).toBeFocused();
+      await expect(edit).toHaveAttribute('aria-pressed', 'true');
+      await preview.click();
       const modes = page.getByRole('group', { name: 'Card type' });
       const recognition = modes.getByRole('button', { name: 'Recognition', exact: true });
       const recall = modes.getByRole('button', { name: 'Recall', exact: true });

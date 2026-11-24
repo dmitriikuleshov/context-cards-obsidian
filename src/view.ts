@@ -186,28 +186,45 @@ export class ReviewView extends ItemView {
       ? 'Wait for the Anki export to finish before clearing drafts.'
       : 'Remove all drafts from this panel and cancel pending generations. Anki notes are kept.';
     renderSourceHeading(root, draft.capture.book, () => this.plugin.openSource(draft));
-    const tabs = root.createDiv({ cls: 'cc-tabs' });
+    const tabs = root.createDiv({
+      cls: 'cc-tabs',
+      attr: { role: 'group', 'aria-label': 'Draft view' },
+    });
     this.button(
       tabs,
-      'Edit',
+      'Edit draft',
       () => {
         this.tab = 'edit';
         this.render();
+        this.contentEl
+          .querySelector<HTMLButtonElement>('.cc-tabs .is-active')
+          ?.focus({ preventScroll: true });
       },
       this.tab === 'edit' ? 'is-active' : '',
     );
     this.button(
       tabs,
-      'Preview',
+      'Preview cards',
       () => {
         this.tab = 'preview';
         this.back = false;
         this.render();
+        this.contentEl
+          .querySelector<HTMLButtonElement>('.cc-tabs .is-active')
+          ?.focus({ preventScroll: true });
       },
       this.tab === 'preview' ? 'is-active' : '',
     );
-    tabs.querySelectorAll('button')[0]?.setAttribute('aria-label', 'Edit draft');
-    tabs.querySelectorAll('button')[1]?.setAttribute('aria-label', 'Preview cards');
+    for (const [index, button] of Array.from(tabs.querySelectorAll('button')).entries()) {
+      button.setAttribute('aria-pressed', String(index === (this.tab === 'edit' ? 0 : 1)));
+      const label = button.textContent ?? '';
+      button.textContent = '';
+      setIcon(
+        button.createSpan({ attr: { 'aria-hidden': 'true' } }),
+        index === 0 ? 'pencil' : 'eye',
+      );
+      button.createSpan({ text: label });
+    }
     this.warning = root.createDiv({
       cls: 'cc-warning',
       attr: { role: 'status', 'aria-live': 'polite' },

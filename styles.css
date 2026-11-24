@@ -75,21 +75,55 @@
 .cc-tabs {
   display: flex;
   gap: 4px;
-  margin: 0 20px 18px;
-  border-bottom: 1px solid var(--cc-line);
+  width: min(360px, calc(100% - 40px));
+  margin: 0 20px 16px;
+  padding: 4px;
+  border: 1px solid var(--cc-line);
+  border-radius: 12px;
+  background: var(--background-secondary);
 }
-.cc-tabs button {
-  padding: 9px 10px;
-  border: 0;
-  border-radius: 0;
+.cc-panel .cc-tabs > button {
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 40px;
+  height: auto;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
   box-shadow: none;
   background: transparent;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: normal;
+  cursor: pointer;
 }
-.cc-tabs button.is-active {
+.cc-panel .cc-tabs > button:not(.is-active):hover {
+  background: var(--background-primary);
   color: var(--text-normal);
-  border-bottom: 2px solid var(--cc-accent);
+}
+.cc-panel .cc-tabs > button.is-active {
+  color: var(--text-normal);
+  border-color: color-mix(in srgb, var(--cc-accent) 50%, var(--cc-line));
+  background: color-mix(in srgb, var(--cc-accent) 18%, var(--background-primary));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+}
+.cc-panel .cc-tabs > button:focus-visible {
+  outline: 2px solid var(--cc-accent);
+  outline-offset: 2px;
+}
+.cc-tabs button > span:first-child {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.cc-tabs svg {
+  width: 15px;
+  height: 15px;
 }
 .cc-panel-body {
   padding: 0 20px 16px;
@@ -891,13 +925,6 @@
 }
 .cc-writing-error:empty {
   display: none;
-}
-.cc-tabs {
-  margin-bottom: 16px;
-}
-.cc-tabs button {
-  font-size: 13px;
-  padding: 8px 12px;
 }
 .cc-sr-only {
   position: absolute !important;

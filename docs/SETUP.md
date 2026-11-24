@@ -212,7 +212,7 @@ You do not need to create the destination deck or note type manually: the plugin
 ### Verify your first note and sync
 
 1. Open a Markdown text in Obsidian, select a word and click **Explain word / phrase**.
-2. Review the generated draft and click **Add to Anki** in **Edit**.
+2. Review the generated draft and click **Add to Anki** in **Edit draft**.
 3. After **Two cards added to Anki**, select **Open in Anki**, or open Anki's Browse window.
 4. Check both **Recognition** and **Recall**. They are two cards from one note, not two independent notes.
 
@@ -295,7 +295,7 @@ The preview input demonstrates the exercise. Actual typed-answer comparison happ
 
 ![Card back: source answer, metadata, definitions and explanation](images/card-back.png)
 
-**Flip card** switches between question and answer. Enabled teaching fields appear on the back. Preview has no generation/export footer: return to **Edit** to regenerate or add the note.
+Use the rounded **Edit draft / Preview cards** switch to choose between editing and card previews. The selected view is highlighted. **Flip card** switches between question and answer. Enabled teaching fields appear on the back. Preview has no generation/export footer: return to **Edit draft** to regenerate or add the note.
 
 ### Settings that change the panel
 
