@@ -7,6 +7,67 @@ function finish(events: unknown[]) {
   return stream.finish();
 }
 describe('ChatGPT streamed Responses', () => {
+  it.each(['__proto__', 'constructor', 'toString', 'hasOwnProperty'])(
+    'treats inherited error code %s as an unknown provider error',
+    (code) => {
+      const error = cloudError(503, { error: { code, message: 'private' } });
+      expect(error.code).toBe('http_503');
+      expect(error.message).toContain('temporarily unavailable');
+    },
+  );
+  it.each([
+    null,
+    [],
+    true,
+    { type: null },
+    { type: 'response.output_text.delta', delta: {} },
+    { type: 'response.output_text.delta', delta: 42 },
+    { type: 'response.completed', response: null },
+    { type: 'response.completed', response: [] },
+    { type: 'response.completed', response: { output: {} } },
+    { type: 'response.completed', response: { output: [null] } },
+    { type: 'response.completed', response: { output: [{ type: 'message', content: {} }] } },
+    { type: 'response.completed', response: { output: [{ type: 'message', content: [null] }] } },
+    {
+      type: 'response.completed',
+      response: { output: [{ type: 'message', content: [{ type: 'output_text', text: {} }] }] },
+    },
+  ])('rejects malformed streamed event %# with a safe protocol error', (bad) => {
+    expect(() =>
+      finish([
+        { type: 'response.output_text.delta', delta: '{}' },
+        bad,
+        { type: 'response.completed' },
+      ]),
+    ).toThrow(/invalid response stream/);
+  });
+  it('does not silently replace invalid UTF-8 bytes in model output', () => {
+    const stream = new ResponsesStream();
+    expect(() => {
+      stream.feed(
+        Buffer.concat([
+          Buffer.from('data: {"type":"response.output_text.delta","delta":"'),
+          Buffer.from([0xff]),
+          Buffer.from('"}\n\n'),
+        ]),
+      );
+      stream.finish();
+    }).toThrow(/invalid response stream/);
+  });
+  it('rejects an unfinished UTF-8 sequence at end of stream', () => {
+    const stream = new ResponsesStream();
+    stream.feed(Buffer.from([0xe2]));
+    expect(() => stream.finish()).toThrow(/invalid response stream/);
+  });
+  it('accepts CR-only SSE line endings even when CRLF is split between chunks', () => {
+    const stream = new ResponsesStream();
+    for (const byte of Buffer.from(
+      event({ type: 'response.output_text.delta', delta: 'ok' }).replaceAll('\n', '\r') +
+        event({ type: 'response.completed' }).replaceAll('\n', '\r\n'),
+    ))
+      stream.feed(Buffer.from([byte]));
+    expect(stream.finish()).toBe('ok');
+  });
   it('handles UTF-8 split at every byte and returns only completed text', () => {
     const stream = new ResponsesStream();
     const bytes = Buffer.from(

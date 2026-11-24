@@ -11,16 +11,18 @@ interface Script {
   error?: Error;
   responseError?: boolean;
   wait?: boolean;
+  closeEarly?: 'aborted' | 'close';
+  closeWithoutResponse?: boolean;
 }
 function serve(script: Script = {}) {
   let sent: string | undefined;
   request.mockImplementation((_url, options, callback) => {
     const req: any = new EventEmitter();
     req.destroyed = false;
-    req.destroy = (error: Error) => {
+    req.destroy = (error?: Error) => {
       if (req.destroyed) return;
       req.destroyed = true;
-      req.emit('error', error);
+      if (error) req.emit('error', error);
       req.emit('close');
     };
     const abort = () => req.destroy(Object.assign(new Error('secret'), { name: 'AbortError' }));
@@ -30,6 +32,10 @@ function serve(script: Script = {}) {
       sent = payload;
       queueMicrotask(() => {
         if (req.destroyed || script.wait) return;
+        if (script.closeWithoutResponse) {
+          req.emit('close');
+          return;
+        }
         if (script.error) {
           req.destroy(script.error);
           return;
@@ -49,7 +55,13 @@ function serve(script: Script = {}) {
           res.emit('data', Buffer.from(chunk));
         }
         if (!req.destroyed) {
+          if (script.closeEarly) {
+            res.emit(script.closeEarly);
+            req.emit('close');
+            return;
+          }
           res.emit('end');
+          res.emit('close');
           req.emit('close');
         }
       });
@@ -63,6 +75,46 @@ afterEach(() => {
   request.mockReset();
 });
 describe('authenticated HTTPS transport', () => {
+  it('rejects a request closed before receiving headers', async () => {
+    serve({ closeWithoutResponse: true });
+    await expect(cloudHTTP.json('https://api.openai.com/v1/models')).rejects.toThrow(/interrupted/);
+  });
+  it('rejects malformed addresses and sanitizes synchronous request setup failures', async () => {
+    await expect(cloudHTTP.json('not a URL')).rejects.toThrow('Invalid ChatGPT service address.');
+    expect(request).not.toHaveBeenCalled();
+    request.mockImplementationOnce(() => {
+      throw new Error('PRIVATE-TOKEN');
+    });
+    await expect(cloudHTTP.json('https://api.openai.com/v1/models')).rejects.toThrow(
+      'Cannot connect to ChatGPT. Check your internet connection and try again.',
+    );
+  });
+  it('never trusts a network error merely because its message starts with ChatGPT', async () => {
+    serve({ error: new Error('ChatGPT PRIVATE-TOKEN') });
+    await expect(cloudHTTP.json('https://api.openai.com/v1/models')).rejects.toThrow(
+      'Cannot connect to ChatGPT. Check your internet connection and try again.',
+    );
+  });
+  it('clears the total deadline after a completed response', async () => {
+    vi.useFakeTimers();
+    serve();
+    await cloudHTTP.json('https://api.openai.com/v1/models');
+    expect(vi.getTimerCount()).toBe(0);
+  });
+  it.each(['aborted', 'close'] as const)(
+    'rejects an early response %s without waiting for a timeout',
+    async (closeEarly) => {
+      serve({
+        closeEarly,
+        chunks: ['data: {"type":"response.output_text.delta","delta":"partial"}\n\n'],
+      });
+      const outcome = await Promise.race([
+        cloudHTTP.stream('https://api.openai.com/v1/responses', {}).catch((error) => error.message),
+        new Promise((resolve) => setTimeout(() => resolve('still pending'), 60)),
+      ]);
+      expect(outcome).toMatch(/interrupted/);
+    },
+  );
   it('sends exact JSON/form byte lengths with credentials only in headers or form bodies', async () => {
     const sent = serve({ chunks: ['{"ok":true}'] });
     expect(
