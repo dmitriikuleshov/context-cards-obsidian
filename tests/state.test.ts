@@ -241,13 +241,20 @@ describe('draft state and asynchronous operations', () => {
     const { plugin, draft } = setup(),
       file = { path: draft.capture.file };
     const existing = { view: { file }, openFile: vi.fn() },
-      reveal = vi.fn();
+      reveal = vi.fn(),
+      focus = vi.fn();
     plugin.app = {
       vault: { getFileByPath: () => file },
-      workspace: { getLeavesOfType: () => [existing], revealLeaf: reveal, getLeaf: vi.fn() },
+      workspace: {
+        getLeavesOfType: () => [existing],
+        revealLeaf: reveal,
+        setActiveLeaf: focus,
+        getLeaf: vi.fn(),
+      },
     } as any;
     await plugin.openSource(draft);
     expect(reveal).toHaveBeenCalledWith(existing);
+    expect(focus).toHaveBeenCalledWith(existing, { focus: true });
     expect(existing.openFile).not.toHaveBeenCalled();
   });
   it('never replaces edits made while a generation is running', async () => {

@@ -433,6 +433,7 @@ describe('vocabulary navigation and source capture', () => {
     await plugin.openSource(d);
     expect(leaf.openFile).toHaveBeenCalledWith(file);
     expect(workspace.revealLeaf).toHaveBeenCalledWith(leaf);
+    expect(workspace.setActiveLeaf).toHaveBeenCalledWith(leaf, { focus: true });
     vault.getFileByPath.mockReturnValue(null);
     await plugin.openSource(d);
     expect(leaf.openFile).toHaveBeenCalledOnce();
@@ -450,6 +451,25 @@ describe('vocabulary navigation and source capture', () => {
     plugin.refreshWriting();
     expect(render).toHaveBeenCalledTimes(2);
   });
+  it('focuses an already open source note instead of opening another tab', async () => {
+    const { plugin, d, workspace, file } = pluginFixture();
+    const leaf = { view: { file }, openFile: vi.fn() };
+    workspace.getLeavesOfType.mockReturnValue([leaf]);
+    await plugin.openSource(d);
+    expect(workspace.getLeaf).not.toHaveBeenCalled();
+    expect(leaf.openFile).not.toHaveBeenCalled();
+    expect(workspace.revealLeaf).toHaveBeenCalledWith(leaf);
+    expect(workspace.setActiveLeaf).toHaveBeenCalledWith(leaf, { focus: true });
+  });
+  it.each([new Error('Source unavailable'), 'Source unavailable'])(
+    'handles a failed source navigation: %s',
+    async (error) => {
+      const { plugin, d, workspace } = pluginFixture();
+      workspace.getLeaf.mockReturnValue({ openFile: vi.fn().mockRejectedValue(error) });
+      await expect(plugin.openSource(d)).resolves.toBeUndefined();
+      expect(workspace.setActiveLeaf).not.toHaveBeenCalled();
+    },
+  );
   it('supports settings navigation when available and when absent', () => {
     const { plugin, app } = pluginFixture();
     plugin.openSettings();

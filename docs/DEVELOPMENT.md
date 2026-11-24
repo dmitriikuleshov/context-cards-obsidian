@@ -95,7 +95,9 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
-No unreleased user-visible changes. Published changes are recorded in [GitHub Releases](https://github.com/dmitriikuleshov/context-cards-obsidian/releases).
+### Fixed
+
+- After vocabulary export, **Open in Anki** shows progress and confirms that the cards are selected in Anki's Browse window, including guidance if it stays in the background. **Continue reading** and **Open source** focus the source note, including one already visible beside the panel. Failed source navigation is reported instead of failing silently.
 
 ## Current maintenance state
 

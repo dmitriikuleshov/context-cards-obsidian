@@ -1,4 +1,43 @@
 import { test, expect } from '@playwright/test';
+
+test('post-export actions remain clickable, signal an Anki request and route back to the source', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 850 });
+  await page.goto('/');
+  await page.evaluate(() => {
+    const p = (window as any).contextCardsPreview;
+    p.calls = { anki: [], source: [] };
+    p.host.openAnki = async (ids: number[]) => {
+      p.calls.anki.push(ids);
+      await new Promise<void>((resolve) => {
+        p.finishOpen = resolve;
+      });
+    };
+    p.host.openSource = (d: any) => p.calls.source.push(d.id);
+    p.draft.phase = 'saved';
+    p.draft.noteId = 1234;
+    p.view.render();
+  });
+  const success = page.locator('.cc-success');
+  await expect(success.getByRole('button', { name: 'Open in Anki', exact: true })).toBeEnabled();
+  await success.getByRole('button', { name: 'Open in Anki', exact: true }).click();
+  await expect(success.getByRole('button', { name: 'Opening…', exact: true })).toBeDisabled();
+  expect(await page.evaluate(() => (window as any).contextCardsPreview.calls.anki)).toEqual([
+    [1234],
+  ]);
+  await page.evaluate(() => (window as any).contextCardsPreview.finishOpen());
+  await expect(success.getByRole('button', { name: 'Open in Anki', exact: true })).toBeEnabled();
+  await success.getByRole('button', { name: 'Continue reading', exact: true }).click();
+  expect(
+    await page.evaluate(() => {
+      const p = (window as any).contextCardsPreview;
+      return p.calls.source;
+    }),
+  ).toHaveLength(1);
+  await expect(page.getByLabel('Word or expression', { exact: true })).toBeDisabled();
+  await page.screenshot({ path: '.test-artifacts/post-export-actions.png' });
+});
 test('compact sections retain all fields and context editing actions', async ({ page }) => {
   await page.setViewportSize({ width: 340, height: 850 });
   await page.goto('/');

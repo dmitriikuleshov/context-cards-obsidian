@@ -280,12 +280,22 @@ export class ReviewView extends ItemView {
       const saved = root.createDiv({ cls: 'cc-success' });
       saved.createEl('strong', { text: 'Two cards added to Anki.' });
       saved.createDiv({ text: draft.deck });
-      this.button(
+      const open = this.button(
         saved,
         'Open in Anki',
-        () => void this.plugin.openAnki([draft.noteId!]),
+        async () => {
+          open.disabled = true;
+          open.textContent = 'Opening…';
+          try {
+            await this.plugin.openAnki([draft.noteId!]);
+          } finally {
+            open.disabled = false;
+            open.textContent = 'Open in Anki';
+          }
+        },
         'mod-cta',
       );
+      open.title = "Show this note in Anki's Browse window";
       this.button(saved, 'Continue reading', () => {
         void this.plugin.openSource(draft);
       });

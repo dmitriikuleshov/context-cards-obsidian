@@ -606,28 +606,34 @@ export default class ContextCardsPlugin extends Plugin {
   async openAnki(ids: number[]) {
     try {
       await new Anki(this.settings).open(ids);
+      new Notice(
+        "Cards selected in Anki's Browse window. Switch to Anki if it is behind Obsidian.",
+      );
     } catch (error) {
       new Notice(error instanceof Error ? error.message : String(error));
     }
   }
   async openSource(draft: Draft) {
-    const file = this.app.vault.getFileByPath(draft.capture.file);
-    if (!file) {
+    try {
+      const file = this.app.vault.getFileByPath(draft.capture.file);
+      if (!file) {
+        new Notice(
+          'The source file was moved or is no longer available. The quote is preserved in the card.',
+        );
+        return;
+      }
+      const existing = this.app.workspace
+        .getLeavesOfType('markdown')
+        .find((leaf) => (leaf.view as MarkdownView).file?.path === file.path);
+      const leaf = existing ?? this.app.workspace.getLeaf('tab');
+      if (!existing) await leaf.openFile(file);
+      await this.app.workspace.revealLeaf(leaf);
+      this.app.workspace.setActiveLeaf(leaf, { focus: true });
+    } catch (error) {
       new Notice(
-        'The source file was moved or is no longer available. The quote is preserved in the card.',
+        `Could not open the source note: ${error instanceof Error ? error.message : String(error)}`,
       );
-      return;
     }
-    const existing = this.app.workspace
-      .getLeavesOfType('markdown')
-      .find((leaf) => (leaf.view as MarkdownView).file?.path === file.path);
-    if (existing) {
-      await this.app.workspace.revealLeaf(existing);
-      return;
-    }
-    const leaf = this.app.workspace.getLeaf('tab');
-    await leaf.openFile(file);
-    await this.app.workspace.revealLeaf(leaf);
   }
   async refreshDecks() {
     try {

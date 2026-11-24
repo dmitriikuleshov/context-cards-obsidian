@@ -65,6 +65,7 @@ export function pluginFixture() {
     getLeaf: vi.fn(),
     getRightLeaf: vi.fn(),
     revealLeaf: vi.fn().mockResolvedValue(undefined),
+    setActiveLeaf: vi.fn(),
     on: vi.fn(() => ({})),
   };
   const vault: any = { getName: () => 'Test', getFileByPath: vi.fn(() => file), process: vi.fn() };

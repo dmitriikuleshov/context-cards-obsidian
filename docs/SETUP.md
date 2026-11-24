@@ -216,6 +216,8 @@ You do not need to create the destination deck or note type manually: the plugin
 3. After **Two cards added to Anki**, select **Open in Anki**, or open Anki's Browse window.
 4. Check both **Recognition** and **Recall**. They are two cards from one note, not two independent notes.
 
+**Open in Anki** selects the saved note in Anki's Browse window. The button shows **Opening…** while waiting; a confirmation tells you to switch to Anki if Windows keeps it behind Obsidian. **Continue reading** focuses your source note, reusing the open book when available. The saved draft stays available in the panel.
+
 For phone reviews, sync Anki Desktop with your AnkiWeb account, then sync AnkiDroid or AnkiMobile with the same account. Generation and export happen on the computer; the phone reviews the resulting cards. Anki's **Bury siblings** option can separate the two exercises. [Anki syncing instructions](https://docs.ankiweb.net/manual/syncing)
 
 ## 4. Explore the interface
