@@ -6,7 +6,7 @@ import { visibleDraft } from './fields';
 import { CARD_CSS, examplesHtml } from './templates';
 import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
-import { renderPanelHeader, renderSourceHeading } from './panel-header';
+import { renderPanelHeader } from './panel-header';
 import { renderErrorFeedback, scrollPanelToTop } from './error-feedback';
 import { ExamplesEditorState, renderExamplesEditor } from './examples-editor';
 
@@ -170,7 +170,7 @@ export class ReviewView extends ItemView {
     select.dataset.ccField = 'draft-switcher';
     for (const item of [...this.plugin.drafts].reverse())
       select.createEl('option', {
-        text: `${item.phase === 'saved' ? '✓ ' : ''}${item.expression || item.answer}`,
+        text: `${item.phase === 'saved' ? '✓ ' : ''}${item.expression || item.answer} (${item.capture.book})`,
         value: item.id,
       });
     select.value = draft.id;
@@ -189,7 +189,6 @@ export class ReviewView extends ItemView {
     clear.title = clear.disabled
       ? 'Wait for the Anki export to finish before clearing drafts.'
       : 'Remove all drafts from this panel and cancel pending generations. Anki notes are kept.';
-    renderSourceHeading(root, draft.capture.book);
     const tabs = root.createDiv({
       cls: 'cc-tabs',
       attr: { role: 'group', 'aria-label': 'Draft view' },

@@ -228,7 +228,7 @@ The screenshots below show the **current plugin views in the standalone preview*
 
 Read Markdown in **Reading Mode** or **Live Preview**, select a word or expression, and click **Explain word / phrase**. You can also use the Context Cards commands in Obsidian's command palette.
 
-Both modes share the **Context Cards** header and settings button, a **draft selector** with **Clear all**, and a source row showing the note title. The selector appears even when there is one draft.
+Both modes share the **Context Cards** header and settings button, and a **draft selector** with **Clear all**. Vocabulary labels include the source title after the word in parentheses, such as **brush off (The Last Train)**. Writing shows the source title below the selector. The selector appears even when there is one draft.
 
 The latest **four** drafts in each mode can be restored across restarts. The two lists are independent. **Clear all** clears the current mode's drafts and cancels generation while keeping existing Anki notes. With no drafts, the selector and clearing controls disappear.
 

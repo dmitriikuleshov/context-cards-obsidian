@@ -13,7 +13,12 @@ for (const width of [390, 1000]) {
       await expect(page.locator('.cc-draft-switcher > .cc-select-button')).toHaveCount(1);
       await expect(page.locator('.cc-clear-drafts')).toHaveText('Clear all');
       await expect(page.getByRole('button', { name: 'Open source', exact: true })).toHaveCount(0);
-      await expect(page.locator('.cc-source-heading > span')).not.toBeEmpty();
+      if (mode === 'vocabulary') {
+        await expect(page.locator('.cc-draft-switcher .cc-select-value')).toHaveText(
+          'brush off (The Last Train)',
+        );
+        await expect(page.locator('.cc-source-heading')).toHaveCount(0);
+      } else await expect(page.locator('.cc-source-heading > span')).not.toBeEmpty();
       snapshots.push(
         await page.locator('.cc-panel').evaluate((root) => {
           const geometry = (selector: string) => {
@@ -32,19 +37,20 @@ for (const width of [390, 1000]) {
             };
           };
           return {
-            order: [...root.children].slice(0, 3).map((el) => el.className),
+            order: [...root.children].slice(0, 2).map((el) => el.className),
             header: geometry('.cc-panel-header'),
             brand: geometry('.cc-brand'),
             settings: geometry('.cc-panel-header > button'),
             switcher: geometry('.cc-draft-switcher'),
             picker: geometry('.cc-draft-switcher > .cc-select-button'),
             clear: geometry('.cc-clear-drafts'),
-            source: geometry('.cc-source-heading'),
           };
         }),
       );
       const root = (await page.locator('.cc-panel').boundingBox())!,
-        source = (await page.locator('.cc-source-heading').boundingBox())!;
+        source = (await page
+          .locator(mode === 'vocabulary' ? '.cc-draft-switcher' : '.cc-source-heading')
+          .boundingBox())!;
       await page.screenshot({
         path: `.test-artifacts/header-${mode}-${width}.png`,
         clip: {

@@ -96,7 +96,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 ## Unreleased changes
 
 - Add example uses a flat, borderless control with a gray hover background.
-- The Open source button is removed from both mode headers; the source title remains visible.
+- The Open source button is removed from both mode headers. Vocabulary draft labels show the source title in parentheses after the word, using the same font, without a duplicate source row. Writing retains its source title row.
 - Examples uses the same native disclosure triangles as Explanation & usage notes, including keyboard toggling and open/closed states.
 - Vocabulary's Add to Anki keeps its existing green color and darkens on hover when enabled.
 - The top Clear all button highlights red on hover in both modes; its normal appearance and other buttons stay unchanged.
