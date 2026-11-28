@@ -97,6 +97,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 - Vocabulary Examples now uses compact, collapsible usage cards with editable sentence lists. Add or delete usages and individual examples, clear all examples, and undo deletions. Examples remains the final teaching section, below Explanation & usage notes.
 - Examples matches the approved prototype's light/dark colors, integrated heading and counters, green Add usage button, labeled Delete usage buttons, example removal crosses and collapsed usage summaries.
+- Vocabulary's footer stays at the panel bottom with short or long drafts, including after examples are expanded, cleared or restored. Examples has an explicit Show/Hide control and opens without jumping the whole section to the top; clicking its counters does not toggle it.
 - Manual example counts are independent of generation settings and survive reopening drafts. Empty Examples can be omitted from Anki; unfinished entries must be completed or removed before export. Existing drafts remain supported.
 
 ## Current maintenance state

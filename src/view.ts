@@ -108,7 +108,7 @@ export class ReviewView extends ItemView {
     details.dataset.ccSection = key;
     details.open = this.sections.get(key) ?? false;
     const summary = details.createEl('summary', { text: label });
-    if (key === 'explanation' || key === 'examples') {
+    if (key === 'explanation') {
       summary.addEventListener('click', () => {
         if (details.open) return;
         const win = details.ownerDocument.defaultView;
@@ -526,7 +526,9 @@ export class ReviewView extends ItemView {
       if (button.textContent === 'Find base word') button.hidden = !f.wordFormation;
     if (disabled)
       for (const control of Array.from(
-        body.querySelectorAll('input,textarea,button:not(.cc-usage-toggle)'),
+        body.querySelectorAll(
+          'input,textarea,button:not(.cc-usage-toggle):not(.cc-examples-toggle)',
+        ),
       ))
         (control as HTMLInputElement).disabled = true;
   }

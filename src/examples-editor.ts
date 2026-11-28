@@ -43,11 +43,11 @@ export function renderExamplesEditor(
   };
   summary.empty();
   summary.setAttribute('aria-label', 'Examples');
-  summary.title = 'Expand or collapse examples';
-  const heading = summary.createSpan({ cls: 'cc-examples-heading' });
-  const title = heading.createSpan({ cls: 'cc-examples-title', text: 'Examples' });
-  icon(title, 'list-tree');
-  const total = heading.createSpan({ cls: 'cc-examples-total' });
+  summary.setAttribute('role', 'group');
+  summary.tabIndex = -1;
+  // The header contains separate controls; clicking its text or blank space
+  // must not trigger the native summary's implicit toggle and page jump.
+  summary.addEventListener('click', (event) => event.preventDefault());
   const button = (
     parent: HTMLElement,
     label: string,
@@ -63,6 +63,46 @@ export function renderExamplesEditor(
     });
     return control;
   };
+  const heading = summary.createSpan({ cls: 'cc-examples-heading' });
+  const toggle = button(
+    heading,
+    'Examples',
+    () => {
+      section.open = !section.open;
+      updateDisclosure();
+      if (!section.open) return;
+      section.ownerDocument.defaultView?.requestAnimationFrame(() => {
+        if (!section.isConnected || !section.open) return;
+        const first = body.querySelector<HTMLElement>(
+          '.cc-example-group-header, .cc-examples-empty',
+        );
+        const footer = section.closest('.cc-panel')?.querySelector('.cc-footer');
+        if (
+          first &&
+          footer &&
+          first.getBoundingClientRect().bottom > footer.getBoundingClientRect().top
+        ) {
+          first.style.scrollMarginBottom = `${footer.getBoundingClientRect().height + 12}px`;
+          first.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+        }
+      });
+    },
+    'cc-examples-toggle',
+    true,
+  );
+  const disclosureIcon = icon(toggle, 'chevron-right');
+  const caption = toggle.createSpan({ cls: 'cc-examples-toggle-caption' });
+  body.id = `cc-${crypto.randomUUID()}`;
+  toggle.setAttribute('aria-controls', body.id);
+  const total = heading.createSpan({ cls: 'cc-examples-total' });
+  const updateDisclosure = () => {
+    toggle.setAttribute('aria-expanded', String(section.open));
+    toggle.setAttribute('aria-label', section.open ? 'Hide examples' : 'Show examples');
+    caption.textContent = section.open ? 'Hide' : 'Show';
+    setIcon(disclosureIcon, section.open ? 'chevron-down' : 'chevron-right');
+  };
+  section.addEventListener('toggle', updateDisclosure);
+  updateDisclosure();
   const removeButton = (parent: HTMLElement, label: string, action: () => void, usage = false) => {
     const control = button(
       parent,

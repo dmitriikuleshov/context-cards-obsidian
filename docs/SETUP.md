@@ -263,7 +263,7 @@ Vocabulary context supports up to **12,000 characters**: choose **Extended · 12
 
 ### Explanation, examples, destination and actions
 
-**Explanation & usage notes** appears above **Examples**. Both sections are collapsed initially; click their headings to expand and edit the fields. Their expanded state is kept when the panel redraws.
+**Explanation & usage notes** appears above **Examples**. Both sections are collapsed initially. Click the Explanation heading or the **Examples · Show/Hide** button to expand and edit the fields. Their expanded state is kept when the panel redraws. The destination and export buttons remain at the bottom of the panel.
 
 ![Compact usage cards with editable example lists and add/delete controls](images/examples-deck.png)
 

@@ -177,7 +177,7 @@ describe('manual usage lists', () => {
       draft.phase = phase;
       view.render();
       const controls = view.contentEl.querySelectorAll<HTMLInputElement>(
-        '.cc-examples button:not(.cc-usage-toggle),.cc-examples textarea',
+        '.cc-examples button:not(.cc-usage-toggle):not(.cc-examples-toggle),.cc-examples textarea',
       );
       expect([...controls].every((control) => control.disabled)).toBe(true);
       click('Clear examples');

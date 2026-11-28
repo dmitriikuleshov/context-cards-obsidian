@@ -17,7 +17,7 @@ for (const mode of ['vocabulary', 'writing']) {
         const owner = () =>
           p.session
             ? p.view.contentEl.querySelector('.cc-panel-body')
-            : p.view.contentEl.parentElement;
+            : p.view.contentEl;
         (window as any).errorScroll = { p, d, owner };
         owner().scrollTop = owner().scrollHeight;
       }, mode);

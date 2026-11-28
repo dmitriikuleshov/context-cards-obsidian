@@ -45,7 +45,7 @@ for (const width of [320, 736]) {
         view.render();
       }, theme);
       const section = page.locator('[data-cc-section=examples]');
-      await section.locator(':scope > summary').click();
+      await section.locator('.cc-examples-toggle').click();
       // The approved prototype's exact palette and compact geometry are the UI contract.
       const colors =
         theme === 'dark'
@@ -69,7 +69,7 @@ for (const width of [320, 736]) {
             };
       await expect(section).toHaveCSS('background-color', colors.region);
       await expect(section).toHaveCSS('color', colors.ink);
-      await expect(section.locator('.cc-examples-title')).toHaveCSS('color', colors.ink);
+      await expect(section.locator('.cc-examples-toggle')).toHaveCSS('color', colors.ink);
       await expect(section).toHaveCSS('border-color', colors.line);
       await expect(section).toHaveCSS('padding', '12px');
       await expect(section).toHaveCSS('border-radius', '10px');
@@ -132,6 +132,9 @@ for (const width of [320, 736]) {
         'The ability or capacity to do something · 2 examples',
       );
       await section.evaluate((el) => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
+      expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      const pinnedFooter = (await page.locator('.cc-footer').boundingBox())!;
+      expect(pinnedFooter.y + pinnedFooter.height).toBeCloseTo(980, 0);
       await page.screenshot({ path: `.test-artifacts/examples-compact-${width}-${theme}.png` });
       // One list instead of separate boxes for every sentence, without overflow.
       expect(await section.locator('.cc-example-list').count()).toBe(3);
@@ -186,7 +189,9 @@ for (const width of [320, 736]) {
         draft.phase = 'sending';
         view.render();
       });
-      for (const control of await section.locator('button:not(.cc-usage-toggle),textarea').all())
+      for (const control of await section
+        .locator('button:not(.cc-usage-toggle):not(.cc-examples-toggle),textarea')
+        .all())
         await expect(control).toBeDisabled();
       await expect(section.getByRole('button', { name: 'Usage 4', exact: true })).toBeEnabled();
     });
@@ -198,7 +203,7 @@ test('example drafts survive switching between drafts and newly generated conten
 }) => {
   await page.goto('/');
   const section = page.locator('[data-cc-section=examples]');
-  await section.locator(':scope > summary').click();
+  await section.locator('.cc-examples-toggle').click();
   await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
   await page.evaluate(() => {
     const { draft, host, view } = (window as any).contextCardsPreview;
