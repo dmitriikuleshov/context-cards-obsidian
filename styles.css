@@ -71,6 +71,9 @@
   padding: 6px 8px;
   white-space: nowrap;
 }
+.cc-panel button.cc-clear-drafts:hover {
+  box-shadow: none;
+}
 .cc-panel .cc-clear-drafts:hover:not(:disabled) {
   color: var(--cc-ex-danger, var(--text-error));
   background: color-mix(

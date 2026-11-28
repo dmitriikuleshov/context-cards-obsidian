@@ -6,6 +6,16 @@ for (const width of [390, 1000]) {
     const snapshots = [];
     for (const mode of ['vocabulary', 'writing']) {
       await page.goto(mode === 'writing' ? '/?writing=1' : '/');
+      // Blue Topaz can load after plugin styles and reintroduce raised hover shadows.
+      await page.addStyleTag({
+        content:
+          ':root{--input-shadow-hover:inset 0 0 0 1px #888,0 2px 3px #111}button:not(.clickable-icon):hover{box-shadow:var(--input-shadow-hover)}',
+      });
+      const clear = page.locator('.cc-clear-drafts');
+      await clear.hover();
+      await expect(clear).toHaveCSS('box-shadow', 'none');
+      await expect(clear).toHaveCSS('border-top-width', '0px');
+      await page.mouse.move(0, 0);
       await expect(page.locator('.cc-panel-header .cc-brand')).toHaveText('Context Cards');
       await expect(
         page.getByRole('button', { name: 'Open Context Cards settings', exact: true }),

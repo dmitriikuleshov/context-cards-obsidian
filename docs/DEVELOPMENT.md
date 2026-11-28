@@ -100,7 +100,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 - The Open source button is removed from both mode headers. Vocabulary draft labels show the source title in parentheses after the word, with smaller, regular-weight muted text and no duplicate source row. Writing retains its source title row.
 - Examples uses the same native disclosure triangles as Explanation & usage notes, including keyboard toggling and open/closed states.
 - Vocabulary's Add to Anki keeps its existing green color and darkens on hover when enabled.
-- The top Clear all button is flat and borderless in both modes, retaining its red hover highlight.
+- The top Clear all button is flat and borderless in both modes, retaining its red hover highlight. Theme hover shadows, including Blue Topaz rules loaded after the plugin, no longer add a raised border.
 - Vocabulary Examples now uses compact usage cards with editable sentence lists. Add or delete usages and individual examples, and undo deletions. The Clear examples button has been removed. Examples remains the final teaching section, below Explanation & usage notes.
 - Examples uses the approved neutral gray palette in both themes, with green outlines for focused fields. Individual usage cards stay expanded without Usage headers; Delete usage sits at the bottom right, opposite Add example. Deletion controls are flat and turn red on hover or keyboard focus.
 - The vocabulary footer uses the release theme colors again, including green Add to Anki. Explanation and Examples headings sit slightly left of their contents to show nesting.
