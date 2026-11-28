@@ -233,8 +233,18 @@ export class Menu {
 }
 export function setIcon(element: HTMLElement, name: string) {
   element.dataset.icon = name;
-  // Render the deletion affordance for browser layout/visual checks as Obsidian does.
-  if (name === 'trash-2') {
+  // Render the Examples affordances for browser visual checks as Obsidian does.
+  const paths: Record<string, string> = {
+    'trash-2':
+      'M3 6h18M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M5 6l1 14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-14M10 10v7M14 10v7',
+    x: 'M18 6 6 18M6 6l12 12',
+    plus: 'M12 5v14M5 12h14',
+    'chevron-down': 'm6 9 6 6 6-6',
+    'chevron-right': 'm9 18 6-6-6-6',
+    'list-tree': 'M21 12h-8M21 6H8M21 18h-8M3 6h.01M3 12h.01M3 18h.01M8 6v12h1',
+    'undo-2': 'M3 10h11a7 7 0 0 1 7 7M3 10l5-5M3 10l5 5',
+  };
+  if (paths[name]) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     for (const [key, value] of Object.entries({
       viewBox: '0 0 24 24',
@@ -247,10 +257,7 @@ export function setIcon(element: HTMLElement, name: string) {
     }))
       svg.setAttribute(key, value);
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute(
-      'd',
-      'M3 6h18M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M5 6l1 14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-14M10 10v7M14 10v7',
-    );
+    path.setAttribute('d', paths[name]!);
     svg.append(path);
     element.replaceChildren(svg);
   }

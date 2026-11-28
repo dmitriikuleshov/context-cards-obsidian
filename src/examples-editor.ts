@@ -35,6 +35,19 @@ export function renderExamplesEditor(
   }
   const body = section.createDiv({ cls: 'cc-examples-editor' });
   const summary = section.querySelector('summary')!;
+  const icon = (parent: HTMLElement, name: string) => {
+    const glyph = parent.createSpan({ attr: { 'aria-hidden': 'true' } });
+    setIcon(glyph, name);
+    parent.prepend(glyph);
+    return glyph;
+  };
+  summary.empty();
+  summary.setAttribute('aria-label', 'Examples');
+  summary.title = 'Expand or collapse examples';
+  const heading = summary.createSpan({ cls: 'cc-examples-heading' });
+  const title = heading.createSpan({ cls: 'cc-examples-title', text: 'Examples' });
+  icon(title, 'list-tree');
+  const total = heading.createSpan({ cls: 'cc-examples-total' });
   const button = (
     parent: HTMLElement,
     label: string,
@@ -50,11 +63,16 @@ export function renderExamplesEditor(
     });
     return control;
   };
-  const removeButton = (parent: HTMLElement, label: string, action: () => void) => {
-    const control = button(parent, '', action, 'cc-example-delete');
+  const removeButton = (parent: HTMLElement, label: string, action: () => void, usage = false) => {
+    const control = button(
+      parent,
+      usage ? 'Delete usage' : '',
+      action,
+      usage ? 'cc-example-quiet cc-delete-usage' : 'cc-example-delete',
+    );
     control.setAttribute('aria-label', label);
     control.title = label;
-    setIcon(control, 'trash-2');
+    icon(control, usage ? 'trash-2' : 'x');
   };
   const field = (
     parent: HTMLElement,
@@ -82,11 +100,9 @@ export function renderExamplesEditor(
     }
   };
   const updateSummary = () => {
-    const count = draft.examples.filter((v) => v.trim()).length;
+    const count = state.groups.reduce((n, group) => n + group.examples.length, 0);
     const usages = state.groups.length;
-    summary.textContent = usages
-      ? `Examples · ${usages} ${usages === 1 ? 'usage' : 'usages'} · ${count} ${count === 1 ? 'example' : 'examples'}`
-      : 'Examples';
+    total.textContent = `${usages} ${usages === 1 ? 'usage' : 'usages'} · ${count} ${count === 1 ? 'example' : 'examples'}`;
   };
   const save = () => {
     draft.exampleGroups = state.legacy ? undefined : state.groups;
@@ -121,12 +137,14 @@ export function renderExamplesEditor(
   };
   const draw = () => {
     body.empty();
+    summary.querySelector('.cc-examples-tools')?.remove();
     if (state.groups.length) {
-      const tools = body.createDiv({ cls: 'cc-examples-tools' });
-      button(
+      const tools = summary.createDiv({ cls: 'cc-examples-tools' });
+      const clear = button(
         tools,
         'Clear examples',
         () => {
+          section.open = true;
           promote();
           const removed = [...state.groups];
           deleteWithUndo(
@@ -136,6 +154,11 @@ export function renderExamplesEditor(
         },
         'cc-example-quiet',
       );
+      icon(clear, 'trash-2');
+      clear.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      });
     } else {
       body.createEl('p', { text: 'No examples yet.', cls: 'cc-muted cc-examples-empty' });
     }
@@ -147,6 +170,9 @@ export function renderExamplesEditor(
         `Usage ${gi + 1}`,
         () => {
           content.hidden = !content.hidden;
+          folded.hidden = !content.hidden;
+          folded.textContent = `${group.meaning || 'New usage'} · ${group.examples.length} examples`;
+          setIcon(chevron, content.hidden ? 'chevron-right' : 'chevron-down');
           if (content.hidden) state.collapsed.add(group);
           else state.collapsed.delete(group);
           heading.setAttribute('aria-expanded', String(!content.hidden));
@@ -155,13 +181,24 @@ export function renderExamplesEditor(
         true,
       );
       heading.setAttribute('aria-label', `Usage ${gi + 1}`);
-      removeButton(header, `Delete usage ${gi + 1}`, () => {
-        promote();
-        deleteWithUndo(
-          { label: 'Usage deleted.', kind: 'usages', index: gi, groups: [group] },
-          () => state.groups.splice(gi, 1),
-        );
+      const chevron = icon(heading, state.collapsed.has(group) ? 'chevron-right' : 'chevron-down');
+      removeButton(
+        header,
+        `Delete usage ${gi + 1}`,
+        () => {
+          promote();
+          deleteWithUndo(
+            { label: 'Usage deleted.', kind: 'usages', index: gi, groups: [group] },
+            () => state.groups.splice(gi, 1),
+          );
+        },
+        true,
+      );
+      const folded = card.createDiv({
+        cls: 'cc-example-folded',
+        text: `${group.meaning || 'New usage'} · ${group.examples.length} examples`,
       });
+      folded.hidden = !state.collapsed.has(group);
       const content = card.createDiv({ cls: 'cc-example-group-body' });
       content.id = `cc-${crypto.randomUUID()}`;
       content.hidden = state.collapsed.has(group);
@@ -197,7 +234,7 @@ export function renderExamplesEditor(
           );
         });
       });
-      button(
+      const addExample = button(
         content,
         'Add example',
         () => {
@@ -208,10 +245,11 @@ export function renderExamplesEditor(
               : `Usage ${gi + 1}, example ${group.examples.length}`,
           );
         },
-        'cc-example-quiet',
+        'cc-example-quiet cc-add-example',
       );
+      icon(addExample, 'plus');
     });
-    button(
+    const addUsage = button(
       body,
       'Add usage',
       () => {
@@ -221,11 +259,12 @@ export function renderExamplesEditor(
       },
       'cc-add-usage',
     );
+    icon(addUsage, 'plus');
     const last = state.undo.at(-1);
     if (last) {
       const feedback = body.createDiv({ cls: 'cc-examples-undo', attr: { role: 'status' } });
       feedback.createSpan({ text: last.label });
-      button(
+      const undo = button(
         feedback,
         'Undo',
         () => {
@@ -246,6 +285,7 @@ export function renderExamplesEditor(
         },
         'cc-example-quiet',
       );
+      icon(undo, 'undo-2');
     }
   };
   updateSummary();

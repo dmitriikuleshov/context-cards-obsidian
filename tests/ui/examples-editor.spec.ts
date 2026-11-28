@@ -46,6 +46,68 @@ for (const width of [320, 736]) {
       }, theme);
       const section = page.locator('[data-cc-section=examples]');
       await section.locator(':scope > summary').click();
+      // The approved prototype's exact palette and compact geometry are the UI contract.
+      const colors =
+        theme === 'dark'
+          ? {
+              region: 'rgb(37, 42, 35)',
+              card: 'rgb(32, 32, 32)',
+              surface: 'rgb(41, 43, 39)',
+              line: 'rgb(60, 64, 55)',
+              accent: 'rgb(161, 183, 133)',
+              ink: 'rgb(224, 226, 221)',
+              onAccent: 'rgb(25, 34, 17)',
+            }
+          : {
+              region: 'rgb(241, 244, 235)',
+              card: 'rgb(248, 247, 243)',
+              surface: 'rgb(238, 238, 231)',
+              line: 'rgb(216, 220, 209)',
+              accent: 'rgb(101, 121, 79)',
+              ink: 'rgb(44, 51, 45)',
+              onAccent: 'rgb(255, 255, 255)',
+            };
+      await expect(section).toHaveCSS('background-color', colors.region);
+      await expect(section).toHaveCSS('color', colors.ink);
+      await expect(section.locator('.cc-examples-title')).toHaveCSS('color', colors.ink);
+      await expect(section).toHaveCSS('border-color', colors.line);
+      await expect(section).toHaveCSS('padding', '12px');
+      await expect(section).toHaveCSS('border-radius', '10px');
+      const firstUsage = section.locator('.cc-example-group').first();
+      await expect(firstUsage).toHaveCSS('background-color', colors.card);
+      await expect(firstUsage).toHaveCSS('padding', '8px 10px');
+      await expect(firstUsage.locator('.cc-usage-meaning')).toHaveCSS(
+        'background-color',
+        colors.surface,
+      );
+      await expect(firstUsage.getByRole('button', { name: 'Usage 1', exact: true })).toHaveCSS(
+        'color',
+        colors.accent,
+      );
+      await expect(section.getByRole('button', { name: 'Add usage', exact: true })).toHaveCSS(
+        'background-color',
+        colors.accent,
+      );
+      await expect(section.getByRole('button', { name: 'Add usage', exact: true })).toHaveCSS(
+        'color',
+        colors.onAccent,
+      );
+      await section.getByRole('button', { name: 'Add usage', exact: true }).hover();
+      await expect(section.getByRole('button', { name: 'Add usage', exact: true })).toHaveCSS(
+        'background-color',
+        colors.accent,
+      );
+      await expect(
+        firstUsage.getByRole('button', { name: 'Delete usage 1', exact: true }),
+      ).toHaveText('Delete usage');
+      await expect(
+        firstUsage
+          .getByRole('button', { name: 'Delete usage 1, example 1', exact: true })
+          .locator('[data-icon=x]'),
+      ).toHaveCount(1);
+      await expect(section.locator('summary .cc-examples-total')).toHaveText(
+        '3 usages · 6 examples',
+      );
       await expect(section.getByRole('button', { name: 'Usage 1', exact: true })).toHaveAttribute(
         'aria-expanded',
         'true',
@@ -65,6 +127,9 @@ for (const width of [320, 736]) {
       await expect(section.getByRole('button', { name: 'Usage 3', exact: true })).toHaveAttribute(
         'aria-expanded',
         'false',
+      );
+      await expect(section.locator('.cc-example-folded').nth(2)).toHaveText(
+        'The ability or capacity to do something · 2 examples',
       );
       await section.evaluate((el) => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
       await page.screenshot({ path: `.test-artifacts/examples-compact-${width}-${theme}.png` });
@@ -105,6 +170,7 @@ for (const width of [320, 736]) {
       await page.getByRole('button', { name: 'Edit draft', exact: true }).click();
       await expect(meaning).toHaveValue('A manually added fourth sense');
       await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
+      await expect(section).toHaveAttribute('open', '');
       await expect(section.getByText('No examples yet.', { exact: true })).toBeVisible();
       await expect(
         section.getByRole('button', { name: 'Clear examples', exact: true }),
