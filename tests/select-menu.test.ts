@@ -57,6 +57,13 @@ it('tracks disabled and programmatic changes and ignores disabled choices', asyn
   select.dispatchEvent(new Event('change'));
   expect(button.disabled).toBe(false);
   expect(button.textContent).toBe('Fill in the gap');
+  const option = select.selectedOptions[0]!;
+  option.dataset.ccWord = '<word>';
+  option.dataset.ccSource = '<book (edition)>';
+  await Promise.resolve();
+  expect(button.querySelector('.cc-select-source')!.textContent).toBe('(<book (edition)>)');
+  expect(button.textContent).toBe('<word> (<book (edition)>)');
+  expect(button.querySelector('book')).toBeNull();
 });
 it('removes an open menu when its pane is cleared or disposed', async () => {
   const { root, button } = setup();

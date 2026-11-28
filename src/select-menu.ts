@@ -46,7 +46,14 @@ export function enhanceSelects(root: HTMLElement): () => void {
     select.removeAttribute('aria-labelledby');
     select.after(button);
     const sync = () => {
-      label.textContent = select.selectedOptions[0]?.textContent ?? 'Choose an option';
+      const option = select.selectedOptions[0];
+      label.textContent = option?.textContent ?? 'Choose an option';
+      if (option?.dataset.ccWord !== undefined && option.dataset.ccSource !== undefined) {
+        const source = doc.createElement('span');
+        source.className = 'cc-select-source';
+        source.textContent = `(${option.dataset.ccSource})`;
+        label.replaceChildren(doc.createTextNode(`${option.dataset.ccWord} `), source);
+      }
       button.disabled = select.disabled;
       button.title = label.textContent ?? '';
       if (button.disabled && button.getAttribute('aria-expanded') === 'true') active?.hide();

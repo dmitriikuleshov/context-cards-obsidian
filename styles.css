@@ -1439,6 +1439,11 @@ button.cc-select-button:disabled {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.cc-draft-switcher .cc-select-source {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
 .cc-model-control {
   flex-wrap: wrap;
   min-width: 0;

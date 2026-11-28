@@ -168,11 +168,15 @@ export class ReviewView extends ItemView {
     const switcher = root.createDiv({ cls: 'cc-draft-switcher' });
     const select = switcher.createEl('select', { attr: { 'aria-label': 'Choose a draft' } });
     select.dataset.ccField = 'draft-switcher';
-    for (const item of [...this.plugin.drafts].reverse())
-      select.createEl('option', {
-        text: `${item.phase === 'saved' ? '✓ ' : ''}${item.expression || item.answer} (${item.capture.book})`,
+    for (const item of [...this.plugin.drafts].reverse()) {
+      const word = `${item.phase === 'saved' ? '✓ ' : ''}${item.expression || item.answer}`;
+      const option = select.createEl('option', {
+        text: `${word} (${item.capture.book})`,
         value: item.id,
       });
+      option.dataset.ccWord = word;
+      option.dataset.ccSource = item.capture.book;
+    }
     select.value = draft.id;
     select.addEventListener('change', () => {
       this.currentId = select.value;

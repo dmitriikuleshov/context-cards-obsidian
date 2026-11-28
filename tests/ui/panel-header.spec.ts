@@ -17,6 +17,10 @@ for (const width of [390, 1000]) {
         await expect(page.locator('.cc-draft-switcher .cc-select-value')).toHaveText(
           'brush off (The Last Train)',
         );
+        const source = page.locator('.cc-draft-switcher .cc-select-source');
+        await expect(source).toHaveText('(The Last Train)');
+        await expect(source).toHaveCSS('font-size', '12px');
+        await expect(source).toHaveCSS('font-weight', '400');
         await expect(page.locator('.cc-source-heading')).toHaveCount(0);
       } else await expect(page.locator('.cc-source-heading > span')).not.toBeEmpty();
       snapshots.push(
