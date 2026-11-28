@@ -95,24 +95,13 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
-- Examples text uses the same interface font, size, regular weight and line spacing as the meaning fields. Focused sentences show green horizontal lines across the entire row instead of a box around the input. Sentence inputs retain horizontal padding, with more space above Add example and Delete usage.
-- Add example uses a flat, borderless control with a gray hover background.
-- The Open source button is removed from both mode headers. Vocabulary draft labels show the source title in parentheses after the word, with smaller, regular-weight muted text and no duplicate source row. Writing retains its source title row.
-- Examples uses the same native disclosure triangles as Explanation & usage notes, including keyboard toggling and open/closed states.
-- Vocabulary's Add to Anki keeps its existing green color and darkens on hover when enabled.
-- The top Clear all button is flat and borderless in both modes, retaining its red hover highlight. Theme hover shadows, including Blue Topaz rules loaded after the plugin, no longer add a raised border.
-- Vocabulary Examples now uses compact usage cards with editable sentence lists. Add or delete usages and individual examples, and undo deletions. The Clear examples button has been removed. Examples remains the final teaching section, below Explanation & usage notes.
-- Examples uses the approved neutral gray palette in both themes, with green outlines for focused fields. Individual usage cards stay expanded without Usage headers; Delete usage sits at the bottom right, opposite Add example. Deletion controls are flat and turn red on hover or keyboard focus.
-- The vocabulary footer uses the release theme colors again, including green Add to Anki. Explanation and Examples headings sit slightly left of their contents to show nesting.
-- Obsidian hover-name popups are suppressed throughout plugin panels, settings, selection controls and the ribbon. Accessible names are retained, including for controls added asynchronously and in popout windows.
-- Vocabulary's footer stays at the panel bottom with short or long drafts, including after examples are expanded, cleared or restored. Examples opens with a native disclosure heading, like Explanation & usage notes, without a separate Show/Hide button or a jump to the top.
-- Manual example counts are independent of generation settings and survive reopening drafts. Empty Examples can be omitted from Anki; unfinished entries must be completed or removed before export. Existing drafts remain supported.
+No unreleased changes.
 
 ## Current maintenance state
 
-- Supported release: [**0.3.43**](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/tag/0.3.43), runtime tag commit **2394ae0**.
-- The hotfix adds progress and confirmation for opening cards in Anki, explicit source-note focus and source-navigation error reporting. The ChatGPT hardening and panel improvements from 0.3.42 remain included. English setup instructions and interface screenshots are current.
-- Release verification: 955 full-suite tests, all three coverage gates (355 analysis, 453 vocabulary and 175 ChatGPT tests), 80 browser checks, both temporary-Anki checks and package verification passed. Both GitHub workflows passed for the release commit. Published assets and the public ZIP/manifest were verified.
+- Supported release: [**0.3.44**](https://github.com/dmitriikuleshov/context-cards-obsidian/releases/tag/0.3.44), runtime tag commit **1852a3b**.
+- The release adds editable vocabulary usage groups and sentence lists, undoable deletions, consistent typography and disclosure arrows, compact source labels, flat controls and theme-compatible hover feedback. The vocabulary footer remains anchored at the bottom. English setup instructions and interface screenshots are current; versioned changes are recorded in the GitHub release notes.
+- Release verification: 962 full-suite tests, all three coverage gates (355 analysis, 460 vocabulary and 175 ChatGPT tests), 95 browser checks, both temporary-Anki checks and package verification passed. Both GitHub workflows passed for the release commit. Published assets and the public ZIP/manifest were verified.
 - Provider checks use generated credentials, simulated responses and real loopback sockets. Real-account sign-in/refresh/revocation was not repeated, and no cloud inference requests were made for release verification. See [Testing](TESTING.md) for boundaries.
 - No active implementation handoff. Start the next task from the current branch, Git status and the relevant source files.
 - Platform, account and live-test limitations are recorded in [Setup](SETUP.md) and [Testing](TESTING.md).
