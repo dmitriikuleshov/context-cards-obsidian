@@ -3,7 +3,6 @@ import {
   DEFAULT_FIELDS,
   validTimeoutSeconds,
   writingOptions,
-  EXAMPLE_COUNT,
   MAX_DRAFTS,
   MAX_VOCABULARY_CONTEXT,
   emptyContent,
@@ -41,20 +40,12 @@ function content(value: Record<string, unknown>): Content {
     result.ipaVariant = value.ipaVariant;
   if (typeof value.wordFormation === 'string') result.wordFormation = value.wordFormation;
   if (strings(value.examples)) {
-    const examples = value.examples;
-    result.examples = Array.from({ length: EXAMPLE_COUNT }, (_, i) => examples[i] ?? '');
+    result.examples = [...value.examples];
   }
   if (
     Array.isArray(value.exampleGroups) &&
-    value.exampleGroups.length >= 1 &&
-    value.exampleGroups.length <= 5 &&
     value.exampleGroups.every(
-      (g) =>
-        record(g) &&
-        typeof g.meaning === 'string' &&
-        strings(g.examples) &&
-        g.examples.length >= 1 &&
-        g.examples.length <= 10,
+      (g) => record(g) && typeof g.meaning === 'string' && strings(g.examples),
     )
   ) {
     result.exampleGroups = value.exampleGroups.map((g: any) => ({

@@ -3,7 +3,9 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { ReviewView } from '../src/view';
 import type ContextCardsPlugin from '../src/main';
 import { DEFAULTS, type Content } from '../src/types';
-import { createDraft } from '../src/text';
+import { createDraft, issues } from '../src/text';
+import { restoreData } from '../src/storage';
+import { noteFields } from '../src/templates';
 import { installDomHelpers } from './dom';
 beforeAll(installDomHelpers);
 function setup() {
@@ -68,6 +70,126 @@ function setup() {
   };
   return { draft, plugin, view, click, field };
 }
+describe('manual usage lists', () => {
+  it('keeps Examples last and adds usages beyond the generation limit without changing other fields', () => {
+    const { draft, view, click, field, plugin } = setup();
+    const original = draft.explanation;
+    plugin.settings.fields.maxUsages = 1;
+    for (let i = 2; i <= 7; i++) {
+      click('Add usage');
+      for (const [label, value] of [
+        [`Meaning / usage ${i}`, `Meaning ${i}`],
+        [`Usage ${i}, example 1`, `Example ${i}.`],
+      ]) {
+        const input = field(label!);
+        input.value = value!;
+        input.dispatchEvent(new Event('input'));
+      }
+    }
+    expect(draft.exampleGroups).toHaveLength(7);
+    expect(draft.examples).toHaveLength(11);
+    expect(draft.explanation).toBe(original);
+    expect(issues(draft)).toEqual([]);
+    const sections = view.contentEl.querySelectorAll('.cc-teaching-section');
+    expect(sections[sections.length - 1]!.getAttribute('data-cc-section')).toBe('examples');
+    const restored = restoreData({ drafts: [JSON.parse(JSON.stringify(draft))] }).drafts[0]!;
+    expect(restored.exampleGroups).toEqual(draft.exampleGroups);
+    expect(noteFields(restored).Examples).toContain('Example 7.');
+  });
+  it('adds a row, retains typing focus, and restores the latest edited text after deletion', () => {
+    const { draft, view, click, field } = setup();
+    click('Add example');
+    const input = field('Usage example 6');
+    expect(document.activeElement).toBe(input);
+    input.value = 'Manually edited example.';
+    input.dispatchEvent(new Event('input'));
+    expect(document.activeElement).toBe(input);
+    click('Delete usage 1, example 6');
+    expect(draft.examples).toHaveLength(5);
+    // A later edit must not be overwritten by Undo.
+    field('Usage example 1').value = 'Keep this later edit.';
+    field('Usage example 1').dispatchEvent(new Event('input'));
+    view.render();
+    click('Undo');
+    expect(draft.examples[0]).toBe('Keep this later edit.');
+    expect(draft.examples[5]).toBe('Manually edited example.');
+    expect(noteFields(draft).Examples).toContain('Manually edited example.');
+  });
+  it('clears all examples, allows export without them, and restores deleted usages alongside later additions', () => {
+    const { draft, view, click, field } = setup();
+    click('Clear examples');
+    expect(draft.exampleGroups).toEqual([]);
+    expect(draft.examples).toEqual([]);
+    expect(issues(draft)).toEqual([]);
+    expect(noteFields(draft).Examples).toBe('');
+    expect(view.contentEl.querySelector('.cc-examples')!.textContent).not.toContain(
+      'Clear examples',
+    );
+    const restored = restoreData({ drafts: [draft] }).drafts[0]!;
+    expect(restored.exampleGroups).toEqual([]);
+    expect(restored.examples).toEqual([]);
+    click('Add usage');
+    field('Meaning / usage 1').value = 'New usage';
+    field('Meaning / usage 1').dispatchEvent(new Event('input'));
+    click('Undo');
+    expect(draft.exampleGroups).toHaveLength(2);
+    expect(draft.exampleGroups![1]!.meaning).toBe('New usage');
+    expect(draft.examples).toHaveLength(6);
+  });
+  it('deletes and restores a usage and an empty final example without losing incomplete work on reload', () => {
+    const { draft, view, click } = setup();
+    click('Add usage');
+    expect(issues(draft)).toContain('Complete each meaning group and its examples.');
+    click('Delete usage 2, example 1');
+    const restored = restoreData({ drafts: [draft] }).drafts[0]!;
+    expect(restored.exampleGroups![1]).toEqual({ meaning: '', examples: [] });
+    click('Delete usage 2');
+    expect(draft.exampleGroups).toHaveLength(1);
+    expect(issues(draft)).toEqual([]);
+    click('Undo');
+    click('Undo');
+    expect(draft.exampleGroups![1]!.examples).toEqual(['']);
+    view.render();
+    expect(view.contentEl.querySelectorAll('.cc-example-group')).toHaveLength(2);
+  });
+  it('remembers collapsed usages and hides mutation controls when examples are disabled', () => {
+    const { view, click, plugin } = setup();
+    click('Usage 1');
+    expect(view.contentEl.querySelector('.cc-example-group-body')!.hasAttribute('hidden')).toBe(
+      true,
+    );
+    view.render();
+    expect(view.contentEl.querySelector('.cc-example-group-body')!.hasAttribute('hidden')).toBe(
+      true,
+    );
+    plugin.settings.fields.examples = false;
+    view.render();
+    expect(view.contentEl.querySelector('.cc-examples')!.hasAttribute('hidden')).toBe(true);
+  });
+  it('discards stale Undo after generation replaces examples and keeps saved/exporting content read-only', () => {
+    const { draft, view, click } = setup();
+    click('Clear examples');
+    draft.examples = ['A new generated example.'];
+    draft.exampleGroups = [{ meaning: 'New generation', examples: draft.examples }];
+    view.render();
+    expect(view.contentEl.querySelector('.cc-examples-undo')).toBeNull();
+    for (const phase of ['sending', 'saved'] as const) {
+      draft.phase = phase;
+      view.render();
+      const controls = view.contentEl.querySelectorAll<HTMLInputElement>(
+        '.cc-examples button:not(.cc-usage-toggle),.cc-examples textarea',
+      );
+      expect([...controls].every((control) => control.disabled)).toBe(true);
+      click('Clear examples');
+      expect(draft.examples).toEqual(['A new generated example.']);
+      const disclosure = view.contentEl.querySelector<HTMLButtonElement>('.cc-usage-toggle')!;
+      expect(disclosure.disabled).toBe(false);
+      const before = disclosure.getAttribute('aria-expanded');
+      disclosure.click();
+      expect(disclosure.getAttribute('aria-expanded')).not.toBe(before);
+    }
+  });
+});
 describe('editable review panel', () => {
   it('disables Clear all while any draft is exporting and unlocks it when the export finishes', () => {
     const { plugin, view, click } = setup();

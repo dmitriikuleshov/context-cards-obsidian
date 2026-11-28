@@ -95,7 +95,7 @@ describe('persisted drafts and settings', () => {
       americanIpa: undefined,
     };
     const restored = restoreData({ drafts: [old] }).drafts[0]!;
-    expect(restored.examples).toEqual(['Old example one.', 'Old example two.', '', '', '']);
+    expect(restored.examples).toEqual(['Old example one.', 'Old example two.']);
     expect(restored.partOfSpeech).toBe('');
     expect(restored.americanIpa).toBe('');
   });

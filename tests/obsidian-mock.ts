@@ -233,6 +233,27 @@ export class Menu {
 }
 export function setIcon(element: HTMLElement, name: string) {
   element.dataset.icon = name;
+  // Render the deletion affordance for browser layout/visual checks as Obsidian does.
+  if (name === 'trash-2') {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    for (const [key, value] of Object.entries({
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      'stroke-width': '2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round',
+      'aria-hidden': 'true',
+    }))
+      svg.setAttribute(key, value);
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute(
+      'd',
+      'M3 6h18M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M5 6l1 14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-14M10 10v7M14 10v7',
+    );
+    svg.append(path);
+    element.replaceChildren(svg);
+  }
 }
 
 export class TFile {}

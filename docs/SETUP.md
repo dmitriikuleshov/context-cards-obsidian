@@ -265,9 +265,11 @@ Vocabulary context supports up to **12,000 characters**: choose **Extended · 12
 
 **Explanation & usage notes** appears above **Examples**. Both sections are collapsed initially; click their headings to expand and edit the fields. Their expanded state is kept when the panel redraws.
 
-![Editable example groups and export buttons](images/examples-deck.png)
+![Compact usage cards with editable example lists and add/delete controls](images/examples-deck.png)
 
-Edit each **Meaning / usage** heading and its examples. The model selects the number of groups within your configured limit; different topics alone do not necessarily represent different meanings.
+**Examples** stays at the end of the teaching fields, below **Explanation & usage notes**. Each usage has a compact card with an editable meaning and a numbered sentence list. Click its **Usage** heading to collapse or expand it. The model selects the number of groups within your configured limit; different topics alone do not necessarily represent different meanings.
+
+Use **Add usage** to create another meaning group and **Add example** to add a sentence inside a group. The trash buttons delete one usage or sentence; **Clear examples** removes all groups. **Undo** restores deletions without discarding subsequent edits. Manual additions are not limited by the generation counts in settings, and are saved with the draft. Complete or delete unfinished entries before adding to Anki. You can also clear Examples entirely to omit them from the cards. These edits apply to the current draft, not notes already added to Anki.
 
 ![Footer destination with Deck and expanded Tags controls](images/destination.png)
 

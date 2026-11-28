@@ -1,5 +1,5 @@
 import type { Capture, Draft, Settings } from './types';
-import { cardFields, emptyContent, EXAMPLE_COUNT, MAX_VOCABULARY_CONTEXT } from './types';
+import { cardFields, emptyContent, MAX_VOCABULARY_CONTEXT } from './types';
 
 export function escapeHtml(value: string): string {
   return value.replace(
@@ -184,22 +184,13 @@ export function issues(draft: Draft, settings?: Partial<Settings>): string[] {
   if (f.explanationSentences && !draft.explanation.trim()) result.push('Add an explanation.');
   if (f.examples && draft.exampleGroups) {
     if (
-      draft.exampleGroups.length < 1 ||
-      draft.exampleGroups.length > 5 ||
       draft.exampleGroups.some(
-        (g) =>
-          !g.meaning.trim() ||
-          g.examples.length < 1 ||
-          g.examples.length > 10 ||
-          g.examples.some((v) => !v.trim()),
+        (g) => !g.meaning.trim() || g.examples.length < 1 || g.examples.some((v) => !v.trim()),
       )
     )
       result.push('Complete each meaning group and its examples.');
-  } else if (
-    f.examples &&
-    (draft.examples.length !== EXAMPLE_COUNT || draft.examples.some((v) => !v.trim()))
-  )
-    result.push('Add five usage examples.');
+  } else if (f.examples && draft.examples.some((v) => !v.trim()))
+    result.push('Complete or remove unfinished usage examples.');
   if (!answerValid(draft))
     result.push('Select the exact answer in the context, then click “Use selection as answer”.');
   if (!cleanDeck(draft.deck)) result.push('Choose an Anki deck.');

@@ -16,6 +16,32 @@ import { sourceMarkRange } from '../../src/source-mark';
 import { capture, draft } from './fixtures';
 
 describe('untrusted stored vocabulary data', () => {
+  it('preserves manual counts and unfinished lists independently of generation limits', () => {
+    const groups = Array.from({ length: 7 }, (_, i) => ({
+      meaning: `Usage ${i}`,
+      examples: Array.from({ length: 12 }, (_, j) => `Example ${i}.${j}`),
+    }));
+    const d = draft({ exampleGroups: groups, examples: groups.flatMap((g) => g.examples) });
+    expect(issues(d)).toEqual([]);
+    const restored = restoreData({ drafts: [d] }).drafts[0]!;
+    expect(restored.exampleGroups).toEqual(groups);
+    expect(restored.examples).toHaveLength(84);
+    expect(noteFields(restored).Examples).toContain('Example 6.11');
+    const unfinished = draft({ exampleGroups: [{ meaning: '', examples: [] }] });
+    expect(restoreData({ drafts: [unfinished] }).drafts[0]!.exampleGroups).toEqual(
+      unfinished.exampleGroups,
+    );
+  });
+  it.each([[], ['One example.'], Array(9).fill('Example.')].map((examples) => [examples]))(
+    'accepts and restores variable legacy example counts %#',
+    (examples) => {
+      const d = draft({ examples });
+      expect(issues(d)).toEqual([]);
+      const restored = restoreData({ drafts: [d] }).drafts[0]!;
+      expect(restored.examples).toEqual(examples);
+      expect(restored.exampleGroups).toBeUndefined();
+    },
+  );
   it('restores the extended vocabulary context and rejects values above its limit', () => {
     expect(restoreData({ settings: { contextSize: 12000 } }).settings.contextSize).toBe(12000);
     expect(restoreData({ settings: { contextSize: 12001 } }).settings.contextSize).toBe(
@@ -137,15 +163,11 @@ describe('untrusted stored vocabulary data', () => {
     expect(restored.tags).toBe(DEFAULTS.defaultTags);
     expect(restored.seconds).toBeUndefined();
     expect(restored.pendingSource).toBeUndefined();
-    expect(restored.pendingContent!.examples).toEqual(['One', '', '', '', '']);
+    expect(restored.pendingContent!.examples).toEqual(['One']);
   });
   for (const groups of [
-    [],
-    Array(6).fill({ meaning: 'x', examples: ['x'] }),
     [null],
     [{ meaning: 3, examples: ['x'] }],
-    [{ meaning: 'x', examples: [] }],
-    [{ meaning: 'x', examples: Array(11).fill('x') }],
     [{ meaning: 'x', examples: [3] }],
   ])
     it(`ignores corrupt usage groups ${JSON.stringify(groups).slice(0, 50)}`, () => {
@@ -233,11 +255,8 @@ describe('vocabulary recall and safe card rendering', () => {
     expect(parseTags(' a b a\n c ')).toEqual(['a', 'b', 'c']);
   });
   for (const groups of [
-    [],
-    Array(6).fill({ meaning: 'x', examples: ['x'] }),
     [{ meaning: '', examples: ['x'] }],
     [{ meaning: 'sense', examples: [] }],
-    [{ meaning: 'sense', examples: Array(11).fill('x') }],
     [{ meaning: 'sense', examples: [' '] }],
   ])
     it(`requires complete editable usage groups ${JSON.stringify(groups).slice(0, 45)}`, () => {

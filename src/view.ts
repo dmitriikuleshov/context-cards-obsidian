@@ -1,6 +1,6 @@
 import { ItemView, Notice, setIcon, type WorkspaceLeaf } from 'obsidian';
 import type ContextCardsPlugin from './main';
-import { cardFields, EXAMPLE_COUNT, type Draft } from './types';
+import { cardFields, type Draft } from './types';
 import { answerValid, contextHtml, htmlText, issues, updateContext, typedAnswer } from './text';
 import { visibleDraft } from './fields';
 import { CARD_CSS, examplesHtml } from './templates';
@@ -8,6 +8,7 @@ import { enhanceSelects } from './select-menu';
 import { DeckSuggest } from './deck-suggest';
 import { renderPanelHeader, renderSourceHeading } from './panel-header';
 import { renderErrorFeedback, scrollPanelToTop } from './error-feedback';
+import { ExamplesEditorState, renderExamplesEditor } from './examples-editor';
 
 export const VIEW_TYPE = 'context-cards-review';
 export class ReviewView extends ItemView {
@@ -25,6 +26,7 @@ export class ReviewView extends ItemView {
   private dropdownCleanup?: () => void;
   private deckSuggest?: DeckSuggest;
   private errorState?: { id: string; error: string; phase: Draft['phase'] };
+  private exampleStates = new WeakMap<Draft, ExamplesEditorState>();
   constructor(
     leaf: WorkspaceLeaf,
     private plugin: ContextCardsPlugin,
@@ -462,66 +464,12 @@ export class ReviewView extends ItemView {
         }),
       { multiline: true, rows: 2 },
     );
-    const exampleCount = draft.examples.filter((v) => v.trim()).length;
-    const groupCount = draft.exampleGroups?.length;
-    const examples = this.section(
-      body,
-      'examples',
-      exampleCount
-        ? `Examples · ${groupCount ? `${groupCount} ${groupCount === 1 ? 'usage' : 'usages'} · ` : ''}${exampleCount} examples`
-        : 'Examples',
-    );
+    const examples = this.section(body, 'examples', 'Examples');
     examples.addClass('cc-examples');
     examples.addClass('cc-teaching-section');
-    if (draft.exampleGroups?.length) {
-      draft.exampleGroups.forEach((group, gi) => {
-        const container = examples.createDiv({ cls: 'cc-example-group' });
-        const meaning = this.field(
-          container,
-          `Meaning / usage ${gi + 1}`,
-          group.meaning,
-          (v) =>
-            update(() => {
-              group.meaning = v;
-            }),
-          { multiline: true, rows: 1 },
-        );
-        meaning.addClass('cc-usage-meaning');
-        group.examples.forEach((value, ei) => {
-          const input = this.field(
-            container,
-            `Usage ${gi + 1}, example ${ei + 1}`,
-            value,
-            (v) =>
-              update(() => {
-                group.examples[ei] = v;
-                draft.examples = draft.exampleGroups!.flatMap((g) => g.examples);
-              }),
-            { multiline: true, rows: 2 },
-          );
-          input.parentElement!.addClass('cc-example');
-          input.parentElement!.dataset.number = String(ei + 1);
-          input.parentElement!.querySelector('label')?.addClass('cc-sr-only');
-        });
-      });
-    } else {
-      for (let i = 0; i < EXAMPLE_COUNT; i++) {
-        const input = this.field(
-          examples,
-          `Usage example ${i + 1}`,
-          draft.examples[i] ?? '',
-          (v) =>
-            update(() => {
-              draft.examples[i] = v;
-            }),
-          { multiline: true, rows: 2 },
-        );
-        const row = input.parentElement!;
-        row.addClass('cc-example');
-        row.dataset.number = String(i + 1);
-        row.querySelector('label')?.addClass('cc-sr-only');
-      }
-    }
+    let exampleState = this.exampleStates.get(draft);
+    if (!exampleState) this.exampleStates.set(draft, (exampleState = new ExamplesEditorState()));
+    renderExamplesEditor(examples, draft, exampleState, () => this.changed(draft), disabled);
     const destination = body.createDiv({ cls: 'cc-destination' });
     this.destination = destination;
     const deckRow = destination.createDiv({ cls: 'cc-deck-row' });
@@ -577,7 +525,9 @@ export class ReviewView extends ItemView {
     for (const button of Array.from(body.querySelectorAll('button')))
       if (button.textContent === 'Find base word') button.hidden = !f.wordFormation;
     if (disabled)
-      for (const control of Array.from(body.querySelectorAll('input,textarea,button')))
+      for (const control of Array.from(
+        body.querySelectorAll('input,textarea,button:not(.cc-usage-toggle)'),
+      ))
         (control as HTMLInputElement).disabled = true;
   }
   private renderPreview(body: HTMLElement, draft: Draft) {

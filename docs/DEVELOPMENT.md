@@ -95,7 +95,8 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
-No unreleased user-visible changes. Published changes are recorded in [GitHub Releases](https://github.com/dmitriikuleshov/context-cards-obsidian/releases).
+- Vocabulary Examples now uses compact, collapsible usage cards with editable sentence lists. Add or delete usages and individual examples, clear all examples, and undo deletions. Examples remains the final teaching section, below Explanation & usage notes.
+- Manual example counts are independent of generation settings and survive reopening drafts. Empty Examples can be omitted from Anki; unfinished entries must be completed or removed before export. Existing drafts remain supported.
 
 ## Current maintenance state
 
