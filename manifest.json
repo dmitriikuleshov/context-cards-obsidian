@@ -1,7 +1,7 @@
 {
   "id": "context-cards",
   "name": "Context Cards",
-  "version": "0.3.43",
+  "version": "0.3.44",
   "minAppVersion": "1.8.0",
   "description": "Create vocabulary cards and writing practice with Ollama or a ChatGPT subscription and Anki.",
   "author": "Context Cards contributors",
