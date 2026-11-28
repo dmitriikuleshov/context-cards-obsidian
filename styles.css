@@ -278,6 +278,10 @@
   color: #fff;
   border-color: #657b50;
 }
+.cc-panel .cc-footer-actions button.mod-cta:hover:not(:disabled) {
+  background: #566b44;
+  border-color: #566b44;
+}
 .cc-panel button.mod-cta:disabled {
   opacity: 0.45;
 }
