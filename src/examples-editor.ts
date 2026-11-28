@@ -146,29 +146,7 @@ export function renderExamplesEditor(
   };
   const draw = () => {
     body.empty();
-    summary.querySelector('.cc-examples-tools')?.remove();
-    if (state.groups.length) {
-      const tools = summary.createDiv({ cls: 'cc-examples-tools' });
-      const clear = button(
-        tools,
-        'Clear examples',
-        () => {
-          section.open = true;
-          promote();
-          const removed = [...state.groups];
-          deleteWithUndo(
-            { label: 'Examples cleared.', kind: 'usages', index: 0, groups: removed },
-            () => state.groups.splice(0),
-          );
-        },
-        'cc-example-quiet',
-      );
-      icon(clear, 'trash-2');
-      clear.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-      });
-    } else {
+    if (!state.groups.length) {
       body.createEl('p', { text: 'No examples yet.', cls: 'cc-muted cc-examples-empty' });
     }
     state.groups.forEach((group, gi) => {

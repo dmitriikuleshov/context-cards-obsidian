@@ -51,9 +51,13 @@ for (const { width, height } of [
       await section.getByRole('button', { name: 'Add usage', exact: true }).click();
       await atBottom();
       await expect(section.getByLabel('Meaning / usage 6', { exact: true })).toBeFocused();
-      await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
+      for (let i = 0; i < 6; i++) {
+        await section.getByRole('button', { name: 'Delete usage 1', exact: true }).click();
+        await atBottom();
+      }
       await atBottom();
-      await section.getByRole('button', { name: 'Undo', exact: true }).click();
+      for (let i = 0; i < 6; i++)
+        await section.getByRole('button', { name: 'Undo', exact: true }).click();
       await atBottom();
       await section.locator(':scope > summary .cc-examples-title').click();
       await atBottom();
@@ -127,8 +131,8 @@ test('Examples uses a native disclosure heading without a separate button or a p
   await expect(section).not.toHaveAttribute('open');
   await section.locator('.cc-examples-total').click();
   await expect(section).toHaveAttribute('open', '');
-  await show.press('Space');
-  await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
+  await expect(section.getByRole('button', { name: 'Clear examples', exact: true })).toHaveCount(0);
+  await section.getByRole('button', { name: 'Delete usage 1', exact: true }).click();
   await expect(section).toHaveAttribute('open', '');
   await expect(section.getByRole('button', { name: 'Undo', exact: true })).toBeVisible();
   await expect(section.locator(':scope > summary')).toBeVisible();

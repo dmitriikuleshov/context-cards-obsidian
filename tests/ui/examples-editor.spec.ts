@@ -218,7 +218,8 @@ for (const width of [320, 736]) {
       ).toBeVisible();
       await page.getByRole('button', { name: 'Edit draft', exact: true }).click();
       await expect(meaning).toHaveValue('A manually added fourth sense');
-      await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
+      for (let i = 0; i < 4; i++)
+        await section.getByRole('button', { name: 'Delete usage 1', exact: true }).click();
       await expect(section).toHaveAttribute('open', '');
       await expect(section.getByText('No examples yet.', { exact: true })).toBeVisible();
       await expect(
@@ -226,7 +227,8 @@ for (const width of [320, 736]) {
       ).toHaveCount(0);
       await section.evaluate((el) => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
       await page.screenshot({ path: `.test-artifacts/examples-empty-${width}-${theme}.png` });
-      await section.getByRole('button', { name: 'Undo', exact: true }).click();
+      for (let i = 0; i < 4; i++)
+        await section.getByRole('button', { name: 'Undo', exact: true }).click();
       await expect(meaning).toHaveValue('A manually added fourth sense');
       expect(await section.locator('.cc-example-group').count()).toBe(4);
       // No edit controls can change a note after it has been exported.
@@ -249,7 +251,8 @@ test('example drafts survive switching between drafts and newly generated conten
   await page.goto('/');
   const section = page.locator('[data-cc-section=examples]');
   await section.locator(':scope > summary .cc-examples-title').click();
-  await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
+  await expect(section.getByRole('button', { name: 'Clear examples', exact: true })).toHaveCount(0);
+  await section.getByRole('button', { name: 'Delete usage 1', exact: true }).click();
   await page.evaluate(() => {
     const { draft, host, view } = (window as any).contextCardsPreview;
     const other = structuredClone(draft);

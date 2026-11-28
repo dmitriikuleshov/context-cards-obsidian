@@ -115,9 +115,12 @@ describe('manual usage lists', () => {
     expect(draft.examples[5]).toBe('Manually edited example.');
     expect(noteFields(draft).Examples).toContain('Manually edited example.');
   });
-  it('clears all examples, allows export without them, and restores deleted usages alongside later additions', () => {
+  it('allows export after deleting the final usage and restores it alongside later additions', () => {
     const { draft, view, click, field } = setup();
-    click('Clear examples');
+    expect(view.contentEl.querySelector('.cc-examples')!.textContent).not.toContain(
+      'Clear examples',
+    );
+    click('Delete usage 1');
     expect(draft.exampleGroups).toEqual([]);
     expect(draft.examples).toEqual([]);
     expect(issues(draft)).toEqual([]);
@@ -169,7 +172,7 @@ describe('manual usage lists', () => {
   });
   it('discards stale Undo after generation replaces examples and keeps saved/exporting content read-only', () => {
     const { draft, view, click } = setup();
-    click('Clear examples');
+    click('Delete usage 1');
     draft.examples = ['A new generated example.'];
     draft.exampleGroups = [{ meaning: 'New generation', examples: draft.examples }];
     view.render();
@@ -181,7 +184,7 @@ describe('manual usage lists', () => {
         '.cc-examples button,.cc-examples textarea',
       );
       expect([...controls].every((control) => control.disabled)).toBe(true);
-      click('Clear examples');
+      click('Delete usage 1');
       expect(draft.examples).toEqual(['A new generated example.']);
       const examples = view.contentEl.querySelector<HTMLDetailsElement>(
         '[data-cc-section=examples]',

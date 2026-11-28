@@ -271,7 +271,7 @@ Vocabulary context supports up to **12,000 characters**: choose **Extended · 12
 
 Section headings sit slightly left of their contents to make nesting clearer. Delete controls are flat and turn red on hover or keyboard focus. The footer follows the Obsidian theme, with a green **Add to Anki** button. Obsidian's hover-name popups are suppressed within the plugin; labels remain available to screen readers.
 
-Use **Add usage** to create another meaning group and **Add example** to add a sentence inside a group. The trash buttons delete one usage or sentence; **Clear examples** removes all groups. **Undo** restores deletions without discarding subsequent edits. Manual additions are not limited by the generation counts in settings, and are saved with the draft. Complete or delete unfinished entries before adding to Anki. You can also clear Examples entirely to omit them from the cards. These edits apply to the current draft, not notes already added to Anki.
+Use **Add usage** to create another meaning group and **Add example** to add a sentence inside a group. The trash buttons delete one usage or sentence. **Undo** restores deletions without discarding subsequent edits. Manual additions are not limited by the generation counts in settings, and are saved with the draft. Complete or delete unfinished entries before adding to Anki. Delete all usages to omit Examples from the cards. These edits apply to the current draft, not notes already added to Anki.
 
 ![Footer destination with Deck and expanded Tags controls](images/destination.png)
 
