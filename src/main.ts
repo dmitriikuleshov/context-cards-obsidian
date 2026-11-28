@@ -4,6 +4,7 @@ import { WritingController } from './writing-controller';
 import { WritingView, WRITING_VIEW } from './writing-view';
 import { MarkdownView, Notice, Plugin, requireApiVersion, type WorkspaceLeaf } from 'obsidian';
 import { sourceMarkRange } from './source-mark';
+import { suppressPluginTooltips } from './ui-labels';
 import { activeCapture, readCapture } from './capture';
 import { Anki, DuplicateError } from './anki';
 import { Ollama } from './ollama';
@@ -49,6 +50,7 @@ export default class ContextCardsPlugin extends Plugin {
   private jobs = new Map<string, AbortController>();
   private lastCapture: Capture | null = null;
   private floating = new Map<Document, HTMLElement>();
+  private tooltipDocuments = new Map<Document, () => void>();
   private saveTimer?: ReturnType<typeof setTimeout>;
   private writes: Promise<void> = Promise.resolve();
   private exports: Promise<unknown> = Promise.resolve();
@@ -83,11 +85,16 @@ export default class ContextCardsPlugin extends Plugin {
       );
     this.registerView(VIEW_TYPE, (leaf) => new ReviewView(leaf, this));
     this.addSettingTab(new ContextSettings(this.app, this));
-    this.addRibbonIcon('book-open-check', 'Context Cards: Explain word / phrase', () => {
-      const capture = activeCapture(this.app) ?? this.lastCapture;
-      if (capture) void this.capture(capture);
-      else void this.openPanel();
-    });
+    const ribbon = this.addRibbonIcon(
+      'book-open-check',
+      'Context Cards: Explain word / phrase',
+      () => {
+        const capture = activeCapture(this.app) ?? this.lastCapture;
+        if (capture) void this.capture(capture);
+        else void this.openPanel();
+      },
+    );
+    ribbon?.addClass('cc-tooltip-scope');
     this.addCommand({
       id: 'create-from-selection',
       name: 'Explain word / phrase',
@@ -146,11 +153,15 @@ export default class ContextCardsPlugin extends Plugin {
       this.app.workspace.on('window-close', (_workspaceWindow, win) => {
         this.floating.get(win.document)?.remove();
         this.floating.delete(win.document);
+        this.tooltipDocuments.get(win.document)?.();
+        this.tooltipDocuments.delete(win.document);
       }),
     );
     this.register(() => {
       for (const el of this.floating.values()) el.remove();
       this.floating.clear();
+      for (const stop of this.tooltipDocuments.values()) stop();
+      this.tooltipDocuments.clear();
     });
   }
   private setupDocument(doc: Document) {
@@ -166,6 +177,7 @@ export default class ContextCardsPlugin extends Plugin {
     button.className = 'cc-floating';
     button.hidden = true;
     doc.body.appendChild(button);
+    this.tooltipDocuments.set(doc, suppressPluginTooltips(doc));
     this.floating.set(doc, button);
     button.addEventListener('pointerdown', (event) => event.preventDefault());
     writing.addEventListener('click', () => {

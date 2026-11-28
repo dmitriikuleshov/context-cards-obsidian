@@ -1,4 +1,5 @@
 import { ReviewView } from '../../src/view';
+import { suppressPluginTooltips } from '../../src/ui-labels';
 import { mountWritingPanel } from './writing-harness';
 import { createDraft } from '../../src/text';
 import { DEFAULTS, type Draft } from '../../src/types';
@@ -8,6 +9,7 @@ import { enhanceSelects } from '../../src/select-menu';
 import { ModelControl } from '../../src/model-control';
 import { mountChatGPTSettings } from './chatgpt-harness';
 installDomHelpers();
+suppressPluginTooltips(document);
 const text =
   'Mara brushed off the first warning. By the time she reached the station, the last train had already left. She wished she had listened.';
 const draft = createDraft(

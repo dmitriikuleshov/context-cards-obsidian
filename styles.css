@@ -1026,16 +1026,16 @@
   font-size: 12px;
   margin-bottom: 8px;
 }
-/* Approved neutral palette; green is reserved for focused vocabulary fields. */
+/* Neutral examples, green field focus and release-themed export controls. */
 .cc-panel:not(.cc-writing-workflow) {
   --cc-ex-bg: #fafafa;
   --cc-ex-surface: #f3f3f3;
   --cc-ex-ink: #282828;
   --cc-ex-dim: #686868;
   --cc-ex-line: #dedede;
-  --cc-ex-primary: #454545;
-  --cc-ex-on-primary: #f5f5f5;
   --cc-ex-focus: #6f8454;
+  --cc-ex-danger: #b64141;
+  --cc-heading-outdent: 12px;
   --cc-ex-card: color-mix(in srgb, var(--cc-ex-ink) 3%, var(--cc-ex-bg));
 }
 .theme-dark .cc-panel:not(.cc-writing-workflow) {
@@ -1044,8 +1044,8 @@
   --cc-ex-ink: #e1e1e1;
   --cc-ex-dim: #a4a4a4;
   --cc-ex-line: #383838;
-  --cc-ex-primary: #494949;
   --cc-ex-focus: #879d6b;
+  --cc-ex-danger: #ef7c7c;
 }
 .cc-examples {
   margin: 18px 0;
@@ -1083,6 +1083,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-inline-start: calc(-1 * var(--cc-heading-outdent));
+}
+.cc-panel:not(.cc-writing-workflow) [data-cc-section='explanation'] > summary {
+  margin-inline-start: calc(-1 * var(--cc-heading-outdent));
 }
 .cc-examples-chevron {
   display: inline-flex;
@@ -1260,28 +1264,24 @@
     min-width: 44px;
   }
 }
-.cc-panel:not(.cc-writing-workflow) > .cc-footer {
-  background: var(--cc-ex-bg);
-  border-color: var(--cc-ex-line);
-}
-.cc-panel:not(.cc-writing-workflow) > .cc-footer input {
-  background: var(--cc-ex-surface);
-  border-color: var(--cc-ex-line);
-  color: var(--cc-ex-ink);
-}
-.cc-panel:not(.cc-writing-workflow) > .cc-footer .cc-footer-actions button {
-  background: transparent;
-  border-color: var(--cc-ex-line);
-  color: var(--cc-ex-ink);
-}
-.cc-panel:not(.cc-writing-workflow) > .cc-footer .cc-footer-actions .mod-cta {
-  background: var(--cc-ex-primary);
-  border-color: var(--cc-ex-primary);
-  color: var(--cc-ex-on-primary);
-}
+.cc-panel .cc-examples button:is(.cc-example-delete, .cc-delete-usage),
 .cc-panel:not(.cc-writing-workflow) > .cc-footer .cc-footer-actions .cc-discard {
-  border-color: transparent;
+  appearance: none;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
   color: var(--cc-ex-dim);
+}
+.cc-panel
+  .cc-examples
+  button:is(.cc-example-delete, .cc-delete-usage):is(:hover, :focus-visible):not(:disabled),
+.cc-panel:not(.cc-writing-workflow)
+  > .cc-footer
+  .cc-footer-actions
+  .cc-discard:is(:hover, :focus-visible):not(:disabled) {
+  background: color-mix(in srgb, var(--cc-ex-danger) 10%, var(--cc-ex-bg));
+  color: var(--cc-ex-danger);
+  box-shadow: none;
 }
 .cc-technical {
   margin: 22px 0 10px;

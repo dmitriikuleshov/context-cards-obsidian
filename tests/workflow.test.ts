@@ -59,9 +59,13 @@ describe('selection to draft through the plugin entry points', () => {
       const writing = vi.spyOn(plugin.writing, 'start').mockResolvedValue();
       await plugin.onload();
       contentEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-      const button = document.querySelector<HTMLButtonElement>(
-        '.cc-floating > button[aria-label="Explain word / phrase"]',
-      )!;
+      const button = Array.from(
+        document.querySelectorAll<HTMLButtonElement>('.cc-floating > button'),
+      ).find((b) => b.textContent === 'Explain word / phrase')!;
+      expect(button.hasAttribute('aria-label')).toBe(false);
+      expect(document.getElementById(button.getAttribute('aria-labelledby')!)!.textContent).toBe(
+        'Explain word / phrase',
+      );
       expect(button.hidden).toBe(false);
       expect(button.textContent).toBe('Explain word / phrase');
       expect(button.parentElement!.hidden).toBe(false);
@@ -75,9 +79,12 @@ describe('selection to draft through the plugin entry points', () => {
       expect(plugin.drafts[0]!.capture.mode).toBe(mode === 'preview' ? 'reading' : 'editor');
       expect(show).toHaveBeenCalledWith(plugin.drafts[0]);
       contentEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-      const writingButton = document.querySelector<HTMLButtonElement>(
-        '[aria-label="Find mistakes"]',
-      )!;
+      const writingButton = Array.from(
+        document.querySelectorAll<HTMLButtonElement>('.cc-floating > button'),
+      ).find((b) => b.textContent === 'Find mistakes')!;
+      expect(
+        document.getElementById(writingButton.getAttribute('aria-labelledby')!)!.textContent,
+      ).toBe('Find mistakes');
       expect(writingButton.textContent).toBe('Find mistakes');
       writingButton.click();
       expect(writing).toHaveBeenCalledWith(expect.objectContaining({ selected: 'brushed off' }));

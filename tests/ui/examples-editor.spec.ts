@@ -56,7 +56,7 @@ for (const width of [320, 736]) {
               focus: 'rgb(135, 157, 107)',
               ink: 'rgb(225, 225, 225)',
               dim: 'rgb(164, 164, 164)',
-              primary: 'rgb(73, 73, 73)',
+              primary: 'rgb(101, 123, 80)',
             }
           : {
               region: 'rgb(250, 250, 250)',
@@ -65,7 +65,7 @@ for (const width of [320, 736]) {
               focus: 'rgb(111, 132, 84)',
               ink: 'rgb(40, 40, 40)',
               dim: 'rgb(104, 104, 104)',
-              primary: 'rgb(69, 69, 69)',
+              primary: 'rgb(101, 123, 80)',
             };
       await expect(section).toHaveCSS('background-color', colors.region);
       await expect(section).toHaveCSS('color', colors.ink);
@@ -112,6 +112,31 @@ for (const width of [320, 736]) {
         'background-color',
         colors.primary,
       );
+      await expect(page.locator('.cc-footer')).toHaveCSS(
+        'background-color',
+        theme === 'dark' ? 'rgb(37, 37, 37)' : 'rgb(240, 239, 233)',
+      );
+      const arrow = (await section.locator('.cc-examples-chevron').boundingBox())!;
+      expect((await firstUsage.boundingBox())!.x - arrow.x).toBeCloseTo(12, 0);
+      for (const control of [
+        firstUsage.locator('.cc-example-delete').first(),
+        firstUsage.locator('.cc-delete-usage'),
+        page.locator('.cc-footer .cc-discard'),
+      ]) {
+        await section.locator('.cc-examples-total').hover();
+        await expect(control).toHaveCSS('border-top-width', '0px');
+        await expect(control).toHaveCSS('box-shadow', 'none');
+        await expect(control).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+        await control.hover();
+        const color = await control.evaluate((el) => getComputedStyle(el).color);
+        const rgb = color
+          .match(/[\d.]+/g)!
+          .slice(0, 3)
+          .map(Number);
+        expect(rgb[0]).toBeGreaterThan(rgb[1]!);
+        expect(rgb[0]).toBeGreaterThan(rgb[2]!);
+        await expect(control).toHaveCSS('box-shadow', 'none');
+      }
       await expect(
         firstUsage.getByRole('button', { name: 'Delete usage 1', exact: true }),
       ).toHaveText('Delete usage');

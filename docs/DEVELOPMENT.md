@@ -96,7 +96,9 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 ## Unreleased changes
 
 - Vocabulary Examples now uses compact usage cards with editable sentence lists. Add or delete usages and individual examples, clear all examples, and undo deletions. Examples remains the final teaching section, below Explanation & usage notes.
-- Examples and the vocabulary footer use the approved neutral gray palette in both themes, with green outlines reserved for focused fields. Individual usage cards stay expanded without Usage headers; Delete usage sits at the bottom right, opposite Add example. Passive usage cards no longer show Obsidian hover tooltips.
+- Examples uses the approved neutral gray palette in both themes, with green outlines for focused fields. Individual usage cards stay expanded without Usage headers; Delete usage sits at the bottom right, opposite Add example. Deletion controls are flat and turn red on hover or keyboard focus.
+- The vocabulary footer uses the release theme colors again, including green Add to Anki. Explanation and Examples headings sit slightly left of their contents to show nesting.
+- Obsidian hover-name popups are suppressed throughout plugin panels, settings, selection controls and the ribbon. Accessible names are retained, including for controls added asynchronously and in popout windows.
 - Vocabulary's footer stays at the panel bottom with short or long drafts, including after examples are expanded, cleared or restored. Examples opens with a native disclosure heading, like Explanation & usage notes, without a separate Show/Hide button or a jump to the top.
 - Manual example counts are independent of generation settings and survive reopening drafts. Empty Examples can be omitted from Anki; unfinished entries must be completed or removed before export. Existing drafts remain supported.
 

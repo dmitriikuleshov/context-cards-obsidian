@@ -30,6 +30,7 @@ export class ContextSettings extends PluginSettingTab {
     this.modelControl?.destroy();
     this.chatgptControl?.destroy();
     const root = this.containerEl;
+    root.addClass('cc-settings');
     root.empty();
     root.createEl('h2', { text: 'Context Cards' });
     root.createEl('p', {
