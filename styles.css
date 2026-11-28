@@ -1082,7 +1082,7 @@
   justify-content: space-between;
   gap: 6px;
   flex-wrap: wrap;
-  margin-top: 4px;
+  margin-top: 12px;
 }
 .cc-panel .cc-examples button {
   display: inline-flex;

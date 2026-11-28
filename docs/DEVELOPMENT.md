@@ -95,7 +95,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
-- Examples text uses the same interface font, size, regular weight and line spacing as the meaning fields. Sentence inputs have horizontal padding so text and the caret do not touch the focus outline.
+- Examples text uses the same interface font, size, regular weight and line spacing as the meaning fields. Sentence inputs have horizontal padding so text and the caret do not touch the focus outline, with more space above Add example and Delete usage.
 - Add example uses a flat, borderless control with a gray hover background.
 - The Open source button is removed from both mode headers. Vocabulary draft labels show the source title in parentheses after the word, with smaller, regular-weight muted text and no duplicate source row. Writing retains its source title row.
 - Examples uses the same native disclosure triangles as Explanation & usage notes, including keyboard toggling and open/closed states.
