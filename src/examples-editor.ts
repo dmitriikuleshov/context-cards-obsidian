@@ -50,9 +50,7 @@ export function renderExamplesEditor(
     return control;
   };
   const heading = summary.createSpan({ cls: 'cc-examples-heading' });
-  const title = heading.createSpan({ cls: 'cc-examples-title', text: 'Examples' });
-  const disclosureIcon = icon(title, 'chevron-right');
-  disclosureIcon.addClass('cc-examples-chevron');
+  heading.createSpan({ cls: 'cc-examples-title', text: 'Examples' });
   const total = heading.createSpan({ cls: 'cc-examples-total' });
   summary.addEventListener('click', () => {
     if (section.open) return;

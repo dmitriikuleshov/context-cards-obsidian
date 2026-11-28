@@ -1073,44 +1073,30 @@
   container-name: cc-examples;
 }
 .cc-panel .cc-examples.cc-teaching-section > summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
+  display: list-item;
   padding: 0;
   margin: 0;
-  list-style: none;
   color: var(--cc-ex-dim);
   font: inherit;
+  font-size: 13px;
+  margin-inline-start: calc(-1 * var(--cc-heading-outdent));
   cursor: pointer;
 }
 .cc-panel .cc-examples[open] > summary {
   margin-bottom: 12px;
 }
-.cc-examples > summary::-webkit-details-marker {
-  display: none;
-}
 .cc-examples-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-inline-start: calc(-1 * var(--cc-heading-outdent));
+  display: inline;
 }
 .cc-panel:not(.cc-writing-workflow) [data-cc-section='explanation'] > summary {
   margin-inline-start: calc(-1 * var(--cc-heading-outdent));
-}
-.cc-examples-chevron {
-  display: inline-flex;
-}
-.cc-examples[open] > summary .cc-examples-chevron {
-  transform: rotate(90deg);
 }
 .cc-examples-total {
   display: block;
   font-size: 12px;
   color: var(--cc-ex-dim);
   margin-top: 3px;
+  margin-inline-start: var(--cc-heading-outdent);
 }
 .cc-examples-editor {
   padding: 0;

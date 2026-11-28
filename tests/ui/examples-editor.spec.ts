@@ -116,8 +116,14 @@ for (const width of [320, 736]) {
         'background-color',
         theme === 'dark' ? 'rgb(37, 37, 37)' : 'rgb(240, 239, 233)',
       );
-      const arrow = (await section.locator('.cc-examples-chevron').boundingBox())!;
-      expect((await firstUsage.boundingBox())!.x - arrow.x).toBeCloseTo(12, 0);
+      const summary = section.locator(':scope > summary');
+      await expect(summary).toHaveCSS('display', 'list-item');
+      await expect(summary).toHaveCSS('list-style-type', 'disclosure-open');
+      await expect(section.locator('.cc-examples-chevron')).toHaveCount(0);
+      expect((await firstUsage.boundingBox())!.x - (await summary.boundingBox())!.x).toBeCloseTo(
+        12,
+        0,
+      );
       for (const control of [
         firstUsage.locator('.cc-example-delete').first(),
         firstUsage.locator('.cc-delete-usage'),

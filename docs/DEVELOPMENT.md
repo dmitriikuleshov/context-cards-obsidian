@@ -95,6 +95,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
+- Examples uses the same native disclosure triangles as Explanation & usage notes, including keyboard toggling and open/closed states.
 - Vocabulary's Add to Anki keeps its existing green color and darkens on hover when enabled.
 - The top Clear all button highlights red on hover in both modes; its normal appearance and other buttons stay unchanged.
 - Vocabulary Examples now uses compact usage cards with editable sentence lists. Add or delete usages and individual examples, and undo deletions. The Clear examples button has been removed. Examples remains the final teaching section, below Explanation & usage notes.
