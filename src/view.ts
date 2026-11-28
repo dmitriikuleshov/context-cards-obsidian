@@ -525,9 +525,7 @@ export class ReviewView extends ItemView {
     for (const button of Array.from(body.querySelectorAll('button')))
       if (button.textContent === 'Find base word') button.hidden = !f.wordFormation;
     if (disabled)
-      for (const control of Array.from(
-        body.querySelectorAll('input,textarea,button:not(.cc-examples-toggle)'),
-      ))
+      for (const control of Array.from(body.querySelectorAll('input,textarea,button')))
         (control as HTMLInputElement).disabled = true;
   }
   private renderPreview(body: HTMLElement, draft: Draft) {

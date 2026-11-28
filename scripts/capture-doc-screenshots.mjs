@@ -51,7 +51,7 @@ try {
     await page.getByLabel('Context from your book', { exact: true }).scrollIntoViewIfNeeded();
     await page.screenshot({ path: 'docs/images/context-answer.png' });
     await page.locator('[data-cc-section=explanation] > summary').click();
-    await page.getByRole('button', { name: 'Show examples', exact: true }).click();
+    await page.locator('[data-cc-section=examples] > summary .cc-examples-title').click();
     await page.locator('.cc-examples').scrollIntoViewIfNeeded();
     await page.locator('.cc-technical > summary').click();
     await page.getByLabel('Deck', { exact: true }).scrollIntoViewIfNeeded();

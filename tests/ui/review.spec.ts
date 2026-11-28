@@ -42,7 +42,7 @@ test('compact sections retain all fields and context editing actions', async ({ 
   await page.setViewportSize({ width: 340, height: 850 });
   await page.goto('/');
   await page.locator('[data-cc-section=explanation] > summary').click();
-  await page.locator('[data-cc-section=examples] .cc-examples-toggle').click();
+  await page.locator('[data-cc-section=examples] > summary .cc-examples-title').click();
   for (const name of [
     'Grammar',
     'American IPA',
@@ -173,7 +173,7 @@ test('grouped examples stay editable and appear on the card back', async ({ page
     ];
     view.render();
   });
-  await page.locator('[data-cc-section=examples] .cc-examples-toggle').click();
+  await page.locator('[data-cc-section=examples] > summary .cc-examples-title').click();
   await page.getByLabel('Meaning / usage 2', { exact: true }).fill('Remove dust or dirt');
   await page.getByLabel('Usage 2, example 1', { exact: true }).fill('She brushed off the dirt.');
   await expect(page.getByLabel('Meaning / usage 2', { exact: true })).toHaveValue(
@@ -206,7 +206,7 @@ for (const width of [320, 440]) {
       draft.examples = draft.exampleGroups.flatMap((g: any) => g.examples);
       view.render();
     }, labels);
-    await page.locator('[data-cc-section=examples] .cc-examples-toggle').click();
+    await page.locator('[data-cc-section=examples] > summary .cc-examples-title').click();
     const first = page.getByLabel('Meaning / usage 1', { exact: true });
     const second = page.getByLabel('Meaning / usage 2', { exact: true });
     const fullyShown = async () => {
@@ -306,7 +306,7 @@ test('opening teaching sections reveals their content above the footer', async (
   for (const key of ['explanation', 'examples']) {
     const summary = page.locator(`[data-cc-section=${key}] > summary`);
     if (key === 'examples')
-      await page.getByRole('button', { name: 'Show examples', exact: true }).click();
+      await page.locator('[data-cc-section=examples] > summary .cc-examples-title').click();
     else await summary.click();
     const section = page.locator(`[data-cc-section=${key}]`);
     await expect

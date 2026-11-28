@@ -1026,21 +1026,33 @@
   font-size: 12px;
   margin-bottom: 8px;
 }
-/* Examples uses the approved compact prototype palette, independent of vault themes. */
+/* Approved neutral palette; green is reserved for focused vocabulary fields. */
+.cc-panel:not(.cc-writing-workflow) {
+  --cc-ex-bg: #fafafa;
+  --cc-ex-surface: #f3f3f3;
+  --cc-ex-ink: #282828;
+  --cc-ex-dim: #686868;
+  --cc-ex-line: #dedede;
+  --cc-ex-primary: #454545;
+  --cc-ex-on-primary: #f5f5f5;
+  --cc-ex-focus: #6f8454;
+  --cc-ex-card: color-mix(in srgb, var(--cc-ex-ink) 3%, var(--cc-ex-bg));
+}
+.theme-dark .cc-panel:not(.cc-writing-workflow) {
+  --cc-ex-bg: #202020;
+  --cc-ex-surface: #282828;
+  --cc-ex-ink: #e1e1e1;
+  --cc-ex-dim: #a4a4a4;
+  --cc-ex-line: #383838;
+  --cc-ex-primary: #494949;
+  --cc-ex-focus: #879d6b;
+}
 .cc-examples {
-  --cc-ex-bg: #f8f7f3;
-  --cc-ex-surface: #eeeee7;
-  --cc-ex-ink: #2c332d;
-  --cc-ex-dim: #666e61;
-  --cc-ex-line: #d8dcd1;
-  --cc-ex-accent: #65794f;
-  --cc-ex-on-accent: #fff;
-  --cc-ex-region: #f1f4eb;
   margin: 18px 0;
-  padding: 12px;
-  border: 1px solid var(--cc-ex-line);
-  border-radius: 10px;
-  background: var(--cc-ex-region);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--cc-ex-bg);
   color: var(--cc-ex-ink);
   font:
     14px/1.55 'Segoe UI',
@@ -1048,17 +1060,7 @@
   container-type: inline-size;
   container-name: cc-examples;
 }
-.theme-dark .cc-examples {
-  --cc-ex-bg: #202020;
-  --cc-ex-surface: #292b27;
-  --cc-ex-ink: #e0e2dd;
-  --cc-ex-dim: #a7ad9e;
-  --cc-ex-line: #3c4037;
-  --cc-ex-accent: #a1b785;
-  --cc-ex-on-accent: #192211;
-  --cc-ex-region: #252a23;
-}
-.cc-panel .cc-examples > summary {
+.cc-panel .cc-examples.cc-teaching-section > summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1067,83 +1069,69 @@
   padding: 0;
   margin: 0;
   list-style: none;
-  color: var(--cc-ex-ink);
+  color: var(--cc-ex-dim);
   font: inherit;
+  cursor: pointer;
 }
 .cc-panel .cc-examples[open] > summary {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .cc-examples > summary::-webkit-details-marker {
   display: none;
 }
-.cc-panel .cc-examples button.cc-examples-toggle {
+.cc-examples-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-height: 34px;
-  padding: 3px 6px;
-  margin-left: -6px;
-  background: transparent;
-  border-color: var(--cc-ex-line);
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--cc-ex-ink);
+  gap: 6px;
 }
-.cc-examples-toggle-caption {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--cc-ex-dim);
+.cc-examples-chevron {
+  display: inline-flex;
 }
-.cc-panel .cc-examples > summary {
-  cursor: default;
-}
-.cc-panel .cc-examples button.cc-examples-toggle:focus-visible {
-  outline: 2px solid var(--cc-ex-accent);
-  outline-offset: 2px;
+.cc-examples[open] > summary .cc-examples-chevron {
+  transform: rotate(90deg);
 }
 .cc-examples-total {
   display: block;
   font-size: 12px;
   color: var(--cc-ex-dim);
-  margin-top: 2px;
+  margin-top: 3px;
 }
 .cc-examples-editor {
   padding: 0;
 }
 .cc-examples .cc-example-group {
-  padding: 8px 10px;
-  margin: 0 0 8px;
+  padding: 9px 10px 7px;
+  margin: 0 0 9px;
   border: 1px solid var(--cc-ex-line);
   border-radius: 10px;
-  background: var(--cc-ex-bg);
+  background: var(--cc-ex-card);
   min-width: 0;
 }
 .cc-example-group-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 .cc-panel .cc-examples button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 34px;
+  min-height: 32px;
   height: auto;
-  padding: 6px 10px;
+  padding: 5px 9px;
   border: 1px solid var(--cc-ex-line);
-  border-radius: 8px;
-  background: var(--cc-ex-surface);
+  border-radius: 7px;
+  background: transparent;
   color: var(--cc-ex-ink);
   font: inherit;
   box-shadow: none;
 }
 .cc-panel .cc-examples button:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--cc-ex-accent) 12%, var(--cc-ex-bg));
+  background: var(--cc-ex-card);
 }
 .cc-examples button > span:has(svg) {
   display: inline-flex;
@@ -1168,13 +1156,10 @@
   margin: 0;
 }
 .cc-examples .cc-example + .cc-example {
-  border-top: 1px solid color-mix(in srgb, var(--cc-ex-line) 60%, transparent);
-}
-.cc-examples .cc-example:focus-within {
-  background: color-mix(in srgb, var(--cc-ex-accent) 6%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--cc-ex-line) 70%, transparent);
 }
 .cc-example-number {
-  padding-top: 6px;
+  padding-top: 7px;
   color: var(--cc-ex-dim);
   font-size: 12px;
 }
@@ -1193,11 +1178,11 @@
   margin: 0;
 }
 .cc-panel .cc-examples .cc-example textarea {
-  min-height: 32px;
+  min-height: 34px;
   border: 0;
   border-radius: 0;
   background: transparent;
-  padding: 5px 0;
+  padding: 6px 0;
   resize: none;
 }
 .cc-panel .cc-examples button.cc-example-quiet,
@@ -1209,18 +1194,18 @@
 .cc-panel .cc-examples button.cc-example-quiet:hover:not(:disabled),
 .cc-panel .cc-examples button.cc-example-delete:hover:not(:disabled) {
   color: var(--cc-ex-ink);
-  background: var(--cc-ex-surface);
+  background: var(--cc-ex-card);
 }
 .cc-panel .cc-examples button.cc-example-delete {
   min-width: 28px;
   min-height: 28px;
   padding: 4px;
-  margin-top: 2px;
+  margin-top: 3px;
   align-self: start;
 }
 .cc-panel .cc-examples button.cc-delete-usage {
   min-height: 28px;
-  padding: 3px 6px;
+  padding: 3px 5px;
   font-size: 12px;
   flex-shrink: 0;
   margin-left: auto;
@@ -1228,16 +1213,14 @@
 }
 .cc-panel .cc-examples button.cc-add-example {
   min-height: 28px;
-  margin: 0 0 0 20px;
-  padding: 2px 5px;
+  margin: 0;
+  padding: 3px 5px;
   font-size: 12px;
 }
 .cc-panel .cc-examples button.cc-add-usage {
   width: 100%;
-  margin-top: 10px;
-  background: var(--cc-ex-accent);
-  border-color: var(--cc-ex-accent);
-  color: var(--cc-ex-on-accent);
+  min-height: 34px;
+  margin-top: 3px;
 }
 .cc-examples-undo {
   display: flex;
@@ -1246,22 +1229,16 @@
   flex-wrap: wrap;
   color: var(--cc-ex-dim);
   font-size: 12px;
-  margin-top: 12px;
-}
-.cc-panel .cc-examples button.cc-add-usage:hover:not(:disabled) {
-  background: var(--cc-ex-accent);
+  margin-top: 8px;
 }
 .cc-examples-empty {
-  padding: 22px 0;
+  padding: 18px 0;
   margin: 0;
   color: var(--cc-ex-dim);
 }
-@container cc-examples (max-width: 374px) {
+@container cc-examples (max-width: 414px) {
   .cc-panel .cc-examples textarea {
     font-size: 16px;
-  }
-  .cc-panel .cc-examples button.cc-add-example {
-    margin-left: 0;
   }
   .cc-panel .cc-examples button.cc-add-example,
   .cc-panel .cc-examples button.cc-delete-usage {
@@ -1282,6 +1259,29 @@
   .cc-panel .cc-examples button.cc-example-delete {
     min-width: 44px;
   }
+}
+.cc-panel:not(.cc-writing-workflow) > .cc-footer {
+  background: var(--cc-ex-bg);
+  border-color: var(--cc-ex-line);
+}
+.cc-panel:not(.cc-writing-workflow) > .cc-footer input {
+  background: var(--cc-ex-surface);
+  border-color: var(--cc-ex-line);
+  color: var(--cc-ex-ink);
+}
+.cc-panel:not(.cc-writing-workflow) > .cc-footer .cc-footer-actions button {
+  background: transparent;
+  border-color: var(--cc-ex-line);
+  color: var(--cc-ex-ink);
+}
+.cc-panel:not(.cc-writing-workflow) > .cc-footer .cc-footer-actions .mod-cta {
+  background: var(--cc-ex-primary);
+  border-color: var(--cc-ex-primary);
+  color: var(--cc-ex-on-primary);
+}
+.cc-panel:not(.cc-writing-workflow) > .cc-footer .cc-footer-actions .cc-discard {
+  border-color: transparent;
+  color: var(--cc-ex-dim);
 }
 .cc-technical {
   margin: 22px 0 10px;
@@ -1335,13 +1335,21 @@
 
 .cc-panel .cc-examples textarea.cc-usage-meaning {
   font-weight: 500;
-  padding: 6px 8px;
+  padding: 7px 9px;
   margin-bottom: 6px;
   border: 1px solid var(--cc-ex-line);
-  border-radius: 8px;
+  border-radius: 7px;
   background: var(--cc-ex-surface);
   min-height: 36px;
   resize: vertical;
+}
+
+.cc-panel:not(.cc-writing-workflow) input:focus,
+.cc-panel:not(.cc-writing-workflow) textarea:focus {
+  border-color: var(--cc-ex-focus);
+  outline: 1px solid var(--cc-ex-focus);
+  outline-offset: -1px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cc-ex-focus) 16%, transparent);
 }
 
 .cc-panel [hidden] {

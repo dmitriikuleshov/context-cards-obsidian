@@ -45,53 +45,72 @@ for (const width of [320, 736]) {
         view.render();
       }, theme);
       const section = page.locator('[data-cc-section=examples]');
-      await section.locator('.cc-examples-toggle').click();
+      await section.locator(':scope > summary .cc-examples-title').click();
       // The approved prototype's exact palette and compact geometry are the UI contract.
       const colors =
         theme === 'dark'
           ? {
-              region: 'rgb(37, 42, 35)',
-              card: 'rgb(32, 32, 32)',
-              surface: 'rgb(41, 43, 39)',
-              line: 'rgb(60, 64, 55)',
-              accent: 'rgb(161, 183, 133)',
-              ink: 'rgb(224, 226, 221)',
-              onAccent: 'rgb(25, 34, 17)',
+              region: 'rgb(32, 32, 32)',
+              surface: 'rgb(40, 40, 40)',
+              line: 'rgb(56, 56, 56)',
+              focus: 'rgb(135, 157, 107)',
+              ink: 'rgb(225, 225, 225)',
+              dim: 'rgb(164, 164, 164)',
+              primary: 'rgb(73, 73, 73)',
             }
           : {
-              region: 'rgb(241, 244, 235)',
-              card: 'rgb(248, 247, 243)',
-              surface: 'rgb(238, 238, 231)',
-              line: 'rgb(216, 220, 209)',
-              accent: 'rgb(101, 121, 79)',
-              ink: 'rgb(44, 51, 45)',
-              onAccent: 'rgb(255, 255, 255)',
+              region: 'rgb(250, 250, 250)',
+              surface: 'rgb(243, 243, 243)',
+              line: 'rgb(222, 222, 222)',
+              focus: 'rgb(111, 132, 84)',
+              ink: 'rgb(40, 40, 40)',
+              dim: 'rgb(104, 104, 104)',
+              primary: 'rgb(69, 69, 69)',
             };
       await expect(section).toHaveCSS('background-color', colors.region);
       await expect(section).toHaveCSS('color', colors.ink);
-      await expect(section.locator('.cc-examples-toggle')).toHaveCSS('color', colors.ink);
-      await expect(section).toHaveCSS('border-color', colors.line);
-      await expect(section).toHaveCSS('padding', '12px');
-      await expect(section).toHaveCSS('border-radius', '10px');
+      await expect(section.locator(':scope > summary')).toHaveCSS('color', colors.dim);
+      await expect(section.locator('.cc-examples-toggle')).toHaveCount(0);
+      await expect(section).toHaveCSS('border-top-width', '0px');
+      await expect(section).toHaveCSS('padding', '0px');
+      await expect(section).toHaveCSS('border-radius', '0px');
       const firstUsage = section.locator('.cc-example-group').first();
-      await expect(firstUsage).toHaveCSS('background-color', colors.card);
-      await expect(firstUsage).toHaveCSS('padding', '8px 10px');
+      const cardColor = await firstUsage.evaluate((el) => getComputedStyle(el).backgroundColor);
+      const channels = cardColor
+        .match(/[\d.]+/g)!
+        .slice(0, 3)
+        .map(Number);
+      expect(channels[0]).toBe(channels[1]);
+      expect(channels[1]).toBe(channels[2]);
+      await expect(firstUsage).toHaveCSS('border-color', colors.line);
+      await expect(firstUsage).toHaveCSS('padding', '9px 10px 7px');
+      await expect(firstUsage).not.toHaveAttribute('aria-label');
+      await expect(firstUsage).toHaveAccessibleName('Usage 1');
       await expect(firstUsage.locator('.cc-usage-meaning')).toHaveCSS(
         'background-color',
         colors.surface,
       );
       await expect(section.getByRole('button', { name: 'Add usage', exact: true })).toHaveCSS(
         'background-color',
-        colors.accent,
+        'rgba(0, 0, 0, 0)',
       );
       await expect(section.getByRole('button', { name: 'Add usage', exact: true })).toHaveCSS(
         'color',
-        colors.onAccent,
+        colors.ink,
       );
-      await section.getByRole('button', { name: 'Add usage', exact: true }).hover();
-      await expect(section.getByRole('button', { name: 'Add usage', exact: true })).toHaveCSS(
+      const meaningField = firstUsage.locator('.cc-usage-meaning');
+      await meaningField.focus();
+      await expect(meaningField).toHaveCSS('outline-color', colors.focus);
+      await expect(meaningField).toHaveCSS('border-color', colors.focus);
+      expect(await meaningField.evaluate((el) => getComputedStyle(el).boxShadow)).not.toBe('none');
+      await page.screenshot({
+        path: `.test-artifacts/neutral-examples-focus-${width}-${theme}.png`,
+      });
+      await section.locator(':scope > summary').focus();
+      await expect(meaningField).toHaveCSS('border-color', colors.line);
+      await expect(page.locator('.cc-footer-actions .mod-cta')).toHaveCSS(
         'background-color',
-        colors.accent,
+        colors.primary,
       );
       await expect(
         firstUsage.getByRole('button', { name: 'Delete usage 1', exact: true }),
@@ -108,7 +127,7 @@ for (const width of [320, 736]) {
         section.locator('.cc-usage-toggle,.cc-example-group-header,.cc-example-folded'),
       ).toHaveCount(0);
       const meaningBox = (await firstUsage.locator('.cc-usage-meaning').boundingBox())!;
-      expect(meaningBox.y - (await firstUsage.boundingBox())!.y).toBeCloseTo(9, 0);
+      expect(meaningBox.y - (await firstUsage.boundingBox())!.y).toBeCloseTo(10, 0);
       const actions = firstUsage.locator('.cc-example-group-actions');
       const add = (await actions
         .getByRole('button', { name: 'Add example', exact: true })
@@ -191,9 +210,10 @@ for (const width of [320, 736]) {
         draft.phase = 'sending';
         view.render();
       });
-      for (const control of await section.locator('button:not(.cc-examples-toggle),textarea').all())
+      for (const control of await section.locator('button,textarea').all())
         await expect(control).toBeDisabled();
-      await expect(section.locator('.cc-examples-toggle')).toBeEnabled();
+      await section.locator(':scope > summary .cc-examples-title').click();
+      await expect(section).not.toHaveAttribute('open');
     });
   }
 }
@@ -203,7 +223,7 @@ test('example drafts survive switching between drafts and newly generated conten
 }) => {
   await page.goto('/');
   const section = page.locator('[data-cc-section=examples]');
-  await section.locator('.cc-examples-toggle').click();
+  await section.locator(':scope > summary .cc-examples-title').click();
   await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
   await page.evaluate(() => {
     const { draft, host, view } = (window as any).contextCardsPreview;

@@ -41,7 +41,7 @@ for (const { width, height } of [
       };
       await atBottom();
       const section = page.locator('[data-cc-section=examples]');
-      await section.locator('.cc-examples-toggle').click();
+      await section.locator(':scope > summary .cc-examples-title').click();
       await atBottom();
       await page.evaluate((host) => {
         const panel = (window as any).contextCardsPreview.view.contentEl;
@@ -55,7 +55,7 @@ for (const { width, height } of [
       await atBottom();
       await section.getByRole('button', { name: 'Undo', exact: true }).click();
       await atBottom();
-      await section.locator('.cc-examples-toggle').click();
+      await section.locator(':scope > summary .cc-examples-title').click();
       await atBottom();
       await page.screenshot({
         path: `.test-artifacts/examples-footer-${width}-${height}-${obsidianHost}.png`,
@@ -82,7 +82,7 @@ test('the full editor scrolls inside the vocabulary panel without leaving a gap 
     view.render();
   });
   const section = page.locator('[data-cc-section=examples]');
-  await section.getByRole('button', { name: 'Show examples', exact: true }).click();
+  await section.locator(':scope > summary .cc-examples-title').click();
   await section.evaluate((el) => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
   const pinned = async () => {
     const box = (await page.locator('.cc-footer').boundingBox())!;
@@ -92,11 +92,11 @@ test('the full editor scrolls inside the vocabulary panel without leaving a gap 
   await pinned();
   await section.getByRole('button', { name: 'Add usage', exact: true }).click();
   await pinned();
-  await section.getByRole('button', { name: 'Hide examples', exact: true }).click();
+  await section.locator(':scope > summary .cc-examples-title').click();
   await pinned();
 });
 
-test('Examples has a keyboard-accessible Show/Hide button; counters do not toggle it or jump the panel', async ({
+test('Examples uses a native disclosure heading without a separate button or a panel jump', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 700, height: 1200 });
@@ -116,24 +116,20 @@ test('Examples has a keyboard-accessible Show/Hide button; counters do not toggl
   });
   const section = page.locator('[data-cc-section=examples]');
   const position = (await section.boundingBox())!.y;
-  await section.locator('.cc-examples-total').click();
+  await expect(section.locator('button.cc-examples-toggle')).toHaveCount(0);
   await expect(section).not.toHaveAttribute('open');
-  const show = section.getByRole('button', { name: 'Show examples', exact: true });
+  const show = section.locator(':scope > summary');
   await show.focus();
   await show.press('Enter');
   await expect(section).toHaveAttribute('open', '');
-  await expect(section.getByRole('button', { name: 'Hide examples', exact: true })).toHaveAttribute(
-    'aria-expanded',
-    'true',
-  );
   expect((await section.boundingBox())!.y).toBeCloseTo(position, 0);
+  await section.locator(':scope > summary').press('Space');
+  await expect(section).not.toHaveAttribute('open');
   await section.locator('.cc-examples-total').click();
   await expect(section).toHaveAttribute('open', '');
-  await section.getByRole('button', { name: 'Hide examples', exact: true }).press('Space');
-  await expect(show).toHaveAttribute('aria-expanded', 'false');
-  await expect(section).not.toHaveAttribute('open');
+  await show.press('Space');
   await section.getByRole('button', { name: 'Clear examples', exact: true }).click();
   await expect(section).toHaveAttribute('open', '');
   await expect(section.getByRole('button', { name: 'Undo', exact: true })).toBeVisible();
-  await expect(section.getByRole('button', { name: 'Hide examples', exact: true })).toBeVisible();
+  await expect(section.locator(':scope > summary')).toBeVisible();
 });

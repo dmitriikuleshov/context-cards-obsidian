@@ -178,16 +178,17 @@ describe('manual usage lists', () => {
       draft.phase = phase;
       view.render();
       const controls = view.contentEl.querySelectorAll<HTMLInputElement>(
-        '.cc-examples button:not(.cc-examples-toggle),.cc-examples textarea',
+        '.cc-examples button,.cc-examples textarea',
       );
       expect([...controls].every((control) => control.disabled)).toBe(true);
       click('Clear examples');
       expect(draft.examples).toEqual(['A new generated example.']);
-      const disclosure = view.contentEl.querySelector<HTMLButtonElement>('.cc-examples-toggle')!;
-      expect(disclosure.disabled).toBe(false);
-      const before = disclosure.getAttribute('aria-expanded');
-      disclosure.click();
-      expect(disclosure.getAttribute('aria-expanded')).not.toBe(before);
+      const examples = view.contentEl.querySelector<HTMLDetailsElement>(
+        '[data-cc-section=examples]',
+      )!;
+      const before = examples.open;
+      examples.querySelector('summary')!.click();
+      expect(examples.open).not.toBe(before);
     }
   });
 });
