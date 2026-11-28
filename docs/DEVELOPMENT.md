@@ -95,7 +95,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
-- Add example and Open source use flat, borderless controls with a gray hover background; other buttons are unchanged.
+- Add example uses a flat, borderless control with a gray hover background. Open source has a persistent background, visible border and normal text contrast, like Clear all, while retaining a gray hover and no shadow.
 - Examples uses the same native disclosure triangles as Explanation & usage notes, including keyboard toggling and open/closed states.
 - Vocabulary's Add to Anki keeps its existing green color and darkens on hover when enabled.
 - The top Clear all button highlights red on hover in both modes; its normal appearance and other buttons stay unchanged.

@@ -890,11 +890,11 @@
   flex-shrink: 0;
   height: auto;
   padding: 5px 8px;
-  border: 0;
+  border: 1px solid var(--background-modifier-border);
   border-radius: 7px;
   box-shadow: none;
-  background: transparent;
-  color: var(--text-muted);
+  background: var(--interactive-normal, var(--background-secondary));
+  color: var(--text-normal);
   font-size: 12px;
   line-height: 1.4;
   white-space: nowrap;
