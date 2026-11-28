@@ -12,7 +12,8 @@ for (const width of [390, 1000]) {
       ).toBeVisible();
       await expect(page.locator('.cc-draft-switcher > .cc-select-button')).toHaveCount(1);
       await expect(page.locator('.cc-clear-drafts')).toHaveText('Clear all');
-      await expect(page.getByRole('button', { name: 'Open source', exact: true })).toHaveCount(1);
+      await expect(page.getByRole('button', { name: 'Open source', exact: true })).toHaveCount(0);
+      await expect(page.locator('.cc-source-heading > span')).not.toBeEmpty();
       snapshots.push(
         await page.locator('.cc-panel').evaluate((root) => {
           const geometry = (selector: string) => {
@@ -39,7 +40,6 @@ for (const width of [390, 1000]) {
             picker: geometry('.cc-draft-switcher > .cc-select-button'),
             clear: geometry('.cc-clear-drafts'),
             source: geometry('.cc-source-heading'),
-            open: geometry('.cc-source-heading > button'),
           };
         }),
       );
@@ -68,7 +68,6 @@ test('writing header actions work in both corrections and card preview', async (
     const p = (window as any).writingPreview;
     p.controls.settingsOpened = 0;
     p.host.openSettings = () => p.controls.settingsOpened++;
-    p.host.app.workspace.openLinkText = (...args: unknown[]) => (p.controls.sourceRequest = args);
     p.view.render();
   });
   await page.getByRole('button', { name: 'Open Context Cards settings', exact: true }).click();
@@ -80,10 +79,8 @@ test('writing header actions work in both corrections and card preview', async (
         page.getByRole('heading', { name: 'Review your cards', exact: true }),
       ).toBeVisible();
     }
-    await page.getByRole('button', { name: 'Open source', exact: true }).click();
-    expect(
-      await page.evaluate(() => (window as any).writingPreview.controls.sourceRequest),
-    ).toEqual(['My story.md', '', true]);
+    await expect(page.getByRole('button', { name: 'Open source', exact: true })).toHaveCount(0);
+    await expect(page.locator('.cc-source-heading')).toHaveText('My story');
     await expect(page.locator('.cc-panel-header .cc-brand')).toHaveText('Context Cards');
     await expect(page.getByLabel('Writing review', { exact: true })).toBeVisible();
   }

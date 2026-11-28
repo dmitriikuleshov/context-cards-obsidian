@@ -218,11 +218,7 @@ export class WritingView extends ItemView {
     clear.title =
       'Clear writing drafts and cancel analysis/preparation. Existing Anki cards and saved reviews are kept.';
     clear.disabled = sessions.some((s) => s.phase === 'exporting' || s.phase === 'saving');
-    renderSourceHeading(
-      root,
-      s.capture.book,
-      () => void this.host.app.workspace.openLinkText(s.capture.file, '', true),
-    );
+    renderSourceHeading(root, s.capture.book);
     const body = root.createDiv({ cls: 'cc-panel-body' }),
       busy = s.phase !== 'idle';
     if (busy) {

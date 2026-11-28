@@ -9,7 +9,7 @@ for (const mode of ['vocabulary', 'writing']) {
     await expect(panel.locator('[aria-label]')).toHaveCount(0);
     const settings = page.getByRole('button', { name: 'Open Context Cards settings', exact: true });
     await expect(settings).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Open source', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Open source', exact: true })).toHaveCount(0);
     if (mode === 'vocabulary')
       await expect(page.getByRole('group', { name: 'Draft view', exact: true })).toBeVisible();
     await page.evaluate(() => {

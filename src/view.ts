@@ -189,7 +189,7 @@ export class ReviewView extends ItemView {
     clear.title = clear.disabled
       ? 'Wait for the Anki export to finish before clearing drafts.'
       : 'Remove all drafts from this panel and cancel pending generations. Anki notes are kept.';
-    renderSourceHeading(root, draft.capture.book, () => this.plugin.openSource(draft));
+    renderSourceHeading(root, draft.capture.book);
     const tabs = root.createDiv({
       cls: 'cc-tabs',
       attr: { role: 'group', 'aria-label': 'Draft view' },

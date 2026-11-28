@@ -65,7 +65,7 @@ The recall exercise uses the **original source form**. If the book says “brush
 ## Built around your reading
 
 - **Read in either mode.** Capture selections from Reading Mode or Live Preview.
-- **One familiar panel layout.** Both modes share the Context Cards header, a draft selector, **Clear all** and **Open source**.
+- **One familiar panel layout.** Both modes share the Context Cards header, a draft selector, **Clear all** and the source title.
 - **Keep the source close.** Review the surrounding passage and jump back to the book.
 - **Organise by book.** Use a separate subdeck for each Markdown file, or choose your own destination.
 - **Check before exporting.** Preview both exercises and edit the draft before it reaches Anki.

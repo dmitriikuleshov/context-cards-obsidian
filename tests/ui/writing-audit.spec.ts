@@ -270,7 +270,7 @@ for (const size of [
       if (!result.ok) await page.screenshot({ path: '.test-artifacts/ui-obstruction.png' });
       expect(result.ok, JSON.stringify(result)).toBe(true);
     };
-    await reachable(page.getByRole('button', { name: 'Open source', exact: true }));
+    await expect(page.getByRole('button', { name: 'Open source', exact: true })).toHaveCount(0);
     await reachable(page.getByRole('button', { name: 'Edit', exact: true }));
     await reachable(page.locator('[data-writing-card-toggle]'));
     await page.getByRole('button', { name: 'Edit', exact: true }).click();
