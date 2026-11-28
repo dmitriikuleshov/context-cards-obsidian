@@ -1035,9 +1035,7 @@
   border-radius: 0;
   background: var(--cc-ex-bg);
   color: var(--cc-ex-ink);
-  font:
-    14px/1.55 'Segoe UI',
-    sans-serif;
+  font: 14px/1.6 var(--font-interface);
   container-type: inline-size;
   container-name: cc-examples;
 }
@@ -1216,9 +1214,6 @@
   color: var(--cc-ex-dim);
 }
 @container cc-examples (max-width: 414px) {
-  .cc-panel .cc-examples textarea {
-    font-size: 16px;
-  }
   .cc-panel .cc-examples button.cc-add-example,
   .cc-panel .cc-examples button.cc-delete-usage {
     padding-inline: 2px;
@@ -1309,7 +1304,7 @@
 }
 
 .cc-panel .cc-examples textarea.cc-usage-meaning {
-  font-weight: 500;
+  font-weight: 400;
   padding: 7px 9px;
   margin-bottom: 6px;
   border: 1px solid var(--cc-ex-line);
