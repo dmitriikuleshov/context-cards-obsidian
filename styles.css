@@ -883,13 +883,14 @@
   font-size: 12px;
 }
 .cc-panel button.cc-source-button {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 5px;
   flex-shrink: 0;
   height: auto;
   padding: 5px 8px;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 7px;
   box-shadow: none;
   background: transparent;
@@ -898,8 +899,9 @@
   line-height: 1.4;
   white-space: nowrap;
 }
-.cc-panel button.cc-source-button:hover {
-  background: var(--background-modifier-hover);
+.cc-panel button.cc-source-button:hover:not(:disabled) {
+  background: color-mix(in srgb, #808080 16%, var(--background-primary));
+  box-shadow: none;
   color: var(--text-normal);
 }
 .cc-panel button.cc-source-button:focus-visible {
@@ -1214,10 +1216,18 @@
   white-space: nowrap;
 }
 .cc-panel .cc-examples button.cc-add-example {
+  appearance: none;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
   min-height: 28px;
   margin: 0;
   padding: 3px 5px;
   font-size: 12px;
+}
+.cc-panel .cc-examples button.cc-add-example:hover:not(:disabled) {
+  background: color-mix(in srgb, #808080 16%, var(--cc-ex-bg));
+  box-shadow: none;
 }
 .cc-panel .cc-examples button.cc-add-usage {
   width: 100%;
