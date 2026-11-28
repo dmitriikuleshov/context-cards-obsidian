@@ -61,7 +61,11 @@
   width: 0;
   font-weight: 600;
 }
-.cc-clear-drafts {
+.cc-panel button.cc-clear-drafts {
+  appearance: none;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
   flex-shrink: 0;
   font-size: 11px;
   padding: 6px 8px;
