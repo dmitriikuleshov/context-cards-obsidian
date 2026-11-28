@@ -526,9 +526,7 @@ export class ReviewView extends ItemView {
       if (button.textContent === 'Find base word') button.hidden = !f.wordFormation;
     if (disabled)
       for (const control of Array.from(
-        body.querySelectorAll(
-          'input,textarea,button:not(.cc-usage-toggle):not(.cc-examples-toggle)',
-        ),
+        body.querySelectorAll('input,textarea,button:not(.cc-examples-toggle)'),
       ))
         (control as HTMLInputElement).disabled = true;
   }

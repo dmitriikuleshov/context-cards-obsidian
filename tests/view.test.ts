@@ -152,15 +152,16 @@ describe('manual usage lists', () => {
     view.render();
     expect(view.contentEl.querySelectorAll('.cc-example-group')).toHaveLength(2);
   });
-  it('remembers collapsed usages and hides mutation controls when examples are disabled', () => {
-    const { view, click, plugin } = setup();
-    click('Usage 1');
+  it('keeps usage content expanded after redraw and hides the whole section when disabled', () => {
+    const { view, plugin } = setup();
+    expect(view.contentEl.querySelector('.cc-usage-toggle')).toBeNull();
+    expect(view.contentEl.querySelector('.cc-example-group-header')).toBeNull();
     expect(view.contentEl.querySelector('.cc-example-group-body')!.hasAttribute('hidden')).toBe(
-      true,
+      false,
     );
     view.render();
     expect(view.contentEl.querySelector('.cc-example-group-body')!.hasAttribute('hidden')).toBe(
-      true,
+      false,
     );
     plugin.settings.fields.examples = false;
     view.render();
@@ -177,12 +178,12 @@ describe('manual usage lists', () => {
       draft.phase = phase;
       view.render();
       const controls = view.contentEl.querySelectorAll<HTMLInputElement>(
-        '.cc-examples button:not(.cc-usage-toggle):not(.cc-examples-toggle),.cc-examples textarea',
+        '.cc-examples button:not(.cc-examples-toggle),.cc-examples textarea',
       );
       expect([...controls].every((control) => control.disabled)).toBe(true);
       click('Clear examples');
       expect(draft.examples).toEqual(['A new generated example.']);
-      const disclosure = view.contentEl.querySelector<HTMLButtonElement>('.cc-usage-toggle')!;
+      const disclosure = view.contentEl.querySelector<HTMLButtonElement>('.cc-examples-toggle')!;
       expect(disclosure.disabled).toBe(false);
       const before = disclosure.getAttribute('aria-expanded');
       disclosure.click();

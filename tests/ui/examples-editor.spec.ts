@@ -80,10 +80,6 @@ for (const width of [320, 736]) {
         'background-color',
         colors.surface,
       );
-      await expect(firstUsage.getByRole('button', { name: 'Usage 1', exact: true })).toHaveCSS(
-        'color',
-        colors.accent,
-      );
       await expect(section.getByRole('button', { name: 'Add usage', exact: true })).toHaveCSS(
         'background-color',
         colors.accent,
@@ -108,10 +104,22 @@ for (const width of [320, 736]) {
       await expect(section.locator('summary .cc-examples-total')).toHaveText(
         '3 usages · 6 examples',
       );
-      await expect(section.getByRole('button', { name: 'Usage 1', exact: true })).toHaveAttribute(
-        'aria-expanded',
-        'true',
-      );
+      await expect(
+        section.locator('.cc-usage-toggle,.cc-example-group-header,.cc-example-folded'),
+      ).toHaveCount(0);
+      const meaningBox = (await firstUsage.locator('.cc-usage-meaning').boundingBox())!;
+      expect(meaningBox.y - (await firstUsage.boundingBox())!.y).toBeCloseTo(9, 0);
+      const actions = firstUsage.locator('.cc-example-group-actions');
+      const add = (await actions
+        .getByRole('button', { name: 'Add example', exact: true })
+        .boundingBox())!;
+      const remove = (await actions
+        .getByRole('button', { name: 'Delete usage 1', exact: true })
+        .boundingBox())!;
+      expect(remove.y).toBeCloseTo(add.y, 0);
+      expect(remove.x).toBeGreaterThan(add.x + add.width);
+      const list = (await firstUsage.locator('.cc-example-list').boundingBox())!;
+      expect(remove.y).toBeGreaterThanOrEqual(list.y + list.height);
       for (const textarea of await section.locator('textarea').all()) {
         expect(
           await textarea.evaluate(
@@ -122,15 +130,9 @@ for (const width of [320, 736]) {
       expect(
         await page.locator('.cc-teaching-section').last().getAttribute('data-cc-section'),
       ).toBe('examples');
-      await section.getByRole('button', { name: 'Usage 3', exact: true }).click();
       await page.evaluate(() => (window as any).contextCardsPreview.view.render());
-      await expect(section.getByRole('button', { name: 'Usage 3', exact: true })).toHaveAttribute(
-        'aria-expanded',
-        'false',
-      );
-      await expect(section.locator('.cc-example-folded').nth(2)).toHaveText(
-        'The ability or capacity to do something · 2 examples',
-      );
+      await expect(section.getByLabel('Meaning / usage 3', { exact: true })).toBeVisible();
+      await expect(section.getByLabel('Usage 3, example 2', { exact: true })).toBeVisible();
       await section.evaluate((el) => el.scrollIntoView({ block: 'start', behavior: 'instant' }));
       expect(await page.evaluate(() => window.scrollY)).toBe(0);
       const pinnedFooter = (await page.locator('.cc-footer').boundingBox())!;
@@ -189,11 +191,9 @@ for (const width of [320, 736]) {
         draft.phase = 'sending';
         view.render();
       });
-      for (const control of await section
-        .locator('button:not(.cc-usage-toggle):not(.cc-examples-toggle),textarea')
-        .all())
+      for (const control of await section.locator('button:not(.cc-examples-toggle),textarea').all())
         await expect(control).toBeDisabled();
-      await expect(section.getByRole('button', { name: 'Usage 4', exact: true })).toBeEnabled();
+      await expect(section.locator('.cc-examples-toggle')).toBeEnabled();
     });
   }
 }

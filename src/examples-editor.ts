@@ -12,7 +12,6 @@ export class ExamplesEditorState {
   sourceGroups?: Content['exampleGroups'];
   groups: Usage[] = [];
   legacy = false;
-  collapsed = new WeakSet<Usage>();
   undo: Deletion[] = [];
 }
 
@@ -29,7 +28,6 @@ export function renderExamplesEditor(
       (draft.examples.length ? [{ meaning: '', examples: draft.examples }] : []);
     state.legacy = draft.exampleGroups === undefined && draft.examples.length > 0;
     state.undo = [];
-    state.collapsed = new WeakSet();
     state.examples = draft.examples;
     state.sourceGroups = draft.exampleGroups;
   }
@@ -74,7 +72,7 @@ export function renderExamplesEditor(
       section.ownerDocument.defaultView?.requestAnimationFrame(() => {
         if (!section.isConnected || !section.open) return;
         const first = body.querySelector<HTMLElement>(
-          '.cc-example-group-header, .cc-examples-empty',
+          '.cc-usage-meaning, .cc-example, .cc-examples-empty',
         );
         const footer = section.closest('.cc-panel')?.querySelector('.cc-footer');
         if (
@@ -204,46 +202,9 @@ export function renderExamplesEditor(
     }
     state.groups.forEach((group, gi) => {
       const card = body.createDiv({ cls: 'cc-example-group' });
-      const header = card.createDiv({ cls: 'cc-example-group-header' });
-      const heading = button(
-        header,
-        `Usage ${gi + 1}`,
-        () => {
-          content.hidden = !content.hidden;
-          folded.hidden = !content.hidden;
-          folded.textContent = `${group.meaning || 'New usage'} · ${group.examples.length} examples`;
-          setIcon(chevron, content.hidden ? 'chevron-right' : 'chevron-down');
-          if (content.hidden) state.collapsed.add(group);
-          else state.collapsed.delete(group);
-          heading.setAttribute('aria-expanded', String(!content.hidden));
-        },
-        'cc-usage-toggle',
-        true,
-      );
-      heading.setAttribute('aria-label', `Usage ${gi + 1}`);
-      const chevron = icon(heading, state.collapsed.has(group) ? 'chevron-right' : 'chevron-down');
-      removeButton(
-        header,
-        `Delete usage ${gi + 1}`,
-        () => {
-          promote();
-          deleteWithUndo(
-            { label: 'Usage deleted.', kind: 'usages', index: gi, groups: [group] },
-            () => state.groups.splice(gi, 1),
-          );
-        },
-        true,
-      );
-      const folded = card.createDiv({
-        cls: 'cc-example-folded',
-        text: `${group.meaning || 'New usage'} · ${group.examples.length} examples`,
-      });
-      folded.hidden = !state.collapsed.has(group);
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-label', `Usage ${gi + 1}`);
       const content = card.createDiv({ cls: 'cc-example-group-body' });
-      content.id = `cc-${crypto.randomUUID()}`;
-      content.hidden = state.collapsed.has(group);
-      heading.setAttribute('aria-expanded', String(!content.hidden));
-      heading.setAttribute('aria-controls', content.id);
       if (!state.legacy) {
         const meaning = field(content, `Meaning / usage ${gi + 1}`, group.meaning, (v) => {
           group.meaning = v;
@@ -274,8 +235,9 @@ export function renderExamplesEditor(
           );
         });
       });
+      const actions = content.createDiv({ cls: 'cc-example-group-actions' });
       const addExample = button(
-        content,
+        actions,
         'Add example',
         () => {
           group.examples.push('');
@@ -288,6 +250,18 @@ export function renderExamplesEditor(
         'cc-example-quiet cc-add-example',
       );
       icon(addExample, 'plus');
+      removeButton(
+        actions,
+        `Delete usage ${gi + 1}`,
+        () => {
+          promote();
+          deleteWithUndo(
+            { label: 'Usage deleted.', kind: 'usages', index: gi, groups: [group] },
+            () => state.groups.splice(gi, 1),
+          );
+        },
+        true,
+      );
     });
     const addUsage = button(
       body,
