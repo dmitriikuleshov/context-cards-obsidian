@@ -95,6 +95,7 @@ Consolidate related entries, revise them as behavior changes, and remove entries
 
 ## Unreleased changes
 
+- The top Clear all button highlights red on hover in both modes; its normal appearance and other buttons stay unchanged.
 - Vocabulary Examples now uses compact usage cards with editable sentence lists. Add or delete usages and individual examples, clear all examples, and undo deletions. Examples remains the final teaching section, below Explanation & usage notes.
 - Examples uses the approved neutral gray palette in both themes, with green outlines for focused fields. Individual usage cards stay expanded without Usage headers; Delete usage sits at the bottom right, opposite Add example. Deletion controls are flat and turn red on hover or keyboard focus.
 - The vocabulary footer uses the release theme colors again, including green Add to Anki. Explanation and Examples headings sit slightly left of their contents to show nesting.
