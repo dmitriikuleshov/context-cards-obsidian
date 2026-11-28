@@ -1321,6 +1321,16 @@
   outline-offset: -1px;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--cc-ex-focus) 16%, transparent);
 }
+.cc-panel .cc-examples .cc-example:has(textarea:focus) {
+  border-top-color: var(--cc-ex-focus);
+  box-shadow:
+    inset 0 1px var(--cc-ex-focus),
+    inset 0 -1px var(--cc-ex-focus);
+}
+.cc-panel .cc-examples .cc-example textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 .cc-panel [hidden] {
   display: none !important;
